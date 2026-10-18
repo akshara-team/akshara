@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# Secrets
+.env
+
+# Audio (synthetic test audio can be force-added if needed)
+*.wav
+*.mp3
+*.ogg
+*.flac
+*.m4a
+
+# Cached API results (the report is committed)
+results/transcripts/
+results/audio/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
