@@ -1,14 +1,34 @@
 {
   "summary": {
     "hi-IN": {
-      "passages": 1,
-      "planted": 2,
-      "caught": 2,
-      "ok_words": 11,
-      "false_flags": 2,
+      "passages": 12,
+      "planted": 20,
+      "caught": 19,
+      "ok_words": 117,
+      "false_flags": 6,
+      "catch_rate": 0.95,
+      "false_flag_rate": 0.05128205128205128,
+      "pass": true
+    },
+    "kn-IN": {
+      "passages": 12,
+      "planted": 20,
+      "caught": 20,
+      "ok_words": 74,
+      "false_flags": 1,
       "catch_rate": 1.0,
-      "false_flag_rate": 0.18181818181818182,
-      "pass": false
+      "false_flag_rate": 0.013513513513513514,
+      "pass": true
+    },
+    "ta-IN": {
+      "passages": 12,
+      "planted": 20,
+      "caught": 19,
+      "ok_words": 73,
+      "false_flags": 5,
+      "catch_rate": 0.95,
+      "false_flag_rate": 0.0684931506849315,
+      "pass": true
     }
   },
   "passages": [
@@ -32,6 +52,561 @@
         6
       ],
       "wcpm": 126.56188202206043
+    },
+    {
+      "id": "hi-102",
+      "lang": "hi-IN",
+      "transcript": "आज बारात हो रही है, बच्चे के अंदर बैठे हैं।",
+      "planted": [
+        1,
+        6
+      ],
+      "flagged": [
+        1,
+        6
+      ],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 148.17101404537738
+    },
+    {
+      "id": "hi-103",
+      "lang": "hi-IN",
+      "transcript": "दादी ने हमें एक मोटी कहानी सुनाई, सब बच्चे से सुनते रहे।",
+      "planted": [
+        4,
+        9
+      ],
+      "flagged": [
+        4,
+        9
+      ],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 151.5303706467305
+    },
+    {
+      "id": "hi-104",
+      "lang": "hi-IN",
+      "transcript": "किसान खेत में गेहूं बोता है शाम को वो कर घर लौटता है",
+      "planted": [
+        1,
+        9
+      ],
+      "flagged": [
+        3,
+        8,
+        9
+      ],
+      "missed": [
+        1
+      ],
+      "false_flags": [
+        3,
+        8
+      ],
+      "wcpm": 157.97977380168754
+    },
+    {
+      "id": "hi-105",
+      "lang": "hi-IN",
+      "transcript": "पेड़ पर एक चिड़िया बैठा थी, उसने बच्चों को दाना खिलाया",
+      "planted": [
+        4,
+        7
+      ],
+      "flagged": [
+        4,
+        7
+      ],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 146.73962887102198
+    },
+    {
+      "id": "hi-106",
+      "lang": "hi-IN",
+      "transcript": "सूरज पर्वत से निकलता है वो को पश्चिम में डूब जाता है",
+      "planted": [
+        1,
+        6
+      ],
+      "flagged": [
+        1,
+        5,
+        6
+      ],
+      "missed": [],
+      "false_flags": [
+        5
+      ],
+      "wcpm": 137.75488240611864
+    },
+    {
+      "id": "hi-107",
+      "lang": "hi-IN",
+      "transcript": "मेरे पास एक पीली साइकिल है, मैं बाज़ार जाता हूँ।",
+      "planted": [
+        3,
+        7
+      ],
+      "flagged": [
+        3,
+        7
+      ],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 168.75
+    },
+    {
+      "id": "hi-108",
+      "lang": "hi-IN",
+      "transcript": "गाय भरी घास खाती है वह दूध देती है",
+      "planted": [
+        1,
+        6
+      ],
+      "flagged": [
+        1,
+        6
+      ],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 163.63752583470054
+    },
+    {
+      "id": "hi-109",
+      "lang": "hi-IN",
+      "transcript": "रात को आसमान में बहुत तारे चलते हैं चाँद सुंदर दिखता है।",
+      "planted": [
+        6,
+        9
+      ],
+      "flagged": [
+        6,
+        9
+      ],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 151.5303706467305
+    },
+    {
+      "id": "hi-110",
+      "lang": "hi-IN",
+      "transcript": "स्कूल की घड़ी बजी बच्चे कक्षा में पहुँच गए।",
+      "planted": [
+        2,
+        4
+      ],
+      "flagged": [
+        2,
+        4
+      ],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 154.28502551327895
+    },
+    {
+      "id": "hi-111",
+      "lang": "hi-IN",
+      "transcript": "तोता हरे रंग का होता है वो फल खाता है",
+      "planted": [],
+      "flagged": [
+        6
+      ],
+      "missed": [],
+      "false_flags": [
+        6
+      ],
+      "wcpm": 184.0922165640381
+    },
+    {
+      "id": "hi-112",
+      "lang": "hi-IN",
+      "transcript": "हम सुबह जल्दी उठकर पढ़ाई करते हैं।",
+      "planted": [],
+      "flagged": [],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 168.7509416905228
+    },
+    {
+      "id": "kn-101",
+      "lang": "kn-IN",
+      "transcript": "ರಾಮು ಪ್ರತಿದಿನ ಮನೆಗೆ ಹೋಗುತ್ತಾನೆ ಅವನು ಗೆಳೆಯರೊಂದಿಗೆ ಆಡುತ್ತಾನೆ",
+      "planted": [
+        2,
+        5
+      ],
+      "flagged": [
+        2,
+        5
+      ],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 82.65292944367118
+    },
+    {
+      "id": "kn-102",
+      "lang": "kn-IN",
+      "transcript": "ಹೊಳೆ ಬರುತ್ತಿದೆ ಮಕ್ಕಳು ಮನೆಯೊಳಗೆ ಕುಳಿತಿದ್ದಾರೆ",
+      "planted": [
+        0,
+        1
+      ],
+      "flagged": [
+        0,
+        1
+      ],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 71.05321589815706
+    },
+    {
+      "id": "kn-103",
+      "lang": "kn-IN",
+      "transcript": "ಅಜ್ಜಿ ನಮಗೆ ಸಿಹಿ ಕತ್ತೆ ಹೇಳಿದರೂ ಎಲ್ಲ ಮಕ್ಕಳು ಗಮನವಿಟ್ಟು ಕೇಳಿದರು",
+      "planted": [
+        2,
+        4
+      ],
+      "flagged": [
+        2,
+        4,
+        5
+      ],
+      "missed": [],
+      "false_flags": [
+        5
+      ],
+      "wcpm": 75.00000000000001
+    },
+    {
+      "id": "kn-104",
+      "lang": "kn-IN",
+      "transcript": "ರೈತ ಹೊಳೆಯಲ್ಲಿ ಗೋಧಿ ಬಿತ್ತುತ್ತಾನೆ ಸಂಜೆ ಮನೆಗೆ ಬರುತ್ತಾನೆ",
+      "planted": [
+        1,
+        5
+      ],
+      "flagged": [
+        1,
+        5
+      ],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 88.04377732261318
+    },
+    {
+      "id": "kn-105",
+      "lang": "kn-IN",
+      "transcript": "ಮರದ ಮೇಲೆ ಹಕ್ಕಿ ಕುಳಿತಿತ್ತು ಅದು ತನ್ನ ಮರಿಗಳಿಗೆ ಕಾಲು ತಿನ್ನಿಸಿತು",
+      "planted": [
+        2,
+        8
+      ],
+      "flagged": [
+        2,
+        8
+      ],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 105.88283953510816
+    },
+    {
+      "id": "kn-106",
+      "lang": "kn-IN",
+      "transcript": "ಸೂರ್ಯ ಪಶ್ಚಿಮದಲ್ಲಿ ಉದಯಿಸುತ್ತಾನೆ ಅವನು ಪಶ್ಚಿಮದಲ್ಲಿ ಮುಳುಗುತ್ತಾನೆ",
+      "planted": [
+        1,
+        4
+      ],
+      "flagged": [
+        1,
+        4
+      ],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 61.36381069264402
+    },
+    {
+      "id": "kn-107",
+      "lang": "kn-IN",
+      "transcript": "ನನ್ನ ಬಳಿ ಹಳದಿ ಸೈಕಲ್ ಇದೆ ನಾನು ಅದರಲ್ಲಿ ಮಾರುಕಟ್ಟೆಗೆ ಹೋಗುತ್ತೇನೆ",
+      "planted": [
+        2,
+        3
+      ],
+      "flagged": [
+        2,
+        3
+      ],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 96.4291095374416
+    },
+    {
+      "id": "kn-108",
+      "lang": "kn-IN",
+      "transcript": "ಹಸು ಹಸಿರು ಹಲ್ಲು ತಿನ್ನುತ್ತದೆ ಅದು ಹಾಲು ಕೊಡುತ್ತದೆ",
+      "planted": [
+        2,
+        5
+      ],
+      "flagged": [
+        2,
+        5
+      ],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 79.41212965133111
+    },
+    {
+      "id": "kn-109",
+      "lang": "kn-IN",
+      "transcript": "ರಾತ್ರಿ ಆಕಾಶದಲ್ಲಿ ಬಲ ನಕ್ಷತ್ರಗಳು ಮಿನುಗುತ್ತವೆ ಚಂದ್ರ ಸುಂದರವಾಗಿ ಕಾಣುತ್ತಾನೆ",
+      "planted": [
+        2,
+        6
+      ],
+      "flagged": [
+        2,
+        6
+      ],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 70.52230582753519
+    },
+    {
+      "id": "kn-110",
+      "lang": "kn-IN",
+      "transcript": "ಶಾಲೆಯ ಗಡಿಯಾರ ಬಾರಿಸಿತು ಮಕ್ಕಳು ತರಗತಿಗೆ ಬಂದರು",
+      "planted": [
+        1,
+        3
+      ],
+      "flagged": [
+        1,
+        3
+      ],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 76.70427306721211
+    },
+    {
+      "id": "kn-111",
+      "lang": "kn-IN",
+      "transcript": "ಗಿಳಿ ಹಸಿರು ಬಣ್ಣದ್ದು ಅದು ಹಣ್ಣು ತಿನ್ನುತ್ತದೆ",
+      "planted": [],
+      "flagged": [],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 101.24980224647999
+    },
+    {
+      "id": "kn-112",
+      "lang": "kn-IN",
+      "transcript": "ನಾವು ಬೆಳಿಗ್ಗೆ ಬೇಗ ಎದ್ದು ಓದುತ್ತೇವೆ",
+      "planted": [],
+      "flagged": [],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 112.49912110061639
+    },
+    {
+      "id": "ta-101",
+      "lang": "ta-IN",
+      "transcript": "மீனா தினமும் வீட்டுக்குச் செல்கிறாள் அவள் நண்பர்களுடன் விளையாடுகிறாள்",
+      "planted": [
+        2,
+        5
+      ],
+      "flagged": [
+        2,
+        5
+      ],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 69.82749215046854
+    },
+    {
+      "id": "ta-102",
+      "lang": "ta-IN",
+      "transcript": "மழை பெய்கிறது குழந்தைகள் வீட்டுக்குள் அமர்ந்திருக்கிறார்கள்",
+      "planted": [
+        0,
+        1
+      ],
+      "flagged": [
+        0
+      ],
+      "missed": [
+        1
+      ],
+      "false_flags": [],
+      "wcpm": 86.53794147871707
+    },
+    {
+      "id": "ta-103",
+      "lang": "ta-IN",
+      "transcript": "பாட்டி எங்களுக்கு இனிய கதவு சொன்னால் எல்லா குழந்தைகளும் கவனமாக கேட்டார்கள்",
+      "planted": [
+        2,
+        4
+      ],
+      "flagged": [
+        2,
+        4,
+        5,
+        8
+      ],
+      "missed": [],
+      "false_flags": [
+        5,
+        8
+      ],
+      "wcpm": 66.39310249435198
+    },
+    {
+      "id": "ta-104",
+      "lang": "ta-IN",
+      "transcript": "விவசாயி வாயில் நெல் விதைக்கிறார் மாலையில் வீடு திரும்புகிறார்",
+      "planted": [
+        1,
+        5
+      ],
+      "flagged": [
+        1,
+        5
+      ],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 82.65292944367118
+    },
+    {
+      "id": "ta-105",
+      "lang": "ta-IN",
+      "transcript": "மரத்தின் மேல் குரங்கு அமர்ந்திருந்தது அது தன் குஞ்சுகளுக்கு உணவு ஊட்டியது",
+      "planted": [
+        2,
+        3
+      ],
+      "flagged": [
+        2,
+        3
+      ],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 91.52554492259657
+    },
+    {
+      "id": "ta-106",
+      "lang": "ta-IN",
+      "transcript": "சூரியன் மேற்கில் உதிக்கிறது அது மேற்கில் மறைகிறது",
+      "planted": [
+        1,
+        4
+      ],
+      "flagged": [
+        1,
+        4
+      ],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 88.81651987269633
+    },
+    {
+      "id": "ta-107",
+      "lang": "ta-IN",
+      "transcript": "என்னிடம் சிவப்பு சைக்கிள் உள்ளது நான் அதில் கடைக்கு செல்கிறேன்",
+      "planted": [
+        1,
+        2
+      ],
+      "flagged": [
+        1,
+        2,
+        7
+      ],
+      "missed": [],
+      "false_flags": [
+        7
+      ],
+      "wcpm": 82.65292944367118
+    },
+    {
+      "id": "ta-108",
+      "lang": "ta-IN",
+      "transcript": "பசு பச்சை பல் சாப்பிடுகிறது நமக்கு பால் தருகிறது",
+      "planted": [
+        2,
+        4
+      ],
+      "flagged": [
+        2,
+        4,
+        5
+      ],
+      "missed": [],
+      "false_flags": [
+        5
+      ],
+      "wcpm": 80.35759128120135
+    },
+    {
+      "id": "ta-109",
+      "lang": "ta-IN",
+      "transcript": "இரவில் வானத்தில் பழம் நட்சத்திரங்கள் மின்னுகின்றன நிலா அழகாக தெரிகிறது",
+      "planted": [
+        2,
+        6
+      ],
+      "flagged": [
+        2,
+        6,
+        7
+      ],
+      "missed": [],
+      "false_flags": [
+        7
+      ],
+      "wcpm": 64.28571428571429
+    },
+    {
+      "id": "ta-110",
+      "lang": "ta-IN",
+      "transcript": "பள்ளியின் மனை அடித்தது குழந்தைகளும் வகுப்புக்கு வந்தார்கள்",
+      "planted": [
+        1,
+        3
+      ],
+      "flagged": [
+        1,
+        3
+      ],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 78.48780168748775
+    },
+    {
+      "id": "ta-111",
+      "lang": "ta-IN",
+      "transcript": "கிளி பச்சை நிறமானது அது பழம் சாப்பிடும்",
+      "planted": [],
+      "flagged": [],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 112.49999999999999
+    },
+    {
+      "id": "ta-112",
+      "lang": "ta-IN",
+      "transcript": "நாங்கள் காலையில் சீக்கிரம் எழுந்து படிக்கிறோம்",
+      "planted": [],
+      "flagged": [],
+      "missed": [],
+      "false_flags": [],
+      "wcpm": 116.38056444573756
     }
   ]
 }
