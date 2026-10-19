@@ -1,6 +1,6 @@
 # Akshara
 
-**A reading-fluency tutor for children in Kannada, Tamil and Hindi, built on Gnani AI's speech and language models.**
+**A reading screener and practice tool for early-grade children in Kannada, Tamil and Hindi, built on Gnani AI's speech models, with a measured reliability report.**
 
 Entry for the [Great Indian AI Internship Challenge](https://www.gnani.ai/internship) (deadline Nov 10, 2026).
 

@@ -5,8 +5,10 @@
 ## TL;DR
 
 - We dropped the scam-call idea (Kavach): another team has built it on all three Gnani models, with 50 commits and its own evals.
-- **We're building a reading-fluency tutor for children in Kannada, Tamil and Hindi.** No challenge entry we found does this, it fits the credit budget, and it uses each Gnani model where it's strongest.
-- **Week 1 has a go/no-go test** ([GO_NO_GO.md](GO_NO_GO.md)) before we build the rest.
+- **We're building a reading screener and practice tool for early-grade children in Kannada, Tamil and Hindi.** No challenge entry we found does this, it fits the credit budget, and it uses each Gnani model where it's strongest.
+- **The headline is a measured reliability study of Prisma** on child-style reading errors, including phone-quality (8 kHz) audio. Every Prisma benchmark we found was run by Gnani, so an independent one is our strongest asset, for the post and for the interview.
+- **Week 1 has a go/no-go test** ([GO_NO_GO.md](GO_NO_GO.md)) before we build the rest. The test audio is synthetic (Timbre reads passages with planted mistakes), because neither of us can record Kannada, Tamil and Hindi.
+- **Honest framing:** a screener that tells a teacher which children to listen to first, not a replacement for the teacher. Clean synthetic audio is easier than a classroom, and we say so.
 
 ## 1. What other teams are building
 
@@ -73,14 +75,34 @@ Speech-to-text models tend to "fix" a misread word into the right one, hiding th
 
 A voice explainer for official papers: photograph a government letter, electricity bill or medicine strip and hear it explained in Kannada, Tamil or Hindi, with the source cited. Reuses Helix's document ingestion and citations.
 
-## 6. Timeline
+## 6. How the challenge picks people (from Gnani's pages)
+
+- **Two gates.** "Verified engagement on your public demo decides the shortlist. Your skills and your interview decide the offer." Engagement means reactions, comments and reshares on the nominated posts, counted at the closing cutoff. No weights or thresholds are published.
+- **Awards are separate** (10 × ₹50,000, judged on category criteria; one award per team). Targets: Main Character (Kannada, Tamil), Real Deal, Demo Day Drop. Small Town Big Build depends on where our colleges are.
+- **Interviews are one to one and individual.** Each of us needs to be able to explain and defend our own part.
+- **Banned:** bought engagement, bots, engagement swaps, paid promotion, misleading demos. Gnani's own advice: a demo that shows an honest limitation beats one that fakes a result.
+- **What Gnani sells:** voice AI to large enterprises (mostly banking and finance), so telephony audio, Indian languages and measured accuracy are what they care about. Education is adjacent, which is why the reliability study, including 8 kHz audio, is the bridge.
+- **Engagement plan (legitimate only):** post the demo video by about Nov 1–3, not Nov 10, so it can collect reactions before the cutoff. Open with the child-reading problem, then the live demo. Share with education and NGO people, regional-language communities and our college networks.
+- **Not verified:** the scoring weights, the engagement threshold, how many teams entered, and which intern roles exist.
+
+## 7. Scope: what goes in and what stays out
+
+**In:** the scorer (with akshara/syllable-level error categories if time allows), Prisma, Timbre and, optionally, Evon; an "uncertain" state for words the system can't judge; a per-language reliability report with failure cases; a per-attempt trace and cost summary; a minimal reading screen (words turn green or red) and a class summary.
+
+**Evon is off the critical path.** Passages for assessment come from a fixed, graded bank. Evon is used for optional story variety only, if we get it running.
+
+**Out (roadmap in the docs only):** child-speech model training, offline mobile apps, DPDP compliance work, LangGraph or other agent frameworks around the main flow, realtime streaming unless the basics are done early, anything needing real children's recordings.
+
+## 8. Timeline
 
 | When | What |
 |---|---|
-| Oct 18–23 | Check credit rates, run the go/no-go test, get Evon running |
-| Oct 24–30 | Full loop: story → read-aloud → scoring → feedback |
-| Oct 31–Nov 6 | Teacher dashboard, eval scorecard in the README |
-| Nov 7–10 | Demo video, LinkedIn/X post, submit |
+| Oct 19–23 | API key in `.env`, credit-rate check, synthetic Hindi/Kannada/Tamil go/no-go run, native-speaker check of the passages |
+| Oct 24–28 | Scorer upgrades, "uncertain" state, 8 kHz test variant, reliability report v1 |
+| Oct 29–Nov 1 | Reading screen and class summary, demo recorded |
+| Nov 1–3 | Publish the demo post (engagement window opens) |
+| Nov 4–9 | Fix findings, docs, final numbers in the README, answer comments |
+| Nov 10 | Submit before 11:59 PM IST |
 
 ### Who does what
 
