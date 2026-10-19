@@ -43,3 +43,28 @@ def test_wcpm():
 def test_empty_transcript_skips_everything():
     marks = align(["a", "b"], [])
     assert [m.op for m in marks] == ["skipped", "skipped"]
+
+
+def test_loose_treats_spelling_variants_as_equal():
+    from akshara.text import loose_key
+
+    assert loose_key("रोज़") == loose_key("रोज")
+    assert loose_key("गेहूँ") == loose_key("गेहूं")
+    assert loose_key("वह") == loose_key("वो")
+    assert loose_key("கடைக்குச்") == loose_key("கடைக்கு")
+    assert loose_key("நமக்குப்") == loose_key("நமக்கு")
+
+
+def test_loose_keeps_real_differences():
+    from akshara.text import loose_key
+
+    assert loose_key("ಹೇಳಿದರು") != loose_key("ಹೇಳಿದರೂ")  # Kannada stays strict
+    assert loose_key("खेत") != loose_key("खेल")
+    assert loose_key("சொன்னாள்") != loose_key("சொன்னால்")
+
+
+def test_score_loose_flag():
+    ref = "वह रोज़ स्कूल जाती है"
+    heard = "वो रोज स्कूल जाती है"
+    assert score(ref, heard).correct == 3
+    assert score(ref, heard, loose=True).correct == 5

@@ -8,6 +8,8 @@ import time
 
 import httpx
 
+from akshara.ledger import record
+
 TTS_URL = "https://api.vachana.ai/api/v1/tts/inference"
 MODEL = "timbre-v3.0"
 # Every v3.0 voice speaks all 10 languages.
@@ -55,6 +57,7 @@ def synthesize(
         "speed": speed,
         "audio_config": {"sample_rate": sample_rate, "num_channels": 1, "container": "wav"},
     }
+    record("tts", chars=len(text), voice=voice, language=language)
     delay = 2.0
     for attempt in range(retries + 1):
         resp = httpx.post(TTS_URL, headers={"X-API-Key-ID": key}, json=payload, timeout=timeout_s)

@@ -5,6 +5,7 @@ See docs/GO_NO_GO.md.
     uv run python scripts/go_no_go.py --dry-run     # no API calls; read_as is the transcript
     uv run python scripts/go_no_go.py --only hi-001 # one clip, to check credit cost
     uv run python scripts/go_no_go.py               # full run (transcripts are cached)
+    uv run python scripts/go_no_go.py --variant phone8k   # a stress variant
 """
 
 import argparse
@@ -67,11 +68,45 @@ def get_transcript(row: dict, audio: Path) -> str:
     return body["transcript"]
 
 
+MODES = {"strict": False, "loose": True}
+
+
+def new_stats() -> dict:
+    return {"passages": 0, "planted": 0, "caught": 0, "ok_words": 0, "false_flags": 0}
+
+
+def summarise(stats: dict) -> dict:
+    out = {}
+    for lang, st in sorted(stats.items()):
+        catch = st["caught"] / st["planted"] if st["planted"] else None
+        ff = st["false_flags"] / st["ok_words"] if st["ok_words"] else None
+        ok = catch is not None and catch >= CATCH_PASS and ff is not None and ff <= FALSE_FLAG_PASS
+        out[lang] = {**st, "catch_rate": catch, "false_flag_rate": ff, "pass": ok}
+    return out
+
+
+def print_table(title: str, summary: dict) -> None:
+    print(f"\n[{title}]")
+    print(f"{'lang':<7}{'passages':>9}{'planted':>9}{'catch':>8}{'false-flag':>12}  result")
+    for lang, r in summary.items():
+        c = f"{r['catch_rate']:.0%}" if r["catch_rate"] is not None else "-"
+        f = f"{r['false_flag_rate']:.0%}" if r["false_flag_rate"] is not None else "-"
+        print(
+            f"{lang:<7}{r['passages']:>9}{r['planted']:>9}{c:>8}{f:>12}  "
+            f"{'PASS' if r['pass'] else 'FAIL'}"
+        )
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--passages", type=Path)
     ap.add_argument("--dry-run", action="store_true", help="use read_as as the transcript")
     ap.add_argument("--only", help="run one passage id")
+    ap.add_argument(
+        "--variant",
+        default="base",
+        help="audio set to test: 'base' or a folder name under data/go_no_go/audio_variants/",
+    )
     args = ap.parse_args()
     sys.stdout.reconfigure(encoding="utf-8")  # Windows consoles default to cp1252
     load_dotenv(ROOT / ".env")
@@ -83,17 +118,16 @@ def main() -> None:
     rows = load_passages(path)
     if args.only:
         rows = [r for r in rows if r["id"] == args.only]
+    audio_dir = DATA / "audio" if args.variant == "base" else DATA / "audio_variants" / args.variant
 
-    stats = defaultdict(
-        lambda: {"passages": 0, "planted": 0, "caught": 0, "ok_words": 0, "false_flags": 0}
-    )
+    stats = {m: defaultdict(new_stats) for m in MODES}
     details = []
     for row in rows:
         duration = None
         if args.dry_run:
             transcript = row["read_as"]
         else:
-            audio = DATA / "audio" / f"{row['id']}.wav"
+            audio = audio_dir / f"{row['id']}.wav"
             if not audio.exists():
                 print(f"skip {row['id']}: no audio at {audio.relative_to(ROOT)}")
                 continue
@@ -103,56 +137,46 @@ def main() -> None:
                 continue
             transcript = get_transcript(row, audio)
 
-        s = score(row["reference"], transcript, duration)
         planted = {e["index"] for e in row.get("errors", [])}
-        flagged = set(s.flagged_indexes)
-        caught = planted & flagged
-        false_flags = flagged - planted
-
-        st = stats[row["lang"]]
-        st["passages"] += 1
-        st["planted"] += len(planted)
-        st["caught"] += len(caught)
-        st["ok_words"] += s.total_words - len(planted)
-        st["false_flags"] += len(false_flags)
-        details.append(
-            {
-                "id": row["id"],
-                "lang": row["lang"],
-                "transcript": transcript,
+        detail = {"id": row["id"], "lang": row["lang"], "transcript": transcript}
+        for mode, loose in MODES.items():
+            s = score(row["reference"], transcript, duration, loose=loose)
+            flagged = set(s.flagged_indexes)
+            caught = planted & flagged
+            false_flags = flagged - planted
+            st = stats[mode][row["lang"]]
+            st["passages"] += 1
+            st["planted"] += len(planted)
+            st["caught"] += len(caught)
+            st["ok_words"] += s.total_words - len(planted)
+            st["false_flags"] += len(false_flags)
+            detail[mode] = {
                 "planted": sorted(planted),
                 "flagged": sorted(flagged),
                 "missed": sorted(planted - flagged),
                 "false_flags": sorted(false_flags),
                 "wcpm": s.wcpm,
             }
-        )
+        details.append(detail)
 
-    print(f"\n{'lang':<7}{'passages':>9}{'planted':>9}{'catch':>8}{'false-flag':>12}  result")
-    summary = {}
-    for lang, st in sorted(stats.items()):
-        catch = st["caught"] / st["planted"] if st["planted"] else None
-        ff = st["false_flags"] / st["ok_words"] if st["ok_words"] else None
-        ok = catch is not None and catch >= CATCH_PASS and ff is not None and ff <= FALSE_FLAG_PASS
-        summary[lang] = {**st, "catch_rate": catch, "false_flag_rate": ff, "pass": ok}
-        c = f"{catch:.0%}" if catch is not None else "-"
-        f = f"{ff:.0%}" if ff is not None else "-"
-        print(
-            f"{lang:<7}{st['passages']:>9}{st['planted']:>9}{c:>8}{f:>12}  "
-            f"{'PASS' if ok else 'FAIL'}"
-        )
+    summary = {m: summarise(stats[m]) for m in MODES}
+    for mode in MODES:
+        print_table(f"{args.variant} / {mode}", summary[mode])
 
     if not args.dry_run and details:
         RESULTS.mkdir(exist_ok=True)
-        out = RESULTS / "go_no_go_report.json"
+        name = "go_no_go_report.json" if args.variant == "base" else f"go_no_go_{args.variant}.json"
+        out = RESULTS / name
         out.write_text(
             json.dumps({"summary": summary, "passages": details}, ensure_ascii=False, indent=2),
             encoding="utf-8",
         )
         print(f"\nwrote {out.relative_to(ROOT)}")
     for d in details:
-        if d["missed"] or d["false_flags"]:
-            print(f"  {d['id']}: missed {d['missed']} false flags {d['false_flags']}")
+        for mode in MODES:
+            m = d[mode]
+            if m["missed"] or m["false_flags"]:
+                print(f"  {mode:<6} {d['id']}: missed {m['missed']} false flags {m['false_flags']}")
 
 
 if __name__ == "__main__":

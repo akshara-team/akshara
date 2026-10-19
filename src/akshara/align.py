@@ -1,9 +1,10 @@
 """Align a reading transcript to the story text and score it."""
 
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from typing import Literal
 
-from akshara.text import words
+from akshara.text import loose_key, words
 
 Op = Literal["correct", "substituted", "skipped", "inserted"]
 
@@ -36,9 +37,15 @@ class Score:
         return self.correct / (self.duration_s / 60)
 
 
-def align(reference: list[str], spoken: list[str]) -> list[WordMark]:
-    """Word-level edit-distance alignment. Ties prefer a match, then a substitution."""
+def align(
+    reference: list[str], spoken: list[str], key: Callable[[str], str] = str
+) -> list[WordMark]:
+    """Word-level edit-distance alignment. Ties prefer a match, then a substitution.
+
+    `key` maps a word to the form that is compared, so spelling variants can count as equal.
+    """
     n, m = len(reference), len(spoken)
+    ref_k, spk_k = [key(w) for w in reference], [key(w) for w in spoken]
     # dp[i][j] = cost of aligning reference[:i] with spoken[:j]
     dp = [[0] * (m + 1) for _ in range(n + 1)]
     for i in range(n + 1):
@@ -47,7 +54,7 @@ def align(reference: list[str], spoken: list[str]) -> list[WordMark]:
         dp[0][j] = j
     for i in range(1, n + 1):
         for j in range(1, m + 1):
-            same = reference[i - 1] == spoken[j - 1]
+            same = ref_k[i - 1] == spk_k[j - 1]
             dp[i][j] = min(
                 dp[i - 1][j - 1] + (0 if same else 1),
                 dp[i - 1][j] + 1,
@@ -58,7 +65,7 @@ def align(reference: list[str], spoken: list[str]) -> list[WordMark]:
     i, j = n, m
     while i > 0 or j > 0:
         if i > 0 and j > 0:
-            same = reference[i - 1] == spoken[j - 1]
+            same = ref_k[i - 1] == spk_k[j - 1]
             if dp[i][j] == dp[i - 1][j - 1] + (0 if same else 1):
                 op: Op = "correct" if same else "substituted"
                 marks.append(WordMark(op, i - 1, reference[i - 1], spoken[j - 1]))
@@ -74,9 +81,16 @@ def align(reference: list[str], spoken: list[str]) -> list[WordMark]:
     return marks
 
 
-def score(reference_text: str, transcript: str, duration_s: float | None = None) -> Score:
+def score(
+    reference_text: str,
+    transcript: str,
+    duration_s: float | None = None,
+    *,
+    loose: bool = False,
+) -> Score:
+    """Score a reading. `loose` treats harmless spelling variants as the same word."""
     ref = words(reference_text)
-    marks = align(ref, words(transcript))
+    marks = align(ref, words(transcript), loose_key if loose else str)
     correct = sum(1 for mk in marks if mk.op == "correct")
     flagged = [mk.ref_index for mk in marks if mk.op in ("substituted", "skipped")]
     return Score(

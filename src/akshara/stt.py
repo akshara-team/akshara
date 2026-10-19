@@ -9,6 +9,8 @@ from pathlib import Path
 
 import httpx
 
+from akshara.ledger import record
+
 STT_URL = "https://api.vachana.ai/stt/v3"
 LANGUAGES = {"hi-IN", "kn-IN", "ta-IN"}
 
@@ -22,7 +24,7 @@ def transcribe(
     language_code: str,
     *,
     api_key: str | None = None,
-    retries: int = 3,
+    retries: int = 6,
     timeout_s: float = 60.0,
 ) -> dict:
     """Transcribe one clip verbatim. Returns the API's JSON response.
@@ -36,6 +38,7 @@ def transcribe(
         raise STTError("GNANI_API_KEY is not set")
 
     path = Path(audio_path)
+    record("stt", file=path.name, bytes=path.stat().st_size)
     delay = 2.0
     for attempt in range(retries + 1):
         with path.open("rb") as f:
@@ -48,7 +51,7 @@ def transcribe(
             )
         if resp.status_code in (429, 500, 503) and attempt < retries:
             time.sleep(delay)
-            delay *= 2
+            delay = min(delay * 2, 20.0)
             continue
         try:
             body = resp.json()

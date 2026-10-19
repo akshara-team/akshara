@@ -1,5 +1,6 @@
 """Text normalisation and word splitting for Hindi, Kannada and Tamil."""
 
+import re
 import unicodedata
 
 # Zero-width joiner / non-joiner change how a word renders, not what it says.
@@ -25,3 +26,24 @@ def normalize(text: str) -> str:
 def words(text: str) -> list[str]:
     """Split text into normalised words."""
     return normalize(text).split()
+
+
+_NUKTA = "़"
+_CHANDRABINDU, _ANUSVARA = "ँ", "ं"
+_HINDI_VARIANTS = {"वह": "वो"}  # वह -> वो
+# Tamil writes sandhi (joining) consonants onto the previous word; speech-to-text drops them.
+_TAMIL_SANDHI_END = re.compile("[கசதப]்$")  # க ச த ப + pulli
+
+
+def loose_key(word: str) -> str:
+    """Spelling-variant-insensitive form of a word, for the optional 'loose' comparison.
+
+    Hindi: drops nukta, treats chandrabindu as anusvara, treats वह and वो as one word.
+    Tamil: drops a trailing sandhi consonant (கடைக்குச் == கடைக்கு).
+    Other scripts, Kannada included, are left strict because vowel length changes meaning.
+    """
+    word = word.replace(_NUKTA, "").replace(_CHANDRABINDU, _ANUSVARA)
+    word = _HINDI_VARIANTS.get(word, word)
+    if len(word) > 2 and "஀" <= word[0] <= "௿":
+        word = _TAMIL_SANDHI_END.sub("", word)
+    return word

@@ -1,0 +1,255 @@
+{"t": 1792432283.2821221, "kind": "tts", "chars": 54, "voice": "Shivani", "language": "hi-IN"}
+{"t": 1792432286.144444, "kind": "tts", "chars": 41, "voice": "Lakshmi", "language": "hi-IN"}
+{"t": 1792432289.0905154, "kind": "tts", "chars": 54, "voice": "Kalpana", "language": "hi-IN"}
+{"t": 1792432291.7729049, "kind": "tts", "chars": 52, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792432294.4665623, "kind": "tts", "chars": 53, "voice": "Vasudha", "language": "hi-IN"}
+{"t": 1792432297.0546541, "kind": "tts", "chars": 52, "voice": "Riyaa", "language": "hi-IN"}
+{"t": 1792432299.641518, "kind": "tts", "chars": 46, "voice": "Tarika", "language": "hi-IN"}
+{"t": 1792432302.3975413, "kind": "tts", "chars": 34, "voice": "Avinash", "language": "hi-IN"}
+{"t": 1792432304.830949, "kind": "tts", "chars": 55, "voice": "Shubham", "language": "hi-IN"}
+{"t": 1792432307.4161005, "kind": "tts", "chars": 42, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792432310.0491607, "kind": "tts", "chars": 37, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792432312.475549, "kind": "tts", "chars": 33, "voice": "Yashraj", "language": "hi-IN"}
+{"t": 1792432314.9418325, "kind": "tts", "chars": 58, "voice": "Harshad", "language": "kn-IN"}
+{"t": 1792432317.633803, "kind": "tts", "chars": 43, "voice": "Shivani", "language": "kn-IN"}
+{"t": 1792432320.4916914, "kind": "tts", "chars": 59, "voice": "Lakshmi", "language": "kn-IN"}
+{"t": 1792432323.5081463, "kind": "tts", "chars": 52, "voice": "Kalpana", "language": "kn-IN"}
+{"t": 1792432326.1123993, "kind": "tts", "chars": 59, "voice": "Chetana", "language": "kn-IN"}
+{"t": 1792432328.6771228, "kind": "tts", "chars": 60, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792432331.7867806, "kind": "tts", "chars": 59, "voice": "Riyaa", "language": "kn-IN"}
+{"t": 1792432334.5774484, "kind": "tts", "chars": 46, "voice": "Tarika", "language": "kn-IN"}
+{"t": 1792432337.4841077, "kind": "tts", "chars": 69, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792432340.4072704, "kind": "tts", "chars": 42, "voice": "Shubham", "language": "kn-IN"}
+{"t": 1792432343.0799122, "kind": "tts", "chars": 41, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792432345.5721898, "kind": "tts", "chars": 33, "voice": "Devansh", "language": "kn-IN"}
+{"t": 1792432348.1756136, "kind": "tts", "chars": 69, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792432350.7895858, "kind": "tts", "chars": 59, "voice": "Harshad", "language": "ta-IN"}
+{"t": 1792432353.5183809, "kind": "tts", "chars": 76, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792432356.5969665, "kind": "tts", "chars": 61, "voice": "Lakshmi", "language": "ta-IN"}
+{"t": 1792432359.5945098, "kind": "tts", "chars": 73, "voice": "Kalpana", "language": "ta-IN"}
+{"t": 1792432362.7294817, "kind": "tts", "chars": 49, "voice": "Chetana", "language": "ta-IN"}
+{"t": 1792432365.2462075, "kind": "tts", "chars": 64, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792432367.800537, "kind": "tts", "chars": 50, "voice": "Riyaa", "language": "ta-IN"}
+{"t": 1792432370.3388076, "kind": "tts", "chars": 72, "voice": "Tarika", "language": "ta-IN"}
+{"t": 1792432373.5369608, "kind": "tts", "chars": 58, "voice": "Avinash", "language": "ta-IN"}
+{"t": 1792432376.0568292, "kind": "tts", "chars": 39, "voice": "Shubham", "language": "ta-IN"}
+{"t": 1792432378.5652788, "kind": "tts", "chars": 46, "voice": "Prakash", "language": "ta-IN"}
+{"t": 1792432381.8921688, "kind": "stt", "file": "hi-101.wav", "bytes": 68312}
+{"t": 1792432384.1103017, "kind": "stt", "file": "hi-102.wav", "bytes": 58356}
+{"t": 1792432386.0929956, "kind": "stt", "file": "hi-103.wav", "bytes": 69734}
+{"t": 1792432388.1492493, "kind": "stt", "file": "hi-104.wav", "bytes": 66888}
+{"t": 1792432390.1968687, "kind": "stt", "file": "hi-105.wav", "bytes": 65466}
+{"t": 1792432392.2515857, "kind": "stt", "file": "hi-106.wav", "bytes": 69734}
+{"t": 1792432394.2621734, "kind": "stt", "file": "hi-107.wav", "bytes": 51244}
+{"t": 1792432396.3179374, "kind": "stt", "file": "hi-108.wav", "bytes": 46978}
+{"t": 1792432398.3322303, "kind": "stt", "file": "hi-109.wav", "bytes": 69734}
+{"t": 1792432414.9362583, "kind": "stt", "file": "hi-101.wav", "bytes": 136578}
+{"t": 1792432431.7355962, "kind": "stt", "file": "hi-101.wav", "bytes": 136578}
+{"t": 1792432448.4960608, "kind": "stt", "file": "hi-101.wav", "bytes": 135766}
+{"t": 1792432466.1514654, "kind": "stt", "file": "hi-102.wav", "bytes": 115448}
+{"t": 1792432468.2253022, "kind": "stt", "file": "hi-103.wav", "bytes": 138610}
+{"t": 1792432470.3129528, "kind": "stt", "file": "hi-104.wav", "bytes": 132922}
+{"t": 1792432472.379202, "kind": "stt", "file": "hi-105.wav", "bytes": 130076}
+{"t": 1792432474.6082797, "kind": "stt", "file": "hi-106.wav", "bytes": 138610}
+{"t": 1792432476.7118282, "kind": "stt", "file": "hi-107.wav", "bytes": 101226}
+{"t": 1792432478.796175, "kind": "stt", "file": "hi-108.wav", "bytes": 93098}
+{"t": 1792432480.8404057, "kind": "stt", "file": "hi-109.wav", "bytes": 138610}
+{"t": 1792432483.0429177, "kind": "stt", "file": "hi-110.wav", "bytes": 98788}
+{"t": 1792432485.1159923, "kind": "stt", "file": "hi-111.wav", "bytes": 93098}
+{"t": 1792432487.1918914, "kind": "stt", "file": "hi-112.wav", "bytes": 78876}
+{"t": 1792432489.3967254, "kind": "stt", "file": "kn-101.wav", "bytes": 138610}
+{"t": 1792432491.6098125, "kind": "stt", "file": "kn-102.wav", "bytes": 107322}
+{"t": 1792432493.7173712, "kind": "stt", "file": "kn-103.wav", "bytes": 178026}
+{"t": 1792432495.9678166, "kind": "stt", "file": "kn-104.wav", "bytes": 130076}
+{"t": 1792432498.0404053, "kind": "stt", "file": "kn-105.wav", "bytes": 144298}
+{"t": 1792432500.236792, "kind": "stt", "file": "kn-106.wav", "bytes": 155676}
+{"t": 1792432502.4798822, "kind": "stt", "file": "kn-107.wav", "bytes": 158522}
+{"t": 1792432504.6138244, "kind": "stt", "file": "kn-108.wav", "bytes": 144298}
+{"t": 1792432506.7940397, "kind": "stt", "file": "kn-109.wav", "bytes": 189810}
+{"t": 1792432508.8776302, "kind": "stt", "file": "kn-110.wav", "bytes": 124388}
+{"t": 1792432511.0725703, "kind": "stt", "file": "kn-111.wav", "bytes": 113010}
+{"t": 1792432513.153159, "kind": "stt", "file": "kn-112.wav", "bytes": 84566}
+{"t": 1792432515.1543987, "kind": "stt", "file": "ta-101.wav", "bytes": 164210}
+{"t": 1792432517.3490567, "kind": "stt", "file": "ta-102.wav", "bytes": 110166}
+{"t": 1792432519.5859597, "kind": "stt", "file": "ta-103.wav", "bytes": 172338}
+{"t": 1792432521.8256338, "kind": "stt", "file": "ta-104.wav", "bytes": 138610}
+{"t": 1792432524.0287974, "kind": "stt", "file": "ta-105.wav", "bytes": 166648}
+{"t": 1792432526.1331596, "kind": "stt", "file": "ta-106.wav", "bytes": 107322}
+{"t": 1792432528.2143939, "kind": "stt", "file": "ta-107.wav", "bytes": 138610}
+{"t": 1792432530.4463797, "kind": "stt", "file": "ta-108.wav", "bytes": 118698}
+{"t": 1792432532.4907706, "kind": "stt", "file": "ta-109.wav", "bytes": 178026}
+{"t": 1792432534.6027327, "kind": "stt", "file": "ta-110.wav", "bytes": 121138}
+{"t": 1792432536.6538856, "kind": "stt", "file": "ta-111.wav", "bytes": 101226}
+{"t": 1792432538.7457526, "kind": "stt", "file": "ta-112.wav", "bytes": 81722}
+{"t": 1792432541.5974925, "kind": "stt", "file": "hi-101.wav", "bytes": 67906}
+{"t": 1792432543.7513459, "kind": "stt", "file": "hi-102.wav", "bytes": 57746}
+{"t": 1792432545.7946887, "kind": "stt", "file": "hi-103.wav", "bytes": 69328}
+{"t": 1792432547.867567, "kind": "stt", "file": "hi-104.wav", "bytes": 66484}
+{"t": 1792432549.9984329, "kind": "stt", "file": "hi-105.wav", "bytes": 65060}
+{"t": 1792432552.0887, "kind": "stt", "file": "hi-106.wav", "bytes": 69328}
+{"t": 1792432554.1616297, "kind": "stt", "file": "hi-107.wav", "bytes": 50636}
+{"t": 1792432556.2694895, "kind": "stt", "file": "hi-108.wav", "bytes": 46572}
+{"t": 1792432558.4423168, "kind": "stt", "file": "hi-109.wav", "bytes": 69328}
+{"t": 1792432560.531997, "kind": "stt", "file": "hi-110.wav", "bytes": 49416}
+{"t": 1792432562.5632591, "kind": "stt", "file": "hi-111.wav", "bytes": 46572}
+{"t": 1792432564.5813541, "kind": "stt", "file": "hi-112.wav", "bytes": 39460}
+{"t": 1792432566.8896184, "kind": "stt", "file": "kn-101.wav", "bytes": 69328}
+{"t": 1792432569.1448352, "kind": "stt", "file": "kn-102.wav", "bytes": 53684}
+{"t": 1792432571.513884, "kind": "stt", "file": "kn-103.wav", "bytes": 89036}
+{"t": 1792432573.6058223, "kind": "stt", "file": "kn-104.wav", "bytes": 65060}
+{"t": 1792432575.648945, "kind": "stt", "file": "kn-105.wav", "bytes": 72172}
+{"t": 1792432577.718041, "kind": "stt", "file": "kn-106.wav", "bytes": 77860}
+{"t": 1792432579.7635646, "kind": "stt", "file": "kn-107.wav", "bytes": 79284}
+{"t": 1792432581.801918, "kind": "stt", "file": "kn-108.wav", "bytes": 72172}
+{"t": 1792432584.0063014, "kind": "stt", "file": "kn-109.wav", "bytes": 94928}
+{"t": 1792432586.3624263, "kind": "stt", "file": "kn-110.wav", "bytes": 62216}
+{"t": 1792432588.4187498, "kind": "stt", "file": "kn-111.wav", "bytes": 56528}
+{"t": 1792432590.4618578, "kind": "stt", "file": "kn-112.wav", "bytes": 42306}
+{"t": 1792432592.4753404, "kind": "stt", "file": "ta-101.wav", "bytes": 82128}
+{"t": 1792432594.6674259, "kind": "stt", "file": "ta-102.wav", "bytes": 55106}
+{"t": 1792432596.705019, "kind": "stt", "file": "ta-103.wav", "bytes": 86192}
+{"t": 1792432598.7579544, "kind": "stt", "file": "ta-104.wav", "bytes": 69328}
+{"t": 1792432600.803487, "kind": "stt", "file": "ta-105.wav", "bytes": 83346}
+{"t": 1792432602.8525047, "kind": "stt", "file": "ta-106.wav", "bytes": 53684}
+{"t": 1792432604.9025164, "kind": "stt", "file": "ta-107.wav", "bytes": 69328}
+{"t": 1792432606.975343, "kind": "stt", "file": "ta-108.wav", "bytes": 59372}
+{"t": 1792432609.0125408, "kind": "stt", "file": "ta-109.wav", "bytes": 89036}
+{"t": 1792432611.1394331, "kind": "stt", "file": "ta-110.wav", "bytes": 60592}
+{"t": 1792432613.1995575, "kind": "stt", "file": "ta-111.wav", "bytes": 50636}
+{"t": 1792432615.2597628, "kind": "stt", "file": "ta-112.wav", "bytes": 40884}
+{"t": 1792432618.4066532, "kind": "stt", "file": "hi-101.wav", "bytes": 141596}
+{"t": 1792432620.5596938, "kind": "stt", "file": "hi-102.wav", "bytes": 114492}
+{"t": 1792432622.6654475, "kind": "stt", "file": "hi-103.wav", "bytes": 150632}
+{"t": 1792432624.7930963, "kind": "stt", "file": "hi-104.wav", "bytes": 153644}
+{"t": 1792432626.9192162, "kind": "stt", "file": "hi-105.wav", "bytes": 147620}
+{"t": 1792432628.9945157, "kind": "stt", "file": "hi-106.wav", "bytes": 141596}
+{"t": 1792432631.0868087, "kind": "stt", "file": "hi-107.wav", "bytes": 126538}
+{"t": 1792432633.1655707, "kind": "stt", "file": "hi-108.wav", "bytes": 102444}
+{"t": 1792432635.235625, "kind": "stt", "file": "hi-109.wav", "bytes": 144608}
+{"t": 1792432637.3556566, "kind": "stt", "file": "hi-110.wav", "bytes": 102444}
+{"t": 1792432639.4431384, "kind": "stt", "file": "hi-111.wav", "bytes": 108468}
+{"t": 1792432641.5290346, "kind": "stt", "file": "hi-112.wav", "bytes": 93408}
+{"t": 1792432643.5433328, "kind": "stt", "file": "kn-101.wav", "bytes": 144608}
+{"t": 1792432645.6155689, "kind": "stt", "file": "kn-102.wav", "bytes": 123526}
+{"t": 1792432647.6794846, "kind": "stt", "file": "kn-103.wav", "bytes": 174726}
+{"t": 1792432649.8702343, "kind": "stt", "file": "kn-104.wav", "bytes": 153644}
+{"t": 1792432651.951153, "kind": "stt", "file": "kn-105.wav", "bytes": 144608}
+{"t": 1792432654.0063343, "kind": "stt", "file": "kn-106.wav", "bytes": 177738}
+{"t": 1792432656.0813265, "kind": "stt", "file": "kn-107.wav", "bytes": 150632}
+{"t": 1792432658.1429374, "kind": "stt", "file": "kn-108.wav", "bytes": 135574}
+{"t": 1792432660.2196722, "kind": "stt", "file": "kn-109.wav", "bytes": 210868}
+{"t": 1792432662.2929857, "kind": "stt", "file": "kn-110.wav", "bytes": 135574}
+{"t": 1792432664.354237, "kind": "stt", "file": "kn-111.wav", "bytes": 105456}
+{"t": 1792432666.4298084, "kind": "stt", "file": "kn-112.wav", "bytes": 87386}
+{"t": 1792432668.4226506, "kind": "stt", "file": "ta-101.wav", "bytes": 153644}
+{"t": 1792432670.5347295, "kind": "stt", "file": "ta-102.wav", "bytes": 120514}
+{"t": 1792432672.7405653, "kind": "stt", "file": "ta-103.wav", "bytes": 174726}
+{"t": 1792432674.8029046, "kind": "stt", "file": "ta-104.wav", "bytes": 165692}
+{"t": 1792432676.8367934, "kind": "stt", "file": "ta-105.wav", "bytes": 186774}
+{"t": 1792432678.9278026, "kind": "stt", "file": "ta-106.wav", "bytes": 117502}
+{"t": 1792432681.0983672, "kind": "stt", "file": "ta-107.wav", "bytes": 138586}
+{"t": 1792432683.3513, "kind": "stt", "file": "ta-108.wav", "bytes": 132562}
+{"t": 1792432685.5465477, "kind": "stt", "file": "ta-109.wav", "bytes": 201832}
+{"t": 1792432687.8737972, "kind": "stt", "file": "ta-110.wav", "bytes": 129550}
+{"t": 1792432690.1277623, "kind": "stt", "file": "ta-111.wav", "bytes": 117502}
+{"t": 1792432692.232228, "kind": "stt", "file": "ta-112.wav", "bytes": 93408}
+{"t": 1792432828.1159942, "kind": "stt", "file": "hi-109.wav", "bytes": 69734}
+{"t": 1792432830.3603444, "kind": "stt", "file": "hi-110.wav", "bytes": 49822}
+{"t": 1792432832.4210503, "kind": "stt", "file": "hi-111.wav", "bytes": 46978}
+{"t": 1792432834.4834683, "kind": "stt", "file": "hi-112.wav", "bytes": 39866}
+{"t": 1792432836.5253406, "kind": "stt", "file": "kn-101.wav", "bytes": 69734}
+{"t": 1792432838.576415, "kind": "stt", "file": "kn-102.wav", "bytes": 54088}
+{"t": 1792432840.8153322, "kind": "stt", "file": "kn-103.wav", "bytes": 89644}
+{"t": 1792432842.8729084, "kind": "stt", "file": "kn-104.wav", "bytes": 65466}
+{"t": 1792432844.9351504, "kind": "stt", "file": "kn-105.wav", "bytes": 72578}
+{"t": 1792432847.0269008, "kind": "stt", "file": "kn-106.wav", "bytes": 78266}
+{"t": 1792432849.0869725, "kind": "stt", "file": "kn-107.wav", "bytes": 79688}
+{"t": 1792432851.1675875, "kind": "stt", "file": "kn-108.wav", "bytes": 72578}
+{"t": 1792432853.2314165, "kind": "stt", "file": "kn-109.wav", "bytes": 95334}
+{"t": 1792432855.2936811, "kind": "stt", "file": "kn-110.wav", "bytes": 62622}
+{"t": 1792432857.3702648, "kind": "stt", "file": "kn-111.wav", "bytes": 56934}
+{"t": 1792432859.439722, "kind": "stt", "file": "kn-112.wav", "bytes": 42712}
+{"t": 1792432861.4674149, "kind": "stt", "file": "ta-101.wav", "bytes": 82534}
+{"t": 1792432863.531696, "kind": "stt", "file": "ta-102.wav", "bytes": 55512}
+{"t": 1792432865.6674666, "kind": "stt", "file": "ta-103.wav", "bytes": 86800}
+{"t": 1792432867.7464473, "kind": "stt", "file": "ta-104.wav", "bytes": 69734}
+{"t": 1792432869.803242, "kind": "stt", "file": "ta-105.wav", "bytes": 83956}
+{"t": 1792432871.863682, "kind": "stt", "file": "ta-106.wav", "bytes": 54088}
+{"t": 1792432874.0495744, "kind": "stt", "file": "ta-107.wav", "bytes": 69734}
+{"t": 1792432876.1289048, "kind": "stt", "file": "ta-108.wav", "bytes": 59778}
+{"t": 1792432878.1868212, "kind": "stt", "file": "ta-109.wav", "bytes": 89644}
+{"t": 1792432880.2266276, "kind": "stt", "file": "ta-110.wav", "bytes": 61200}
+{"t": 1792432882.3089035, "kind": "stt", "file": "ta-111.wav", "bytes": 51244}
+{"t": 1792432884.4844518, "kind": "stt", "file": "ta-112.wav", "bytes": 41288}
+{"t": 1792432887.3518913, "kind": "stt", "file": "hi-101.wav", "bytes": 136578}
+{"t": 1792432889.5443783, "kind": "stt", "file": "hi-102.wav", "bytes": 116666}
+{"t": 1792432891.6286604, "kind": "stt", "file": "hi-103.wav", "bytes": 139422}
+{"t": 1792432893.7194855, "kind": "stt", "file": "hi-104.wav", "bytes": 133732}
+{"t": 1792432895.845524, "kind": "stt", "file": "hi-105.wav", "bytes": 130888}
+{"t": 1792432897.9607646, "kind": "stt", "file": "hi-106.wav", "bytes": 139422}
+{"t": 1792432900.0663838, "kind": "stt", "file": "hi-107.wav", "bytes": 102444}
+{"t": 1792432902.1464303, "kind": "stt", "file": "hi-108.wav", "bytes": 93910}
+{"t": 1792432904.192246, "kind": "stt", "file": "hi-109.wav", "bytes": 139422}
+{"t": 1792432906.2916522, "kind": "stt", "file": "hi-110.wav", "bytes": 99600}
+{"t": 1792432908.3490384, "kind": "stt", "file": "hi-111.wav", "bytes": 93910}
+{"t": 1792432910.3831468, "kind": "stt", "file": "hi-112.wav", "bytes": 79688}
+{"t": 1792432912.4251723, "kind": "stt", "file": "kn-101.wav", "bytes": 139422}
+{"t": 1792432914.5680513, "kind": "stt", "file": "kn-102.wav", "bytes": 108132}
+{"t": 1792432916.6472943, "kind": "stt", "file": "kn-103.wav", "bytes": 179244}
+{"t": 1792432918.8637161, "kind": "stt", "file": "kn-104.wav", "bytes": 130888}
+{"t": 1792432920.9700515, "kind": "stt", "file": "kn-105.wav", "bytes": 145110}
+{"t": 1792432923.0242527, "kind": "stt", "file": "kn-106.wav", "bytes": 156488}
+{"t": 1792432925.1946495, "kind": "stt", "file": "kn-107.wav", "bytes": 159332}
+{"t": 1792432927.3960137, "kind": "stt", "file": "kn-108.wav", "bytes": 145110}
+{"t": 1792432929.4795384, "kind": "stt", "file": "kn-109.wav", "bytes": 190622}
+{"t": 1792432931.5342252, "kind": "stt", "file": "kn-110.wav", "bytes": 125200}
+{"t": 1792432933.6019819, "kind": "stt", "file": "kn-111.wav", "bytes": 113822}
+{"t": 1792432935.6488624, "kind": "stt", "file": "kn-112.wav", "bytes": 85378}
+{"t": 1792432937.692643, "kind": "stt", "file": "ta-101.wav", "bytes": 165022}
+{"t": 1792432939.7388206, "kind": "stt", "file": "ta-102.wav", "bytes": 110978}
+{"t": 1792432941.8438437, "kind": "stt", "file": "ta-103.wav", "bytes": 173556}
+{"t": 1792432944.0106795, "kind": "stt", "file": "ta-104.wav", "bytes": 139422}
+{"t": 1792432946.228792, "kind": "stt", "file": "ta-105.wav", "bytes": 167866}
+{"t": 1792432948.362048, "kind": "stt", "file": "ta-106.wav", "bytes": 108132}
+{"t": 1792432950.603349, "kind": "stt", "file": "ta-107.wav", "bytes": 139422}
+{"t": 1792432952.7001133, "kind": "stt", "file": "ta-108.wav", "bytes": 119510}
+{"t": 1792432954.766145, "kind": "stt", "file": "ta-109.wav", "bytes": 179244}
+{"t": 1792432956.837703, "kind": "stt", "file": "ta-110.wav", "bytes": 122356}
+{"t": 1792432958.9408262, "kind": "stt", "file": "ta-111.wav", "bytes": 102444}
+{"t": 1792432961.0157182, "kind": "stt", "file": "ta-112.wav", "bytes": 82532}
+{"t": 1792432963.878741, "kind": "stt", "file": "hi-101.wav", "bytes": 136578}
+{"t": 1792432966.1369395, "kind": "stt", "file": "hi-102.wav", "bytes": 116666}
+{"t": 1792432968.1954916, "kind": "stt", "file": "hi-103.wav", "bytes": 139422}
+{"t": 1792432970.1844254, "kind": "stt", "file": "hi-104.wav", "bytes": 133732}
+{"t": 1792432972.258307, "kind": "stt", "file": "hi-105.wav", "bytes": 130888}
+{"t": 1792432974.3394887, "kind": "stt", "file": "hi-106.wav", "bytes": 139422}
+{"t": 1792432976.4284463, "kind": "stt", "file": "hi-107.wav", "bytes": 102444}
+{"t": 1792432978.4986484, "kind": "stt", "file": "hi-108.wav", "bytes": 93910}
+{"t": 1792432980.4859269, "kind": "stt", "file": "hi-109.wav", "bytes": 139422}
+{"t": 1792432982.5676346, "kind": "stt", "file": "hi-110.wav", "bytes": 99600}
+{"t": 1792432984.651695, "kind": "stt", "file": "hi-111.wav", "bytes": 93910}
+{"t": 1792432986.6988757, "kind": "stt", "file": "hi-112.wav", "bytes": 79688}
+{"t": 1792432988.7880142, "kind": "stt", "file": "kn-101.wav", "bytes": 139422}
+{"t": 1792432990.8435237, "kind": "stt", "file": "kn-102.wav", "bytes": 108132}
+{"t": 1792432993.0426688, "kind": "stt", "file": "kn-103.wav", "bytes": 179244}
+{"t": 1792432995.1132903, "kind": "stt", "file": "kn-104.wav", "bytes": 130888}
+{"t": 1792432997.2191381, "kind": "stt", "file": "kn-105.wav", "bytes": 145110}
+{"t": 1792432999.3346345, "kind": "stt", "file": "kn-106.wav", "bytes": 156488}
+{"t": 1792433001.4300294, "kind": "stt", "file": "kn-107.wav", "bytes": 159332}
+{"t": 1792433003.543028, "kind": "stt", "file": "kn-108.wav", "bytes": 145110}
+{"t": 1792433005.7963486, "kind": "stt", "file": "kn-109.wav", "bytes": 190622}
+{"t": 1792433007.8909588, "kind": "stt", "file": "kn-110.wav", "bytes": 125200}
+{"t": 1792433009.9807637, "kind": "stt", "file": "kn-111.wav", "bytes": 113822}
+{"t": 1792433012.2146611, "kind": "stt", "file": "kn-112.wav", "bytes": 85378}
+{"t": 1792433014.2902005, "kind": "stt", "file": "ta-101.wav", "bytes": 165022}
+{"t": 1792433016.3770359, "kind": "stt", "file": "ta-102.wav", "bytes": 110978}
+{"t": 1792433018.5347445, "kind": "stt", "file": "ta-103.wav", "bytes": 173556}
+{"t": 1792433020.5664926, "kind": "stt", "file": "ta-104.wav", "bytes": 139422}
+{"t": 1792433022.7998912, "kind": "stt", "file": "ta-105.wav", "bytes": 167866}
+{"t": 1792433024.9026988, "kind": "stt", "file": "ta-106.wav", "bytes": 108132}
+{"t": 1792433026.9471028, "kind": "stt", "file": "ta-107.wav", "bytes": 139422}
+{"t": 1792433029.0327234, "kind": "stt", "file": "ta-108.wav", "bytes": 119510}
+{"t": 1792433031.105639, "kind": "stt", "file": "ta-109.wav", "bytes": 179244}
+{"t": 1792433033.2336528, "kind": "stt", "file": "ta-110.wav", "bytes": 122356}
+{"t": 1792433035.2896366, "kind": "stt", "file": "ta-111.wav", "bytes": 102444}
+{"t": 1792433037.3213253, "kind": "stt", "file": "ta-112.wav", "bytes": 82532}

@@ -26,6 +26,7 @@ def main() -> None:
     ap.add_argument("--passages", type=Path, default=DATA / "passages.jsonl")
     ap.add_argument("--only", help="one passage id")
     ap.add_argument("--speed", type=float, default=0.9)
+    ap.add_argument("--out-dir", type=Path, default=DATA / "audio")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
     sys.stdout.reconfigure(encoding="utf-8")
@@ -38,7 +39,7 @@ def main() -> None:
     ]
     if args.only:
         rows = [r for r in rows if r["id"] == args.only]
-    out_dir = DATA / "audio"
+    out_dir = args.out_dir
     out_dir.mkdir(parents=True, exist_ok=True)
 
     chars = 0
