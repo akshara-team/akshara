@@ -21,6 +21,16 @@ class TTSError(RuntimeError):
     pass
 
 
+def fix_wav_header(wav: bytes) -> bytes:
+    """Timbre streams WAVs with 0xFFFFFFFF chunk sizes; write the real ones."""
+    if wav[:4] != b"RIFF" or (i := wav.find(b"data")) < 0:
+        return wav
+    out = bytearray(wav)
+    out[4:8] = (len(wav) - 8).to_bytes(4, "little")
+    out[i + 4 : i + 8] = (len(wav) - i - 8).to_bytes(4, "little")
+    return bytes(out)
+
+
 def synthesize(
     text: str,
     language: str,
@@ -54,5 +64,5 @@ def synthesize(
             continue
         if resp.status_code != 200:
             raise TTSError(f"HTTP {resp.status_code}: {resp.text[:300]}")
-        return resp.content
+        return fix_wav_header(resp.content)
     raise TTSError("retries exhausted")
