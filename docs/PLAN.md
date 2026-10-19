@@ -93,7 +93,19 @@ A voice explainer for official papers: photograph a government letter, electrici
 
 **Out (roadmap in the docs only):** child-speech model training, offline mobile apps, DPDP compliance work, LangGraph or other agent frameworks around the main flow, realtime streaming unless the basics are done early, anything needing real children's recordings.
 
-## 8. Timeline
+## 8. How we work
+
+The code is largely AI-written. Achindra and the partner decide and review. Every other entrant is also using AI coding, so code volume and a polished README don't set us apart. These do:
+
+- **Real numbers and an honest failure analysis**, from a live API, not a mock.
+- **Outside validation:** 2–3 teachers or education-NGO people react to the demo, and their feedback goes in the docs. Few AI-built entries will have it.
+- **Human review gates** on what a model can get subtly wrong: Kannada and Tamil text, scoring thresholds, and every claim in the docs.
+- **Defensibility in the interview.** Each of us is interviewed alone, so the code stays small and readable, with a short walkthrough per module and a decision log in `docs/DECISIONS.md`. Nobody ships code they can't explain.
+- **Credits are the real constraint, not coding time.** The code enforces a spend cap and caches everything.
+
+Because code is cheap, we build the whole loop early and spend the saved time on evaluation, outside feedback and the demo.
+
+## 9. Timeline
 
 | When | What |
 |---|---|
