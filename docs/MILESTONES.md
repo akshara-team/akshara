@@ -13,16 +13,16 @@ Check off as each one is done and verified. Dates are targets; deadline Nov 10, 
 
 - [x] 90 passages from StoryWeaver descriptions with sources
 - [x] Planting for skip, near-sound, distant, half-word, with tests
-- [ ] Audio generated for all 90 passages
+- [ ] Audio generated for all 90 passages (in progress)
 - [ ] Base condition transcribed and scored, per-type catch table
 - [ ] Phone 8 kHz, noise and child-proxy conditions
 - [ ] Write-up in RESULTS.md with intervals; compare to the first study
-- [ ] Repeats and self-corrections added
+- [x] Repeats and self-corrections: planting, scoring and a 30-passage set built; audio and transcription still to run
 
 ## M2. Mitigation (Oct 23–27)
 
 - [ ] Prediction written down before running
-- [ ] Pause finder on the audio (no word timings from Prisma)
+- [x] Pause finder on the audio (no word timings from Prisma); finding: fluent Timbre speech has no word-level pauses (1–4 segments per passage), so the mitigation test needs halting audio built from separately synthesised chunks joined with silences
 - [ ] Chunked re-check pass behind the provider interface
 - [ ] Catch and false-flag rates compared with the whole-sentence pass on the same clips
 - [ ] Result recorded whether it helps or not
