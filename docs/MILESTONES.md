@@ -13,8 +13,8 @@ Check off as each one is done and verified. Dates are targets; deadline Nov 10, 
 
 - [x] 90 passages from StoryWeaver descriptions with sources
 - [x] Planting for skip, near-sound, distant, half-word, with tests
-- [ ] Audio generated for all 90 passages (in progress)
-- [ ] Base condition transcribed and scored, per-type catch table
+- [x] Audio generated for all 90 passages
+- [x] Base condition transcribed and scored, per-type catch table (87 of 90 clips; 3 blocked by a Cloudflare 403). Near-sound catch is low (9 of 39); control run to find out whether the voice pronounced the non-words
 - [ ] Phone 8 kHz, noise and child-proxy conditions
 - [ ] Write-up in RESULTS.md with intervals; compare to the first study
 - [x] Repeats and self-corrections: planting, scoring and a 30-passage set built; audio and transcription still to run
