@@ -435,3 +435,7 @@
 {"t": 1792484719.4160686, "kind": "stt", "file": "ta-x10-ok.wav", "bytes": 45556}
 {"t": 1792484721.462604, "kind": "stt", "file": "ta-x10-m.wav", "bytes": 45556}
 {"t": 1792484723.4922972, "kind": "stt", "file": "ta-x10-d.wav", "bytes": 59778}
+{"t": 1792503132.1981153, "kind": "tts", "chars": 83, "voice": "Shivani", "language": "hi-IN"}
+{"t": 1792503135.3707755, "kind": "tts", "chars": 41, "voice": "Lakshmi", "language": "hi-IN"}
+{"t": 1792503137.9597108, "kind": "tts", "chars": 73, "voice": "Kalpana", "language": "hi-IN"}
+{"t": 1792503140.9059947, "kind": "tts", "chars": 71, "voice": "Chetana", "language": "hi-IN"}

@@ -115,6 +115,7 @@ def main() -> None:
         default="base",
         help="audio set to test: 'base' or a folder name under data/go_no_go/audio_variants/",
     )
+    ap.add_argument("--audio-dir", type=Path, help="override the folder the clips are read from")
     args = ap.parse_args()
     sys.stdout.reconfigure(encoding="utf-8")  # Windows consoles default to cp1252
     load_dotenv(ROOT / ".env")
@@ -126,7 +127,9 @@ def main() -> None:
     rows = load_passages(path)
     if args.only:
         rows = [r for r in rows if r["id"] == args.only]
-    audio_dir = DATA / "audio" if args.variant == "base" else DATA / "audio_variants" / args.variant
+    audio_dir = args.audio_dir or (
+        DATA / "audio" if args.variant == "base" else DATA / "audio_variants" / args.variant
+    )
 
     stats = {m: defaultdict(new_stats) for m in MODES}
     details = []

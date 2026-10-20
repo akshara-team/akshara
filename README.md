@@ -45,6 +45,7 @@ uv run uvicorn akshara.api.app:create_app --factory   # API on :8000 (offline fi
 | File | What's in it |
 |---|---|
 | [docs/PLAN.md](docs/PLAN.md) | Plan and timeline |
+| [docs/MILESTONES.md](docs/MILESTONES.md) | Checklist of what is done and what is next |
 | [docs/RESULTS.md](docs/RESULTS.md) | Measured results and limits |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Components and data flow |
 | [docs/GNANI_API.md](docs/GNANI_API.md) | Gnani API notes and quirks |
