@@ -12,8 +12,8 @@ def test_near_changes_one_akshara_and_is_not_a_spelling_variant():
 
 
 def test_tables_exist_for_each_language():
-    assert near_candidates("ಹಾಲು", "kn-IN")
-    assert near_candidates("மலை", "ta-IN")
+    assert near_candidates("ಕಾಡು", "kn-IN")
+    assert near_candidates("படம்", "ta-IN")
 
 
 def test_half_word_never_ends_on_a_dangling_mark():

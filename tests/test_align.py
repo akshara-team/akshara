@@ -51,6 +51,9 @@ def test_loose_treats_spelling_variants_as_equal():
     assert loose_key("रोज़") == loose_key("रोज")
     assert loose_key("गेहूँ") == loose_key("गेहूं")
     assert loose_key("वह") == loose_key("वो")
+    assert loose_key("लम्बे") == loose_key("लंबे")
+    assert loose_key("गयी") == loose_key("गई")
+    assert loose_key("आइये") == loose_key("आइए")
     assert loose_key("கடைக்குச்") == loose_key("கடைக்கு")
     assert loose_key("நமக்குப்") == loose_key("நமக்கு")
 
@@ -60,6 +63,8 @@ def test_loose_keeps_real_differences():
 
     assert loose_key("ಹೇಳಿದರು") != loose_key("ಹೇಳಿದರೂ")  # Kannada stays strict
     assert loose_key("खेत") != loose_key("खेल")
+    assert loose_key("यह") != loose_key("वह")
+    assert loose_key("पानी") != loose_key("पाई")
     assert loose_key("சொன்னாள்") != loose_key("சொன்னால்")
 
 

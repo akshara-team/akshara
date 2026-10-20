@@ -35,14 +35,27 @@ _HINDI_VARIANTS = {"वह": "वो"}  # वह -> वो
 _TAMIL_SANDHI_END = re.compile("[கசதப]்$")  # க ச த ப + pulli
 
 
+# A nasal letter plus virama before a consonant of its own class is the same sound as an anusvara:
+# लम्बे == लंबे, पन्द्रह == पंद्रह.
+_NASAL_CONJUNCT = re.compile(
+    "[ङ]्(?=[कखगघ])|[ञ]्(?=[चछजझ])|[ण]्(?=[टठडढ])|[न]्(?=[तथदध])|[म]्(?=[पफबभ])"
+)
+# Word-final यी/ये is often written ई/ए: गयी == गई, आइये == आइए.
+_HINDI_FINAL_YA = re.compile("य([ीे])$")
+_FINAL_YA_TO = {"ी": "ई", "े": "ए"}
+
+
 def loose_key(word: str) -> str:
     """Spelling-variant-insensitive form of a word, for the optional 'loose' comparison.
 
-    Hindi: drops nukta, treats chandrabindu as anusvara, treats वह and वो as one word.
+    Hindi: drops nukta, treats chandrabindu as anusvara, nasal+virama as anusvara (लम्बे == लंबे),
+    final यी/ये as ई/ए (गयी == गई), and वह and वो as one word.
     Tamil: drops a trailing sandhi consonant (கடைக்குச் == கடைக்கு).
     Other scripts, Kannada included, are left strict because vowel length changes meaning.
     """
     word = word.replace(_NUKTA, "").replace(_CHANDRABINDU, _ANUSVARA)
+    word = _NASAL_CONJUNCT.sub(_ANUSVARA, word)
+    word = _HINDI_FINAL_YA.sub(lambda m: _FINAL_YA_TO[m.group(1)], word)
     word = _HINDI_VARIANTS.get(word, word)
     if len(word) > 2 and "஀" <= word[0] <= "௿":
         word = _TAMIL_SANDHI_END.sub("", word)

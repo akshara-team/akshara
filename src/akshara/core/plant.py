@@ -2,7 +2,7 @@
 
 Error types:
     skip     the word is not read
-    near     one akshara changed to a close sound (aspiration, voicing, vowel length, ...)
+    near     one consonant changed to a clearly different close sound (aspiration, voicing, place)
     distant  replaced by an unrelated word from the same language
     half     only the first part of the word is read
     repeat, selfcorrect   fluency events (see DISFLUENCY): the word twice, or a slip then the word
@@ -21,23 +21,23 @@ TYPES = ("skip", "near", "distant", "half")
 # should keep the extra word. They are scored as "kept" or "lost", not as flagged mistakes.
 DISFLUENCY = ("repeat", "selfcorrect")
 
-# Devanagari pairs of close sounds; Kannada follows the same layout, 0x380 higher.
-_DEV_PAIRS = "कख गघ चछ जझ टठ डढ तथ दध पफ बभ कग तद पब सश तट"
-_DEV_VOWELS = "िी ुू"
+# Close-sound pairs that are clearly audible: aspiration, voicing and place of a consonant.
+# Devanagari first; Kannada follows the same layout, 0x380 higher. Vowel length, sibilants and
+# word-final changes are left out: a first run showed they are often not audible in synthetic
+# speech, so a "miss" on them says nothing about the transcriber (docs/RESULTS.md).
+_DEV_PAIRS = "कख गघ चछ जझ टठ डढ तथ दध पफ बभ कग तद पब तट"
 _KN_OFFSET = 0x380
-_TA_PAIRS = "லள ளழ னண நன ரற"
-_TA_VOWELS = "ிீ ுூ"
+_TA_PAIRS = "ரற ளழ டத பக தப"
 
 
 def _table(lang: str) -> dict[str, list[str]]:
     if lang == "ta-IN":
-        pairs, vowels = _TA_PAIRS.split(), _TA_VOWELS.split()
+        pairs = _TA_PAIRS.split()
     else:
         shift = _KN_OFFSET if lang == "kn-IN" else 0
         pairs = ["".join(chr(ord(c) + shift) for c in p) for p in _DEV_PAIRS.split()]
-        vowels = ["".join(chr(ord(c) + shift) for c in p) for p in _DEV_VOWELS.split()]
     table: dict[str, list[str]] = {}
-    for a, b in [*pairs, *vowels]:
+    for a, b in pairs:
         table.setdefault(a, []).append(b)
         table.setdefault(b, []).append(a)
     return table
@@ -47,7 +47,9 @@ def near_candidates(word: str, lang: str) -> list[str]:
     """All words one close-sound change away that differ even under the loose spelling rules."""
     table = _table(lang)
     out = []
-    for i, ch in enumerate(word):
+    for i, ch in enumerate(
+        word[:-1]
+    ):  # not the last letter: word-final changes are often inaudible
         for rep in table.get(ch, []):
             new = word[:i] + rep + word[i + 1 :]
             if loose_key(new) != loose_key(word):
