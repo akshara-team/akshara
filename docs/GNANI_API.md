@@ -40,17 +40,21 @@ Realtime: `wss://api.vachana.ai/stt/v3/stream`, 16-bit mono PCM, 1024-byte frame
 ## Known quirks (reported by other teams)
 
 - Clips over ~30 s rejected despite the 60 s limit in the docs.
-- HTTP 429 on two quick requests in a row. Our client waits and retries.
+- HTTP 429 on two quick requests in a row. The exact message is "Only 1 active request is allowed at a time" (`RATE_LIMITED`), so one request at a time. Our client waits and retries up to 6 times.
+- Timbre's REST WAV has `0xFFFFFFFF` in its RIFF and data sizes (streamed). Some readers and Prisma see it as empty or huge; the client rewrites the real sizes.
 - Realtime partial transcripts need an undocumented `x-partials` header.
 - Realtime `connected` event always reports 16 kHz.
 
 ## Credit rates
 
-*Fill this in after the first test calls.*
+Measured from the dashboard (Oct 19-20, 2026). Gnani gives each participant 5,000 programme credits.
 
-| Call | Size | Credits used | ≈ ₹ |
+| Checkpoint | Credits used | Requests | Credits per request |
 |---|---|---|---|
-| STT REST | 60 s audio | | |
-| TTS REST | 500 characters | | |
+| 1 Timbre call + 1 Prisma call (4 s clip) | 0.34 | about 3 | about 0.11 |
+| 36 Timbre clips + 36 Prisma calls | 6.77 | 73 | 0.093 |
+| plus 36 Timbre clips (speed 0.85) and 6 Prisma variants (216 calls) | 20.15 | 325 | 0.053 for the added 252 |
 
-Budget: ~₹1000 total, shared, in the primary registrant's account.
+- A request here is a short clip (under 10 s) or about 50 characters. Rates per second or per character are not separable from this data, because the dashboard shows one total.
+- **At this rate the whole 5,000 is about 80,000 short requests, so credits are not the limiting resource for evaluation work.** Long audio, streaming and live demos are different and should be measured before assuming.
+- `results/ledger.jsonl` logs every paid call (type, size) so costs can be matched to the dashboard.

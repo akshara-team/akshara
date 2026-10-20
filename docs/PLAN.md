@@ -51,10 +51,9 @@ About 30 identifiable challenge entries on GitHub. Almost all have 0 stars, so t
 
 ## 3. Credits
 
-- No published per-minute rates. We have about ₹1000 of credits in the **primary registrant's account**, shared between us.
-- Only speech-to-text and text-to-speech use credits.
-- **First thing to do:** one 60 s speech-to-text call and one 500-character text-to-speech call, then read the dashboard. Record the rates in [GNANI_API.md](GNANI_API.md#credit-rates).
-- Keep usage low: short clips, cache every transcript and every generated audio file, never stream silence.
+- Gnani gives each participant 5,000 programme credits, in the **primary registrant's account** and shared between us. Only speech-to-text and text-to-speech use credits.
+- **Measured:** 20.15 credits for 325 short requests, about 0.05 to 0.1 per request ([GNANI_API.md](GNANI_API.md#credit-rates)). At that rate the evaluation work is a rounding error against 5,000.
+- Long audio, streaming and a live demo may cost differently, so measure before assuming. Keep caching transcripts and generated audio, and keep the spend cap in `src/akshara/ledger.py`.
 
 ## 4. The idea
 
