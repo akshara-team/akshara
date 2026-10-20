@@ -42,7 +42,8 @@ Check off as each one is done and verified. Dates are targets; deadline Nov 10, 
 - [ ] Written explanation, models used, honest limits
 - [ ] Caption drafts for LinkedIn and X (hashtags #GnaniAI #GreatIndianAIInternshipChallenge)
 - [ ] Post live by about Nov 3
-- [ ] Walkthrough per module and `docs/DECISIONS.md`
+- [x] `docs/DECISIONS.md` (decision log)
+- [ ] Walkthrough per module
 - [ ] Repo made public
 
 ## M5. Submit (by Nov 9)
