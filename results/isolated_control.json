@@ -1,0 +1,314 @@
+[
+  {
+    "id": "sw-204765",
+    "lang": "hi-IN",
+    "original": "लौकी",
+    "read": "लौखी",
+    "heard": "लौकी",
+    "verdict": "corrected"
+  },
+  {
+    "id": "sw-812",
+    "lang": "hi-IN",
+    "original": "भूलिएगा",
+    "read": "भूलिएका",
+    "heard": "भूलिए का",
+    "verdict": "other"
+  },
+  {
+    "id": "sw-241493",
+    "lang": "hi-IN",
+    "original": "गुबरैलों",
+    "read": "घुबरैलों",
+    "heard": "घुबरे लो",
+    "verdict": "other"
+  },
+  {
+    "id": "sw-13328",
+    "lang": "hi-IN",
+    "original": "दोस्त",
+    "read": "धोस्त",
+    "heard": "दोस्त",
+    "verdict": "corrected"
+  },
+  {
+    "id": "sw-21228",
+    "lang": "hi-IN",
+    "original": "लंबे",
+    "read": "लंभे",
+    "heard": "लम्बे",
+    "verdict": "corrected"
+  },
+  {
+    "id": "sw-30025",
+    "lang": "hi-IN",
+    "original": "लगाते",
+    "read": "लगादे",
+    "heard": "लगा दे",
+    "verdict": "other"
+  },
+  {
+    "id": "sw-15507",
+    "lang": "hi-IN",
+    "original": "कैसी",
+    "read": "गैसी",
+    "heard": "गैसी",
+    "verdict": "as_read"
+  },
+  {
+    "id": "sw-13701",
+    "lang": "hi-IN",
+    "original": "लगता",
+    "read": "लघता",
+    "heard": "लगता",
+    "verdict": "corrected"
+  },
+  {
+    "id": "sw-62764",
+    "lang": "hi-IN",
+    "original": "बनाती",
+    "read": "बनाटी",
+    "heard": "बनाटी",
+    "verdict": "as_read"
+  },
+  {
+    "id": "sw-15518",
+    "lang": "hi-IN",
+    "original": "सबसे",
+    "read": "सभसे",
+    "heard": "सब ह से",
+    "verdict": "other"
+  },
+  {
+    "id": "sw-170",
+    "lang": "hi-IN",
+    "original": "सकते",
+    "read": "सकथे",
+    "heard": "सख्त है",
+    "verdict": "other"
+  },
+  {
+    "id": "sw-203930",
+    "lang": "hi-IN",
+    "original": "क्या",
+    "read": "ख्या",
+    "heard": "क्या",
+    "verdict": "corrected"
+  },
+  {
+    "id": "sw-55764",
+    "lang": "hi-IN",
+    "original": "सुंदरी",
+    "read": "सुंधरी",
+    "heard": "सुन्धरी",
+    "verdict": "as_read"
+  },
+  {
+    "id": "sw-25737",
+    "lang": "kn-IN",
+    "original": "ಕುಣಿವುದು",
+    "read": "ಕುಣಿವುಧು",
+    "heard": "ಕುಣಿವುದು",
+    "verdict": "corrected"
+  },
+  {
+    "id": "sw-11761",
+    "lang": "kn-IN",
+    "original": "ನೋಡಿದ್ದೀರಾ",
+    "read": "ನೋಢಿದ್ದೀರಾ",
+    "heard": "ನೋಡಿದ್ದೀರಾ",
+    "verdict": "corrected"
+  },
+  {
+    "id": "sw-36",
+    "lang": "kn-IN",
+    "original": "ಮಾಡಬೇಕೆನಿಸುತ್ತದೆ",
+    "read": "ಮಾಡಬೇಗೆನಿಸುತ್ತದೆ",
+    "heard": "ಮಾಡ್ಬೇಕೆನಿಸುತ್ತದೆ",
+    "verdict": "other"
+  },
+  {
+    "id": "sw-261",
+    "lang": "kn-IN",
+    "original": "ಕೆರಳಿಸುವ",
+    "read": "ಗೆರಳಿಸುವ",
+    "heard": "ಗಿರಡಿಸುವ",
+    "verdict": "other"
+  },
+  {
+    "id": "sw-61668",
+    "lang": "kn-IN",
+    "original": "ತಪ್ಪುತ್ತಿತ್ತು",
+    "read": "ತಪ್ಪುತ್ಟಿತ್ತು",
+    "heard": "ತಪ್ಪುತ್ತಿತ್ತು",
+    "verdict": "corrected"
+  },
+  {
+    "id": "sw-214545",
+    "lang": "kn-IN",
+    "original": "ಹೋದಳು",
+    "read": "ಹೋಧಳು",
+    "heard": "ಹೋದಳು",
+    "verdict": "corrected"
+  },
+  {
+    "id": "sw-162",
+    "lang": "kn-IN",
+    "original": "ಭೇಟಿ",
+    "read": "ಬೇಟಿ",
+    "heard": "ಬೇಟಿ",
+    "verdict": "as_read"
+  },
+  {
+    "id": "sw-29539",
+    "lang": "kn-IN",
+    "original": "ಗೊತ್ತು",
+    "read": "ಗೊತ್ಥು",
+    "heard": "ಗುಚ್ಚು",
+    "verdict": "other"
+  },
+  {
+    "id": "sw-18764",
+    "lang": "kn-IN",
+    "original": "ಕಲಿಯುತ್ತದೆ",
+    "read": "ಕಲಿಯುಟ್ತದೆ",
+    "heard": "ಕಲಿಯುತ್ತದೆ",
+    "verdict": "corrected"
+  },
+  {
+    "id": "sw-13715",
+    "lang": "kn-IN",
+    "original": "ಮಾಡಿದ್ದಾರೆ",
+    "read": "ಮಾಡಿಧ್ದಾರೆ",
+    "heard": "ಮಾಡಿದ್ದಾರೆ",
+    "verdict": "corrected"
+  },
+  {
+    "id": "sw-96775",
+    "lang": "kn-IN",
+    "original": "ಕಾಲದಲ್ಲಿ",
+    "read": "ಕಾಲತಲ್ಲಿ",
+    "heard": "ಕಾಲದಲ್ಲಿ",
+    "verdict": "corrected"
+  },
+  {
+    "id": "sw-97697",
+    "lang": "kn-IN",
+    "original": "ತಪ್ಪಿಸಿಕೊಳ್ಳುವ",
+    "read": "ತಫ್ಪಿಸಿಕೊಳ್ಳುವ",
+    "heard": "ತಪ್ಪಿಸಿಕೊಳ್ಳುವ",
+    "verdict": "corrected"
+  },
+  {
+    "id": "sw-8740",
+    "lang": "kn-IN",
+    "original": "ಮತ್ತು",
+    "read": "ಮತ್ಥು",
+    "heard": "ಮತ್ತು",
+    "verdict": "corrected"
+  },
+  {
+    "id": "sw-591721",
+    "lang": "ta-IN",
+    "original": "பார்க்கலாம்",
+    "read": "பார்க்பலாம்",
+    "heard": "பார்க்கலாம்",
+    "verdict": "corrected"
+  },
+  {
+    "id": "sw-96776",
+    "lang": "ta-IN",
+    "original": "வாருங்கள்",
+    "read": "வாருங்கழ்",
+    "heard": "வாருங்கள்",
+    "verdict": "corrected"
+  },
+  {
+    "id": "sw-543803",
+    "lang": "ta-IN",
+    "original": "பூக்கள்",
+    "read": "கூக்கள்",
+    "heard": "கூகுள்",
+    "verdict": "other"
+  },
+  {
+    "id": "sw-44632",
+    "lang": "ta-IN",
+    "original": "கலைஞராகவா",
+    "read": "கலைஞறாகவா",
+    "heard": "கலைஞாராகவா",
+    "verdict": "other"
+  },
+  {
+    "id": "sw-33637",
+    "lang": "ta-IN",
+    "original": "தலைகீழ்",
+    "read": "தலைகீள்",
+    "heard": "தலை கீழ்",
+    "verdict": "other"
+  },
+  {
+    "id": "sw-587067",
+    "lang": "ta-IN",
+    "original": "புதிய",
+    "read": "துதிய",
+    "heard": "துதியா",
+    "verdict": "other"
+  },
+  {
+    "id": "sw-61460",
+    "lang": "ta-IN",
+    "original": "தொங்கும்",
+    "read": "பொங்கும்",
+    "heard": "பங்கம்",
+    "verdict": "other"
+  },
+  {
+    "id": "sw-1041",
+    "lang": "ta-IN",
+    "original": "தேவைப்படும்",
+    "read": "தேவைக்படும்",
+    "heard": "தேவைப்படும்",
+    "verdict": "corrected"
+  },
+  {
+    "id": "sw-577824",
+    "lang": "ta-IN",
+    "original": "இளஞ்சிவப்பு",
+    "read": "இழஞ்சிவப்பு",
+    "heard": "இரஞ்சிவப்பு",
+    "verdict": "other"
+  },
+  {
+    "id": "sw-577837",
+    "lang": "ta-IN",
+    "original": "உலகத்தை",
+    "read": "உலபத்தை",
+    "heard": "உழுபத்து",
+    "verdict": "other"
+  },
+  {
+    "id": "sw-304",
+    "lang": "ta-IN",
+    "original": "பற்றி",
+    "read": "பர்றி",
+    "heard": "திருச்சி",
+    "verdict": "other"
+  },
+  {
+    "id": "sw-187453",
+    "lang": "ta-IN",
+    "original": "பார்ப்போமா",
+    "read": "பாற்ப்போமா",
+    "heard": "பார்ப்போமா",
+    "verdict": "corrected"
+  },
+  {
+    "id": "sw-577825",
+    "lang": "ta-IN",
+    "original": "அடக்க",
+    "read": "அடப்க",
+    "heard": "அடுப்பு",
+    "verdict": "other"
+  }
+]

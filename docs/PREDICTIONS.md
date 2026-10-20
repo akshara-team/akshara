@@ -10,3 +10,6 @@ Setup: 45 open passages (15 per language) that contain a near-sound or distant s
 4. Chunking is **not** a clear win in Tamil, where short fragments may be recognised less reliably.
 
 If 1 fails, we report that chunking does not help and why. If 3 fails, the mitigation costs too much accuracy and we say so. Numbers will be reported with intervals, and the sample (about 20 near-sound swaps per condition) is small enough that a 10-point difference may not be statistically reliable. We will say that too.
+
+### Addendum, written Oct 20 before the halting run
+The isolated-word control (`scripts/isolated_control.py`) found that Prisma returns the original word for 18 of 39 near-sound non-words even with no sentence around them, and the read non-word for only 4. So sentence context is not the only cause, and prediction 1 may fall short. We cannot tell whether the voice or the transcriber is responsible. Predictions 1 to 4 stand as written and will be judged as written.
