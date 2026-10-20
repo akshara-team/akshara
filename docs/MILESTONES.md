@@ -39,8 +39,8 @@ Check off as each one is done and verified. Dates are targets; deadline Nov 10, 
 ## M4. Demo and docs (Nov 1–3 for the post, then polish)
 
 - [ ] 60 s demo video with before/after on the same clip
-- [ ] Written explanation, models used, honest limits
-- [ ] Caption drafts for LinkedIn and X (hashtags #GnaniAI #GreatIndianAIInternshipChallenge)
+- [x] Written explanation, models used, honest limits ([WRITEUP.md](WRITEUP.md))
+- [x] Caption drafts for LinkedIn and X ([CAPTIONS.md](CAPTIONS.md))
 - [ ] Post live by about Nov 3
 - [x] `docs/DECISIONS.md` (decision log)
 - [x] Walkthrough per module ([WALKTHROUGH.md](WALKTHROUGH.md))
