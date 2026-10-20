@@ -48,7 +48,7 @@ Check off as each one is done and verified. Dates are targets; deadline Nov 10, 
 ## M5. Submit (by Nov 9)
 
 - [ ] Every number in the docs regenerates from cached results
-- [ ] No Claude mentions in repo, commits or docs
+- [ ] Final check of repo, commits and docs for stray tool names
 - [ ] Submission form filled with post link
 - [ ] Submitted before Nov 10, 11:59 PM IST
 
