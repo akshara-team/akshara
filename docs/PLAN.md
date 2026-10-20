@@ -70,6 +70,19 @@ See the [README](../README.md#how-it-works) for the flow and [ARCHITECTURE.md](A
 
 Speech-to-text models tend to "fix" a misread word into the right one, hiding the mistake. Word-boosting the story's words (`bias_list`) would make this worse, so we don't use it. The go/no-go test measures this directly.
 
+### Story: diagnose, mitigate, prove (revised Oct 20)
+
+The pipeline alone is simple and every entrant uses AI coding, so the weight is on the finding. Prisma catches 95–100% of planted mistakes, but near-sound swaps that fit the sentence are sometimes autocorrected (25/29 caught vs 29/29 for distant swaps; p = 0.11, suggestive). The plan:
+
+1. **Chunked re-check (main mitigation).** Transcribe short pieces without the sentence around them, so there is little context to autocorrect from. Measure catch and false-flag rate against the whole-sentence baseline on the same clips. Risks: more false flags, and Prisma returns no word timings or confidence (checked on the REST docs), so pauses have to be found from the audio itself.
+2. **Larger, more varied study** to settle the p = 0.11 question and to add error types beyond swaps.
+3. **Real product** with the mitigation inside: live mic, green/red words, per-attempt trace, class summary.
+4. **Stretch only:** a second opinion from AI4Bharat IndicConformer. Checked: Hindi and Kannada checkpoints exist but are gated and need the AI4Bharat NeMo fork; no Tamil-specific checkpoint was found (the 22-language 600M model may cover it, unverified); the licence is reported as MIT or CC BY 4.0 depending on the page, so read the model card before any use.
+
+Related work (checked): the "ASR autocorrects reading errors" problem is described in a practitioner article, and a Dutch Interspeech 2023 study found that putting reading errors in the language model helps. We found no published substitution-detection rate for a cloud API on Indian-language reading, which is the gap this fills. We do not claim the effect is new, only that it is measured here for these three languages.
+
+Limits stay the same: synthetic voices, not validated on children, passages not native-reviewed. A well-measured study with a working fix, not a research breakthrough.
+
 ## 5. Runner-up (if the go/no-go test fails)
 
 A voice explainer for official papers: photograph a government letter, electricity bill or medicine strip and hear it explained in Kannada, Tamil or Hindi, with the source cited. Reuses Helix's document ingestion and citations.
@@ -115,12 +128,32 @@ The code and experiments are largely AI-assisted. Achindra and the partner have 
 
 | When | What |
 |---|---|
-| Oct 19–23 | API key, credit-rate check, go/no-go run on the synthetic Hindi/Kannada/Tamil clips plus a clean-read control |
-| Oct 24–28 | Real-passage bank from open content, open-dataset audio run, 8 kHz and child-proxy variants, scorer upgrades, reliability report v1 |
-| Oct 29–Nov 1 | Whole loop and minimal reading screen; demo video built with Timbre narration |
+| Oct 19–20 | Done: API key, credit-rate check, go/no-go run, 7 audio conditions, context experiment (see RESULTS.md) |
+| Oct 21–26 | **Mitigation study:** chunked re-check (cut audio at pauses, transcribe 1–3 word pieces) tested on the near-sound swaps; larger sample (about 100 items per condition) from openly licensed passages; more error types (half-said, repeated, self-corrected) |
+| Oct 27–Nov 1 | Whole loop with the mitigation inside: reading screen, per-attempt trace, class summary; demo video built with Timbre narration |
 | Nov 1–3 | You post the demo (engagement window opens) |
 | Nov 4–9 | Fix findings, final numbers, docs, walkthroughs |
 | Nov 10 | Submit before 11:59 PM IST |
+
+### Build plan (Oct 21–Nov 9)
+
+Goal: a project whose claims stay true without child or native-speaker testing. The claim is narrow and measured: "this catches X% of planted mistakes on synthetic speech under these conditions, and here is where it fails."
+
+| # | Work | Done when | Credits (est.) |
+|---|---|---|---|
+| 1 | **Passages we didn't write.** Pick short StoryWeaver (CC BY 4.0) passages per language with their reading levels; record title, licence and URL per passage. Check Tamil coverage first; if thin, say so | 20+ passages per language in `data/`, source list in docs | 0 |
+| 2 | **Error types.** Extend the plant tool to skips, swaps, half-said words, repetitions and self-corrections; scorer reports each type | Tests per type; scorer table by type | 0 |
+| 3 | **Bigger study.** About 100 planted items per condition, same clean/phone/noise/child-proxy conditions, with Wilson intervals | Numbers regenerate from cached transcripts with one command | ~30 |
+| 4 | **Chunked re-check.** Find pauses in the audio, transcribe 1–3 word pieces, merge. Compare catch and false-flag rate with whole-sentence on the same clips. Prediction written down before the run | Result reported whether it helps or not | ~20 |
+| 5 | **"Check this word" state.** Words that are near-identical in sound to a strongly predicted word, or disagree between the two passes, are marked uncertain instead of green | Rate of uncertain words and what it costs in catch reported | 0 |
+| 6 | **Reading screen and class summary.** FastAPI plus browser mic; words green, red or uncertain; per-attempt trace of what was heard; class summary from synthetic learners | Works end to end on live Prisma and Timbre; 8 kHz mode shown | ~15 |
+| 7 | **Demo and docs.** 60 s video, written explanation, walkthrough per module, `docs/DECISIONS.md`, caption drafts, repo public | Submission checklist ticked | ~5 |
+
+Order: 1 and 2 first (no credits), then 3 and 4 together, then 5, then 6. If 4 does not improve catch, we report that and spend the freed time on 6 and 7; the study and the app still stand.
+
+**Cut lines if time runs short:** drop 5 first, then the half-word and self-correction types, then class summary polish. Never cut the limits section or the regenerate-from-cache command.
+
+**What stays unfixable and is stated in the docs:** real children's speech may behave differently, Tamil is the weakest language, and the audio is synthetic.
 
 Log your work in [WORKLOG.md](WORKLOG.md). Each of us is evaluated and interviewed separately.
 
