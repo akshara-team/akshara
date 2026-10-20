@@ -108,3 +108,9 @@ def test_list_passages_filters_by_language():
 def test_reading_screen_is_served():
     r = client(FixtureSTT({})).get("/")
     assert r.status_code == 200 and "Akshara" in r.text
+
+
+def test_attempt_carries_notice_and_no_check_on_exact_words():
+    body = post(client(FixtureSTT({"clip": "राम स्कूल जाता"})), wav()).json()
+    assert "does not prove" in body["notice"]
+    assert not any(w["check"] for w in body["words"])

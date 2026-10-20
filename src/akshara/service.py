@@ -56,8 +56,13 @@ def assess(
     duration = audio_seconds(audio)
     s = score(reference, transcript, duration, loose=language != "kn-IN")
     trace = [
-        {"op": m.op, "word": m.ref_word, "said": m.said, "index": m.ref_index} for m in s.marks
-    ]
+        {
+            "op": m.op, "word": m.ref_word, "said": m.said, "index": m.ref_index,
+            # accepted only through a spelling-variant rule: worth a second look
+            "check": m.op == "correct" and m.said != m.ref_word,
+        }
+        for m in s.marks
+    ]  # fmt: skip
     store.save_attempt(
         request_id=request_id,
         learner_id=store.learner(learner, language),

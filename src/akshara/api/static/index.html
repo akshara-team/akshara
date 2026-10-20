@@ -70,6 +70,7 @@
 
   <section class="card" id="result" hidden>
     <div class="stats"><div><b id="acc">-</b>accuracy</div><div><b id="wcpm">-</b>words per minute</div></div>
+    <p id="notice" class="muted" style="margin:4px 0 12px"></p>
     <div class="muted">What the system heard:</div>
     <p id="heard" style="margin-top:4px"></p>
     <table><thead><tr><th>Word</th><th>Heard</th><th>Result</th></tr></thead><tbody id="trace"></tbody></table>
@@ -105,7 +106,11 @@ function showText() {
 
 function show(a) {
   const refs = a.words.filter((w) => w.op !== "inserted");
-  $("text").innerHTML = refs.map((w) => `<span class="w ${w.op}" title="${esc(w.op)}">${MARK[w.op] || ""} ${esc(w.word)}</span>`).join(" ");
+  $("text").innerHTML = refs.map((w) => {
+    const cls = w.check ? "uncertain" : w.op;
+    return `<span class="w ${cls}" title="${w.check ? "heard with a different spelling: check this word" : esc(w.op)}">${MARK[cls] || ""} ${esc(w.word)}</span>`;
+  }).join(" ");
+  $("notice").textContent = a.notice || "";
   $("acc").textContent = Math.round(a.accuracy * 100) + "%";
   $("wcpm").textContent = a.wcpm == null ? "-" : Math.round(a.wcpm);
   $("heard").textContent = a.transcript;

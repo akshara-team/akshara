@@ -8,3 +8,6 @@ Gnani evaluates and interviews each of us separately, so log what you did. Newes
 | 2026-10-20 | Achindra | Restructured into core/providers/api, added service, SQLite store, FastAPI app, fixture provider, Dockerfile, CI format check and an eval regression gate |
 | 2026-10-18 | Achindra | Set up the repo: docs, word-alignment scorer with tests, Prisma client, go/no-go script |
 | 2026-10-17 | Achindra | Researched the challenge, competitors and Gnani models; picked the reading-tutor idea |
+
+## 2026-10-20: honest-limits state
+Service marks words accepted only via a spelling-variant rule as `check` (dashed ? in the screen) and returns a fixed notice with each attempt, because the chunked re-check failed to expose near-sound misreads. 92 tests pass.
