@@ -27,6 +27,7 @@ Speech-to-text tends to correct a misread word into the expected one, which hide
 | Prisma and Timbre clients | Done, tested live |
 | Reliability study (synthetic audio, 3 languages) | First results in [docs/RESULTS.md](docs/RESULTS.md) |
 | Mitigation for autocorrected mistakes | Planned |
+| HTTP API, storage, offline fixture provider, CI gate | Done |
 | Reading screen and class summary | Not started |
 
 ## Quick start
@@ -36,6 +37,7 @@ uv sync
 cp .env.example .env        # add your GNANI_API_KEY
 uv run pytest
 uv run python scripts/go_no_go.py --dry-run   # no API calls
+uv run uvicorn akshara.api.app:create_app --factory   # API on :8000 (offline fixture provider by default)
 ```
 
 ## Docs

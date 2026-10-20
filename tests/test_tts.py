@@ -1,7 +1,7 @@
 import io
 import wave
 
-from akshara.tts import fix_wav_header
+from akshara.providers.timbre import fix_wav_header
 
 
 def test_fix_wav_header_sets_real_sizes():

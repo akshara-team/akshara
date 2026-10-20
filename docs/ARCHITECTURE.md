@@ -1,82 +1,47 @@
 # Architecture
 
-## Flow for one reading attempt
+## Layout
 
 ```
- Teacher picks child + level + language
-            │
-            ▼
- ┌─────────────────────┐   cached by (lang, level, story_id)
- │ Story store         │◄──────────────────────────────┐
- └─────────┬───────────┘                               │
-           │ no story yet?                             │
-           ▼                                           │
- ┌─────────────────────┐  strict JSON: {title, text}   │
- │ Evon v3.3 (vLLM)    │───────────────────────────────┘
- └─────────────────────┘
-           │ story text
-           ▼
- ┌─────────────────────┐  generated once, cached as audio file
- │ Timbre v3.0 TTS     │──► model reading played to the child
- └─────────────────────┘
-           │
-           ▼
-   Child reads aloud in the browser (mic, ≤30 s per chunk)
-           │
-           ▼
- ┌─────────────────────┐  format=verbatim, NO bias_list
- │ Prisma v2.5 STT     │
- └─────────┬───────────┘
-           │ transcript
-           ▼
- ┌─────────────────────┐  word alignment (src/akshara/align.py)
- │ Scorer              │──► WCPM, accuracy, per-word marks
- └─────────┬───────────┘
-           │ missed / misread words
-           ▼
- ┌─────────────────────┐  "<excited>" praise + slow, clear word
- │ Timbre v3.0 TTS     │──► feedback audio (cached per word)
- └─────────────────────┘
-           │
-           ▼
-   Attempt saved → teacher dashboard (progress vs NIPUN targets)
+src/akshara/
+  core/        pure scoring: text.py (normalise, spelling-variant keys), align.py (edit distance)
+  providers/   base.py (SpeechToText, TextToSpeech interfaces), prisma.py, timbre.py,
+               fixture.py (offline, replays recorded transcripts), ledger.py (credit cap)
+  service.py   assess(): transcribe -> score -> persist, idempotent on request id
+  store.py     SQLite with ordered migrations; attempts keep the full trace
+  api/         FastAPI app and response schemas
+  settings.py  typed settings from the environment
+scripts/       study tooling (build passages, make audio and variants, run, analyse)
+tests/         unit, API, store and eval-gate tests; no live calls
 ```
 
-## Components
+## One reading attempt
 
-| Component | Tech | Owner | State |
-|---|---|---|---|
-| Scorer (normalise, align, WCPM) | Python, `src/akshara/align.py` | Achindra | Done |
-| Prisma client | `httpx`, `src/akshara/stt.py` | Achindra | Done, untested live |
-| Timbre client | `httpx` | Achindra | Todo |
-| Evon story generator | vLLM or llama.cpp, OpenAI-compatible API | Achindra | Todo |
-| Backend API | FastAPI | Achindra | Todo |
-| Storage | SQLite (children, stories, attempts) + audio files on disk | Achindra | Todo |
-| Frontend: child reading screen | TBD | Partner | Todo |
-| Frontend: teacher dashboard | TBD | Partner | Todo |
+```
+browser mic -> POST /v1/attempts (WAV, learner, passage_id, X-Request-ID)
+   -> size, type and duration checks, rate limit
+   -> SpeechToText (Prisma, or fixture offline), one active request at a time
+   -> core scorer: green / red per word, accuracy, WCPM
+   -> SQLite attempt with the trace of what was heard
+   -> GET /v1/attempts/{id}, GET /v1/class/summary
+```
 
-## Design rules
+## Rules
 
-1. **Evon output is always strict JSON with a length cap.** Validate it; on failure, retry once, then fall back to a hand-written story from the seed bank. Evon is weak at following instructions.
-2. **Never send `bias_list` to Prisma for reading attempts.** Boosting the story's words hides the child's mistakes.
-3. **Cache everything that costs credits.** Story audio is keyed by story id + voice; feedback audio by word + voice; transcripts by audio hash.
-4. **Chunk long readings to ≤30 s** (Prisma rejects longer clips in practice). Split on sentence boundaries; the child reads one chunk at a time.
-5. **The scorer is pure code with tests.** No LLM in the scoring path, so scores are repeatable and explainable.
+1. **The scorer is pure.** No network or LLM calls in `core/`, so scores repeat exactly.
+2. **Providers sit behind interfaces.** The service never imports Prisma directly, so a recorded-fixture provider, a second model or a mitigation pass can be swapped in.
+3. **Never send `bias_list` to Prisma** for reading attempts; it hides mistakes. Use `format=verbatim`.
+4. **Cache and cap everything that costs credits.** Transcripts are cached by audio hash; every paid call goes in `results/ledger.jsonl` with a hard cap.
+5. **Retries are safe.** An attempt is keyed by request id; resending returns the stored result and makes no second paid call.
+6. **Tests never call the API.** An eval gate fails if the committed study results drop below the pass line.
 
-## Scoring
+## Planned
 
-- Text is normalised (Unicode NFC, punctuation and dandas removed, zero-width joiners removed) and split on whitespace.
-- The transcript is aligned to the story with word-level edit distance. Each story word is marked `correct`, `substituted` or `skipped`; extra spoken words are `inserted`.
-- **WCPM** = correct words ÷ reading time in minutes.
-- Accuracy = correct words ÷ story words.
+- Chunked re-check pass and a "check this word" state in the service (see [PLAN.md](PLAN.md)).
+- Browser reading screen and a class summary view.
+- Passages from openly licensed books.
 
-Known gap: Indian-language words can differ by a small spelling variation (nukta, vowel sign) that Prisma may produce either way. If the go/no-go test shows many false flags from this, add a per-language "close enough" rule (e.g. character edit distance ≤ 1 on long words) and measure the trade-off.
+## Not built or not verified
 
-## Open decisions
-
-| Decision | Options | Decide by |
-|---|---|---|
-| Where Evon runs | Modal + vLLM (we already deploy Helix there) · quantized GGUF locally · hosted endpoint if Gnani offers one | Oct 23 |
-| Frontend stack | Next.js · plain React + Vite · Streamlit for a fast first version | Oct 23 |
-| Live vs recorded scoring | Record then send (simpler, cheaper) · realtime WebSocket (shows words light up as they're read) | After go/no-go |
-| Timbre voice per language | Pick by ear in week 2 | Oct 30 |
+- The Dockerfile has not been built on this machine.
+- Evon is off the critical path and not used.

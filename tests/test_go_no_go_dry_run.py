@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from akshara.align import score
+from akshara.core.align import score
 
 DATA = Path(__file__).resolve().parent.parent / "data" / "go_no_go"
 FILES = [p for p in (DATA / "passages.example.jsonl", DATA / "passages.jsonl") if p.exists()]

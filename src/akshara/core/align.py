@@ -4,7 +4,7 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from typing import Literal
 
-from akshara.text import loose_key, words
+from akshara.core.text import loose_key, words
 
 Op = Literal["correct", "substituted", "skipped", "inserted"]
 

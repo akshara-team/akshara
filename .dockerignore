@@ -1,0 +1,4 @@
+results/*.sqlite
+.venv
+.env
+data/**/audio*

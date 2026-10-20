@@ -141,6 +141,7 @@ Goal: a project whose claims stay true without child or native-speaker testing. 
 
 | # | Work | Done when | Credits (est.) |
 |---|---|---|---|
+| 0 | **Production structure (done Oct 20).** `core/`, `providers/` behind interfaces, service, SQLite with migrations, FastAPI app, offline fixture provider, Dockerfile, CI with format check and an eval regression gate. See [ARCHITECTURE.md](ARCHITECTURE.md) | 68 tests pass, no live calls in tests | 0 |
 | 1 | **Passages we didn't write.** Pick short StoryWeaver (CC BY 4.0) passages per language with their reading levels; record title, licence and URL per passage. Check Tamil coverage first; if thin, say so | 20+ passages per language in `data/`, source list in docs | 0 |
 | 2 | **Error types.** Extend the plant tool to skips, swaps, half-said words, repetitions and self-corrections; scorer reports each type | Tests per type; scorer table by type | 0 |
 | 3 | **Bigger study.** About 100 planted items per condition, same clean/phone/noise/child-proxy conditions, with Wilson intervals | Numbers regenerate from cached transcripts with one command | ~30 |

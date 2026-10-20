@@ -15,7 +15,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from akshara.tts import VOICES, synthesize
+from akshara.providers.timbre import VOICES, synthesize
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data" / "go_no_go"

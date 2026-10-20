@@ -9,13 +9,14 @@ from pathlib import Path
 
 import httpx
 
-from akshara.ledger import record
+from akshara.providers.base import ProviderError
+from akshara.providers.ledger import record
 
 STT_URL = "https://api.vachana.ai/stt/v3"
 LANGUAGES = {"hi-IN", "kn-IN", "ta-IN"}
 
 
-class STTError(RuntimeError):
+class STTError(ProviderError):
     pass
 
 
@@ -65,3 +66,15 @@ def transcribe(
             raise STTError(f"HTTP {resp.status_code}: {body.get('error', body)}")
         return body
     raise STTError("retries exhausted")
+
+
+class PrismaSTT:
+    """Prisma v2.5 behind the SpeechToText interface."""
+
+    name = "prisma-v2.5"
+
+    def __init__(self, api_key: str | None = None):
+        self.api_key = api_key
+
+    def transcribe(self, audio: Path, language: str) -> str:
+        return transcribe(audio, language, api_key=self.api_key)["transcript"]

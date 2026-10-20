@@ -19,9 +19,9 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from akshara.align import score
-from akshara.stt import STTError, transcribe
-from akshara.text import words
+from akshara.core.align import score
+from akshara.core.text import words
+from akshara.providers.prisma import STTError, transcribe
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data" / "go_no_go"

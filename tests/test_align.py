@@ -1,5 +1,5 @@
-from akshara.align import align, score
-from akshara.text import normalize, words
+from akshara.core.align import align, score
+from akshara.core.text import normalize, words
 
 
 def test_normalize_strips_danda_and_punctuation():
@@ -46,7 +46,7 @@ def test_empty_transcript_skips_everything():
 
 
 def test_loose_treats_spelling_variants_as_equal():
-    from akshara.text import loose_key
+    from akshara.core.text import loose_key
 
     assert loose_key("रोज़") == loose_key("रोज")
     assert loose_key("गेहूँ") == loose_key("गेहूं")
@@ -56,7 +56,7 @@ def test_loose_treats_spelling_variants_as_equal():
 
 
 def test_loose_keeps_real_differences():
-    from akshara.text import loose_key
+    from akshara.core.text import loose_key
 
     assert loose_key("ಹೇಳಿದರು") != loose_key("ಹೇಳಿದರೂ")  # Kannada stays strict
     assert loose_key("खेत") != loose_key("खेल")

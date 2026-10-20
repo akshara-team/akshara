@@ -27,3 +27,4 @@ results/audio/
 Thumbs.db
 .vscode/
 .idea/
+results/*.sqlite

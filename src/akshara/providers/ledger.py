@@ -5,7 +5,7 @@ import os
 import time
 from pathlib import Path
 
-LEDGER = Path(__file__).resolve().parents[2] / "results" / "ledger.jsonl"
+LEDGER = Path(__file__).resolve().parents[3] / "results" / "ledger.jsonl"
 DEFAULT_CAP = 600
 
 

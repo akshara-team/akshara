@@ -10,7 +10,7 @@ import json
 import sys
 from pathlib import Path
 
-from akshara.text import words
+from akshara.core.text import words
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "data" / "go_no_go" / "passages.jsonl"

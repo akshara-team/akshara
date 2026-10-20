@@ -8,7 +8,8 @@ import time
 
 import httpx
 
-from akshara.ledger import record
+from akshara.providers.base import ProviderError
+from akshara.providers.ledger import record
 
 TTS_URL = "https://api.vachana.ai/api/v1/tts/inference"
 MODEL = "timbre-v3.0"
@@ -19,7 +20,7 @@ VOICES = [
 ]  # fmt: skip
 
 
-class TTSError(RuntimeError):
+class TTSError(ProviderError):
     pass
 
 
@@ -69,3 +70,15 @@ def synthesize(
             raise TTSError(f"HTTP {resp.status_code}: {resp.text[:300]}")
         return fix_wav_header(resp.content)
     raise TTSError("retries exhausted")
+
+
+class TimbreTTS:
+    """Timbre v3.0 behind the TextToSpeech interface."""
+
+    name = "timbre-v3.0"
+
+    def __init__(self, api_key: str | None = None):
+        self.api_key = api_key
+
+    def synthesize(self, text: str, language: str, voice: str) -> bytes:
+        return synthesize(text, language, voice, api_key=self.api_key)
