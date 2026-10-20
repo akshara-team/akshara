@@ -56,5 +56,5 @@ Check off as each one is done and verified. Dates are targets; deadline Nov 10, 
 ## Stretch
 
 - [ ] Second opinion from an open acoustic model (only if there is slack)
-- [ ] Ask Gnani on Discord about open read-speech datasets
-- [ ] Report the Cloudflare 403 on one clip to Gnani
+- [ ] Ask Gnani on Discord about open read-speech datasets (draft in [GNANI_MESSAGES.md](GNANI_MESSAGES.md); you send it)
+- [ ] Report the Cloudflare 403 on some clips to Gnani (draft in [GNANI_MESSAGES.md](GNANI_MESSAGES.md); you send it)

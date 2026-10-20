@@ -72,6 +72,8 @@ Speech-to-text models tend to "fix" a misread word into the right one, hiding th
 
 ### Story: diagnose, mitigate, prove (revised Oct 20)
 
+**Outcome (Oct 20):** the chunked re-check was tested against predictions written first and did not help (near-sound catch 31% whole vs 28% chunked). The story became "what a transcript-based screener can and cannot see": the product keeps one pass and states the limit. See [RESULTS.md](RESULTS.md) and [DECISIONS.md](DECISIONS.md). The text below is the original plan.
+
 The pipeline alone is simple and every entrant uses AI coding, so the weight is on the finding. Prisma catches 95–100% of planted mistakes, but near-sound swaps that fit the sentence are sometimes autocorrected (25/29 caught vs 29/29 for distant swaps; p = 0.11, suggestive). The plan:
 
 1. **Chunked re-check (main mitigation).** Transcribe short pieces without the sentence around them, so there is little context to autocorrect from. Measure catch and false-flag rate against the whole-sentence baseline on the same clips. Risks: more false flags, and Prisma returns no word timings or confidence (checked on the REST docs), so pauses have to be found from the audio itself.

@@ -17,3 +17,6 @@ scripts/live_check.py: real app plus Prisma, 3 clips x (clean, 8 kHz), 6 calls. 
 
 ## 2026-10-20: demo video
 Built a 60 s silent demo from slides plus two real screenshots (app served offline from cached transcripts, WAV upload through a real browser). Timbre has no English voice, so no narration.
+
+## 2026-10-20: docs refreshed
+README status, PLAN outcome note, Gnani message drafts (docs/GNANI_MESSAGES.md).

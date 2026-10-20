@@ -17,7 +17,7 @@ Entry for the [Great Indian AI Internship Challenge](https://www.gnani.ai/intern
 3. Akshara aligns the transcript to the passage, counts correct words per minute, and flags skipped or misread words.
 4. **Timbre v3.0** reads passages aloud and says missed words correctly.
 
-Speech-to-text tends to correct a misread word into the expected one, which hides the mistake. Measuring and reducing that is the main work. Results so far are in [docs/RESULTS.md](docs/RESULTS.md).
+Speech-to-text tends to correct a misread word into the expected one, which hides the mistake. We measured how often: skipped and unrelated words are caught almost always, but a single wrong consonant only 8 times in 39. A pause-based re-check did not help, so the app says so on every result. Read [docs/WRITEUP.md](docs/WRITEUP.md) (one page) or [docs/RESULTS.md](docs/RESULTS.md) (all numbers).
 
 ## Status
 
@@ -25,10 +25,11 @@ Speech-to-text tends to correct a misread word into the expected one, which hide
 |---|---|
 | Word alignment and scoring | Done, with tests |
 | Prisma and Timbre clients | Done, tested live |
-| Reliability study (synthetic audio, 3 languages) | First results in [docs/RESULTS.md](docs/RESULTS.md) |
-| Mitigation for autocorrected mistakes | Planned |
+| Reliability study (synthetic audio, 3 languages, 90 passages, 4 audio conditions) | Done, in [docs/RESULTS.md](docs/RESULTS.md) |
+| Mitigation for autocorrected mistakes | Tried, does not help (result recorded) |
 | HTTP API, storage, offline fixture provider, CI gate | Done |
-| Reading screen and class summary | Not started |
+| Reading screen, trace view, class summary, limits notice | Done (v0.1); microphone path untested live |
+| Demo video | [docs/demo/akshara_demo.mp4](docs/demo/akshara_demo.mp4) |
 
 ## Quick start
 
@@ -44,6 +45,9 @@ uv run uvicorn akshara.api.app:create_app --factory   # API on :8000 (offline fi
 
 | File | What's in it |
 |---|---|
+| [docs/WRITEUP.md](docs/WRITEUP.md) | One-page explanation |
+| [docs/DECISIONS.md](docs/DECISIONS.md) | Why each choice was made |
+| [docs/WALKTHROUGH.md](docs/WALKTHROUGH.md) | One section per module |
 | [docs/PLAN.md](docs/PLAN.md) | Plan and timeline |
 | [docs/MILESTONES.md](docs/MILESTONES.md) | Checklist of what is done and what is next |
 | [docs/RESULTS.md](docs/RESULTS.md) | Measured results and limits |
