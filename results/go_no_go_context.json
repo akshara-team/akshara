@@ -1,0 +1,2278 @@
+{
+  "summary": {
+    "strict": {
+      "hi-IN": {
+        "passages": 30,
+        "planted": 20,
+        "caught": 18,
+        "ok_words": 163,
+        "false_flags": 4,
+        "catch_rate": 0.9,
+        "false_flag_rate": 0.024539877300613498,
+        "pass": true
+      },
+      "kn-IN": {
+        "passages": 30,
+        "planted": 20,
+        "caught": 19,
+        "ok_words": 97,
+        "false_flags": 3,
+        "catch_rate": 0.95,
+        "false_flag_rate": 0.030927835051546393,
+        "pass": true
+      },
+      "ta-IN": {
+        "passages": 29,
+        "planted": 19,
+        "caught": 18,
+        "ok_words": 83,
+        "false_flags": 1,
+        "catch_rate": 0.9473684210526315,
+        "false_flag_rate": 0.012048192771084338,
+        "pass": true
+      }
+    },
+    "loose": {
+      "hi-IN": {
+        "passages": 30,
+        "planted": 20,
+        "caught": 18,
+        "ok_words": 163,
+        "false_flags": 0,
+        "catch_rate": 0.9,
+        "false_flag_rate": 0.0,
+        "pass": true
+      },
+      "kn-IN": {
+        "passages": 30,
+        "planted": 20,
+        "caught": 19,
+        "ok_words": 97,
+        "false_flags": 3,
+        "catch_rate": 0.95,
+        "false_flag_rate": 0.030927835051546393,
+        "pass": true
+      },
+      "ta-IN": {
+        "passages": 29,
+        "planted": 19,
+        "caught": 18,
+        "ok_words": 83,
+        "false_flags": 1,
+        "catch_rate": 0.9473684210526315,
+        "false_flag_rate": 0.012048192771084338,
+        "pass": true
+      }
+    }
+  },
+  "skipped": [
+    "ta-x01-m"
+  ],
+  "passages": [
+    {
+      "id": "hi-x01-ok",
+      "lang": "hi-IN",
+      "transcript": "गाय हमें दूध देती है।",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 146.73962887102198
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 146.73962887102198
+      }
+    },
+    {
+      "id": "hi-x01-m",
+      "lang": "hi-IN",
+      "transcript": "गाय हमें दूध देती है।",
+      "strict": {
+        "planted": [
+          2
+        ],
+        "flagged": [],
+        "missed": [
+          2
+        ],
+        "false_flags": [],
+        "wcpm": 160.7124920480798
+      },
+      "loose": {
+        "planted": [
+          2
+        ],
+        "flagged": [],
+        "missed": [
+          2
+        ],
+        "false_flags": [],
+        "wcpm": 160.7124920480798
+      }
+    },
+    {
+      "id": "hi-x01-d",
+      "lang": "hi-IN",
+      "transcript": "गाय हमें किताब देती है",
+      "strict": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 107.9986500168748
+      },
+      "loose": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 107.9986500168748
+      }
+    },
+    {
+      "id": "hi-x02-ok",
+      "lang": "hi-IN",
+      "transcript": "बच्चे स्कूल में किताब पढ़ते हैं।",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 150.0
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 150.0
+      }
+    },
+    {
+      "id": "hi-x02-m",
+      "lang": "hi-IN",
+      "transcript": "बच्चे स्कूल में किताब पढ़ते हैं।",
+      "strict": {
+        "planted": [
+          4
+        ],
+        "flagged": [],
+        "missed": [
+          4
+        ],
+        "false_flags": [],
+        "wcpm": 144.6436643061624
+      },
+      "loose": {
+        "planted": [
+          4
+        ],
+        "flagged": [],
+        "missed": [
+          4
+        ],
+        "false_flags": [],
+        "wcpm": 144.6436643061624
+      }
+    },
+    {
+      "id": "hi-x02-d",
+      "lang": "hi-IN",
+      "transcript": "बच्चे स्कूल में किताब सोते हैं",
+      "strict": {
+        "planted": [
+          4
+        ],
+        "flagged": [
+          4
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 129.8069122180756
+      },
+      "loose": {
+        "planted": [
+          4
+        ],
+        "flagged": [
+          4
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 129.8069122180756
+      }
+    },
+    {
+      "id": "hi-x03-ok",
+      "lang": "hi-IN",
+      "transcript": "बारिश में हम छाता लगाते हैं।",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 161.9979750253122
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 161.9979750253122
+      }
+    },
+    {
+      "id": "hi-x03-m",
+      "lang": "hi-IN",
+      "transcript": "बारिश में हम काता लगाते हैं।",
+      "strict": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 125.0
+      },
+      "loose": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 125.0
+      }
+    },
+    {
+      "id": "hi-x03-d",
+      "lang": "hi-IN",
+      "transcript": "बारिश में हम तारा लगाते हैं।",
+      "strict": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 116.38056444573756
+      },
+      "loose": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 116.38056444573756
+      }
+    },
+    {
+      "id": "hi-x04-ok",
+      "lang": "hi-IN",
+      "transcript": "रात को आसमान में चांद निकलता है।",
+      "strict": {
+        "planted": [],
+        "flagged": [
+          4
+        ],
+        "missed": [],
+        "false_flags": [
+          4
+        ],
+        "wcpm": 139.65667733488507
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 162.93279022403257
+      }
+    },
+    {
+      "id": "hi-x04-m",
+      "lang": "hi-IN",
+      "transcript": "रात को आसमान में बाँध निकलता है।",
+      "strict": {
+        "planted": [
+          4
+        ],
+        "flagged": [
+          4
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 144.6436643061624
+      },
+      "loose": {
+        "planted": [
+          4
+        ],
+        "flagged": [
+          4
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 144.6436643061624
+      }
+    },
+    {
+      "id": "hi-x04-d",
+      "lang": "hi-IN",
+      "transcript": "रात को आसमान में पानी निकलता है।",
+      "strict": {
+        "planted": [
+          4
+        ],
+        "flagged": [
+          4
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 130.64483204427407
+      },
+      "loose": {
+        "planted": [
+          4
+        ],
+        "flagged": [
+          4
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 130.64483204427407
+      }
+    },
+    {
+      "id": "hi-x05-ok",
+      "lang": "hi-IN",
+      "transcript": "किसान खेत में हल चलाता है",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 161.9979750253122
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 161.9979750253122
+      }
+    },
+    {
+      "id": "hi-x05-m",
+      "lang": "hi-IN",
+      "transcript": "किसान खेत में फल चलाता है",
+      "strict": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 134.9983125210935
+      },
+      "loose": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 134.9983125210935
+      }
+    },
+    {
+      "id": "hi-x05-d",
+      "lang": "hi-IN",
+      "transcript": "किसान खेत में दर चलाता है",
+      "strict": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 134.9983125210935
+      },
+      "loose": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 134.9983125210935
+      }
+    },
+    {
+      "id": "hi-x06-ok",
+      "lang": "hi-IN",
+      "transcript": "हम प्यास लगने पर पानी पीते हैं।",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 162.93279022403257
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 162.93279022403257
+      }
+    },
+    {
+      "id": "hi-x06-m",
+      "lang": "hi-IN",
+      "transcript": "हम प्यास लगने पर रानी पीते हैं।",
+      "strict": {
+        "planted": [
+          4
+        ],
+        "flagged": [
+          4
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 130.64483204427407
+      },
+      "loose": {
+        "planted": [
+          4
+        ],
+        "flagged": [
+          4
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 130.64483204427407
+      }
+    },
+    {
+      "id": "hi-x06-d",
+      "lang": "hi-IN",
+      "transcript": "हम प्यास लगने पर कपड़ा पीते हैं।",
+      "strict": {
+        "planted": [
+          4
+        ],
+        "flagged": [
+          4
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 130.64483204427407
+      },
+      "loose": {
+        "planted": [
+          4
+        ],
+        "flagged": [
+          4
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 130.64483204427407
+      }
+    },
+    {
+      "id": "hi-x07-ok",
+      "lang": "hi-IN",
+      "transcript": "पक्षी आसमान में उड़ते हैं।",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 116.38056444573756
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 116.38056444573756
+      }
+    },
+    {
+      "id": "hi-x07-m",
+      "lang": "hi-IN",
+      "transcript": "पक्षी आसमान में जुड़ते हैं।",
+      "strict": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 100.0
+      },
+      "loose": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 100.0
+      }
+    },
+    {
+      "id": "hi-x07-d",
+      "lang": "hi-IN",
+      "transcript": "पक्षी आसमान में तैरते हैं।",
+      "strict": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 112.50109864354143
+      },
+      "loose": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 112.50109864354143
+      }
+    },
+    {
+      "id": "hi-x08-ok",
+      "lang": "hi-IN",
+      "transcript": "मेरी बहन रोज चित्र बनाती है।",
+      "strict": {
+        "planted": [],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [
+          2
+        ],
+        "wcpm": 129.8069122180756
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 155.7682946616907
+      }
+    },
+    {
+      "id": "hi-x08-m",
+      "lang": "hi-IN",
+      "transcript": "मेरी बहन रोज मित्र बनाती है।",
+      "strict": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          2,
+          3
+        ],
+        "missed": [],
+        "false_flags": [
+          2
+        ],
+        "wcpm": 103.84552977446047
+      },
+      "loose": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 129.8069122180756
+      }
+    },
+    {
+      "id": "hi-x08-d",
+      "lang": "hi-IN",
+      "transcript": "मेरी बहन रोज रोटी बनाती है।",
+      "strict": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          2,
+          3
+        ],
+        "missed": [],
+        "false_flags": [
+          2
+        ],
+        "wcpm": 100.0
+      },
+      "loose": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 125.0
+      }
+    },
+    {
+      "id": "hi-x09-ok",
+      "lang": "hi-IN",
+      "transcript": "रात में हम बिस्तर पर सोते हैं",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 162.93279022403257
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 162.93279022403257
+      }
+    },
+    {
+      "id": "hi-x09-m",
+      "lang": "hi-IN",
+      "transcript": "रात में हम बिस्तर पर रोते हैं",
+      "strict": {
+        "planted": [
+          5
+        ],
+        "flagged": [
+          5
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 122.7281443760254
+      },
+      "loose": {
+        "planted": [
+          5
+        ],
+        "flagged": [
+          5
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 122.7281443760254
+      }
+    },
+    {
+      "id": "hi-x09-d",
+      "lang": "hi-IN",
+      "transcript": "रात में हम बिस्तर पर तैरते हैं",
+      "strict": {
+        "planted": [
+          5
+        ],
+        "flagged": [
+          5
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 155.7682946616907
+      },
+      "loose": {
+        "planted": [
+          5
+        ],
+        "flagged": [
+          5
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 155.7682946616907
+      }
+    },
+    {
+      "id": "hi-x10-ok",
+      "lang": "hi-IN",
+      "transcript": "रविवार को स्कूल बंद रहता है।",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 130.64483204427407
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 130.64483204427407
+      }
+    },
+    {
+      "id": "hi-x10-m",
+      "lang": "hi-IN",
+      "transcript": "रविवार को स्कूल चंद रहता है।",
+      "strict": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 125.0
+      },
+      "loose": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 125.0
+      }
+    },
+    {
+      "id": "hi-x10-d",
+      "lang": "hi-IN",
+      "transcript": "रविवार को स्कूल गर्म रहता है।",
+      "strict": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 120.536386921802
+      },
+      "loose": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 120.536386921802
+      }
+    },
+    {
+      "id": "kn-x01-ok",
+      "lang": "kn-IN",
+      "transcript": "ಹಸು ಹಾಲು ಕೊಡುತ್ತದೆ",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 112.49999999999999
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 112.49999999999999
+      }
+    },
+    {
+      "id": "kn-x01-m",
+      "lang": "kn-IN",
+      "transcript": "ಹಸು ಹಾರು ಕೊಡುತ್ತದೆ",
+      "strict": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 61.36341845376969
+      },
+      "loose": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 61.36341845376969
+      }
+    },
+    {
+      "id": "kn-x01-d",
+      "lang": "kn-IN",
+      "transcript": "ಹಸು ಬಾಗಿಲು ಕೊಡುತ್ತದೆ",
+      "strict": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 64.28499681923192
+      },
+      "loose": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 64.28499681923192
+      }
+    },
+    {
+      "id": "kn-x02-ok",
+      "lang": "kn-IN",
+      "transcript": "ಮಳೆ ಬಂದಾಗ ನಾವು ಕೂಡ ಹಿಡಿಯುತ್ತೇವೆ",
+      "strict": {
+        "planted": [],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [
+          3
+        ],
+        "wcpm": 84.37520599415525
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [
+          3
+        ],
+        "wcpm": 84.37520599415525
+      }
+    },
+    {
+      "id": "kn-x02-m",
+      "lang": "kn-IN",
+      "transcript": "ಮಳೆ ಬಂದಾಗ ನಾವು ಕೋಡೆ ಹಿಡಿಯುತ್ತೇವೆ",
+      "strict": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 77.14251275663948
+      },
+      "loose": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 77.14251275663948
+      }
+    },
+    {
+      "id": "kn-x02-d",
+      "lang": "kn-IN",
+      "transcript": "ಮಳೆ ಬಂದಾಗ ನಾವು ಮೀನು ಹಿಡಿಯುತ್ತೇವೆ",
+      "strict": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 84.37520599415525
+      },
+      "loose": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 84.37520599415525
+      }
+    },
+    {
+      "id": "kn-x03-ok",
+      "lang": "kn-IN",
+      "transcript": "ಹಕ್ಕಿಗಳು ಆಕಾಶದಲ್ಲಿ ಹಾರುತ್ತವೆ",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 77.88414733084535
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 77.88414733084535
+      }
+    },
+    {
+      "id": "kn-x03-m",
+      "lang": "kn-IN",
+      "transcript": "ಹಕ್ಕಿಗಳು ಆಕಾಶದಲ್ಲಿ ಹರಿಯುತ್ತವೆ",
+      "strict": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 53.9993250084374
+      },
+      "loose": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 53.9993250084374
+      }
+    },
+    {
+      "id": "kn-x03-d",
+      "lang": "kn-IN",
+      "transcript": "ಹಕ್ಕಿಗಳು ಆಕಾಶದಲ್ಲಿ ಕುಡಿಯುತ್ತವೆ",
+      "strict": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 53.9993250084374
+      },
+      "loose": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 53.9993250084374
+      }
+    },
+    {
+      "id": "kn-x04-ok",
+      "lang": "kn-IN",
+      "transcript": "ನಾವು ಬೆಳಿಗ್ಗೆ ಹಲ್ಲು ಉಜ್ಜುತ್ತೇವೆ",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 100.0
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 100.0
+      }
+    },
+    {
+      "id": "kn-x04-m",
+      "lang": "kn-IN",
+      "transcript": "ನಾವು ಬೆಳಗ್ಗೆ ಹಳ್ಳ ಉಜ್ಜುತ್ತೇವೆ",
+      "strict": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          1,
+          2
+        ],
+        "missed": [],
+        "false_flags": [
+          1
+        ],
+        "wcpm": 50.0
+      },
+      "loose": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          1,
+          2
+        ],
+        "missed": [],
+        "false_flags": [
+          1
+        ],
+        "wcpm": 50.0
+      }
+    },
+    {
+      "id": "kn-x04-d",
+      "lang": "kn-IN",
+      "transcript": "ನಾವು ಬೆಳಿಗ್ಗೆ ಮರ ಉಜ್ಜುತ್ತೇವೆ",
+      "strict": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 80.9989875126561
+      },
+      "loose": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 80.9989875126561
+      }
+    },
+    {
+      "id": "kn-x05-ok",
+      "lang": "kn-IN",
+      "transcript": "ರೈತ ಹೊಲದಲ್ಲಿ ಬೀಜ ಬಿತ್ತುತ್ತಾನೆ",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 96.4291095374416
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 96.4291095374416
+      }
+    },
+    {
+      "id": "kn-x05-m",
+      "lang": "kn-IN",
+      "transcript": "ರೈತ ಹೊಲದಲ್ಲಿ ಬೀಗ ಬಿತ್ತುತ್ತಾನೆ",
+      "strict": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 65.32241602213703
+      },
+      "loose": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 65.32241602213703
+      }
+    },
+    {
+      "id": "kn-x05-d",
+      "lang": "kn-IN",
+      "transcript": "ರೈತ ಹೊಲದಲ್ಲಿ ಕುರ್ಚಿ ಬಿತ್ತುತ್ತಾನೆ",
+      "strict": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 63.28140449561644
+      },
+      "loose": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 63.28140449561644
+      }
+    },
+    {
+      "id": "kn-x06-ok",
+      "lang": "kn-IN",
+      "transcript": "ಅಮ್ಮ ಅಡುಗೆ ಮನೆಯಲ್ಲಿ ಅನ್ನ ಮಾಡುತ್ತಾರೆ",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 116.38056444573756
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 116.38056444573756
+      }
+    },
+    {
+      "id": "kn-x06-m",
+      "lang": "kn-IN",
+      "transcript": "ಅಮ್ಮ ಅಡುಗೆ ಮನೆಯಲ್ಲಿ ಅನ್ನ ಮಾಡುತ್ತಾರೆ",
+      "strict": {
+        "planted": [
+          3
+        ],
+        "flagged": [],
+        "missed": [
+          3
+        ],
+        "false_flags": [],
+        "wcpm": 102.27345364668783
+      },
+      "loose": {
+        "planted": [
+          3
+        ],
+        "flagged": [],
+        "missed": [
+          3
+        ],
+        "false_flags": [],
+        "wcpm": 102.27345364668783
+      }
+    },
+    {
+      "id": "kn-x06-d",
+      "lang": "kn-IN",
+      "transcript": "ಅಮ್ಮ ಅಡುಗೆ ಮನೆಯಲ್ಲಿ ಬಟ್ಟೆ ಮಾಡುತ್ತಾರೆ",
+      "strict": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 89.99929688049312
+      },
+      "loose": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 89.99929688049312
+      }
+    },
+    {
+      "id": "kn-x07-ok",
+      "lang": "kn-IN",
+      "transcript": "ಮಕ್ಕಳು ಮೈದಾನದಲ್ಲಿ ಚೆಂಡು ಆಡುತ್ತಾರೆ",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 89.99929688049312
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 89.99929688049312
+      }
+    },
+    {
+      "id": "kn-x07-m",
+      "lang": "kn-IN",
+      "transcript": "ಮಕ್ಕಳು ಮೈದಾನದಲ್ಲಿ ಕೆಂಡ ಆಡುತ್ತಾರೆ",
+      "strict": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 67.49947266036983
+      },
+      "loose": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 67.49947266036983
+      }
+    },
+    {
+      "id": "kn-x07-d",
+      "lang": "kn-IN",
+      "transcript": "ಮಕ್ಕಳು ಮೈದಾನದಲ್ಲಿ ಹೂವು ಆಡುತ್ತಾರೆ",
+      "strict": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 67.49947266036983
+      },
+      "loose": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 67.49947266036983
+      }
+    },
+    {
+      "id": "kn-x08-ok",
+      "lang": "kn-IN",
+      "transcript": "ತೋಟದಲ್ಲಿ ಹೂವು ಅರಳುತ್ತದೆ",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 75.0
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 75.0
+      }
+    },
+    {
+      "id": "kn-x08-m",
+      "lang": "kn-IN",
+      "transcript": "ತೋಟದಲ್ಲಿ ಹೂಳು ಅರಳುತ್ತದೆ",
+      "strict": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 50.0
+      },
+      "loose": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 50.0
+      }
+    },
+    {
+      "id": "kn-x08-d",
+      "lang": "kn-IN",
+      "transcript": "ತೋಟದಲ್ಲಿ ಗಡಿಯಾರ ಹರಡುತ್ತದೆ",
+      "strict": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1,
+          2
+        ],
+        "missed": [],
+        "false_flags": [
+          2
+        ],
+        "wcpm": 25.96138244361512
+      },
+      "loose": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1,
+          2
+        ],
+        "missed": [],
+        "false_flags": [
+          2
+        ],
+        "wcpm": 25.96138244361512
+      }
+    },
+    {
+      "id": "kn-x09-ok",
+      "lang": "kn-IN",
+      "transcript": "ಬಸ್ಸು ರಸ್ತೆಯಲ್ಲಿ ಓಡುತ್ತದೆ",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 92.04512768065453
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 92.04512768065453
+      }
+    },
+    {
+      "id": "kn-x09-m",
+      "lang": "kn-IN",
+      "transcript": "ಬಸ್ಸು ರೂಟಿಯಲ್ಲಿ ಓಡುತ್ತದೆ",
+      "strict": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 58.69585154840879
+      },
+      "loose": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 58.69585154840879
+      }
+    },
+    {
+      "id": "kn-x09-d",
+      "lang": "kn-IN",
+      "transcript": "ಬಸ್ಸು ಮೋಡದಲ್ಲಿ ಓಡುತ್ತದೆ",
+      "strict": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 61.36341845376969
+      },
+      "loose": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 61.36341845376969
+      }
+    },
+    {
+      "id": "kn-x10-ok",
+      "lang": "kn-IN",
+      "transcript": "ಅಜ್ಜ ಕನ್ನಡಕ ಹಾಕಿಕೊಂಡು ಪತ್ರಿಕೆ ಓದುತ್ತಾರೆ",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 88.81651987269633
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 88.81651987269633
+      }
+    },
+    {
+      "id": "kn-x10-m",
+      "lang": "kn-IN",
+      "transcript": "ಅಜ್ಜ ಕನ್ನಡಕ ಹಾಕಿಕೊಂಡು ಪತ್ತೆ ಓದುತ್ತಾರೆ",
+      "strict": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 72.97328113716696
+      },
+      "loose": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 72.97328113716696
+      }
+    },
+    {
+      "id": "kn-x10-d",
+      "lang": "kn-IN",
+      "transcript": "ಅಜ್ಜ ಕನ್ನಡಕ ಹಾಕಿಕೊಂಡು ನದಿ ಓದುತ್ತಾರೆ",
+      "strict": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 77.14251275663948
+      },
+      "loose": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 77.14251275663948
+      }
+    },
+    {
+      "id": "ta-x01-ok",
+      "lang": "ta-IN",
+      "transcript": "பசு பால் தருகிறது",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 106.57982384723559
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 106.57982384723559
+      }
+    },
+    {
+      "id": "ta-x01-d",
+      "lang": "ta-IN",
+      "transcript": "பசு கதவு தருகிறது",
+      "strict": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 64.28499681923192
+      },
+      "loose": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 64.28499681923192
+      }
+    },
+    {
+      "id": "ta-x02-ok",
+      "lang": "ta-IN",
+      "transcript": "மழை பெய்யும்போது குடை பிடிக்கிறோம்",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 103.84552977446047
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 103.84552977446047
+      }
+    },
+    {
+      "id": "ta-x02-m",
+      "lang": "ta-IN",
+      "transcript": "மழை பெய்யும்போது குடல் பிடிக்கிறோம்",
+      "strict": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 67.49947266036983
+      },
+      "loose": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 67.49947266036983
+      }
+    },
+    {
+      "id": "ta-x02-d",
+      "lang": "ta-IN",
+      "transcript": "மழை பெய்யும்போது மீன் பிடிக்கிறோம்",
+      "strict": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 72.3218321530812
+      },
+      "loose": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 72.3218321530812
+      }
+    },
+    {
+      "id": "ta-x03-ok",
+      "lang": "ta-IN",
+      "transcript": "பறவைகள் வானத்தில் பறக்கின்றன",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 77.88414733084535
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 77.88414733084535
+      }
+    },
+    {
+      "id": "ta-x03-m",
+      "lang": "ta-IN",
+      "transcript": "பறவைகள் வானத்தில் பிறக்கின்றன",
+      "strict": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 46.552225778295025
+      },
+      "loose": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 46.552225778295025
+      }
+    },
+    {
+      "id": "ta-x03-d",
+      "lang": "ta-IN",
+      "transcript": "பறவைகள் வானத்தில் குடிக்கின்றன",
+      "strict": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 46.552225778295025
+      },
+      "loose": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 46.552225778295025
+      }
+    },
+    {
+      "id": "ta-x04-ok",
+      "lang": "ta-IN",
+      "transcript": "காலையில் பால் துலக்குகிறோம்",
+      "strict": {
+        "planted": [],
+        "flagged": [
+          1
+        ],
+        "missed": [],
+        "false_flags": [
+          1
+        ],
+        "wcpm": 56.25054932177071
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [
+          1
+        ],
+        "missed": [],
+        "false_flags": [
+          1
+        ],
+        "wcpm": 56.25054932177071
+      }
+    },
+    {
+      "id": "ta-x04-m",
+      "lang": "ta-IN",
+      "transcript": "காலையில் பால் துலக்குகிறோம்",
+      "strict": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 67.50105470397975
+      },
+      "loose": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 67.50105470397975
+      }
+    },
+    {
+      "id": "ta-x04-d",
+      "lang": "ta-IN",
+      "transcript": "காலையில் நாற்காலி துலக்குகிறோம்",
+      "strict": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 58.69585154840879
+      },
+      "loose": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 58.69585154840879
+      }
+    },
+    {
+      "id": "ta-x05-ok",
+      "lang": "ta-IN",
+      "transcript": "விவசாயி வயலில் விதை விதைக்கிறார்",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 93.10445155659005
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 93.10445155659005
+      }
+    },
+    {
+      "id": "ta-x05-m",
+      "lang": "ta-IN",
+      "transcript": "விவசாயி வயலில் வீதி விதைக்கிறார்",
+      "strict": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 69.82833866744254
+      },
+      "loose": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 69.82833866744254
+      }
+    },
+    {
+      "id": "ta-x05-d",
+      "lang": "ta-IN",
+      "transcript": "விவசாயி வயலில் புத்தகம் விதைக்கிறார்",
+      "strict": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 65.32241602213703
+      },
+      "loose": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 65.32241602213703
+      }
+    },
+    {
+      "id": "ta-x06-ok",
+      "lang": "ta-IN",
+      "transcript": "அம்மா சமையலறையில் சோறு சமைக்கிறார்",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 93.10445155659005
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 93.10445155659005
+      }
+    },
+    {
+      "id": "ta-x06-m",
+      "lang": "ta-IN",
+      "transcript": "அம்மா சமையலறையில் சேர சமைக்கிறார்",
+      "strict": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 69.82833866744254
+      },
+      "loose": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 69.82833866744254
+      }
+    },
+    {
+      "id": "ta-x06-d",
+      "lang": "ta-IN",
+      "transcript": "அம்மா சமையலறையில் நாய் சமைக்கிறார்",
+      "strict": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 77.88414733084535
+      },
+      "loose": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 77.88414733084535
+      }
+    },
+    {
+      "id": "ta-x07-ok",
+      "lang": "ta-IN",
+      "transcript": "குழந்தைகள் மைதானத்தில் பந்து விளையாடுகிறார்கள்",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 75.0
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 75.0
+      }
+    },
+    {
+      "id": "ta-x07-m",
+      "lang": "ta-IN",
+      "transcript": "குழந்தைகள் மைதானத்தில் பந்தம் விளையாடுகிறார்கள்",
+      "strict": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 54.72996085287522
+      },
+      "loose": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 54.72996085287522
+      }
+    },
+    {
+      "id": "ta-x07-d",
+      "lang": "ta-IN",
+      "transcript": "குழந்தைகள் மைதானத்தில் வானம் விளையாடுகிறார்கள்",
+      "strict": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 50.624901123239994
+      },
+      "loose": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 50.624901123239994
+      }
+    },
+    {
+      "id": "ta-x08-ok",
+      "lang": "ta-IN",
+      "transcript": "இரவில் வானத்தில் நிலா தெரிகிறது",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 89.99929688049312
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 89.99929688049312
+      }
+    },
+    {
+      "id": "ta-x08-m",
+      "lang": "ta-IN",
+      "transcript": "இரவில் வானத்தில் நிலம் தெரிகிறது",
+      "strict": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 59.55827611878567
+      },
+      "loose": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 59.55827611878567
+      }
+    },
+    {
+      "id": "ta-x08-d",
+      "lang": "ta-IN",
+      "transcript": "இரவில் வானத்தில் பையன் தெரிகிறது",
+      "strict": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 65.32241602213703
+      },
+      "loose": {
+        "planted": [
+          2
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 65.32241602213703
+      }
+    },
+    {
+      "id": "ta-x09-ok",
+      "lang": "ta-IN",
+      "transcript": "பேருந்து சாலையில் ஓடுகிறது",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 92.04512768065453
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 92.04512768065453
+      }
+    },
+    {
+      "id": "ta-x09-m",
+      "lang": "ta-IN",
+      "transcript": "பேருந்து சோலையில் ஓடுகிறது",
+      "strict": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 61.36341845376969
+      },
+      "loose": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 61.36341845376969
+      }
+    },
+    {
+      "id": "ta-x09-d",
+      "lang": "ta-IN",
+      "transcript": "பேருந்து மேகத்தில் ஓடுகிறது",
+      "strict": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 48.2145547687208
+      },
+      "loose": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 48.2145547687208
+      }
+    },
+    {
+      "id": "ta-x10-ok",
+      "lang": "ta-IN",
+      "transcript": "பாட்டி கதை சொல்கிறார்",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 126.56002812445068
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 126.56002812445068
+      }
+    },
+    {
+      "id": "ta-x10-m",
+      "lang": "ta-IN",
+      "transcript": "பாட்டி கதை சொல்கிறார்",
+      "strict": {
+        "planted": [
+          1
+        ],
+        "flagged": [],
+        "missed": [
+          1
+        ],
+        "false_flags": [],
+        "wcpm": 126.56002812445068
+      },
+      "loose": {
+        "planted": [
+          1
+        ],
+        "flagged": [],
+        "missed": [
+          1
+        ],
+        "false_flags": [],
+        "wcpm": 126.56002812445068
+      }
+    },
+    {
+      "id": "ta-x10-d",
+      "lang": "ta-IN",
+      "transcript": "பாட்டி அரிசி சொல்கிறார்",
+      "strict": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 64.28499681923192
+      },
+      "loose": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 64.28499681923192
+      }
+    }
+  ]
+}

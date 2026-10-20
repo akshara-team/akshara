@@ -42,10 +42,18 @@ def main() -> None:
     out_dir = args.out_dir
     out_dir.mkdir(parents=True, exist_ok=True)
 
+    # Variants of one sentence (-ok, -m, -d) share a voice, so only the words differ.
+    def frame_of(row_id: str) -> str:
+        return row_id.removesuffix("-ok").removesuffix("-m").removesuffix("-d")
+
+    frames: dict[str, int] = {}
+    for row in rows:
+        frames.setdefault(frame_of(row["id"]), len(frames))
+
     chars = 0
-    for n, row in enumerate(rows):
+    for row in rows:
         out = out_dir / f"{row['id']}.wav"
-        voice = VOICES[n % len(VOICES)]  # a different voice per clip
+        voice = VOICES[frames[frame_of(row["id"])] % len(VOICES)]  # a different voice per sentence
         if out.exists():
             print(f"have {out.name}")
             continue

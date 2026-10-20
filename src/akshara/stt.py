@@ -49,13 +49,17 @@ def transcribe(
                 data={"language_code": language_code, "format": "verbatim"},
                 timeout=timeout_s,
             )
-        if resp.status_code in (429, 500, 503) and attempt < retries:
+        if resp.status_code in (429, 500, 502, 503, 504) and attempt < retries:
             time.sleep(delay)
             delay = min(delay * 2, 20.0)
             continue
         try:
             body = resp.json()
         except ValueError as e:
+            if attempt < retries:  # an empty or HTML body is a gateway hiccup, not an answer
+                time.sleep(delay)
+                delay = min(delay * 2, 20.0)
+                continue
             raise STTError(f"HTTP {resp.status_code}: {resp.text[:200]}") from e
         if resp.status_code != 200 or not body.get("success"):
             raise STTError(f"HTTP {resp.status_code}: {body.get('error', body)}")

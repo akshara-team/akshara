@@ -41,6 +41,7 @@ Realtime: `wss://api.vachana.ai/stt/v3/stream`, 16-bit mono PCM, 1024-byte frame
 
 - Clips over ~30 s rejected despite the 60 s limit in the docs.
 - HTTP 429 on two quick requests in a row. The exact message is "Only 1 active request is allowed at a time" (`RATE_LIMITED`), so one request at a time. Our client waits and retries up to 6 times.
+- Prisma sits behind Cloudflare. One valid 54 KB WAV was blocked every time with an HTTP 403 HTML "Attention Required" page (not JSON), while other clips from the same IP went through. The client treats a non-JSON body as retryable, and `go_no_go.py` skips and reports a clip that stays blocked.
 - Timbre's REST WAV has `0xFFFFFFFF` in its RIFF and data sizes (streamed). Some readers and Prisma see it as empty or huge; the client rewrites the real sizes.
 - Realtime partial transcripts need an undocumented `x-partials` header.
 - Realtime `connected` event always reports 16 kHz.

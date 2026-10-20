@@ -1,0 +1,90 @@
+{"id": "hi-x01-ok", "lang": "hi-IN", "reference": "गाय हमें दूध देती है।", "read_as": "गाय हमें दूध देती है", "errors": []}
+{"id": "hi-x01-m", "lang": "hi-IN", "reference": "गाय हमें दूध देती है।", "read_as": "गाय हमें दूर देती है", "errors": [{"index": 2, "type": "substitution", "said": "दूर"}]}
+{"id": "hi-x01-d", "lang": "hi-IN", "reference": "गाय हमें दूध देती है।", "read_as": "गाय हमें किताब देती है", "errors": [{"index": 2, "type": "substitution", "said": "किताब"}]}
+{"id": "hi-x02-ok", "lang": "hi-IN", "reference": "बच्चे स्कूल में किताब पढ़ते हैं।", "read_as": "बच्चे स्कूल में किताब पढ़ते हैं", "errors": []}
+{"id": "hi-x02-m", "lang": "hi-IN", "reference": "बच्चे स्कूल में किताब पढ़ते हैं।", "read_as": "बच्चे स्कूल में किताब बढ़ते हैं", "errors": [{"index": 4, "type": "substitution", "said": "बढ़ते"}]}
+{"id": "hi-x02-d", "lang": "hi-IN", "reference": "बच्चे स्कूल में किताब पढ़ते हैं।", "read_as": "बच्चे स्कूल में किताब सोते हैं", "errors": [{"index": 4, "type": "substitution", "said": "सोते"}]}
+{"id": "hi-x03-ok", "lang": "hi-IN", "reference": "बारिश में हम छाता लगाते हैं।", "read_as": "बारिश में हम छाता लगाते हैं", "errors": []}
+{"id": "hi-x03-m", "lang": "hi-IN", "reference": "बारिश में हम छाता लगाते हैं।", "read_as": "बारिश में हम काता लगाते हैं", "errors": [{"index": 3, "type": "substitution", "said": "काता"}]}
+{"id": "hi-x03-d", "lang": "hi-IN", "reference": "बारिश में हम छाता लगाते हैं।", "read_as": "बारिश में हम तारा लगाते हैं", "errors": [{"index": 3, "type": "substitution", "said": "तारा"}]}
+{"id": "hi-x04-ok", "lang": "hi-IN", "reference": "रात को आसमान में चाँद निकलता है।", "read_as": "रात को आसमान में चाँद निकलता है", "errors": []}
+{"id": "hi-x04-m", "lang": "hi-IN", "reference": "रात को आसमान में चाँद निकलता है।", "read_as": "रात को आसमान में बाँध निकलता है", "errors": [{"index": 4, "type": "substitution", "said": "बाँध"}]}
+{"id": "hi-x04-d", "lang": "hi-IN", "reference": "रात को आसमान में चाँद निकलता है।", "read_as": "रात को आसमान में पानी निकलता है", "errors": [{"index": 4, "type": "substitution", "said": "पानी"}]}
+{"id": "hi-x05-ok", "lang": "hi-IN", "reference": "किसान खेत में हल चलाता है।", "read_as": "किसान खेत में हल चलाता है", "errors": []}
+{"id": "hi-x05-m", "lang": "hi-IN", "reference": "किसान खेत में हल चलाता है।", "read_as": "किसान खेत में फल चलाता है", "errors": [{"index": 3, "type": "substitution", "said": "फल"}]}
+{"id": "hi-x05-d", "lang": "hi-IN", "reference": "किसान खेत में हल चलाता है।", "read_as": "किसान खेत में दर चलाता है", "errors": [{"index": 3, "type": "substitution", "said": "दर"}]}
+{"id": "hi-x06-ok", "lang": "hi-IN", "reference": "हम प्यास लगने पर पानी पीते हैं।", "read_as": "हम प्यास लगने पर पानी पीते हैं", "errors": []}
+{"id": "hi-x06-m", "lang": "hi-IN", "reference": "हम प्यास लगने पर पानी पीते हैं।", "read_as": "हम प्यास लगने पर रानी पीते हैं", "errors": [{"index": 4, "type": "substitution", "said": "रानी"}]}
+{"id": "hi-x06-d", "lang": "hi-IN", "reference": "हम प्यास लगने पर पानी पीते हैं।", "read_as": "हम प्यास लगने पर कपड़ा पीते हैं", "errors": [{"index": 4, "type": "substitution", "said": "कपड़ा"}]}
+{"id": "hi-x07-ok", "lang": "hi-IN", "reference": "पक्षी आसमान में उड़ते हैं।", "read_as": "पक्षी आसमान में उड़ते हैं", "errors": []}
+{"id": "hi-x07-m", "lang": "hi-IN", "reference": "पक्षी आसमान में उड़ते हैं।", "read_as": "पक्षी आसमान में जुड़ते हैं", "errors": [{"index": 3, "type": "substitution", "said": "जुड़ते"}]}
+{"id": "hi-x07-d", "lang": "hi-IN", "reference": "पक्षी आसमान में उड़ते हैं।", "read_as": "पक्षी आसमान में तैरते हैं", "errors": [{"index": 3, "type": "substitution", "said": "तैरते"}]}
+{"id": "hi-x08-ok", "lang": "hi-IN", "reference": "मेरी बहन रोज़ चित्र बनाती है।", "read_as": "मेरी बहन रोज़ चित्र बनाती है", "errors": []}
+{"id": "hi-x08-m", "lang": "hi-IN", "reference": "मेरी बहन रोज़ चित्र बनाती है।", "read_as": "मेरी बहन रोज़ मित्र बनाती है", "errors": [{"index": 3, "type": "substitution", "said": "मित्र"}]}
+{"id": "hi-x08-d", "lang": "hi-IN", "reference": "मेरी बहन रोज़ चित्र बनाती है।", "read_as": "मेरी बहन रोज़ रोटी बनाती है", "errors": [{"index": 3, "type": "substitution", "said": "रोटी"}]}
+{"id": "hi-x09-ok", "lang": "hi-IN", "reference": "रात में हम बिस्तर पर सोते हैं।", "read_as": "रात में हम बिस्तर पर सोते हैं", "errors": []}
+{"id": "hi-x09-m", "lang": "hi-IN", "reference": "रात में हम बिस्तर पर सोते हैं।", "read_as": "रात में हम बिस्तर पर रोते हैं", "errors": [{"index": 5, "type": "substitution", "said": "रोते"}]}
+{"id": "hi-x09-d", "lang": "hi-IN", "reference": "रात में हम बिस्तर पर सोते हैं।", "read_as": "रात में हम बिस्तर पर तैरते हैं", "errors": [{"index": 5, "type": "substitution", "said": "तैरते"}]}
+{"id": "hi-x10-ok", "lang": "hi-IN", "reference": "रविवार को स्कूल बंद रहता है।", "read_as": "रविवार को स्कूल बंद रहता है", "errors": []}
+{"id": "hi-x10-m", "lang": "hi-IN", "reference": "रविवार को स्कूल बंद रहता है।", "read_as": "रविवार को स्कूल चंद रहता है", "errors": [{"index": 3, "type": "substitution", "said": "चंद"}]}
+{"id": "hi-x10-d", "lang": "hi-IN", "reference": "रविवार को स्कूल बंद रहता है।", "read_as": "रविवार को स्कूल गरम रहता है", "errors": [{"index": 3, "type": "substitution", "said": "गरम"}]}
+{"id": "kn-x01-ok", "lang": "kn-IN", "reference": "ಹಸು ಹಾಲು ಕೊಡುತ್ತದೆ.", "read_as": "ಹಸು ಹಾಲು ಕೊಡುತ್ತದೆ", "errors": []}
+{"id": "kn-x01-m", "lang": "kn-IN", "reference": "ಹಸು ಹಾಲು ಕೊಡುತ್ತದೆ.", "read_as": "ಹಸು ಹಾರು ಕೊಡುತ್ತದೆ", "errors": [{"index": 1, "type": "substitution", "said": "ಹಾರು"}]}
+{"id": "kn-x01-d", "lang": "kn-IN", "reference": "ಹಸು ಹಾಲು ಕೊಡುತ್ತದೆ.", "read_as": "ಹಸು ಬಾಗಿಲು ಕೊಡುತ್ತದೆ", "errors": [{"index": 1, "type": "substitution", "said": "ಬಾಗಿಲು"}]}
+{"id": "kn-x02-ok", "lang": "kn-IN", "reference": "ಮಳೆ ಬಂದಾಗ ನಾವು ಕೊಡೆ ಹಿಡಿಯುತ್ತೇವೆ.", "read_as": "ಮಳೆ ಬಂದಾಗ ನಾವು ಕೊಡೆ ಹಿಡಿಯುತ್ತೇವೆ", "errors": []}
+{"id": "kn-x02-m", "lang": "kn-IN", "reference": "ಮಳೆ ಬಂದಾಗ ನಾವು ಕೊಡೆ ಹಿಡಿಯುತ್ತೇವೆ.", "read_as": "ಮಳೆ ಬಂದಾಗ ನಾವು ಕೋಡೆ ಹಿಡಿಯುತ್ತೇವೆ", "errors": [{"index": 3, "type": "substitution", "said": "ಕೋಡೆ"}]}
+{"id": "kn-x02-d", "lang": "kn-IN", "reference": "ಮಳೆ ಬಂದಾಗ ನಾವು ಕೊಡೆ ಹಿಡಿಯುತ್ತೇವೆ.", "read_as": "ಮಳೆ ಬಂದಾಗ ನಾವು ಮೀನು ಹಿಡಿಯುತ್ತೇವೆ", "errors": [{"index": 3, "type": "substitution", "said": "ಮೀನು"}]}
+{"id": "kn-x03-ok", "lang": "kn-IN", "reference": "ಹಕ್ಕಿಗಳು ಆಕಾಶದಲ್ಲಿ ಹಾರುತ್ತವೆ.", "read_as": "ಹಕ್ಕಿಗಳು ಆಕಾಶದಲ್ಲಿ ಹಾರುತ್ತವೆ", "errors": []}
+{"id": "kn-x03-m", "lang": "kn-IN", "reference": "ಹಕ್ಕಿಗಳು ಆಕಾಶದಲ್ಲಿ ಹಾರುತ್ತವೆ.", "read_as": "ಹಕ್ಕಿಗಳು ಆಕಾಶದಲ್ಲಿ ಹರಿಯುತ್ತವೆ", "errors": [{"index": 2, "type": "substitution", "said": "ಹರಿಯುತ್ತವೆ"}]}
+{"id": "kn-x03-d", "lang": "kn-IN", "reference": "ಹಕ್ಕಿಗಳು ಆಕಾಶದಲ್ಲಿ ಹಾರುತ್ತವೆ.", "read_as": "ಹಕ್ಕಿಗಳು ಆಕಾಶದಲ್ಲಿ ಕುಡಿಯುತ್ತವೆ", "errors": [{"index": 2, "type": "substitution", "said": "ಕುಡಿಯುತ್ತವೆ"}]}
+{"id": "kn-x04-ok", "lang": "kn-IN", "reference": "ನಾವು ಬೆಳಿಗ್ಗೆ ಹಲ್ಲು ಉಜ್ಜುತ್ತೇವೆ.", "read_as": "ನಾವು ಬೆಳಿಗ್ಗೆ ಹಲ್ಲು ಉಜ್ಜುತ್ತೇವೆ", "errors": []}
+{"id": "kn-x04-m", "lang": "kn-IN", "reference": "ನಾವು ಬೆಳಿಗ್ಗೆ ಹಲ್ಲು ಉಜ್ಜುತ್ತೇವೆ.", "read_as": "ನಾವು ಬೆಳಿಗ್ಗೆ ಹಳ್ಳ ಉಜ್ಜುತ್ತೇವೆ", "errors": [{"index": 2, "type": "substitution", "said": "ಹಳ್ಳ"}]}
+{"id": "kn-x04-d", "lang": "kn-IN", "reference": "ನಾವು ಬೆಳಿಗ್ಗೆ ಹಲ್ಲು ಉಜ್ಜುತ್ತೇವೆ.", "read_as": "ನಾವು ಬೆಳಿಗ್ಗೆ ಮರ ಉಜ್ಜುತ್ತೇವೆ", "errors": [{"index": 2, "type": "substitution", "said": "ಮರ"}]}
+{"id": "kn-x05-ok", "lang": "kn-IN", "reference": "ರೈತ ಹೊಲದಲ್ಲಿ ಬೀಜ ಬಿತ್ತುತ್ತಾನೆ.", "read_as": "ರೈತ ಹೊಲದಲ್ಲಿ ಬೀಜ ಬಿತ್ತುತ್ತಾನೆ", "errors": []}
+{"id": "kn-x05-m", "lang": "kn-IN", "reference": "ರೈತ ಹೊಲದಲ್ಲಿ ಬೀಜ ಬಿತ್ತುತ್ತಾನೆ.", "read_as": "ರೈತ ಹೊಲದಲ್ಲಿ ಬೀಗ ಬಿತ್ತುತ್ತಾನೆ", "errors": [{"index": 2, "type": "substitution", "said": "ಬೀಗ"}]}
+{"id": "kn-x05-d", "lang": "kn-IN", "reference": "ರೈತ ಹೊಲದಲ್ಲಿ ಬೀಜ ಬಿತ್ತುತ್ತಾನೆ.", "read_as": "ರೈತ ಹೊಲದಲ್ಲಿ ಕುರ್ಚಿ ಬಿತ್ತುತ್ತಾನೆ", "errors": [{"index": 2, "type": "substitution", "said": "ಕುರ್ಚಿ"}]}
+{"id": "kn-x06-ok", "lang": "kn-IN", "reference": "ಅಮ್ಮ ಅಡುಗೆ ಮನೆಯಲ್ಲಿ ಅನ್ನ ಮಾಡುತ್ತಾರೆ.", "read_as": "ಅಮ್ಮ ಅಡುಗೆ ಮನೆಯಲ್ಲಿ ಅನ್ನ ಮಾಡುತ್ತಾರೆ", "errors": []}
+{"id": "kn-x06-m", "lang": "kn-IN", "reference": "ಅಮ್ಮ ಅಡುಗೆ ಮನೆಯಲ್ಲಿ ಅನ್ನ ಮಾಡುತ್ತಾರೆ.", "read_as": "ಅಮ್ಮ ಅಡುಗೆ ಮನೆಯಲ್ಲಿ ಅಣ್ಣ ಮಾಡುತ್ತಾರೆ", "errors": [{"index": 3, "type": "substitution", "said": "ಅಣ್ಣ"}]}
+{"id": "kn-x06-d", "lang": "kn-IN", "reference": "ಅಮ್ಮ ಅಡುಗೆ ಮನೆಯಲ್ಲಿ ಅನ್ನ ಮಾಡುತ್ತಾರೆ.", "read_as": "ಅಮ್ಮ ಅಡುಗೆ ಮನೆಯಲ್ಲಿ ಬಟ್ಟೆ ಮಾಡುತ್ತಾರೆ", "errors": [{"index": 3, "type": "substitution", "said": "ಬಟ್ಟೆ"}]}
+{"id": "kn-x07-ok", "lang": "kn-IN", "reference": "ಮಕ್ಕಳು ಮೈದಾನದಲ್ಲಿ ಚೆಂಡು ಆಡುತ್ತಾರೆ.", "read_as": "ಮಕ್ಕಳು ಮೈದಾನದಲ್ಲಿ ಚೆಂಡು ಆಡುತ್ತಾರೆ", "errors": []}
+{"id": "kn-x07-m", "lang": "kn-IN", "reference": "ಮಕ್ಕಳು ಮೈದಾನದಲ್ಲಿ ಚೆಂಡು ಆಡುತ್ತಾರೆ.", "read_as": "ಮಕ್ಕಳು ಮೈದಾನದಲ್ಲಿ ಕೆಂಡ ಆಡುತ್ತಾರೆ", "errors": [{"index": 2, "type": "substitution", "said": "ಕೆಂಡ"}]}
+{"id": "kn-x07-d", "lang": "kn-IN", "reference": "ಮಕ್ಕಳು ಮೈದಾನದಲ್ಲಿ ಚೆಂಡು ಆಡುತ್ತಾರೆ.", "read_as": "ಮಕ್ಕಳು ಮೈದಾನದಲ್ಲಿ ಹೂವು ಆಡುತ್ತಾರೆ", "errors": [{"index": 2, "type": "substitution", "said": "ಹೂವು"}]}
+{"id": "kn-x08-ok", "lang": "kn-IN", "reference": "ತೋಟದಲ್ಲಿ ಹೂವು ಅರಳುತ್ತದೆ.", "read_as": "ತೋಟದಲ್ಲಿ ಹೂವು ಅರಳುತ್ತದೆ", "errors": []}
+{"id": "kn-x08-m", "lang": "kn-IN", "reference": "ತೋಟದಲ್ಲಿ ಹೂವು ಅರಳುತ್ತದೆ.", "read_as": "ತೋಟದಲ್ಲಿ ಹೂಳು ಅರಳುತ್ತದೆ", "errors": [{"index": 1, "type": "substitution", "said": "ಹೂಳು"}]}
+{"id": "kn-x08-d", "lang": "kn-IN", "reference": "ತೋಟದಲ್ಲಿ ಹೂವು ಅರಳುತ್ತದೆ.", "read_as": "ತೋಟದಲ್ಲಿ ಗಡಿಯಾರ ಅರಳುತ್ತದೆ", "errors": [{"index": 1, "type": "substitution", "said": "ಗಡಿಯಾರ"}]}
+{"id": "kn-x09-ok", "lang": "kn-IN", "reference": "ಬಸ್ಸು ರಸ್ತೆಯಲ್ಲಿ ಓಡುತ್ತದೆ.", "read_as": "ಬಸ್ಸು ರಸ್ತೆಯಲ್ಲಿ ಓಡುತ್ತದೆ", "errors": []}
+{"id": "kn-x09-m", "lang": "kn-IN", "reference": "ಬಸ್ಸು ರಸ್ತೆಯಲ್ಲಿ ಓಡುತ್ತದೆ.", "read_as": "ಬಸ್ಸು ರೊಟ್ಟಿಯಲ್ಲಿ ಓಡುತ್ತದೆ", "errors": [{"index": 1, "type": "substitution", "said": "ರೊಟ್ಟಿಯಲ್ಲಿ"}]}
+{"id": "kn-x09-d", "lang": "kn-IN", "reference": "ಬಸ್ಸು ರಸ್ತೆಯಲ್ಲಿ ಓಡುತ್ತದೆ.", "read_as": "ಬಸ್ಸು ಮೋಡದಲ್ಲಿ ಓಡುತ್ತದೆ", "errors": [{"index": 1, "type": "substitution", "said": "ಮೋಡದಲ್ಲಿ"}]}
+{"id": "kn-x10-ok", "lang": "kn-IN", "reference": "ಅಜ್ಜ ಕನ್ನಡಕ ಹಾಕಿಕೊಂಡು ಪತ್ರಿಕೆ ಓದುತ್ತಾರೆ.", "read_as": "ಅಜ್ಜ ಕನ್ನಡಕ ಹಾಕಿಕೊಂಡು ಪತ್ರಿಕೆ ಓದುತ್ತಾರೆ", "errors": []}
+{"id": "kn-x10-m", "lang": "kn-IN", "reference": "ಅಜ್ಜ ಕನ್ನಡಕ ಹಾಕಿಕೊಂಡು ಪತ್ರಿಕೆ ಓದುತ್ತಾರೆ.", "read_as": "ಅಜ್ಜ ಕನ್ನಡಕ ಹಾಕಿಕೊಂಡು ಪತ್ತೆ ಓದುತ್ತಾರೆ", "errors": [{"index": 3, "type": "substitution", "said": "ಪತ್ತೆ"}]}
+{"id": "kn-x10-d", "lang": "kn-IN", "reference": "ಅಜ್ಜ ಕನ್ನಡಕ ಹಾಕಿಕೊಂಡು ಪತ್ರಿಕೆ ಓದುತ್ತಾರೆ.", "read_as": "ಅಜ್ಜ ಕನ್ನಡಕ ಹಾಕಿಕೊಂಡು ನದಿ ಓದುತ್ತಾರೆ", "errors": [{"index": 3, "type": "substitution", "said": "ನದಿ"}]}
+{"id": "ta-x01-ok", "lang": "ta-IN", "reference": "பசு பால் தருகிறது.", "read_as": "பசு பால் தருகிறது", "errors": []}
+{"id": "ta-x01-m", "lang": "ta-IN", "reference": "பசு பால் தருகிறது.", "read_as": "பசு பல் தருகிறது", "errors": [{"index": 1, "type": "substitution", "said": "பல்"}]}
+{"id": "ta-x01-d", "lang": "ta-IN", "reference": "பசு பால் தருகிறது.", "read_as": "பசு கதவு தருகிறது", "errors": [{"index": 1, "type": "substitution", "said": "கதவு"}]}
+{"id": "ta-x02-ok", "lang": "ta-IN", "reference": "மழை பெய்யும்போது குடை பிடிக்கிறோம்.", "read_as": "மழை பெய்யும்போது குடை பிடிக்கிறோம்", "errors": []}
+{"id": "ta-x02-m", "lang": "ta-IN", "reference": "மழை பெய்யும்போது குடை பிடிக்கிறோம்.", "read_as": "மழை பெய்யும்போது குடல் பிடிக்கிறோம்", "errors": [{"index": 2, "type": "substitution", "said": "குடல்"}]}
+{"id": "ta-x02-d", "lang": "ta-IN", "reference": "மழை பெய்யும்போது குடை பிடிக்கிறோம்.", "read_as": "மழை பெய்யும்போது மீன் பிடிக்கிறோம்", "errors": [{"index": 2, "type": "substitution", "said": "மீன்"}]}
+{"id": "ta-x03-ok", "lang": "ta-IN", "reference": "பறவைகள் வானத்தில் பறக்கின்றன.", "read_as": "பறவைகள் வானத்தில் பறக்கின்றன", "errors": []}
+{"id": "ta-x03-m", "lang": "ta-IN", "reference": "பறவைகள் வானத்தில் பறக்கின்றன.", "read_as": "பறவைகள் வானத்தில் பிறக்கின்றன", "errors": [{"index": 2, "type": "substitution", "said": "பிறக்கின்றன"}]}
+{"id": "ta-x03-d", "lang": "ta-IN", "reference": "பறவைகள் வானத்தில் பறக்கின்றன.", "read_as": "பறவைகள் வானத்தில் குடிக்கின்றன", "errors": [{"index": 2, "type": "substitution", "said": "குடிக்கின்றன"}]}
+{"id": "ta-x04-ok", "lang": "ta-IN", "reference": "காலையில் பல் துலக்குகிறோம்.", "read_as": "காலையில் பல் துலக்குகிறோம்", "errors": []}
+{"id": "ta-x04-m", "lang": "ta-IN", "reference": "காலையில் பல் துலக்குகிறோம்.", "read_as": "காலையில் பால் துலக்குகிறோம்", "errors": [{"index": 1, "type": "substitution", "said": "பால்"}]}
+{"id": "ta-x04-d", "lang": "ta-IN", "reference": "காலையில் பல் துலக்குகிறோம்.", "read_as": "காலையில் நாற்காலி துலக்குகிறோம்", "errors": [{"index": 1, "type": "substitution", "said": "நாற்காலி"}]}
+{"id": "ta-x05-ok", "lang": "ta-IN", "reference": "விவசாயி வயலில் விதை விதைக்கிறார்.", "read_as": "விவசாயி வயலில் விதை விதைக்கிறார்", "errors": []}
+{"id": "ta-x05-m", "lang": "ta-IN", "reference": "விவசாயி வயலில் விதை விதைக்கிறார்.", "read_as": "விவசாயி வயலில் வீதி விதைக்கிறார்", "errors": [{"index": 2, "type": "substitution", "said": "வீதி"}]}
+{"id": "ta-x05-d", "lang": "ta-IN", "reference": "விவசாயி வயலில் விதை விதைக்கிறார்.", "read_as": "விவசாயி வயலில் புத்தகம் விதைக்கிறார்", "errors": [{"index": 2, "type": "substitution", "said": "புத்தகம்"}]}
+{"id": "ta-x06-ok", "lang": "ta-IN", "reference": "அம்மா சமையலறையில் சோறு சமைக்கிறார்.", "read_as": "அம்மா சமையலறையில் சோறு சமைக்கிறார்", "errors": []}
+{"id": "ta-x06-m", "lang": "ta-IN", "reference": "அம்மா சமையலறையில் சோறு சமைக்கிறார்.", "read_as": "அம்மா சமையலறையில் சேறு சமைக்கிறார்", "errors": [{"index": 2, "type": "substitution", "said": "சேறு"}]}
+{"id": "ta-x06-d", "lang": "ta-IN", "reference": "அம்மா சமையலறையில் சோறு சமைக்கிறார்.", "read_as": "அம்மா சமையலறையில் நாய் சமைக்கிறார்", "errors": [{"index": 2, "type": "substitution", "said": "நாய்"}]}
+{"id": "ta-x07-ok", "lang": "ta-IN", "reference": "குழந்தைகள் மைதானத்தில் பந்து விளையாடுகிறார்கள்.", "read_as": "குழந்தைகள் மைதானத்தில் பந்து விளையாடுகிறார்கள்", "errors": []}
+{"id": "ta-x07-m", "lang": "ta-IN", "reference": "குழந்தைகள் மைதானத்தில் பந்து விளையாடுகிறார்கள்.", "read_as": "குழந்தைகள் மைதானத்தில் பந்தம் விளையாடுகிறார்கள்", "errors": [{"index": 2, "type": "substitution", "said": "பந்தம்"}]}
+{"id": "ta-x07-d", "lang": "ta-IN", "reference": "குழந்தைகள் மைதானத்தில் பந்து விளையாடுகிறார்கள்.", "read_as": "குழந்தைகள் மைதானத்தில் வானம் விளையாடுகிறார்கள்", "errors": [{"index": 2, "type": "substitution", "said": "வானம்"}]}
+{"id": "ta-x08-ok", "lang": "ta-IN", "reference": "இரவில் வானத்தில் நிலா தெரிகிறது.", "read_as": "இரவில் வானத்தில் நிலா தெரிகிறது", "errors": []}
+{"id": "ta-x08-m", "lang": "ta-IN", "reference": "இரவில் வானத்தில் நிலா தெரிகிறது.", "read_as": "இரவில் வானத்தில் நிலம் தெரிகிறது", "errors": [{"index": 2, "type": "substitution", "said": "நிலம்"}]}
+{"id": "ta-x08-d", "lang": "ta-IN", "reference": "இரவில் வானத்தில் நிலா தெரிகிறது.", "read_as": "இரவில் வானத்தில் பையன் தெரிகிறது", "errors": [{"index": 2, "type": "substitution", "said": "பையன்"}]}
+{"id": "ta-x09-ok", "lang": "ta-IN", "reference": "பேருந்து சாலையில் ஓடுகிறது.", "read_as": "பேருந்து சாலையில் ஓடுகிறது", "errors": []}
+{"id": "ta-x09-m", "lang": "ta-IN", "reference": "பேருந்து சாலையில் ஓடுகிறது.", "read_as": "பேருந்து சோலையில் ஓடுகிறது", "errors": [{"index": 1, "type": "substitution", "said": "சோலையில்"}]}
+{"id": "ta-x09-d", "lang": "ta-IN", "reference": "பேருந்து சாலையில் ஓடுகிறது.", "read_as": "பேருந்து மேகத்தில் ஓடுகிறது", "errors": [{"index": 1, "type": "substitution", "said": "மேகத்தில்"}]}
+{"id": "ta-x10-ok", "lang": "ta-IN", "reference": "பாட்டி கதை சொல்கிறார்.", "read_as": "பாட்டி கதை சொல்கிறார்", "errors": []}
+{"id": "ta-x10-m", "lang": "ta-IN", "reference": "பாட்டி கதை சொல்கிறார்.", "read_as": "பாட்டி கடை சொல்கிறார்", "errors": [{"index": 1, "type": "substitution", "said": "கடை"}]}
+{"id": "ta-x10-d", "lang": "ta-IN", "reference": "பாட்டி கதை சொல்கிறார்.", "read_as": "பாட்டி அரிசி சொல்கிறார்", "errors": [{"index": 1, "type": "substitution", "said": "அரிசி"}]}

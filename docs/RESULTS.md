@@ -37,3 +37,19 @@ Our pass line was catch ≥ 70% and false flag ≤ 10%. Every condition passes i
 - **Small sample.** 20 planted mistakes per language: the 95% interval on a 95% catch rate is roughly 76–99%. The seven conditions reuse the same clips, so they are not independent tests and should not be pooled.
 - **Planted mistakes are of our design** (similar-sounding swaps and skips). Real children make other errors, such as half-said words and long pauses.
 - **Passages were written by us, not reviewed by a native speaker.** They are a pipeline test, not teaching material.
+
+## Context-autocorrection experiment
+
+The base run missed the same two swaps in every condition, both corrected to the word the sentence predicts. To test whether context is the cause, we built 30 sentence frames (10 per language), each with one strongly predicted word, and read each three ways with the same voice: correctly (control), with a near-identical sound swapped in (**near sound**, e.g. दूध → दूर), and with a distant, equally wrong word swapped in (**distant**, e.g. दूध → किताब). Prediction written before the run: near-sound swaps are caught less often than distant ones. Run with `scripts/build_context_passages.py`, `scripts/go_no_go.py --passages data/go_no_go/passages.context.jsonl --variant context` and `scripts/context_analysis.py`.
+
+| Swap | Hindi | Kannada | Tamil | All |
+|---|---|---|---|---|
+| Near sound | 8/10 | 9/10 | 8/9 | **25/29 (86%)**, interval 69–95% |
+| Distant | 10/10 | 10/10 | 9/9 | **29/29 (100%)**, interval 88–100% |
+
+- All 4 misses are near-sound swaps, and each was silently corrected to the contextually expected word (दूर → दूध, बढ़ते → पढ़ते, ಅಣ್ಣ → ಅನ್ನ, கடை → கதை). No distant swap was missed.
+- The direction matches the prediction, but **the difference is not statistically conclusive** (4 vs 0 misses, Fisher exact two-sided p = 0.11, 29 swaps per condition). Read it as suggestive evidence that autocorrection depends on both acoustic closeness and context, not as proof.
+- The control (sentences read correctly) had 4 false flags in about 132 words in strict mode and 2 in loose mode.
+- One clip (`ta-x01-m`) was blocked by Cloudflare with an HTTP 403 HTML page on every attempt, while the same sentence's other clips went through. It looks like a false positive on that file's bytes. It is excluded, and so is its frame from the comparison (29 near-sound pairs, not 30).
+
+Extra limits for this experiment: the sentences and swaps were written by us and have not been reviewed by a native speaker, so some "near sound" swaps may be less close than intended, and the sentence frames are simple present-tense sentences, which are the easiest case for a language model to predict.

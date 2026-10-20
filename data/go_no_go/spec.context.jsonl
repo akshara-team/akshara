@@ -1,0 +1,30 @@
+{"id": "hi-x01", "lang": "hi-IN", "reference": "गाय हमें दूध देती है।", "target": "दूध", "minimal": "दूर", "distant": "किताब"}
+{"id": "hi-x02", "lang": "hi-IN", "reference": "बच्चे स्कूल में किताब पढ़ते हैं।", "target": "पढ़ते", "minimal": "बढ़ते", "distant": "सोते"}
+{"id": "hi-x03", "lang": "hi-IN", "reference": "बारिश में हम छाता लगाते हैं।", "target": "छाता", "minimal": "काता", "distant": "तारा"}
+{"id": "hi-x04", "lang": "hi-IN", "reference": "रात को आसमान में चाँद निकलता है।", "target": "चाँद", "minimal": "बाँध", "distant": "पानी"}
+{"id": "hi-x05", "lang": "hi-IN", "reference": "किसान खेत में हल चलाता है।", "target": "हल", "minimal": "फल", "distant": "दर"}
+{"id": "hi-x06", "lang": "hi-IN", "reference": "हम प्यास लगने पर पानी पीते हैं।", "target": "पानी", "minimal": "रानी", "distant": "कपड़ा"}
+{"id": "hi-x07", "lang": "hi-IN", "reference": "पक्षी आसमान में उड़ते हैं।", "target": "उड़ते", "minimal": "जुड़ते", "distant": "तैरते"}
+{"id": "hi-x08", "lang": "hi-IN", "reference": "मेरी बहन रोज़ चित्र बनाती है।", "target": "चित्र", "minimal": "मित्र", "distant": "रोटी"}
+{"id": "hi-x09", "lang": "hi-IN", "reference": "रात में हम बिस्तर पर सोते हैं।", "target": "सोते", "minimal": "रोते", "distant": "तैरते"}
+{"id": "hi-x10", "lang": "hi-IN", "reference": "रविवार को स्कूल बंद रहता है।", "target": "बंद", "minimal": "चंद", "distant": "गरम"}
+{"id": "kn-x01", "lang": "kn-IN", "reference": "ಹಸು ಹಾಲು ಕೊಡುತ್ತದೆ.", "target": "ಹಾಲು", "minimal": "ಹಾರು", "distant": "ಬಾಗಿಲು"}
+{"id": "kn-x02", "lang": "kn-IN", "reference": "ಮಳೆ ಬಂದಾಗ ನಾವು ಕೊಡೆ ಹಿಡಿಯುತ್ತೇವೆ.", "target": "ಕೊಡೆ", "minimal": "ಕೋಡೆ", "distant": "ಮೀನು"}
+{"id": "kn-x03", "lang": "kn-IN", "reference": "ಹಕ್ಕಿಗಳು ಆಕಾಶದಲ್ಲಿ ಹಾರುತ್ತವೆ.", "target": "ಹಾರುತ್ತವೆ", "minimal": "ಹರಿಯುತ್ತವೆ", "distant": "ಕುಡಿಯುತ್ತವೆ"}
+{"id": "kn-x04", "lang": "kn-IN", "reference": "ನಾವು ಬೆಳಿಗ್ಗೆ ಹಲ್ಲು ಉಜ್ಜುತ್ತೇವೆ.", "target": "ಹಲ್ಲು", "minimal": "ಹಳ್ಳ", "distant": "ಮರ"}
+{"id": "kn-x05", "lang": "kn-IN", "reference": "ರೈತ ಹೊಲದಲ್ಲಿ ಬೀಜ ಬಿತ್ತುತ್ತಾನೆ.", "target": "ಬೀಜ", "minimal": "ಬೀಗ", "distant": "ಕುರ್ಚಿ"}
+{"id": "kn-x06", "lang": "kn-IN", "reference": "ಅಮ್ಮ ಅಡುಗೆ ಮನೆಯಲ್ಲಿ ಅನ್ನ ಮಾಡುತ್ತಾರೆ.", "target": "ಅನ್ನ", "minimal": "ಅಣ್ಣ", "distant": "ಬಟ್ಟೆ"}
+{"id": "kn-x07", "lang": "kn-IN", "reference": "ಮಕ್ಕಳು ಮೈದಾನದಲ್ಲಿ ಚೆಂಡು ಆಡುತ್ತಾರೆ.", "target": "ಚೆಂಡು", "minimal": "ಕೆಂಡ", "distant": "ಹೂವು"}
+{"id": "kn-x08", "lang": "kn-IN", "reference": "ತೋಟದಲ್ಲಿ ಹೂವು ಅರಳುತ್ತದೆ.", "target": "ಹೂವು", "minimal": "ಹೂಳು", "distant": "ಗಡಿಯಾರ"}
+{"id": "kn-x09", "lang": "kn-IN", "reference": "ಬಸ್ಸು ರಸ್ತೆಯಲ್ಲಿ ಓಡುತ್ತದೆ.", "target": "ರಸ್ತೆಯಲ್ಲಿ", "minimal": "ರೊಟ್ಟಿಯಲ್ಲಿ", "distant": "ಮೋಡದಲ್ಲಿ"}
+{"id": "kn-x10", "lang": "kn-IN", "reference": "ಅಜ್ಜ ಕನ್ನಡಕ ಹಾಕಿಕೊಂಡು ಪತ್ರಿಕೆ ಓದುತ್ತಾರೆ.", "target": "ಪತ್ರಿಕೆ", "minimal": "ಪತ್ತೆ", "distant": "ನದಿ"}
+{"id": "ta-x01", "lang": "ta-IN", "reference": "பசு பால் தருகிறது.", "target": "பால்", "minimal": "பல்", "distant": "கதவு"}
+{"id": "ta-x02", "lang": "ta-IN", "reference": "மழை பெய்யும்போது குடை பிடிக்கிறோம்.", "target": "குடை", "minimal": "குடல்", "distant": "மீன்"}
+{"id": "ta-x03", "lang": "ta-IN", "reference": "பறவைகள் வானத்தில் பறக்கின்றன.", "target": "பறக்கின்றன", "minimal": "பிறக்கின்றன", "distant": "குடிக்கின்றன"}
+{"id": "ta-x04", "lang": "ta-IN", "reference": "காலையில் பல் துலக்குகிறோம்.", "target": "பல்", "minimal": "பால்", "distant": "நாற்காலி"}
+{"id": "ta-x05", "lang": "ta-IN", "reference": "விவசாயி வயலில் விதை விதைக்கிறார்.", "target": "விதை", "minimal": "வீதி", "distant": "புத்தகம்"}
+{"id": "ta-x06", "lang": "ta-IN", "reference": "அம்மா சமையலறையில் சோறு சமைக்கிறார்.", "target": "சோறு", "minimal": "சேறு", "distant": "நாய்"}
+{"id": "ta-x07", "lang": "ta-IN", "reference": "குழந்தைகள் மைதானத்தில் பந்து விளையாடுகிறார்கள்.", "target": "பந்து", "minimal": "பந்தம்", "distant": "வானம்"}
+{"id": "ta-x08", "lang": "ta-IN", "reference": "இரவில் வானத்தில் நிலா தெரிகிறது.", "target": "நிலா", "minimal": "நிலம்", "distant": "பையன்"}
+{"id": "ta-x09", "lang": "ta-IN", "reference": "பேருந்து சாலையில் ஓடுகிறது.", "target": "சாலையில்", "minimal": "சோலையில்", "distant": "மேகத்தில்"}
+{"id": "ta-x10", "lang": "ta-IN", "reference": "பாட்டி கதை சொல்கிறார்.", "target": "கதை", "minimal": "கடை", "distant": "அரிசி"}

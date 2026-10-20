@@ -20,7 +20,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from akshara.align import score
-from akshara.stt import transcribe
+from akshara.stt import STTError, transcribe
 from akshara.text import words
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -122,6 +122,7 @@ def main() -> None:
 
     stats = {m: defaultdict(new_stats) for m in MODES}
     details = []
+    skipped: list[str] = []
     for row in rows:
         duration = None
         if args.dry_run:
@@ -135,7 +136,12 @@ def main() -> None:
             if duration and duration > MAX_CLIP_S:
                 print(f"skip {row['id']}: {duration:.1f}s is over {MAX_CLIP_S:.0f}s")
                 continue
-            transcript = get_transcript(row, audio)
+            try:
+                transcript = get_transcript(row, audio)
+            except STTError as e:
+                print(f"skip {row['id']}: {str(e)[:90]}")
+                skipped.append(row["id"])
+                continue
 
         planted = {e["index"] for e in row.get("errors", [])}
         detail = {"id": row["id"], "lang": row["lang"], "transcript": transcript}
@@ -168,7 +174,11 @@ def main() -> None:
         name = "go_no_go_report.json" if args.variant == "base" else f"go_no_go_{args.variant}.json"
         out = RESULTS / name
         out.write_text(
-            json.dumps({"summary": summary, "passages": details}, ensure_ascii=False, indent=2),
+            json.dumps(
+                {"summary": summary, "skipped": skipped, "passages": details},
+                ensure_ascii=False,
+                indent=2,
+            ),
             encoding="utf-8",
         )
         print(f"\nwrote {out.relative_to(ROOT)}")
