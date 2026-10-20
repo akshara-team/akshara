@@ -8,6 +8,7 @@ from collections import defaultdict, deque
 from pathlib import Path
 
 from fastapi import FastAPI, File, Form, Header, HTTPException, Request, UploadFile
+from fastapi.responses import FileResponse
 
 from akshara import passages as passage_bank
 from akshara.api.schemas import AttemptOut, LearnerSummary
@@ -19,7 +20,8 @@ from akshara.store import Store
 
 log = logging.getLogger("akshara")
 RATE_LIMIT, RATE_WINDOW_S = 30, 60.0
-PASSAGES = ROOT / "data" / "go_no_go" / "passages.jsonl"
+PASSAGES = ROOT / "data" / "open_passages" / "passages.jsonl"
+INDEX = Path(__file__).parent / "static" / "index.html"
 
 
 def build_stt(settings: Settings) -> SpeechToText:
@@ -54,6 +56,18 @@ def create_app(
     @app.get("/health")
     def health() -> dict:
         return {"status": "ok", "provider": stt.name, "passages": len(bank)}
+
+    @app.get("/")
+    def index() -> FileResponse:
+        return FileResponse(INDEX)
+
+    @app.get("/v1/passages")
+    def list_passages(lang: str | None = None) -> list[dict]:
+        return [
+            {"id": p["id"], "language": p["lang"], "text": p["reference"]}
+            for p in bank.values()
+            if lang in (None, p["lang"])
+        ]
 
     @app.get("/v1/passages/{passage_id}")
     def get_passage(passage_id: str) -> dict:

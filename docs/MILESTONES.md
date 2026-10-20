@@ -30,9 +30,9 @@ Check off as each one is done and verified. Dates are targets; deadline Nov 10, 
 ## M3. Product (Oct 27–Nov 1)
 
 - [ ] "Check this word" state in the service
-- [ ] Browser reading screen: mic, green / red / uncertain words
-- [ ] Per-attempt trace view
-- [ ] Class summary view
+- [x] Browser reading screen: mic or WAV upload, green / red words (uncertain state still to add); checked in a browser with a replayed reading, microphone path not yet tried live
+- [x] Per-attempt trace view (word, what was heard, result)
+- [x] Class summary view
 - [ ] Runs end to end on live Prisma and Timbre, including 8 kHz mode
 - [ ] First usable version (v0.1) tagged
 

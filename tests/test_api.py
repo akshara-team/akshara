@@ -97,3 +97,14 @@ def test_rate_limit():
 @pytest.mark.parametrize("path", ["/v1/passages/zzz", "/v1/attempts/zzz"])
 def test_unknown_is_404(path):
     assert client(FixtureSTT({})).get(path).status_code == 404
+
+
+def test_list_passages_filters_by_language():
+    c = client(FixtureSTT({}))
+    assert [p["id"] for p in c.get("/v1/passages?lang=hi-IN").json()] == ["p1"]
+    assert c.get("/v1/passages?lang=ta-IN").json() == []
+
+
+def test_reading_screen_is_served():
+    r = client(FixtureSTT({})).get("/")
+    assert r.status_code == 200 and "Akshara" in r.text
