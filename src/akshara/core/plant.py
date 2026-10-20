@@ -5,6 +5,7 @@ Error types:
     near     one akshara changed to a close sound (aspiration, voicing, vowel length, ...)
     distant  replaced by an unrelated word from the same language
     half     only the first part of the word is read
+    repeat, selfcorrect   fluency events (see DISFLUENCY): the word twice, or a slip then the word
 
 The result is the text a reader would say (`read_as`) and where each error is, so a transcript can
 be scored against the truth. Mutated words may not be real words; children produce those too.
@@ -16,6 +17,9 @@ import unicodedata
 from akshara.core.text import loose_key, words
 
 TYPES = ("skip", "near", "distant", "half")
+# Fluency events, not wrong words: the reader says more than the text, so a verbatim transcript
+# should keep the extra word. They are scored as "kept" or "lost", not as flagged mistakes.
+DISFLUENCY = ("repeat", "selfcorrect")
 
 # Devanagari pairs of close sounds; Kannada follows the same layout, 0x380 higher.
 _DEV_PAIRS = "कख गघ चछ जझ टठ डढ तथ दध पफ बभ कग तद पब सश तट"
@@ -91,12 +95,17 @@ def plant(
                 options += [(i, p) for p in same[:50]]
             elif kind == "half" and (h := half_word(w)):
                 options.append((i, h))
+            elif kind == "repeat":
+                options.append((i, f"{w} {w}"))
+            elif kind == "selfcorrect":
+                options += [(i, f"{c} {w}") for c in near_candidates(w, lang)]
         if not options:
             return None
         i, said = rng.choice(options)
         used.add(i)
         changes[i] = (kind, said)
     read_as = [changes[i][1] if i in changes else w for i, w in enumerate(ref)]
+    # a skip is the only change that leaves the word unsaid: its `said` is None
     errors = [
         {"index": i, "type": k, **({"said": s} if s else {})}
         for i, (k, s) in sorted(changes.items())

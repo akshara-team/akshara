@@ -47,3 +47,21 @@ def test_errors_are_never_adjacent():
 
 def test_unplaceable_returns_none():
     assert plant("w", "hi-IN", "राम", ["skip", "near"], POOL) is None
+
+
+def test_repeat_and_selfcorrect_keep_the_story_words_in_order():
+    from akshara.core.align import insertion_near
+
+    for kind in ("repeat", "selfcorrect"):
+        p = plant("d", "hi-IN", HI, [kind], POOL, seed=3)
+        assert p is not None
+        i = p["errors"][0]["index"]
+        s = score(HI, p["read_as"], loose=True)
+        assert s.flagged_indexes == []  # every story word was still read
+        assert insertion_near(s.marks, i)
+
+
+def test_insertion_near_is_false_for_a_clean_reading():
+    from akshara.core.align import insertion_near
+
+    assert not insertion_near(score(HI, HI, loose=True).marks, 2)

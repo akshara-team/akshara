@@ -100,3 +100,15 @@ def score(
         duration_s=duration_s,
         flagged_indexes=flagged,  # type: ignore[arg-type]
     )
+
+
+def insertion_near(marks: list[WordMark], index: int) -> bool:
+    """True if an extra spoken word sits right next to story word `index`."""
+    for pos, mk in enumerate(marks):
+        if mk.op == "inserted":
+            around = [
+                m.ref_index for m in marks[max(0, pos - 1) : pos + 2] if m.ref_index is not None
+            ]
+            if index in around:
+                return True
+    return False

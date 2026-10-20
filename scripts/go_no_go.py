@@ -19,7 +19,8 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from akshara.core.align import score
+from akshara.core.align import insertion_near, score
+from akshara.core.plant import DISFLUENCY
 from akshara.core.text import words
 from akshara.providers.prisma import STTError, transcribe
 
@@ -29,7 +30,7 @@ RESULTS = ROOT / "results"
 CACHE = RESULTS / "transcripts"
 MAX_CLIP_S = 30.0
 CATCH_PASS, FALSE_FLAG_PASS = 0.70, 0.10
-ERROR_TYPES = ("skip", "substitution", "near", "distant", "half")
+ERROR_TYPES = ("skip", "substitution", "near", "distant", "half", *DISFLUENCY)
 
 
 def load_passages(path: Path) -> list[dict]:
@@ -105,6 +106,19 @@ def print_table(title: str, summary: dict) -> None:
         )
 
 
+def print_types(summary: dict) -> None:
+    kinds = sorted({k for r in summary.values() for k in r["by_type"]})
+    if not kinds:
+        return
+    print(f"{'lang':<7}" + "".join(f"{k:>14}" for k in kinds))
+    for lang, r in summary.items():
+        cells = []
+        for k in kinds:
+            t = r["by_type"].get(k)
+            cells.append(f"{t['caught']}/{t['planted']}" if t else "-")
+        print(f"{lang:<7}" + "".join(f"{c:>14}" for c in cells))
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--passages", type=Path)
@@ -154,24 +168,26 @@ def main() -> None:
                 skipped.append(row["id"])
                 continue
 
-        planted = {e["index"] for e in row.get("errors", [])}
         kind_at = {e["index"]: e["type"] for e in row.get("errors", [])}
+        planted = {i for i, k in kind_at.items() if k not in DISFLUENCY}
+        fluency = {i for i, k in kind_at.items() if k in DISFLUENCY}
         detail = {"id": row["id"], "lang": row["lang"], "transcript": transcript}
         for mode, loose in MODES.items():
             s = score(row["reference"], transcript, duration, loose=loose)
-            flagged = set(s.flagged_indexes)
+            flagged = set(s.flagged_indexes) - fluency
             caught = planted & flagged
             false_flags = flagged - planted
             st = stats[mode][row["lang"]]
             st["passages"] += 1
             st["planted"] += len(planted)
             st["caught"] += len(caught)
-            st["ok_words"] += s.total_words - len(planted)
+            st["ok_words"] += s.total_words - len(planted) - len(fluency)
             st["false_flags"] += len(false_flags)
             for idx, kind in kind_at.items():
                 t = st["by_type"].setdefault(kind, {"planted": 0, "caught": 0})
                 t["planted"] += 1
-                t["caught"] += idx in flagged
+                # a fluency event is "caught" when the transcript kept the extra word
+                t["caught"] += insertion_near(s.marks, idx) if idx in fluency else idx in flagged
             detail[mode] = {
                 "planted": sorted(planted),
                 "flagged": sorted(flagged),
@@ -184,6 +200,7 @@ def main() -> None:
     summary = {m: summarise(stats[m]) for m in MODES}
     for mode in MODES:
         print_table(f"{args.variant} / {mode}", summary[mode])
+        print_types(summary[mode])
 
     if not args.dry_run and details:
         RESULTS.mkdir(exist_ok=True)

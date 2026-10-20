@@ -8,9 +8,9 @@ different types, 4 read correctly. Same seed, same output.
 
 import hashlib
 import itertools
-import unicodedata
 import json
 import sys
+import unicodedata
 from pathlib import Path
 
 from akshara.core.plant import TYPES, plant
