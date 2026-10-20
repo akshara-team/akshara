@@ -11,3 +11,6 @@ Gnani evaluates and interviews each of us separately, so log what you did. Newes
 
 ## 2026-10-20: honest-limits state
 Service marks words accepted only via a spelling-variant rule as `check` (dashed ? in the screen) and returns a fixed notice with each attempt, because the chunked re-check failed to expose near-sound misreads. 92 tests pass.
+
+## 2026-10-20: live check
+scripts/live_check.py: real app plus Prisma, 3 clips x (clean, 8 kHz), 6 calls. Word marks identical in both conditions, no errors. Microphone path still untried.

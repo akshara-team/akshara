@@ -33,8 +33,8 @@ Check off as each one is done and verified. Dates are targets; deadline Nov 10, 
 - [x] Browser reading screen: mic or WAV upload, green / red words (uncertain state shown as a dashed "?"); checked in a browser with a replayed reading, microphone path not yet tried live
 - [x] Per-attempt trace view (word, what was heard, result)
 - [x] Class summary view
-- [ ] Runs end to end on live Prisma and Timbre, including 8 kHz mode
-- [ ] First usable version (v0.1) tagged
+- [x] Runs end to end on live Prisma (6 calls, `scripts/live_check.py`): one clip per language, clean and 8 kHz phone band, identical word marks in both; Timbre ran earlier when the clips were made
+- [x] First usable version (v0.1) tagged (local tag; push with the next push)
 
 ## M4. Demo and docs (Nov 1–3 for the post, then polish)
 
