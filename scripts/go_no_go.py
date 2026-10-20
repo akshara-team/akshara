@@ -29,6 +29,7 @@ RESULTS = ROOT / "results"
 CACHE = RESULTS / "transcripts"
 MAX_CLIP_S = 30.0
 CATCH_PASS, FALSE_FLAG_PASS = 0.70, 0.10
+ERROR_TYPES = ("skip", "substitution", "near", "distant", "half")
 
 
 def load_passages(path: Path) -> list[dict]:
@@ -41,7 +42,7 @@ def load_passages(path: Path) -> list[dict]:
         for err in row.get("errors", []):
             if not 0 <= err["index"] < n_words:
                 sys.exit(f"{path.name}:{n} {row['id']}: error index {err['index']} out of range")
-            if err["type"] not in ("skip", "substitution"):
+            if err["type"] not in ERROR_TYPES:
                 sys.exit(f"{path.name}:{n} {row['id']}: unknown error type {err['type']!r}")
         rows.append(row)
     return rows
@@ -72,7 +73,14 @@ MODES = {"strict": False, "loose": True}
 
 
 def new_stats() -> dict:
-    return {"passages": 0, "planted": 0, "caught": 0, "ok_words": 0, "false_flags": 0}
+    return {
+        "passages": 0,
+        "planted": 0,
+        "caught": 0,
+        "ok_words": 0,
+        "false_flags": 0,
+        "by_type": {},
+    }
 
 
 def summarise(stats: dict) -> dict:
@@ -144,6 +152,7 @@ def main() -> None:
                 continue
 
         planted = {e["index"] for e in row.get("errors", [])}
+        kind_at = {e["index"]: e["type"] for e in row.get("errors", [])}
         detail = {"id": row["id"], "lang": row["lang"], "transcript": transcript}
         for mode, loose in MODES.items():
             s = score(row["reference"], transcript, duration, loose=loose)
@@ -156,6 +165,10 @@ def main() -> None:
             st["caught"] += len(caught)
             st["ok_words"] += s.total_words - len(planted)
             st["false_flags"] += len(false_flags)
+            for idx, kind in kind_at.items():
+                t = st["by_type"].setdefault(kind, {"planted": 0, "caught": 0})
+                t["planted"] += 1
+                t["caught"] += idx in flagged
             detail[mode] = {
                 "planted": sorted(planted),
                 "flagged": sorted(flagged),
