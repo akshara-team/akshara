@@ -14,3 +14,6 @@ Service marks words accepted only via a spelling-variant rule as `check` (dashed
 
 ## 2026-10-20: live check
 scripts/live_check.py: real app plus Prisma, 3 clips x (clean, 8 kHz), 6 calls. Word marks identical in both conditions, no errors. Microphone path still untried.
+
+## 2026-10-20: demo video
+Built a 60 s silent demo from slides plus two real screenshots (app served offline from cached transcripts, WAV upload through a real browser). Timbre has no English voice, so no narration.

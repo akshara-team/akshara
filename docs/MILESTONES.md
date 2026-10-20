@@ -38,7 +38,7 @@ Check off as each one is done and verified. Dates are targets; deadline Nov 10, 
 
 ## M4. Demo and docs (Nov 1–3 for the post, then polish)
 
-- [ ] 60 s demo video with before/after on the same clip
+- [x] 60 s demo video (`docs/demo/akshara_demo.mp4`, silent, captioned; built by `scripts/make_demo_video.py` from slides, saved results and two screenshots of the real app; no microphone or before/after clip, since the transcriber hides the interesting case)
 - [x] Written explanation, models used, honest limits ([WRITEUP.md](WRITEUP.md))
 - [x] Caption drafts for LinkedIn and X ([CAPTIONS.md](CAPTIONS.md))
 - [ ] Post live by about Nov 3
