@@ -15,9 +15,9 @@ Check off as each one is done and verified. Dates are targets; deadline Nov 10, 
 - [x] Planting for skip, near-sound, distant, half-word, with tests
 - [x] Audio generated for all 90 passages
 - [x] Base condition transcribed and scored, per-type catch table (87 of 90 clips; 3 blocked by a Cloudflare 403); written up in RESULTS.md with the isolated-word control
-- [ ] Phone 8 kHz, noise and child-proxy conditions
-- [ ] Write-up in RESULTS.md with intervals; compare to the first study
-- [x] Repeats and self-corrections: planting, scoring and a 30-passage set built; audio and transcription still to run
+- [x] Phone 8 kHz, noise (5 dB) and child-proxy (+4 semitones) conditions on the open set
+- [x] Write-up in RESULTS.md; compared to the first study
+- [x] Repeats and self-corrections: planting, scoring and a 30-passage set built, audio made and transcribed (12/14 repeats and 14/15 self-corrections kept in the transcript)
 
 ## M2. Mitigation (Oct 23–27)
 
@@ -48,8 +48,8 @@ Check off as each one is done and verified. Dates are targets; deadline Nov 10, 
 
 ## M5. Submit (by Nov 9)
 
-- [ ] Every number in the docs regenerates from cached results
-- [ ] Final check of repo, commits and docs for stray tool names
+- [x] Headline numbers regenerate from cached results (`scripts/check_numbers.py`, run in CI; covers catch counts for every condition, isolated control, pause finder; other figures are in the saved reports)
+- [x] Final check of repo, commits and docs for stray tool names (scan clean on Oct 20; repeat before the last push)
 - [ ] Submission form filled with post link
 - [ ] Submitted before Nov 10, 11:59 PM IST
 

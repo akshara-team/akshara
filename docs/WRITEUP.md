@@ -21,6 +21,8 @@ Skips and clear substitutions are reliable. A single wrong consonant mostly is n
 - **Is it sentence context?** Each changed word was spoken alone. The result was mixed (4 non-word reads, 18 corrected to the original, 17 other), so we cannot separate the transcriber from the synthetic voice.
 - **Chunked re-check.** Cut the audio at pauses and transcribe each piece. With predictions written down first, near-sound catch stayed flat (31% whole vs 28% chunked) and Hindi false flags rose 6 points. It is not in the product.
 
+- **Repeats and self-corrections** are kept in the verbatim transcript (12 of 14 and 14 of 15), so the app can show hesitation.
+
 ## What the product does about it
 It keeps one pass, scores accuracy and words correct per minute, shows a per-word trace, and says on every result that green does not prove a perfect reading. Words accepted only through a spelling-variant rule get a `?` ("check this word").
 
@@ -29,7 +31,7 @@ It keeps one pass, scores accuracy and words correct per minute, shows a per-wor
 - Passages are book descriptions, not graded reading texts, and were not reviewed by native speakers.
 - Samples are small; intervals are wide (near-sound: about 11–36%).
 - The synthetic voice may not pronounce a planted non-word clearly, so the 21% could understate Prisma.
-- Only phone-band audio was run live through the app; noise and child-pitch conditions were run only in the first, smaller study.
+- Phone-band, noisy and child-pitch audio are the same synthetic voices degraded by code, not real phones, classrooms or children. The pattern held in all three (consonant change caught 5–7 of 39).
 - Prisma returns no word timings or confidence, which limits what a second pass can do.
 
 ## Models used

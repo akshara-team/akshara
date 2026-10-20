@@ -78,6 +78,22 @@ False flags on correct words (strict → loose): Hindi 7% → 3%, Kannada 12% �
 
 Extra limits: the planted words are our design and may not match real children's errors; descriptions are blurbs, not story text; the 87-clip sample gives wide intervals (8 of 39 is 21%, interval about 11–36%).
 
+## Open passages under degraded audio, and repeats and self-corrections
+
+Same 90 passages and planted mistakes as the base run, with the clips degraded by code (`scripts/make_variants.py data/open_passages/audio data/open_passages/variants`): 8 kHz phone band, pink noise at 5 dB signal-to-noise, and pitch raised 4 semitones as a rough child stand-in. Loose scoring, pooled over the three languages, caught / planted:
+
+| Planted mistake | Base (87 clips) | Phone 8 kHz | Noise 5 dB | Child pitch +4 |
+|---|---|---|---|---|
+| Skipped word | 40/41 | 41/42 | 40/42 | 41/42 |
+| Unrelated word | 36/36 | 39/39 | 39/39 | 39/39 |
+| First half of a word | 28/34 | 30/36 | 27/36 | 30/36 |
+| One consonant changed | 8/39 | 7/39 | 6/39 | 5/39 |
+| False flags on correct words | 84/1221 (6.9%) | 86/1263 (6.8%) | 110/1263 (8.7%) | 102/1263 (8.1%) |
+
+All 90 clips of each degraded condition were transcribed (no Cloudflare blocks this time; the base run lost 3). Compared with the first, smaller study (36 clips, catch 95–100% in every condition), skips and unrelated words hold up on the larger set; the new, harder mistake types (a changed consonant, half a word) are where the catch rate drops, and that is the same in every audio condition. Degraded audio does not rescue or hide those mistakes. Noise and child pitch add about 1–2 points of false flags. These are synthetic voices degraded by code, not real phones, classrooms or children.
+
+**Repeats and self-corrections** (30 passages, one repeat or one self-correction each; `scripts/go_no_go.py --passages data/open_passages/disfluency.jsonl --variant open_disfluency --audio-dir data/open_passages/disfluency_audio`). With `format=verbatim` the transcript kept the extra word in 12 of 14 repeats and 14 of 15 self-corrections (29 of 30 clips transcribed; `sw-675080-d` was blocked). So the app can show that a child hesitated or restarted, not only whether the final word was right. False flags on the other words were 6% (Hindi), 4% (Kannada), 9% (Tamil).
+
 ## Halting-audio test: does a chunked re-check help?
 
 Predictions were committed before the run ([PREDICTIONS.md](PREDICTIONS.md)). Setup: 45 open passages containing a near-sound or distant swap, read in 3-word chunks (each synthesised separately, joined with 0.35 s of silence). The same audio was transcribed **whole** (one call per clip) and **chunked** (cut at pauses found in the audio, one call per piece). 43 of 45 clips completed; 2 were blocked by a Cloudflare 403 and are listed in `results/halting_study.json`. Run: `scripts/make_halting_audio.py`, `scripts/halting_study.py`.

@@ -4,6 +4,7 @@ Reads data/go_no_go/audio/*.wav and writes data/go_no_go/audio_variants/<name>/<
 No API calls, no credits. Everything is seeded, so re-runs give identical files.
 
     uv run python scripts/make_variants.py
+    uv run python scripts/make_variants.py data/open_passages/audio data/open_passages/variants
 
 Variants (all simulated, none is real classroom audio):
     phone8k      8 kHz, 300-3400 Hz band, mu-law companding (a basic phone call)
@@ -107,9 +108,10 @@ def pitch_shift(x: np.ndarray, semitones: float) -> np.ndarray:
 
 def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8")
-    files = sorted(SRC.glob("*.wav"))
+    src, out = (Path(sys.argv[1]), Path(sys.argv[2])) if len(sys.argv) == 3 else (SRC, OUT)
+    files = sorted(src.glob("*.wav"))
     if not files:
-        sys.exit(f"no audio in {SRC}; run scripts/make_test_audio.py first")
+        sys.exit(f"no audio in {src}; run scripts/make_test_audio.py first")
     for f in files:
         x, sr = read_wav(f)
         # one RNG per file, so adding files doesn't change the noise on existing ones
@@ -123,8 +125,8 @@ def main() -> None:
             "child4_phone": phone(child, sr),
         }
         for name, (y, ysr) in variants.items():
-            write_wav(OUT / name / f.name, y, ysr)
-    print(f"wrote {len(variants)} variants for {len(files)} clips to {OUT.relative_to(ROOT)}")
+            write_wav(out / name / f.name, y, ysr)
+    print(f"wrote {len(variants)} variants for {len(files)} clips to {out}")
 
 
 if __name__ == "__main__":
