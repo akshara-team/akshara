@@ -77,3 +77,26 @@ False flags on correct words (strict → loose): Hindi 7% → 3%, Kannada 12% �
 - A discarded first design is described in [DECISIONS.md](DECISIONS.md); its numbers are not reported.
 
 Extra limits: the planted words are our design and may not match real children's errors; descriptions are blurbs, not story text; the 87-clip sample gives wide intervals (8 of 39 is 21%, interval about 11–36%).
+
+## Halting-audio test: does a chunked re-check help?
+
+Predictions were committed before the run ([PREDICTIONS.md](PREDICTIONS.md)). Setup: 45 open passages containing a near-sound or distant swap, read in 3-word chunks (each synthesised separately, joined with 0.35 s of silence). The same audio was transcribed **whole** (one call per clip) and **chunked** (cut at pauses found in the audio, one call per piece). 43 of 45 clips completed; 2 were blocked by a Cloudflare 403 and are listed in `results/halting_study.json`. Run: `scripts/make_halting_audio.py`, `scripts/halting_study.py`.
+
+Loose scoring, all three languages pooled:
+
+| | Whole clip | Chunked | Change |
+|---|---|---|---|
+| Near-sound consonant caught | 10/32 (31%, interval 17–49%) | 9/32 (28%, 15–46%) | 1 fewer |
+| Distant swap, skip | 18/18, 19/19 | 18/18, 19/19 | none |
+| False flags on correct words | 44/554 (7.9%, 6–11%) | 60/554 (10.8%, 8–14%) | +2.9 points |
+
+Near-sound swaps caught by one pass only: chunked only 2, whole only 3 (sign test p = 1.00). Hindi false flags rose from 5% to 11%; Kannada 5% to 7%; Tamil 14% to 15%. The pause finder found the expected number of pieces in 26 of 43 clips (60%). On only those 26 clips the picture is the same (post-hoc subset): near-sound caught 7/17 whole against 5/17 chunked.
+
+### Verdict against the predictions
+
+1. Near-sound swaps caught at least 10 points more often chunked: **failed**. There was no gain (28% vs 31%).
+2. Distant swaps and skips change little: **held** (unchanged, 100% in both).
+3. False flags rise by no more than 3 points: **held pooled** (+2.9) **but not for Hindi** (+6).
+4. Not a clear win in Tamil: **held** (and not a win anywhere).
+
+**Chunking does not recover near-sound mistakes in this data.** Together with the isolated-word control, which found the transcriber often returns the real word even with no sentence at all, this points away from sentence context as the main cause. Alternatives we could not separate: the transcriber's preference for real words, or the synthetic voice not pronouncing the non-word. Limits: 32 near-sound items per condition, so a real difference of 10 points or less could not be seen; the pause finder missed the piece count in 40% of clips; all audio is synthetic.

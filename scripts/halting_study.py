@@ -20,7 +20,7 @@ from akshara.core.align import score
 from akshara.core.stats import wilson
 from akshara.mitigation import chunked_transcript
 from akshara.providers.cache import CachedSTT
-from akshara.providers.prisma import PrismaSTT
+from akshara.providers.prisma import PrismaSTT, STTError
 
 ROOT = Path(__file__).resolve().parent.parent
 DIR = ROOT / "data" / "open_passages"
@@ -50,11 +50,17 @@ def main() -> None:
         return
     stt = CachedSTT(PrismaSTT(), CACHE)
     detail = []
+    skipped: list[str] = []
     for m in manifest:
         row = rows[m["id"]]
         audio = HALT / f"{m['id']}.wav"
-        whole = stt.transcribe(audio, row["lang"])
-        chunked, pieces = chunked_transcript(stt, audio, row["lang"])
+        try:
+            whole = stt.transcribe(audio, row["lang"])
+            chunked, pieces = chunked_transcript(stt, audio, row["lang"])
+        except STTError as e:  # a blocked clip is listed, not allowed to stop the study
+            skipped.append(m["id"])
+            print(f"skip {m['id']}: {str(e)[:60]}")
+            continue
         detail.append(
             {
                 "id": m["id"],
@@ -67,7 +73,12 @@ def main() -> None:
         )
         print(f"{m['id']}: {pieces}/{m['chunks']} pieces")
     out = ROOT / "results" / "halting_study.json"
-    out.write_text(json.dumps(detail, ensure_ascii=False, indent=2), encoding="utf-8")
+    out.write_text(
+        json.dumps({"skipped": skipped, "clips": detail}, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    if skipped:
+        print("skipped (blocked or failed):", ", ".join(skipped))
 
     found = sum(d["pieces"] == d["expected_pieces"] for d in detail)
     print(f"\npause finder found the right number of pieces in {pct(found, len(detail))} clips")

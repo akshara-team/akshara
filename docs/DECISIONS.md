@@ -31,3 +31,6 @@ The first version of "near-sound" planting also changed vowel length, sibilants 
 
 ## Halting audio is built from separate chunks
 Fluent Timbre speech has almost no pauses between words (1–4 segments per passage), and Prisma returns no word timings. To test a pause-based re-check fairly, 3-word chunks are synthesised separately and joined with 0.35 s of silence, like a halting reader.
+
+## The chunked re-check is not part of the product
+It did not raise near-sound catch (28% vs 31%) and raised Hindi false flags by 6 points ([RESULTS.md](RESULTS.md)). Shipping it would cost extra calls for no measured gain, so the product keeps the single whole-clip pass. The code and the test stay in the repo as a documented negative result.

@@ -21,11 +21,11 @@ Check off as each one is done and verified. Dates are targets; deadline Nov 10, 
 
 ## M2. Mitigation (Oct 23–27)
 
-- [ ] Prediction written down before running
+- [x] Prediction written down before running ([PREDICTIONS.md](PREDICTIONS.md))
 - [x] Pause finder on the audio (no word timings from Prisma); finding: fluent Timbre speech has no word-level pauses (1–4 segments per passage), so the mitigation test needs halting audio built from separately synthesised chunks joined with silences
-- [ ] Chunked re-check pass behind the provider interface
-- [ ] Catch and false-flag rates compared with the whole-sentence pass on the same clips
-- [ ] Result recorded whether it helps or not
+- [x] Chunked re-check pass (`mitigation.py`)
+- [x] Catch and false-flag rates compared with the whole-sentence pass on the same clips
+- [x] Result recorded: it does not help (RESULTS.md); next step is to design the product around that limit
 
 ## M3. Product (Oct 27–Nov 1)
 
