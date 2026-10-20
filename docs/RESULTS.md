@@ -53,3 +53,27 @@ The base run missed the same two swaps in every condition, both corrected to the
 - One clip (`ta-x01-m`) was blocked by Cloudflare with an HTTP 403 HTML page on every attempt, while the same sentence's other clips went through. It looks like a false positive on that file's bytes. It is excluded, and so is its frame from the comparison (29 near-sound pairs, not 30).
 
 Extra limits for this experiment: the sentences and swaps were written by us and have not been reviewed by a native speaker, so some "near sound" swaps may be less close than intended, and the sentence frames are simple present-tense sentences, which are the easiest case for a language model to predict.
+
+## Open-passage study (StoryWeaver descriptions, base condition)
+
+90 passages (30 per language) from the descriptions of StoryWeaver books, with 156 planted mistakes of four kinds. Same voices-per-passage method as above, no bias list, verbatim format. Run: `scripts/build_open_passages.py`, `scripts/make_test_audio.py --passages data/open_passages/passages.jsonl --out-dir data/open_passages/audio`, `scripts/go_no_go.py --passages data/open_passages/passages.jsonl --variant open_base --audio-dir data/open_passages/audio`. 87 of 90 clips were transcribed; 3 were blocked by Cloudflare with an HTTP 403 page on every attempt and are excluded.
+
+Caught / planted, loose scoring:
+
+| Mistake | Hindi | Kannada | Tamil | All |
+|---|---|---|---|---|
+| Skipped word | 12/13 | 14/14 | 14/14 | 40/41 |
+| Distant swap | 12/12 | 12/12 | 12/12 | 36/36 |
+| Half-read word | 10/12 | 10/11 | 8/11 | 28/34 |
+| Near-sound consonant | 4/13 | 1/13 | 3/13 | **8/39 (21%)** |
+
+False flags on correct words (strict → loose): Hindi 7% → 3%, Kannada 12% → 8%, Tamil 15% → 9%. Hindi and Tamil strict fail our 10% line; loose passes in all three. The loose rules added for this run: Hindi nasal conjuncts and final यी/ये; Kannada word-final vowel length. Most false flags are spelling differences between the book text and the transcript (ನೀವೂ/ನೀವು, लम्बे/लंबे, गयी/गई), not misreadings.
+
+### What this does and does not show
+
+- Skips and unrelated word swaps are caught almost every time, in all three languages.
+- **Near-sound consonant changes are mostly not flagged: 8 of 39.** In the first study, near-sound *real-word* swaps were caught 86% of the time. Here the changed words are mostly **non-words**, and the transcriber usually writes the real word instead.
+- **We cannot say who corrects the word.** The control (`scripts/isolated_control.py`) synthesised each planted word alone: only 4 of 39 came back as the non-word we asked for, 18 came back as the original word and 17 as something else. With no sentence around it, there is still no reliable way to tell whether the voice never pronounced the non-word or the transcriber replaced it. So context alone does not explain the misses.
+- A discarded first design is described in [DECISIONS.md](DECISIONS.md); its numbers are not reported.
+
+Extra limits: the planted words are our design and may not match real children's errors; descriptions are blurbs, not story text; the 87-clip sample gives wide intervals (8 of 39 is 21%, interval about 11–36%).

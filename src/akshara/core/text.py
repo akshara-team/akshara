@@ -45,13 +45,20 @@ _HINDI_FINAL_YA = re.compile("य([ीे])$")
 _FINAL_YA_TO = {"ी": "ई", "े": "ए"}
 
 
+# Kannada: a word-final vowel length (ೂ/ು, ೀ/ಿ, ೇ/ೆ, ೋ/ೊ) or a final ಾ is not reliably heard or
+# written the same way (ನೀವೂ == ನೀವು, ತುಂಬಾ == ತುಂಬ). Only the last letter is relaxed.
+_KANNADA_FINAL = re.compile("[ೂೀೇೋಾ]$")
+_KANNADA_SHORT = {"ೂ": "ು", "ೀ": "ಿ", "ೇ": "ೆ", "ೋ": "ೊ", "ಾ": ""}
+
+
 def loose_key(word: str) -> str:
     """Spelling-variant-insensitive form of a word, for the optional 'loose' comparison.
 
     Hindi: drops nukta, treats chandrabindu as anusvara, nasal+virama as anusvara (लम्बे == लंबे),
     final यी/ये as ई/ए (गयी == गई), and वह and वो as one word.
     Tamil: drops a trailing sandhi consonant (கடைக்குச் == கடைக்கு).
-    Other scripts, Kannada included, are left strict because vowel length changes meaning.
+    Kannada: relaxes only a word-final vowel length or final ಾ (ನೀವೂ == ನೀವು); inside a word, vowel
+    length stays strict because it changes meaning.
     """
     word = word.replace(_NUKTA, "").replace(_CHANDRABINDU, _ANUSVARA)
     word = _NASAL_CONJUNCT.sub(_ANUSVARA, word)
@@ -59,4 +66,6 @@ def loose_key(word: str) -> str:
     word = _HINDI_VARIANTS.get(word, word)
     if len(word) > 2 and "஀" <= word[0] <= "௿":
         word = _TAMIL_SANDHI_END.sub("", word)
+    if len(word) > 2 and "ಀ" <= word[0] <= "೿":
+        word = _KANNADA_FINAL.sub(lambda m: _KANNADA_SHORT[m.group(0)], word)
     return word
