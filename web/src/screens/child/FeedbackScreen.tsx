@@ -10,7 +10,7 @@ import {
   QuestionIcon,
   StarIcon,
   SwapIcon,
-  TopBar,
+  PageHeader,
   WordChip,
   wordStatus,
 } from "../../components";
@@ -41,7 +41,7 @@ export function FeedbackScreen() {
   if (!part?.attempt) {
     return (
       <>
-        <TopBar back backTo="/reader" />
+        <PageHeader back backTo="/home" />
         <div className="screen-body">
           <p className="note">Nothing to show yet — read a part first.</p>
           <div className="actions">
@@ -56,7 +56,7 @@ export function FeedbackScreen() {
 
   return (
     <>
-      <TopBar back backTo="/reader" />
+      <PageHeader back backTo="/home" />
       <div className="feedback-hero">
         <h1 className={`feedback-hero__title ${scriptClass(lang)}`}>
           {copy.wellRead} <StarIcon className="inline-icon" />
@@ -85,7 +85,7 @@ export function FeedbackScreen() {
               </span>
             </div>
 
-            <p className="note">{part.attempt.notice}</p>
+            <p className="banner">{part.attempt.notice}</p>
           </div>
 
           {/* Right: the words and what to practise. */}

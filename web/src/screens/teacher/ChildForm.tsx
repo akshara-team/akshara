@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { CHILDREN, childById } from "../../api/teacherData";
-import { Avatar, Button, Card, Input, Radio, Select, TopBar } from "../../components";
+import { Avatar, Button, Card, Input, Radio, Select, PageHeader } from "../../components";
 
 const AVATAR_CHOICES = ["AG", "DK", "RM"];
 
@@ -35,7 +35,7 @@ export function ChildForm({ mode }: { mode: "add" | "edit" }) {
 
   return (
     <>
-      <TopBar
+      <PageHeader
         back
         backTo="/teacher"
         nav={[

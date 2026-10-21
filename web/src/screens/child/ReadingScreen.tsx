@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { isMock } from "../../api";
 import { MOCK_DURATIONS, createRecorder, type Recorder } from "../../api/mock";
@@ -9,7 +9,7 @@ import {
   MicButton,
   ProgressBar,
   ProgressDots,
-  TopBar,
+  PageHeader,
 } from "../../components";
 import { useSession } from "../../state/session";
 import { scriptClass } from "../../theme/script";
@@ -24,8 +24,18 @@ export function ReadingScreen() {
 
   const [phase, setPhase] = useState<Phase>("idle");
   const [error, setError] = useState<string | null>(null);
+  const [elapsed, setElapsed] = useState(0);
   const recorder = useRef<Recorder | null>(null);
   const startedAt = useRef(0);
+
+  // Elapsed seconds while recording: the only live feedback the child gets.
+  useEffect(() => {
+    if (phase !== "recording") return;
+    const timer = setInterval(() => {
+      setElapsed(Math.floor((Date.now() - startedAt.current) / 1000));
+    }, 250);
+    return () => clearInterval(timer);
+  }, [phase]);
 
   const total = Math.max(parts.length, 1);
   const text = parts[currentPart - 1]?.text ?? passage?.text ?? "No passage loaded.";
@@ -53,6 +63,7 @@ export function ReadingScreen() {
       await rec.start();
       recorder.current = rec;
       startedAt.current = Date.now();
+      setElapsed(0);
       setError(null);
       setPhase("recording");
     } catch {
@@ -65,7 +76,7 @@ export function ReadingScreen() {
 
   return (
     <>
-      <TopBar back backTo="/reader" />
+      <PageHeader back backTo="/home" />
       <div className="screen-body">
         <div className="workspace workspace--w360">
           {/* Left: story and part context, plus Listen. */}
@@ -101,6 +112,11 @@ export function ReadingScreen() {
             <div className="controls">
               <MicButton state={phase} onClick={onMic} label={label} />
               <p className="controls__label">{label}</p>
+              {phase === "recording" && (
+                <p className="controls__timer" aria-live="polite">
+                  {elapsed}s
+                </p>
+              )}
               <p className="controls__desc">{desc}</p>
 
               {error && (

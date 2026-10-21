@@ -214,6 +214,21 @@
   font-size: var(--text-secondary);
   text-align: center;
 }
+.controls__timer {
+  margin: 0;
+  color: var(--color-feedback-danger);
+  font-weight: var(--font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Numbers line up in tables and stat cards. */
+.statcard__value,
+.metric__value,
+.reading-row,
+.roster-table td,
+.table td {
+  font-variant-numeric: tabular-nums;
+}
 
 /* ---------- Feedback ---------- */
 .feedback-hero {
@@ -612,32 +627,4 @@ button.screen__link {
   color: var(--color-text-primary);
 }
 
-/* Top-bar teacher navigation: desktop only, as in the design. */
-.topbar__nav {
-  display: none;
-}
-@media (min-width: 900px) {
-  .topbar__nav {
-    display: flex;
-    align-items: center;
-    gap: var(--space-24);
-  }
-}
-.topbar__link {
-  color: var(--color-text-secondary);
-  text-decoration: none;
-  font-size: var(--text-secondary);
-}
-.topbar__link--active {
-  color: var(--color-text-primary);
-  font-weight: var(--font-weight-semibold);
-  border-bottom: var(--border-width-3) solid var(--color-brand-primary);
-  padding-bottom: var(--space-2);
-}
-.topbar__badge {
-  background: var(--color-background-soft);
-  border-radius: var(--radius-pill);
-  padding: var(--space-6) var(--space-16);
-  font-size: var(--text-meta);
-  font-weight: var(--font-weight-semibold);
-}
+/* Header, teacher nav and account menu styles live in components.css. */

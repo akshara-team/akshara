@@ -26,6 +26,7 @@ export function ListenButton({
       <Button
         variant="outline"
         icon="audio"
+        size="sm"
         block={block}
         disabled={busy}
         onClick={async () => {

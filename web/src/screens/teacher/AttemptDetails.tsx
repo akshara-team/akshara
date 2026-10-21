@@ -7,7 +7,7 @@ import {
   LanguageBadge,
   ListenButton,
   StatCard,
-  TopBar,
+  PageHeader,
   WordChip,
   wordStatus,
 } from "../../components";
@@ -21,7 +21,7 @@ export function AttemptDetails() {
 
   return (
     <>
-      <TopBar
+      <PageHeader
         back
         backTo={`/teacher/child/${child.id}`}
         badge={child.level}

@@ -16,6 +16,6 @@ export { Spinner } from "./Spinner";
 export { StatCard } from "./StatCard";
 export { StatusBadge } from "./StatusBadge";
 export { Table } from "./Table";
-export { TopBar } from "./TopBar";
+export { PageHeader } from "./PageHeader";
 export { WordChip, wordStatus, type WordStatus } from "./WordChip";
 export * from "./icons";

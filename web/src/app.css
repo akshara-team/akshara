@@ -2,13 +2,13 @@
   min-height: 100dvh;
   display: flex;
   justify-content: center;
-  background: var(--color-surface-muted);
+  background: var(--color-background);
 }
 
 /* Mobile-first: the design's primary frame is 375 x 812. */
 .app-main {
   width: 100%;
-  max-width: var(--size-error-card);
+  max-width: var(--size-shell-mobile);
   min-height: 100dvh;
   background: var(--color-background);
   display: flex;
@@ -16,26 +16,40 @@
 }
 
 /* Desktop: the design's desktop frames are 1280 wide with a 40px content inset
-   (1024 x 768 in the compact frames). The shell is shared by every route.
+   (1024 x 768 in the compact frames). One flat canvas — no outer frame, so the
+   cards are the only surfaces (no box inside a box).
    The 900px literal is --breakpoint-desktop; media queries cannot read vars. */
 @media (min-width: 900px) {
-  .app-shell {
-    padding: var(--space-24) 0;
-  }
   .app-main {
     max-width: var(--size-shell-desktop);
-    min-height: calc(100dvh - var(--space-48));
-    border-radius: var(--radius-16);
-    border: var(--border-width) solid var(--color-border);
-    overflow: hidden;
   }
   .app-main .screen-body {
     padding: var(--space-40);
-    gap: var(--space-20);
+    gap: var(--gap-section);
   }
 }
 
-/* Temporary scaffolding for the screen stubs; replaced as screens are built. */
+/* A short fade as each route mounts; off when motion is reduced. */
+.app-main > * {
+  animation: screen-in var(--duration-base) var(--ease-out) both;
+}
+@keyframes screen-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-main > * {
+    animation: none;
+  }
+}
+
+/* Scaffolding used by NotFound. */
 .screen {
   display: flex;
   flex-direction: column;
@@ -55,7 +69,7 @@
 }
 
 .screen__link {
-  min-height: var(--tap-min);
+  min-height: var(--size-tap);
   display: inline-flex;
   align-items: center;
   color: var(--color-secondary);

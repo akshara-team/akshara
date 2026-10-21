@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { api } from "../../api";
 import { STORY } from "../../api/teacherData";
-import { BookIcon, Button, Card, ListenButton, Select, TopBar } from "../../components";
+import { BookIcon, Button, Card, ListenButton, Select, PageHeader } from "../../components";
 import { useSession } from "../../state/session";
 import { scriptClass } from "../../theme/script";
 
@@ -24,7 +24,7 @@ export function SelectStory() {
 
   return (
     <>
-      <TopBar
+      <PageHeader
         back
         backTo="/teacher"
         badge={childName}

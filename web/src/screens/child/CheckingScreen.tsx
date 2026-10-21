@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api, isMock } from "../../api";
-import { Button, LanguageBadge, ProgressDots, Spinner, TopBar } from "../../components";
+import { Button, LanguageBadge, ProgressDots, Spinner, PageHeader } from "../../components";
 import { useSession } from "../../state/session";
 import { scriptClass } from "../../theme/script";
 
@@ -57,7 +57,7 @@ export function CheckingScreen() {
   if (failed) {
     return (
       <>
-        <TopBar back backTo="/reader" />
+        <PageHeader back backTo="/home" />
         <div className="screen-body">
           <h1 className="recovery-hero__title">We could not finish checking</h1>
           <p className="note">
@@ -82,7 +82,7 @@ export function CheckingScreen() {
 
   return (
     <>
-      <TopBar back={false} />
+      <PageHeader back={false} />
       <div className="screen-body">
         <div className="workspace workspace--w360">
           {/* Left: story and part context. */}
