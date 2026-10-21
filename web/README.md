@@ -24,8 +24,32 @@ final results. Recovery: microphone permission, story loading, connection delay,
 speech-recognition failure, service error (`/recovery/:kind`). Teacher: dashboard, story
 picker, child profile and history, attempt details, add/edit child.
 
-Teacher screens use the design's desktop layout from 900 px up; the child screens stay a
-375 px column, matching the Figma frames.
+## Desktop layouts
+
+The design ships desktop frames for the teacher side (section 03) and only phone frames for
+the child flow (section 02). So the teacher screens get real desktop layouts, and the child
+screens stay a 375 px column, centred as a card on wide viewports.
+
+Values come from the frames, not guesses:
+
+| Screen | Desktop frame | Layout |
+|---|---|---|
+| Teacher dashboard | 1280 × 800 | 40 px inset, 3 stat cards (~389 px each), roster as a **5-column table** |
+| Child profile | 1280 × 800 | **360** side column + 808 main |
+| Attempt details | 1280 × 800 | **320** side column + 848 main |
+| Select story | 1280 × 800 | **300** side column + 868 main |
+| Add child | 1280 × 800 | **340** purpose column + 560 form panel |
+
+The teacher top bar gains its desktop navigation (Class / Story / Add child + a class badge);
+the mobile frames use a back button instead. Which roster renders is decided in JS
+(`useIsDesktop`), so the DOM never contains both the table and the card list.
+
+## Theme
+
+Every colour, size, space, radius, weight and duration lives in `src/theme/theme.css` as a
+custom property; component and screen stylesheets only reference `var(--…)`. The one
+exception is the 900 px breakpoint, which CSS cannot read from a variable inside `@media` —
+it is documented there as `--breakpoint-desktop` and must be kept in sync.
 
 ## Layout
 

@@ -1,0 +1,173 @@
+/* ============================================================================
+   Akshara theme — the single source of design values.
+
+   Every colour, size, space, radius, weight and duration used by the app is
+   declared here as a custom property; component and screen stylesheets only
+   reference `var(--…)` and never repeat a literal.
+
+   Values come from the Figma handoff: the colour foundation (2:41891), the
+   layout foundation (2:41939) and the desktop frames' own geometry.
+   ============================================================================ */
+
+:root {
+  /* ---------- Colour ---------- */
+  --color-brand-primary: #fde047;
+  --color-secondary: #2563eb;
+  --color-feedback-success: #22c55e;
+  --color-feedback-warning: #f59e0b;
+  --color-feedback-danger: #ef4444;
+
+  --color-background: #ffffff;
+  --color-background-soft: #eff6ff;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f9fafb;
+  --color-surface-selected: #fffbeb;
+  --color-border: #d1d5db;
+  --color-on-accent: #ffffff;
+
+  --color-text-primary: #111827;
+  --color-text-secondary: #374151;
+  --color-muted: #6b7280;
+  --color-focus: #2563eb;
+
+  /* WordChip states (Figma: WordChip 2:42372). The fourth is ours: the scorer
+     emits `check` for a word accepted only by a spelling rule. */
+  --chip-correct-bg: #dcfce7;
+  --chip-correct-border: #22c55e;
+  --chip-substituted-bg: #fef3c7;
+  --chip-substituted-border: #f59e0b;
+  --chip-skipped-bg: #fee2e2;
+  --chip-skipped-border: #ef4444;
+  --chip-uncertain-bg: #eff6ff;
+  --chip-uncertain-border: #2563eb;
+
+  /* ---------- Type ---------- */
+  --font-ui: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-kn: "Noto Sans Kannada", var(--font-ui);
+  --font-ta: "Noto Sans Tamil", var(--font-ui);
+  --font-hi: "Noto Sans Devanagari", var(--font-ui);
+
+  --text-heading-1: 28px;
+  --text-heading-2: 24px;
+  --text-heading-3: 20px;
+  --text-body: 16px;
+  --text-secondary: 14px;
+  --text-badge: 13px;
+  --text-meta: 12px;
+  --text-chip: 20px;
+  --text-reading: 32px; /* native-script reading, supported range 32-44 */
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-body: 1.5;
+  --line-height-tight: 1.1;
+  --line-height-normal: 1;
+  --line-height-reading: 1.6;
+  --tracking-eyebrow: 0.06em;
+
+  /* ---------- Space ---------- */
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-56: 56px;
+  --space-64: 64px;
+
+  /* ---------- Shape ---------- */
+  --radius-12: 12px;
+  --radius-16: 16px;
+  --radius-pill: 999px;
+
+  --border-width: 1px;
+  --border-width-2: 2px;
+  --border-width-3: 3px;
+  --border-width-4: 4px;
+
+  /* ---------- Component sizes ---------- */
+  --size-tap: 44px; /* minimum touch target */
+  --size-control: 52px; /* buttons, inputs, selects, radios */
+  --size-topbar: 72px;
+  --size-avatar: 56px;
+  --size-mic: 112px;
+  --size-spinner: 48px;
+  --size-radio-mark: 20px;
+  --size-step-num: 28px;
+  --size-steps-num: 24px;
+  --size-dot: 10px;
+  --size-progress-height: 10px;
+  --size-accent-bar: 6px;
+  --size-reading-min: 260px;
+  --size-chart-height: 140px;
+  --size-chart-bar: 32px;
+  --size-chart-min: 6px;
+
+  /* ---------- Layout ---------- */
+  --size-shell-mobile: 375px; /* the design's mobile frame width */
+  --size-shell-desktop: 1280px; /* the desktop frames */
+  --size-error-card: 375px;
+
+  /* Desktop workspace side columns, straight from the frames. */
+  --workspace-side-profile: 360px;
+  --workspace-side-attempt: 320px;
+  --workspace-side-story: 300px;
+  --workspace-side-form: 340px;
+
+  /* Media queries cannot read custom properties, so the one breakpoint is
+     repeated as a literal in @media rules. Keep them in sync with this. */
+  --breakpoint-desktop: 900px;
+
+  /* ---------- Inline SVG in text ---------- */
+  --inline-icon-size: 1em;
+  --inline-icon-offset: -0.125em;
+
+  /* ---------- Motion ---------- */
+  --duration-spin: 0.9s;
+  --duration-spin-reduced: 2.5s;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: var(--font-ui);
+  font-size: var(--text-body);
+  line-height: var(--line-height-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Native-script text: pick the right Noto family. */
+.script-kn {
+  font-family: var(--font-kn);
+}
+.script-ta {
+  font-family: var(--font-ta);
+}
+.script-hi {
+  font-family: var(--font-hi);
+}
+
+/* Reading passage: the design's native-script reading size. */
+.reading-text {
+  font-size: var(--text-reading);
+  line-height: var(--line-height-reading);
+}

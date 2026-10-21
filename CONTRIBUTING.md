@@ -34,6 +34,10 @@ npm run lint && npm run typecheck && npm test && npm run build
 - Screens never call `fetch` directly — go through the API seam in `web/src/api/index.ts`.
 - Every route is wrapped in its own error boundary; keep it that way.
 - No emoji: icons are SVGs in `web/src/components/icons.tsx`.
+- **Design values live in one place.** Every colour, size, space, radius, weight and duration
+  is a custom property in `web/src/theme/theme.css`. Component and screen CSS reference
+  `var(--…)`; never repeat a literal. The 900 px breakpoint is the only literal that has to
+  stay inside `@media` rules (CSS cannot read variables there).
 
 ## Data rules
 
