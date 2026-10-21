@@ -16,7 +16,8 @@ cp .env.example .env    # put the API key in .env, never in code
 
 | Command | What it does |
 |---|---|
-| `./run.sh` / `npm start` | backend + web together |
+| `./run.sh` / `npm start` | backend + web together, **offline** (no credits) |
+| `./run.sh live` | backend + web with **real Prisma + Timbre** (costs credits) |
 | `./run.sh backend` | FastAPI on :8000 |
 | `./run.sh frontend` | Vite on :5173 |
 | `./run.sh install` | `uv sync` + `npm install` |

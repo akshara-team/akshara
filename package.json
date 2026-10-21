@@ -6,6 +6,7 @@
   "scripts": {
     "start": "./run.sh dev",
     "dev": "./run.sh dev",
+    "live": "./run.sh live",
     "backend": "./run.sh backend",
     "frontend": "./run.sh frontend",
     "install:all": "./run.sh install",
