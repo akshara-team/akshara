@@ -1,11 +1,10 @@
-import { isMock } from "../api";
-
-const BASE = import.meta.env.VITE_API_BASE ?? "";
+import { api } from "../api";
+import type { Lang } from "../theme/script";
 
 export type PlaySource = "model" | "device" | "none";
 
 /** Device voice, used when the model audio isn't available. */
-function speak(text: string, lang: string): boolean {
+function speak(text: string, lang: Lang): boolean {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return false;
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = lang;
@@ -17,24 +16,25 @@ function speak(text: string, lang: string): boolean {
 /**
  * Play a word or passage aloud.
  *
- * Live mode asks the backend for Timbre audio (`/v1/feedback/audio`); that
- * endpoint does not exist yet, so a miss falls back to the device voice rather
- * than failing silently. Mock mode uses the device voice so the demo speaks.
+ * Asks the API for Timbre audio first (`/v1/feedback/audio`, served from a
+ * content cache on the server). If the endpoint is unavailable, in mock mode,
+ * or the browser blocks playback, it falls back to the device voice. Reports
+ * "none" when neither is possible.
  */
-export async function play(text: string, lang: string): Promise<PlaySource> {
-  if (!isMock) {
+export async function play(text: string, lang: Lang): Promise<PlaySource> {
+  const blob = await api.feedbackAudio(text, lang).catch(() => null);
+
+  if (blob) {
+    const objectUrl = URL.createObjectURL(blob);
     try {
-      const url = `${BASE}/v1/feedback/audio?lang=${encodeURIComponent(lang)}&word=${encodeURIComponent(text)}`;
-      const res = await fetch(url);
-      if (res.ok) {
-        const objectUrl = URL.createObjectURL(await res.blob());
-        await new Audio(objectUrl).play();
-        URL.revokeObjectURL(objectUrl);
-        return "model";
-      }
+      await new Audio(objectUrl).play();
+      URL.revokeObjectURL(objectUrl);
+      return "model";
     } catch {
-      // fall through to the device voice
+      URL.revokeObjectURL(objectUrl);
+      // fall through: autoplay blocked, or the clip could not be decoded
     }
   }
+
   return speak(text, lang) ? "device" : "none";
 }

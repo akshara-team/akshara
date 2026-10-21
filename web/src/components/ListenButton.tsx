@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { play } from "../audio/playback";
+import type { Lang } from "../theme/script";
 import { Button } from "./Button";
 
 /**
@@ -13,7 +14,7 @@ export function ListenButton({
   block = false,
 }: {
   text: string;
-  lang: string;
+  lang: Lang;
   label?: string;
   block?: boolean;
 }) {

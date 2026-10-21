@@ -110,8 +110,9 @@ src/
 - **Uncertain words.** `WordChip` has a fourth, dashed state for the scorer's `check` flag
   (a word counted correct only via a spelling variant). The Figma library has only
   correct/substituted/skipped.
-- **Listen** asks the backend for Timbre audio (`/v1/feedback/audio`) and falls back to the
-  device voice; it says so when neither is available.
+- **Listen** asks the API for Timbre audio (`GET /v1/feedback/audio`, cached on the server by
+  content) and falls back to the device voice if the request fails or playback is blocked; it
+  says so when neither is available.
 - **Teacher data.** The dashboard reads `GET /v1/class/summary` when the API answers and falls
   back to the demo class otherwise; the other teacher screens are invented demo data, as the
   handoff specifies (the API has no children, roster or history endpoints yet).

@@ -45,6 +45,14 @@ Passages for one language (omit `lang` for all). `text` is the reference the chi
 {"id": "kn-101", "language": "kn-IN", "text": "ರಾಮು ಪ್ರತಿದಿನ ಶಾಲೆಗೆ ಹೋಗುತ್ತಾನೆ. ..."}
 ```
 
+### `GET /v1/feedback/audio?lang=kn-IN&word=ಹಾರುತ್ತಿತ್ತು`
+
+Timbre pronunciation of one word, for the "Listen" buttons. Returns `audio/wav`
+(mono 16 kHz). `lang` must be `hi-IN`, `kn-IN` or `ta-IN`; `word` is trimmed and must be
+1–60 characters (both violations → `400`). Results are cached on disk by
+`sha256(text, language, voice)`, so repeating a word never costs another credit. A provider
+failure is `502`. Costs one Timbre call on a cache miss.
+
 ### `POST /v1/attempts` (multipart)
 
 Fields: `audio` (WAV file), `learner` (alias, 1–40 chars), `passage_id`.

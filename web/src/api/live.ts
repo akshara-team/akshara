@@ -56,4 +56,12 @@ export const liveApi = {
   classSummary(): Promise<LearnerSummary[]> {
     return getJson<LearnerSummary[]>("/v1/class/summary");
   },
+
+  /** Timbre pronunciation of one word; null when the endpoint says no. */
+  async feedbackAudio(word: string, lang: string): Promise<Blob | null> {
+    const url = `${BASE}/v1/feedback/audio?lang=${encodeURIComponent(lang)}&word=${encodeURIComponent(word)}`;
+    const res = await fetch(url);
+    if (!res.ok) return null;
+    return res.blob();
+  },
 };
