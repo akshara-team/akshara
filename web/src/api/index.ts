@@ -20,6 +20,8 @@ export type Api = {
     partIndex: number;
   }) => Promise<Attempt>;
   classSummary: () => Promise<LearnerSummary[]>;
+  /** Model audio for one word; null means "no model audio, fall back". */
+  feedbackAudio: (word: string, lang: Lang) => Promise<Blob | null>;
 };
 
 const mock: Api = {
@@ -28,6 +30,7 @@ const mock: Api = {
   submitAttempt: async ({ passageId, lang, partIndex }) =>
     mockAttempt(passageId, lang, partIndex),
   classSummary: async () => mockClassSummary(),
+  feedbackAudio: async () => null, // mock uses the device voice
 };
 
 const live: Api = {
@@ -37,6 +40,7 @@ const live: Api = {
   submitAttempt: ({ audio, learner, passageId }) =>
     liveApi.submitAttempt({ audio, learner, passageId }),
   classSummary: () => liveApi.classSummary(),
+  feedbackAudio: (word, lang) => liveApi.feedbackAudio(word, lang),
 };
 
 export const isMock = import.meta.env.VITE_API_MODE !== "live";

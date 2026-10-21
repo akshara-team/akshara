@@ -8,11 +8,12 @@ from collections import defaultdict, deque
 from pathlib import Path
 
 from fastapi import FastAPI, File, Form, Header, HTTPException, Request, UploadFile
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
 
 from akshara import passages as passage_bank
 from akshara.api.schemas import AttemptOut, LearnerSummary
-from akshara.providers.base import ProviderError, SpeechToText
+from akshara.providers.audio_cache import CachedTTS
+from akshara.providers.base import ProviderError, SpeechToText, TextToSpeech
 from akshara.providers.fixture import FixtureSTT
 from akshara.service import assess, audio_seconds
 from akshara.settings import ROOT, Settings
@@ -22,6 +23,9 @@ log = logging.getLogger("akshara")
 RATE_LIMIT, RATE_WINDOW_S = 30, 60.0
 PASSAGES = ROOT / "data" / "open_passages" / "passages.jsonl"
 INDEX = Path(__file__).parent / "static" / "index.html"
+AUDIO_CACHE = ROOT / "results" / "audio"
+SUPPORTED_LANGUAGES = frozenset({"hi-IN", "kn-IN", "ta-IN"})
+MAX_WORD_CHARS = 60
 
 
 def build_stt(settings: Settings) -> SpeechToText:
@@ -32,13 +36,23 @@ def build_stt(settings: Settings) -> SpeechToText:
     return FixtureSTT.from_cache(ROOT / "results" / "transcripts")
 
 
+def build_tts(tts: TextToSpeech | None) -> TextToSpeech:
+    if tts is not None:
+        return tts
+    from akshara.providers.timbre import TimbreTTS
+
+    return CachedTTS(TimbreTTS(), AUDIO_CACHE)
+
+
 def create_app(
     settings: Settings | None = None,
     stt: SpeechToText | None = None,
     bank: dict[str, dict] | None = None,
+    tts: TextToSpeech | None = None,
 ) -> FastAPI:
     settings = settings or Settings.from_env()
     stt = stt or build_stt(settings)
+    tts = build_tts(tts)
     store = Store(settings.db_path)
     bank = bank if bank is not None else passage_bank.load(PASSAGES)
     stt_lock = threading.Lock()  # Prisma allows one active request at a time
@@ -75,6 +89,21 @@ def create_app(
         if not p:
             raise HTTPException(404, "unknown passage")
         return {"id": p["id"], "language": p["lang"], "text": p["reference"]}
+
+    @app.get("/v1/feedback/audio")
+    def feedback_audio(lang: str, word: str) -> Response:
+        """Timbre pronunciation of one word, cached by content. Costs one call on a miss."""
+        if lang not in SUPPORTED_LANGUAGES:
+            raise HTTPException(400, f"unsupported language {lang!r}")
+        text = word.strip()
+        if not 1 <= len(text) <= MAX_WORD_CHARS:
+            raise HTTPException(400, f"word must be 1-{MAX_WORD_CHARS} characters")
+        try:
+            audio = tts.synthesize(text, lang, None)
+        except ProviderError as e:
+            log.warning("tts failed: %s", e)
+            raise HTTPException(502, "speech provider failed") from e
+        return Response(audio, media_type="audio/wav")
 
     @app.post("/v1/attempts", response_model=AttemptOut)
     def create_attempt(

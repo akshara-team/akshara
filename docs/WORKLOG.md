@@ -11,6 +11,7 @@ Gnani evaluates and interviews each of us separately, so log what you did. Newes
 | 2026-10-21 | Partner | Desktop layouts for the child flow and recovery screens, derived from the teacher desktop language; one responsive shell (375 below 900px, 1280 above) for every route |
 | 2026-10-21 | Partner | Child home + saved progress: reader, language and reading history in `localStorage`, `/` redirects a returning child to `/home`, results are saved once and finish to home instead of role selection |
 | 2026-10-21 | Partner | Bundle-size budget (`web/scripts/budget.mjs`): CI fails past 120 kB JS / 160 kB total gzip; measured production build ~73 kB JS / ~78 kB total |
+| 2026-10-21 | Partner | `GET /v1/feedback/audio`: Timbre word audio with a content cache (verified live: one 1.20 s WAV, second request a cache hit, 1 paid call); Listen now plays model audio before the device fallback |
 | 2026-10-21 | Partner | Generated the Kannada + Tamil go/no-go clips with Timbre TTS (24 clips, mono 16 kHz) via `scripts/make_test_audio.py`, replacing hand recording; one clip fixed by re-rendering after a Cloudflare 403 |
 | 2026-10-21 | Partner | Ran the go/no-go test on the synthetic clips: Kannada 100% catch / 1% false-flag, Tamil 95% / 5% (loose) — both pass; result and decision written into GO_NO_GO.md |
 | 2026-10-20 | Achindra | Open passages: fetched StoryWeaver catalogue descriptions, added deterministic mistake planting (skip, near-sound, distant, half-word) with tests, built 90 study passages (156 planted mistakes) |

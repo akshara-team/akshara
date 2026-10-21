@@ -79,7 +79,9 @@ is its own branch → PR → CI green on the branch → merge. Details: [web/REA
 
 - [x] Phase 1 — class-summary wiring: `GET /v1/class/summary` feeds the teacher dashboard
       through a tested `toRoster` mapper, with the demo class as the fallback
-- [ ] Phase 2 — `GET /v1/feedback/audio`: Timbre audio behind a cache, so Listen plays the model
+- [x] Phase 2 — `GET /v1/feedback/audio`: Timbre audio behind a content cache (one paid call
+      per new word, then free); validated lang/word, 502 on provider failure; the web app
+      tries it before falling back to the device voice
 - [ ] Phase 3 — story chunking: `split_parts`, `part_index` on attempts, parts from the API
 - [x] Phase 4 — performance gate: `web/scripts/budget.mjs` fails CI past 120 kB JS / 160 kB
       total gzip (measured build: ~73 kB JS / ~78 kB total); runs after the build and in `run.sh check`
