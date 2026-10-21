@@ -1,4 +1,5 @@
 import type { Lang } from "../theme/script";
+import type { LearnerSummary } from "./types";
 
 /**
  * Teacher-side demo data. The API has no children, roster or history
@@ -66,6 +67,15 @@ export const CHILDREN: Child[] = [
 export function childById(id: string | undefined): Child {
   return CHILDREN.find((c) => c.id === id) ?? CHILDREN[0];
 }
+
+/** The demo class shaped exactly like the API's /v1/class/summary. */
+export const DEMO_SUMMARY: LearnerSummary[] = CHILDREN.map((c) => ({
+  alias: c.name,
+  language: c.lang,
+  attempts: 3,
+  accuracy: c.accuracy,
+  wcpm: c.wcpm,
+}));
 
 export const HISTORY = [
   { date: "5 Oct", wcpm: 30, accuracy: 0.8 },

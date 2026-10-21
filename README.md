@@ -29,6 +29,7 @@ Speech-to-text tends to correct a misread word into the expected one, which hide
 | Mitigation for autocorrected mistakes | Tried, does not help (result recorded) |
 | HTTP API, storage, offline fixture provider, CI gate | Done |
 | Reading screen, trace view, class summary, limits notice | Done (v0.1); microphone path untested live |
+| **Web app** (`web/`, Vite + React + TS PWA) | Child flow, teacher screens and recovery states built from the Figma handoff; 27 tests, own CI job. See [web/README.md](web/README.md) |
 | Demo video | [docs/demo/akshara_demo.mp4](docs/demo/akshara_demo.mp4) |
 
 ## Quick start
@@ -40,6 +41,19 @@ uv run pytest
 uv run python scripts/go_no_go.py --dry-run   # no API calls
 uv run uvicorn akshara.api.app:create_app --factory   # API on :8000 (offline fixture provider by default)
 ```
+
+## Web app
+
+```bash
+cd web
+npm install          # NODE_ENV must not be "production", or devDependencies are skipped
+npm run dev          # http://localhost:5173, proxies /v1 to :8000
+npm run lint && npm run typecheck && npm test && npm run build
+```
+
+Runs on fixtures by default (`VITE_API_MODE=mock`) so it works with **no backend at all**;
+set `VITE_API_MODE=live` to talk to the API. Screens, data modes and known gaps:
+[web/README.md](web/README.md).
 
 ## Docs
 
@@ -54,6 +68,7 @@ uv run uvicorn akshara.api.app:create_app --factory   # API on :8000 (offline fi
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Components and data flow |
 | [docs/GNANI_API.md](docs/GNANI_API.md) | Gnani API notes and quirks |
 | [docs/WORKLOG.md](docs/WORKLOG.md) | Work log |
+| [web/README.md](web/README.md) | Frontend: run modes, screens, known gaps |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Workflow and data rules |
 
 ## Gnani models used

@@ -1,5 +1,6 @@
 import { isLang, type Lang } from "../theme/script";
-import type { Attempt, Passage, WordOut } from "./types";
+import { DEMO_SUMMARY } from "./teacherData";
+import type { Attempt, LearnerSummary, Passage, WordOut } from "./types";
 
 /**
  * Turns one recorded clip into a WAV blob the backend accepts: mono, 16 kHz,
@@ -173,6 +174,11 @@ export function mockPassages(lang: Lang): Passage[] {
 
 export function mockNoticeLines(): string[] {
   return [NOTICE];
+}
+
+/** The same demo class, shaped exactly like the API's /v1/class/summary. */
+export function mockClassSummary(): LearnerSummary[] {
+  return DEMO_SUMMARY;
 }
 
 export function mockLanguageOf(id: string): Lang {
