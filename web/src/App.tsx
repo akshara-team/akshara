@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useEffect, useRef, type MouseEvent, type ReactNode, type RefObject } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { CheckingScreen } from "./screens/child/CheckingScreen";
@@ -32,12 +32,46 @@ function Screen({ children }: { children: ReactNode }) {
   return <ErrorBoundary key={pathname}>{children}</ErrorBoundary>;
 }
 
+/**
+ * After a route change, move focus to the new screen's heading (or the main region), so a
+ * screen-reader user hears that the screen changed instead of staying on a control that no
+ * longer exists. Not on first load: the browser already starts at the top of the page there.
+ */
+function useFocusOnRouteChange(main: RefObject<HTMLElement>) {
+  const { pathname } = useLocation();
+  const first = useRef(true);
+  useEffect(() => {
+    if (first.current) {
+      first.current = false;
+      return;
+    }
+    const target = main.current?.querySelector<HTMLElement>("h1") ?? main.current;
+    if (!target) return;
+    if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
+    target.focus();
+  }, [pathname, main]);
+}
+
 /** Owns the shell: one responsive frame for every route, plus offline handling. */
 function Shell({ children }: { children: ReactNode }) {
   useOfflineRedirect();
+  const main = useRef<HTMLElement>(null);
+  useFocusOnRouteChange(main);
+
+  // Handled in JS so the router never sees a "#main" hash change.
+  function skipToContent(event: MouseEvent<HTMLAnchorElement>) {
+    event.preventDefault();
+    main.current?.focus();
+  }
+
   return (
     <div className="app-shell">
-      <main className="app-main">{children}</main>
+      <a className="skip-link" href="#main" onClick={skipToContent}>
+        Skip to content
+      </a>
+      <main id="main" className="app-main" ref={main} tabIndex={-1}>
+        {children}
+      </main>
     </div>
   );
 }

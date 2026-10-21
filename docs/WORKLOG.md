@@ -38,3 +38,6 @@ Committed the open-set phone, noise, child-pitch and repeat/self-correction resu
 
 ## 2026-10-22: story chunking (M6 phase 3)
 `core/parts.py` splits passages into parts (whole sentences up to 12 words, cut only past 20, tiny parts joined). The API returns `parts` and accepts `part_index`, stored by migration 2 and scored against that part only. Web live mode reads the real parts. On the 90 open passages: 34 read in one part, 54 in two, 2 in three; parts are 4–20 words.
+
+## 2026-10-22: accessibility pass (M6 phase 6)
+Skip link, focus moved to each new screen's heading, `lang` on all native-script text, spoken word results on chips, a quiet recording timer. axe-core (dev only) runs on 12 routes in the web tests and found two real issues, both fixed: an unnamed progress bar and three unnamed avatar buttons. A theme contrast test checks the text pairs at 4.5:1. Not tested with a real screen reader.

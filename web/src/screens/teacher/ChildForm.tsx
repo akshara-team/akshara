@@ -102,14 +102,17 @@ export function ChildForm({ mode }: { mode: "add" | "edit" }) {
             />
 
             <div className="field">
-              <span className="field__label">Choose an avatar</span>
-              <div className="avatar-picker">
+              <span className="field__label" id="avatar-label">
+                Choose an avatar
+              </span>
+              <div className="avatar-picker" role="group" aria-labelledby="avatar-label">
                 {AVATAR_CHOICES.map((initials) => (
                   <button
                     key={initials}
                     type="button"
                     className="avatar-pick"
                     aria-pressed={avatar === initials}
+                    aria-label={`Avatar ${initials}`}
                     onClick={() => setAvatar(initials)}
                   >
                     <Avatar initials={initials} selected={avatar === initials} />

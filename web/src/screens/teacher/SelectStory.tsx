@@ -71,16 +71,16 @@ export function SelectStory() {
           {/* Right: story content (868 wide in the frame). */}
           <div className="stack">
             <Card>
-              <p className={`metarow__title ${scriptClass(lang)}`}>{STORY.title}</p>
+              <p className={`metarow__title ${scriptClass(lang)}`} lang={lang}>{STORY.title}</p>
               <p className="reader-meta">
                 {STORY.english} · {STORY.words} words
               </p>
-              <p className={`reading-text ${scriptClass(lang)}`}>{STORY.preview}</p>
+              <p className={`reading-text ${scriptClass(lang)}`} lang={lang}>{STORY.preview}</p>
             </Card>
 
             <Card>
               <p className="eyebrow">Part 2 preview</p>
-              <p className={`reading-text ${scriptClass(lang)}`}>
+              <p className={`reading-text ${scriptClass(lang)}`} lang={lang}>
                 ಕೆಂಪು ಹೂವು ಬಹಳ ಸುಂದರವಾಗಿತ್ತು.
               </p>
             </Card>

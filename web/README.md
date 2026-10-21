@@ -132,7 +132,24 @@ Each phase is its own branch → PR → CI green on the branch → merge.
 - [x] Phase 3 — story chunking (real parts from the API, scored per part)
 - [x] Phase 4 — bundle-size budget in CI
 - [ ] Phase 5 — deploy the demo (GitHub Pages, mock mode)
-- [ ] Phase 6 — accessibility pass (focus, skip link, live regions, axe)
+- [x] Phase 6 — accessibility pass (see Accessibility below)
+
+## Accessibility
+
+- **Skip link** as the first tab stop; it focuses `<main>`.
+- **Route changes move focus** to the new screen's `h1` (or `<main>`), so a screen reader
+  announces the new screen. Not on first load.
+- **`lang` on native-script text** (`kn-IN`, `ta-IN`, `hi-IN`) wherever `scriptClass()` is
+  used, so screen readers switch voice instead of reading Kannada with an English one.
+- **Word results are spoken**: each word chip has visually hidden text ("skipped", "read as
+  a different word", ...), since colour and icon alone are not enough.
+- **Recording timer** uses `role="timer"`, which is not announced every second.
+- **Names** on every progress bar and on the avatar picker buttons (found by axe).
+- **Tests** (`src/a11y.test.tsx`): axe-core on 12 routes (colour contrast is off there, as
+  jsdom has no layout), the skip link, focus after navigation, and a WCAG AA check of the
+  theme's text colour pairs (4.5:1) and the stop icon on the red mic (3:1). The disabled
+  "processing" mic is below 3:1 but WCAG exempts disabled controls.
+- **Not done:** a pass with a real screen reader (NVDA/TalkBack) on a device.
 
 ## Tests
 

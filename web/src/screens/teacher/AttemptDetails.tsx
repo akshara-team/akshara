@@ -86,14 +86,14 @@ export function AttemptDetails() {
 
             <Card>
               <p className="eyebrow">Heard, not the reference</p>
-              <p className={`reading-text ${scriptClass(child.lang)}`}>{ATTEMPT.transcript}</p>
+              <p className={`reading-text ${scriptClass(child.lang)}`} lang={child.lang}>{ATTEMPT.transcript}</p>
             </Card>
 
             <div className="practice">
               <p className="eyebrow">Recommended practice</p>
               {ATTEMPT.practice.map((word) => (
                 <div className="practice__row" key={word}>
-                  <span className={`reading-text ${scriptClass(child.lang)}`}>{word}</span>
+                  <span className={`reading-text ${scriptClass(child.lang)}`} lang={child.lang}>{word}</span>
                   <ListenButton text={word} lang={child.lang} />
                 </div>
               ))}

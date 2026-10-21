@@ -58,7 +58,7 @@ export function FeedbackScreen() {
     <>
       <PageHeader back backTo="/home" />
       <div className="feedback-hero">
-        <h1 className={`feedback-hero__title ${scriptClass(lang)}`}>
+        <h1 className={`feedback-hero__title ${scriptClass(lang)}`} lang={lang}>
           {copy.wellRead} <StarIcon className="inline-icon" />
         </h1>
         <p className="feedback-hero__sub">Child · Evaluated demo · Part {currentPart}</p>
@@ -75,7 +75,7 @@ export function FeedbackScreen() {
                 </span>
                 <span>{Math.round(part.attempt.accuracy * 100)}% correct</span>
               </div>
-              <ProgressBar value={(currentPart / total) * 100} />
+              <ProgressBar value={(currentPart / total) * 100} label="Reading progress" />
             </div>
 
             <div className="metarow">
@@ -123,7 +123,7 @@ export function FeedbackScreen() {
                 </p>
                 {missed.map((w, i) => (
                   <div className="practice__row" key={`${w.word}-${i}`}>
-                    <span className={`reading-text ${scriptClass(lang)}`}>{w.word}</span>
+                    <span className={`reading-text ${scriptClass(lang)}`} lang={lang}>{w.word}</span>
                     <ListenButton text={w.word ?? ""} lang={lang} label={copy.listen} />
                   </div>
                 ))}

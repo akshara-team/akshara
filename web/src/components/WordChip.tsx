@@ -47,7 +47,11 @@ export function WordChip({
       <span className="wordchip__icon" aria-hidden="true">
         {ICON[status]}
       </span>
-      <span className={`wordchip__word ${scriptClass(lang)}`}>{word}</span>
+      <span className={`wordchip__word ${scriptClass(lang)}`} lang={lang}>
+        {word}
+      </span>
+      {/* The icon and colour are visual only; this says the same thing aloud. */}
+      <span className="sr-only">, {TITLE[status]}</span>
     </span>
   );
 }

@@ -32,7 +32,7 @@ export function RecoveryScreen() {
               <LanguageBadge lang={lang} />
               <div className="metarow__text">
                 <span className="eyebrow">Recovery · Demo state</span>
-                <span className={`metarow__title ${scriptClass(lang)}`}>
+                <span className={`metarow__title ${scriptClass(lang)}`} lang={lang}>
                   {passage ? passage.text.split(/\s+/).slice(0, 3).join(" ") : "No story loaded"}
                 </span>
               </div>

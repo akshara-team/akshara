@@ -65,7 +65,7 @@ is its own branch → PR → CI green on the branch → merge. Details: [web/REA
       picker, child profile and history, attempt details, add/edit child
 - [x] API seam with a mock adapter (the handoff's demo attempt) and a live adapter for `/v1`
 - [x] Per-screen error boundaries so one broken screen leaves the rest working
-- [x] `web` CI job: npm ci, lint, typecheck, 55 tests, build, bundle budget
+- [x] `web` CI job: npm ci, lint, typecheck, 80 tests, build, bundle budget
 - [x] Desktop teacher layout, offline redirect, real Listen audio (model audio with a
       device-voice fallback)
 - [x] Desktop layouts taken from the design's desktop frames: dashboard with a 5-column roster
@@ -89,7 +89,10 @@ is its own branch → PR → CI green on the branch → merge. Details: [web/REA
       total gzip (measured build: ~73 kB JS / ~78 kB total); runs after the build and in `run.sh check`
 - [ ] Phase 5 — deploy the demo (mock mode) for the post — **blocked: GitHub Pages needs repo
       admin (Achindra)**; the workflow is ready apart from enabling Pages
-- [ ] Phase 6 — accessibility pass: focus, skip link, live regions, axe
+- [x] Phase 6 — accessibility pass: skip link; focus moves to each new screen's heading; `lang` on all Kannada/Tamil/Hindi text
+      so screen readers use the right voice; word results spoken, not only coloured; a quiet
+      recording timer; named progress bars and avatar buttons; axe on 12 routes and a theme
+      contrast check in the web tests
 - [x] Phase 7 — child home + saved progress: reader, language and readings in `localStorage`,
       `/` sends a returning child to `/home`, results save once and finish to home, with a
       synced line from `/v1/class/summary`
