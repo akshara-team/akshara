@@ -5,3 +5,5 @@ Hi Gnani team. We are building a reading screener for early-grade children in Ka
 
 ## Support: Cloudflare 403 on some Prisma clips
 Hi. A few of our short WAV clips (16 kHz mono, 4 to 11 s, made with Timbre) always return an HTTP 403 Cloudflare HTML page from the Prisma REST endpoint, on every retry, while similar clips succeed. Examples from our log: files named sw-958, sw-557049, sw-37201 (one each in Hindi, Kannada, Tamil), and two halting-test clips sw-30140 and sw-38483. We can send the audio. Is there a content or size rule we are hitting, and how should we avoid it?
+
+One clean reproduction: a 2.7 s Kannada clip returned the 403 HTML page on every retry, while re-synthesising the same text and changing nothing else returned 200. So it looks tied to that specific file's bytes, not the key, the IP or the clip length. Could you check the WAF rule for this?

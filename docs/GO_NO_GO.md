@@ -33,12 +33,20 @@ Add 20 passages per language to `data/go_no_go/passages.jsonl`. Copy the format 
 
 Run `uv run python scripts/go_no_go.py --dry-run` to check your indexes. In dry-run mode `read_as` stands in for the transcript, so every passage should score 100% catch and 0% false flags. If one doesn't, its `index` values are wrong.
 
-### 2. Record
+### 2. Record (synthetic)
 
-- Read `read_as` aloud, at a child-like slow pace. Each clip **under 30 seconds**.
-- Save as WAV in `data/go_no_go/audio/<id>.wav` (any sample rate; mono preferred).
-- **Adults only, our own voices.** No children, no one else's recordings.
-- Record a few on a phone mic in a noisy room too. Classrooms aren't quiet.
+Timbre reads each passage's `read_as`, mistakes included, so no one has to record by hand:
+
+```bash
+uv run python scripts/make_test_audio.py --dry-run      # preview, no calls
+uv run python scripts/make_test_audio.py --only hi-101  # one clip, to check credit cost
+uv run python scripts/make_test_audio.py                # all passages
+```
+
+- Clips are written to `data/go_no_go/audio/<id>.wav` as mono 16 kHz, already **under 30 seconds**.
+- A slow voice (`--speed 0.85`) reads closer to a halting reader.
+- `scripts/record.py` records with a microphone instead (adults only, our own voices) if a
+  real voice is ever wanted.
 
 ### 3. Check the credit cost first
 
@@ -64,12 +72,17 @@ Write the result and the decision at the bottom of this file and in [WORKLOG.md]
 
 ## Result
 
-*Not run yet.*
+*Run 2026-10-21 on synthetic Timbre clips, 12 Kannada + 12 Tamil (`results/go_no_go_kn_ta.json`). Hindi not run.*
 
 | Language | Passages | Planted mistakes | Catch rate | False-flag rate | Pass? |
 |---|---|---|---|---|---|
-| Hindi | | | | | |
-| Kannada | | | | | |
-| Tamil | | | | | |
+| Hindi | — | — | — | — | not run |
+| Kannada | 12 | 20 | 100% | 1% | Yes |
+| Tamil | 12 | 20 | 95% | 5% (loose) / 11% (strict) | Yes (loose) |
 
-**Decision:**
+**Decision:** Go for Kannada and Tamil. Audio is synthetic (Timbre reads `read_as`), so this
+measures the transcriber, not a classroom. Kannada passes in both scoring modes. Tamil passes
+under loose scoring; its strict false-flag rate (11%) is one word over the line and comes only
+from spelling variants (trailing ள்/ல், க், word merging), not passage errors. One genuine miss:
+ta-102, where the near-sound swap மலை came back as the correct மழை — the hidden-misread
+behaviour this test exists to measure.

@@ -439,3 +439,61 @@
 {"t": 1792503135.3707755, "kind": "tts", "chars": 41, "voice": "Lakshmi", "language": "hi-IN"}
 {"t": 1792503137.9597108, "kind": "tts", "chars": 73, "voice": "Kalpana", "language": "hi-IN"}
 {"t": 1792503140.9059947, "kind": "tts", "chars": 71, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792568855.499089, "kind": "tts", "chars": 58, "voice": "Shivani", "language": "kn-IN"}
+{"t": 1792568866.208429, "kind": "tts", "chars": 43, "voice": "Lakshmi", "language": "kn-IN"}
+{"t": 1792568868.634963, "kind": "tts", "chars": 59, "voice": "Kalpana", "language": "kn-IN"}
+{"t": 1792568871.1450171, "kind": "tts", "chars": 52, "voice": "Chetana", "language": "kn-IN"}
+{"t": 1792568873.604536, "kind": "tts", "chars": 59, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792568876.619381, "kind": "tts", "chars": 60, "voice": "Riyaa", "language": "kn-IN"}
+{"t": 1792568879.0991192, "kind": "tts", "chars": 59, "voice": "Tarika", "language": "kn-IN"}
+{"t": 1792568881.7331898, "kind": "tts", "chars": 46, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792568884.517287, "kind": "tts", "chars": 69, "voice": "Shubham", "language": "kn-IN"}
+{"t": 1792568887.589879, "kind": "tts", "chars": 42, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792568890.0079548, "kind": "tts", "chars": 41, "voice": "Devansh", "language": "kn-IN"}
+{"t": 1792568892.999434, "kind": "tts", "chars": 33, "voice": "Yashraj", "language": "kn-IN"}
+{"t": 1792568895.288227, "kind": "tts", "chars": 69, "voice": "Harshad", "language": "ta-IN"}
+{"t": 1792568898.4328709, "kind": "tts", "chars": 59, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792568900.847612, "kind": "tts", "chars": 76, "voice": "Lakshmi", "language": "ta-IN"}
+{"t": 1792568903.506866, "kind": "tts", "chars": 61, "voice": "Kalpana", "language": "ta-IN"}
+{"t": 1792568906.053251, "kind": "tts", "chars": 73, "voice": "Chetana", "language": "ta-IN"}
+{"t": 1792568908.680036, "kind": "tts", "chars": 49, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792568911.022806, "kind": "tts", "chars": 64, "voice": "Riyaa", "language": "ta-IN"}
+{"t": 1792568914.1563032, "kind": "tts", "chars": 50, "voice": "Tarika", "language": "ta-IN"}
+{"t": 1792568916.5116422, "kind": "tts", "chars": 72, "voice": "Avinash", "language": "ta-IN"}
+{"t": 1792568919.1880808, "kind": "tts", "chars": 58, "voice": "Shubham", "language": "ta-IN"}
+{"t": 1792568921.656478, "kind": "tts", "chars": 39, "voice": "Prakash", "language": "ta-IN"}
+{"t": 1792568924.3923829, "kind": "tts", "chars": 46, "voice": "Devansh", "language": "ta-IN"}
+{"t": 1792568945.6458519, "kind": "stt", "file": "kn-101.wav", "bytes": 145110}
+{"t": 1792568947.518593, "kind": "stt", "file": "kn-102.wav", "bytes": 113822}
+{"t": 1792568949.3491242, "kind": "stt", "file": "kn-103.wav", "bytes": 153644}
+{"t": 1792568951.195335, "kind": "stt", "file": "kn-104.wav", "bytes": 130888}
+{"t": 1792568953.126533, "kind": "stt", "file": "kn-105.wav", "bytes": 173556}
+{"t": 1792568955.00118, "kind": "stt", "file": "kn-106.wav", "bytes": 156488}
+{"t": 1792568956.9462888, "kind": "stt", "file": "kn-107.wav", "bytes": 153644}
+{"t": 1792568958.935103, "kind": "stt", "file": "kn-108.wav", "bytes": 128044}
+{"t": 1792568960.7900531, "kind": "stt", "file": "kn-109.wav", "bytes": 176400}
+{"t": 1792568962.640667, "kind": "stt", "file": "kn-110.wav", "bytes": 119510}
+{"t": 1792568964.616181, "kind": "stt", "file": "kn-111.wav", "bytes": 113822}
+{"t": 1792568966.497848, "kind": "stt", "file": "kn-112.wav", "bytes": 88222}
+{"t": 1792569037.370466, "kind": "stt", "file": "ta-101.wav", "bytes": 136578}
+{"t": 1792569039.327306, "kind": "stt", "file": "ta-102.wav", "bytes": 119510}
+{"t": 1792569041.524072, "kind": "stt", "file": "ta-103.wav", "bytes": 173556}
+{"t": 1792569043.549283, "kind": "stt", "file": "ta-104.wav", "bytes": 142266}
+{"t": 1792569045.5131562, "kind": "stt", "file": "ta-105.wav", "bytes": 156488}
+{"t": 1792569047.4568949, "kind": "stt", "file": "ta-106.wav", "bytes": 119510}
+{"t": 1792569049.4077609, "kind": "stt", "file": "ta-107.wav", "bytes": 133732}
+{"t": 1792569051.457149, "kind": "stt", "file": "ta-108.wav", "bytes": 122356}
+{"t": 1792569053.4962611, "kind": "stt", "file": "ta-109.wav", "bytes": 184932}
+{"t": 1792569055.556136, "kind": "stt", "file": "ta-110.wav", "bytes": 122356}
+{"t": 1792569057.4842398, "kind": "stt", "file": "ta-111.wav", "bytes": 96756}
+{"t": 1792569059.427833, "kind": "stt", "file": "ta-112.wav", "bytes": 85378}
+{"t": 1792569073.230664, "kind": "stt", "file": "kn-112.wav", "bytes": 88222}
+{"t": 1792569146.3173199, "kind": "stt", "file": "kn-112.wav", "bytes": 88222}
+{"t": 1792569219.41466, "kind": "stt", "file": "kn-112.wav", "bytes": 88222}
+{"t": 1792569423.8097768, "kind": "stt", "file": "kn-112.wav", "bytes": 88222}
+{"t": 1792569495.048479, "kind": "tts", "chars": 33, "voice": "Kalpana", "language": "kn-IN"}
+{"t": 1792569495.8170109, "kind": "stt", "file": "kn112_Kalpana.wav", "bytes": 79404}
+{"t": 1792569496.121838, "kind": "tts", "chars": 33, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792569496.948281, "kind": "stt", "file": "kn112_Prakash.wav", "bytes": 71724}
+{"t": 1792569753.6660469, "kind": "tts", "chars": 33, "voice": "Kalpana", "language": "kn-IN"}
+{"t": 1792569775.209523, "kind": "stt", "file": "kn-112.wav", "bytes": 81964}

@@ -4,8 +4,11 @@ Gnani evaluates and interviews each of us separately, so log what you did. Newes
 
 | Date | Who | What |
 |---|---|---|
+| 2026-10-21 | Partner | Generated the Kannada + Tamil go/no-go clips with Timbre TTS (24 clips, mono 16 kHz) via `scripts/make_test_audio.py`, replacing hand recording; one clip fixed by re-rendering after a Cloudflare 403 |
+| 2026-10-21 | Partner | Ran the go/no-go test on the synthetic clips: Kannada 100% catch / 1% false-flag, Tamil 95% / 5% (loose) — both pass; result and decision written into GO_NO_GO.md |
 | 2026-10-20 | Achindra | Open passages: fetched StoryWeaver catalogue descriptions, added deterministic mistake planting (skip, near-sound, distant, half-word) with tests, built 90 study passages (156 planted mistakes) |
 | 2026-10-20 | Achindra | Restructured into core/providers/api, added service, SQLite store, FastAPI app, fixture provider, Dockerfile, CI format check and an eval regression gate |
+| 2026-10-19 | Partner | Wrote 20 Kannada + 20 Tamil go/no-go passages with planted errors (`data/go_no_go/passages.jsonl`); dry run passes 100% catch / 0% false flags. Drafted the frontend stack decision ([decisions/001-frontend-stack.md](decisions/001-frontend-stack.md)) and the FastAPI contract ([API_CONTRACT.md](API_CONTRACT.md)). Added `scripts/record.py` to record the clips |
 | 2026-10-18 | Achindra | Set up the repo: docs, word-alignment scorer with tests, Prisma client, go/no-go script |
 | 2026-10-17 | Achindra | Researched the challenge, competitors and Gnani models; picked the reading-tutor idea |
 

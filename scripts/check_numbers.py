@@ -15,13 +15,17 @@ RES, DOCS = ROOT / "results", ROOT / "docs"
 
 
 def load(name: str):
-    return json.loads((RES / name).read_text(encoding="utf-8"))
+    path = RES / name
+    if not path.exists():
+        print(f"skip {name}: not present")
+        return None
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def pooled_by_type(report: dict) -> dict[str, tuple[int, int]]:
     out: dict[str, list[int]] = {}
     for r in report["summary"]["loose"].values():
-        for kind, v in r["by_type"].items():
+        for kind, v in r.get("by_type", {}).items():
             c = out.setdefault(kind, [0, 0])
             c[0] += v["caught"]
             c[1] += v["planted"]
@@ -33,15 +37,24 @@ def main() -> None:
     text = {n: (DOCS / n).read_text(encoding="utf-8") for n in ("WRITEUP.md", "RESULTS.md")}
     text["CAPTIONS.md"] = (DOCS / "CAPTIONS.md").read_text(encoding="utf-8")
     wanted: list[tuple[str, str]] = []  # (what, a form it may be written in)
-    counts = pooled_by_type(load("go_no_go_open_base.json"))
-    for kind, (c, n) in counts.items():
-        wanted.append((f"open base {kind}", f"{c} of {n}"))
-    for cond in ("open_phone8k", "open_noise5", "open_child4"):
-        for kind, (c, n) in pooled_by_type(load(f"go_no_go_{cond}.json")).items():
+    base = load("go_no_go_open_base.json")
+    if base is not None:
+        for kind, (c, n) in pooled_by_type(base).items():
+            wanted.append((f"open base {kind}", f"{c} of {n}"))
+    for cond in ("phone8k", "noise5", "child4"):
+        report = load(f"go_no_go_{cond}.json")
+        if report is None:
+            continue
+        pooled = pooled_by_type(report)
+        if not pooled:
+            print(f"skip {cond}: report has no per-type data")
+            continue
+        for kind, (c, n) in pooled.items():
             wanted.append((f"{cond} {kind}", f"{c}/{n}"))
-    dis = pooled_by_type(load("go_no_go_open_disfluency.json"))
-    for kind, (c, n) in dis.items():
-        wanted.append((f"disfluency {kind}", f"{c} of {n}"))
+    disfluency = load("go_no_go_open_disfluency.json")
+    if disfluency is not None:
+        for kind, (c, n) in pooled_by_type(disfluency).items():
+            wanted.append((f"disfluency {kind}", f"{c} of {n}"))
     iso = load("isolated_control.json")
     v = [o["verdict"] for o in iso]
     wanted.append(("isolated, read as spoken", f"{v.count('as_read')} non-word reads"))

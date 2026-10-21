@@ -22,6 +22,12 @@ build/
 results/transcripts/
 results/audio/
 
+# Personal working notes
+data/go_no_go/*_practice.md
+
+# Tooling
+.commandcode/
+
 # OS / editors
 .DS_Store
 Thumbs.db
