@@ -84,6 +84,9 @@ is its own branch → PR → CI green on the branch → merge. Details: [web/REA
 - [ ] Phase 4 — performance gate: a bundle-size budget in CI
 - [ ] Phase 5 — deploy the demo (GitHub Pages, mock mode) for the post
 - [ ] Phase 6 — accessibility pass: focus, skip link, live regions, axe
+- [x] Phase 7 — child home + saved progress: reader, language and readings in `localStorage`,
+      `/` sends a returning child to `/home`, results save once and finish to home, with a
+      synced line from `/v1/class/summary`
 
 ## Stretch
 

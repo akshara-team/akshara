@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Button,
@@ -9,13 +10,15 @@ import {
   TrendingUpIcon,
 } from "../../components";
 import { useSession } from "../../state/session";
+import { addReading, buildReading } from "../../state/storage";
 import { scriptClass } from "../../theme/script";
 import { flowCopy } from "./copy";
 
 export function ResultsScreen() {
-  const { lang, parts, reset } = useSession();
+  const { lang, passage, parts, sessionId, reset } = useSession();
   const navigate = useNavigate();
   const copy = flowCopy(lang);
+  const saved = useRef(false);
 
   const read = parts.filter((p) => p.attempt);
   const words = read.flatMap((p) => p.attempt?.words ?? []);
@@ -26,9 +29,24 @@ export function ResultsScreen() {
   const wcpm = seconds > 0 ? Math.round((correct / seconds) * 60) : null;
   const missed = words.filter((w) => w.op === "substituted" || w.op === "skipped");
 
+  // Record the reading once, so the child's home can show it later.
+  useEffect(() => {
+    if (saved.current || !sessionId || !passage) return;
+    const reading = buildReading({
+      id: sessionId,
+      passageId: passage.id,
+      storyTitle: copy.storyTitle,
+      language: lang,
+      parts,
+    });
+    if (!reading) return;
+    saved.current = true;
+    addReading(reading);
+  }, [sessionId, passage, parts, lang, copy.storyTitle]);
+
   function finish() {
     reset();
-    navigate("/");
+    navigate("/home");
   }
 
   return (

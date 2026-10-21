@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { ATTEMPT, childById } from "../../api/teacherData";
 import { mockAttempt } from "../../api/mock";
-import type { WordOut } from "../../api/types";
 import {
   Button,
   Card,
@@ -10,16 +9,9 @@ import {
   StatCard,
   TopBar,
   WordChip,
-  type WordStatus,
+  wordStatus,
 } from "../../components";
 import { scriptClass } from "../../theme/script";
-
-function statusOf(w: WordOut): WordStatus {
-  if (w.check) return "uncertain";
-  if (w.op === "substituted") return "substituted";
-  if (w.op === "skipped") return "skipped";
-  return "correct";
-}
 
 export function AttemptDetails() {
   const { childId } = useParams<{ childId: string }>();
@@ -85,7 +77,7 @@ export function AttemptDetails() {
               {words.map((w, i) => (
                 <WordChip
                   key={`${w.index ?? i}-${w.word ?? ""}`}
-                  status={statusOf(w)}
+                  status={wordStatus(w)}
                   word={w.word ?? ""}
                   lang={child.lang}
                 />

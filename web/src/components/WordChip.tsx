@@ -4,6 +4,14 @@ import { CheckIcon, MinusIcon, QuestionIcon, SwapIcon } from "./icons";
 
 export type WordStatus = "correct" | "substituted" | "skipped" | "uncertain";
 
+/** Maps a scorer word (`op` + `check`) to the chip state used across screens. */
+export function wordStatus(w: { op: string; check?: boolean }): WordStatus {
+  if (w.check) return "uncertain";
+  if (w.op === "substituted") return "substituted";
+  if (w.op === "skipped") return "skipped";
+  return "correct";
+}
+
 const ICON: Record<WordStatus, ReactNode> = {
   correct: <CheckIcon width={14} height={14} />,
   substituted: <SwapIcon width={14} height={14} />,

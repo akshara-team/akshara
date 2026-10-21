@@ -117,6 +117,7 @@
   --size-error-card: 375px;
   --size-passage-max: 640px; /* keeps reading lines short on desktop */
   --size-recovery-card: 560px;
+  --size-home-max: 720px; /* the child home column on desktop */
 
   /* Desktop workspace side columns, straight from the frames. */
   --workspace-side-profile: 360px;

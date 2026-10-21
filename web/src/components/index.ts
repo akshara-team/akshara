@@ -17,5 +17,5 @@ export { StatCard } from "./StatCard";
 export { StatusBadge } from "./StatusBadge";
 export { Table } from "./Table";
 export { TopBar } from "./TopBar";
-export { WordChip, type WordStatus } from "./WordChip";
+export { WordChip, wordStatus, type WordStatus } from "./WordChip";
 export * from "./icons";
