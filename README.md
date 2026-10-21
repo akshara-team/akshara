@@ -40,8 +40,12 @@ cp .env.example .env # add your GNANI_API_KEY (optional: the fixture provider ne
 ./run.sh             # backend + web together; logs are tagged [backend] / [frontend]
 ```
 
-The same commands are available through npm: `npm start`, `npm run dev`, `npm test`,
-`npm run lint`, `npm run typecheck`, `npm run build`, `npm run check`.
+The same commands are available through npm: `npm start`, `npm run dev`, `npm run live`,
+`npm test`, `npm run lint`, `npm run typecheck`, `npm run build`, `npm run check`.
+
+`./run.sh` runs the offline demo (fixture transcripts + mock web, **no credits**).
+`./run.sh live` runs the real pipeline — Prisma transcription and Timbre audio — and costs
+about 0.05–0.1 credits per attempt, capped by `AKSHARA_MAX_CALLS`.
 
 Pieces, if you want them separately:
 

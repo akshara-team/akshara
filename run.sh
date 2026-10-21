@@ -69,8 +69,9 @@ usage() {
   cat <<'EOF'
 Akshara dev runner
 
-  ./run.sh              backend + web together
+  ./run.sh              backend + web together, offline (no credits)
   ./run.sh dev          ditto
+  ./run.sh live         real Prisma + Timbre + live web (costs credits)
   ./run.sh backend      FastAPI only (http://127.0.0.1:8000)
   ./run.sh frontend     Vite only (http://localhost:5173)
   ./run.sh install      install Python and web dependencies
@@ -85,7 +86,12 @@ Environment:
   API_PORT=8000         backend port
   WEB_PORT=5173         web dev-server port
   AKSHARA_PROVIDER      fixture (default) or prisma
-  VITE_API_MODE         set in web/.env: mock (default) or live
+  VITE_API_MODE         mock (default) or live
+
+Modes:
+  dev / no argument     fixture provider + mock web: no network, no credits
+  live / demo           prisma provider + live web: real transcription and audio,
+                        ~0.05-0.1 credits per attempt, capped by AKSHARA_MAX_CALLS
 
 Logs are tagged: [backend] in red, [frontend] in teal.
 The web app talks to the API through the Vite dev proxy, so /v1 needs no CORS.
@@ -118,7 +124,10 @@ frontend() {
     | label "$C_FRONTEND" frontend
 }
 
-dev() {
+# Shared by `dev` (fixture + mock) and `live` (Prisma + live web).
+run_both() {
+  local provider="$1" web_mode="$2"
+
   need uv
   need npm
   force_dev_env
@@ -130,11 +139,11 @@ dev() {
   : > "$api_log"
   : > "$web_log"
 
-  ( cd "$ROOT" && exec uv run uvicorn akshara.api.app:create_app \
+  ( cd "$ROOT" && exec env AKSHARA_PROVIDER="$provider" uv run uvicorn akshara.api.app:create_app \
       --factory --host 127.0.0.1 --port "$API_PORT" --reload ) >"$api_log" 2>&1 &
   api=$!
 
-  ( cd "$WEB" && exec npm run dev -- --port "$WEB_PORT" ) >"$web_log" 2>&1 &
+  ( cd "$WEB" && exec env VITE_API_MODE="$web_mode" npm run dev -- --port "$WEB_PORT" ) >"$web_log" 2>&1 &
   web=$!
 
   # Tail each log through the labeller so the two streams stay distinguishable.
@@ -152,9 +161,20 @@ dev() {
   }
   trap cleanup INT TERM EXIT
 
-  log "Backend http://127.0.0.1:${API_PORT}   Web http://localhost:${WEB_PORT}"
+  log "Backend http://127.0.0.1:${API_PORT} (${provider})   Web http://localhost:${WEB_PORT} (${web_mode})"
   log "Ctrl-C stops both."
   wait "$web"
+}
+
+# Offline: fixture transcripts + in-browser fixtures. No network, no credits.
+dev() { run_both fixture mock; }
+
+# Real pipeline: Prisma transcription and Timbre audio. Costs credits per attempt.
+live() {
+  [ -n "${GNANI_API_KEY:-}" ] || die "GNANI_API_KEY is not set (put it in .env); live mode needs it"
+  log "LIVE MODE — real Prisma transcription and Timbre audio."
+  log "Costs credits per attempt. Ledger: results/ledger.jsonl (cap ${AKSHARA_MAX_CALLS:-600})."
+  run_both prisma live
 }
 
 test_all() {
@@ -197,6 +217,7 @@ case "${1:-dev}" in
   backend) backend ;;
   frontend) frontend ;;
   dev | start) dev ;;
+  live | demo) live ;;
   test) test_all ;;
   lint) lint_all ;;
   typecheck) typecheck_all ;;

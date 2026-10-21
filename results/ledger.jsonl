@@ -497,3 +497,4 @@
 {"t": 1792569496.948281, "kind": "stt", "file": "kn112_Prakash.wav", "bytes": 71724}
 {"t": 1792569753.6660469, "kind": "tts", "chars": 33, "voice": "Kalpana", "language": "kn-IN"}
 {"t": 1792569775.209523, "kind": "stt", "file": "kn-112.wav", "bytes": 81964}
+{"t": 1792584164.8150651, "kind": "stt", "file": "kn-101.wav", "bytes": 145110}
