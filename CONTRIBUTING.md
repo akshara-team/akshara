@@ -5,10 +5,30 @@
 ```bash
 git clone https://github.com/Achindra2003/akshara.git
 cd akshara
-uv sync
+./run.sh install        # uv sync + npm install (also: npm run install:all)
 cp .env.example .env    # put the API key in .env, never in code
-uv run pytest
+./run.sh test           # pytest + vitest
 ```
+
+## Runner
+
+`./run.sh` is the one entrypoint; the root `package.json` mirrors it for npm users.
+
+| Command | What it does |
+|---|---|
+| `./run.sh` / `npm start` | backend + web together |
+| `./run.sh backend` | FastAPI on :8000 |
+| `./run.sh frontend` | Vite on :5173 |
+| `./run.sh install` | `uv sync` + `npm install` |
+| `./run.sh test` | `pytest` + `vitest` |
+| `./run.sh lint` | `ruff check`, `ruff format --check`, `eslint` |
+| `./run.sh typecheck` | `tsc --noEmit` |
+| `./run.sh build` | production web build |
+| `./run.sh check` | the whole CI suite locally |
+
+When both run in one terminal, each line is tagged — **`[backend]` in red**, **`[frontend]`
+in teal** — so the interleaved logs stay readable. `Ctrl-C` stops both; the runner kills the
+whole process tree (npm leaves Vite running otherwise).
 
 ## Workflow
 
