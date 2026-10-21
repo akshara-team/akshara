@@ -50,7 +50,9 @@ Both are interviewed separately, so each should be able to explain their own par
 
 - **98 Python tests**, **46 web tests**; CI runs both jobs on every PR.
 - Production web bundle: **73 kB JS / 78 kB total gzip**.
-- Ledger: **501** paid calls used of the `AKSHARA_MAX_CALLS=2500` cap.
+- Ledger: **1,930** paid calls logged in `results/ledger.jsonl` (both machines merged). The
+  `AKSHARA_MAX_CALLS` cap counts this file, so with a cap of 2,500 about 570 calls are left
+  before it needs raising. Credits themselves are not the limit (about 0.05-0.1 per call).
 
 ## Known limits (already stated in the docs)
 

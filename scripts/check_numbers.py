@@ -15,10 +15,11 @@ RES, DOCS = ROOT / "results", ROOT / "docs"
 
 
 def load(name: str):
+    # A missing result file is a failure: a number in the docs that nothing backs is the
+    # thing this check exists to catch.
     path = RES / name
     if not path.exists():
-        print(f"skip {name}: not present")
-        return None
+        sys.exit(f"MISSING results/{name}: commit it, or remove the numbers it backs")
     return json.loads(path.read_text(encoding="utf-8"))
 
 
@@ -37,24 +38,13 @@ def main() -> None:
     text = {n: (DOCS / n).read_text(encoding="utf-8") for n in ("WRITEUP.md", "RESULTS.md")}
     text["CAPTIONS.md"] = (DOCS / "CAPTIONS.md").read_text(encoding="utf-8")
     wanted: list[tuple[str, str]] = []  # (what, a form it may be written in)
-    base = load("go_no_go_open_base.json")
-    if base is not None:
-        for kind, (c, n) in pooled_by_type(base).items():
-            wanted.append((f"open base {kind}", f"{c} of {n}"))
-    for cond in ("phone8k", "noise5", "child4"):
-        report = load(f"go_no_go_{cond}.json")
-        if report is None:
-            continue
-        pooled = pooled_by_type(report)
-        if not pooled:
-            print(f"skip {cond}: report has no per-type data")
-            continue
-        for kind, (c, n) in pooled.items():
+    for kind, (c, n) in pooled_by_type(load("go_no_go_open_base.json")).items():
+        wanted.append((f"open base {kind}", f"{c} of {n}"))
+    for cond in ("open_phone8k", "open_noise5", "open_child4"):
+        for kind, (c, n) in pooled_by_type(load(f"go_no_go_{cond}.json")).items():
             wanted.append((f"{cond} {kind}", f"{c}/{n}"))
-    disfluency = load("go_no_go_open_disfluency.json")
-    if disfluency is not None:
-        for kind, (c, n) in pooled_by_type(disfluency).items():
-            wanted.append((f"disfluency {kind}", f"{c} of {n}"))
+    for kind, (c, n) in pooled_by_type(load("go_no_go_open_disfluency.json")).items():
+        wanted.append((f"disfluency {kind}", f"{c} of {n}"))
     iso = load("isolated_control.json")
     v = [o["verdict"] for o in iso]
     wanted.append(("isolated, read as spoken", f"{v.count('as_read')} non-word reads"))

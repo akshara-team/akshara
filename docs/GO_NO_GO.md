@@ -72,15 +72,18 @@ Write the result and the decision at the bottom of this file and in [WORKLOG.md]
 
 ## Result
 
-*Run 2026-10-21 on synthetic Timbre clips, 12 Kannada + 12 Tamil (`results/go_no_go_kn_ta.json`). Hindi not run.*
+*First run 2026-10-19 on all 36 synthetic Timbre clips (`results/go_no_go_report.json`; full
+write-up in [RESULTS.md](RESULTS.md)). Kannada and Tamil were re-run 2026-10-21 on a second
+machine (`results/go_no_go_kn_ta.json`); the rows below for those two are from the re-run.*
 
 | Language | Passages | Planted mistakes | Catch rate | False-flag rate | Pass? |
 |---|---|---|---|---|---|
-| Hindi | — | — | — | — | not run |
+| Hindi | 12 | 20 | 95% | 1% (loose) / 5% (strict) | Yes |
 | Kannada | 12 | 20 | 100% | 1% | Yes |
 | Tamil | 12 | 20 | 95% | 5% (loose) / 11% (strict) | Yes (loose) |
 
-**Decision:** Go for Kannada and Tamil. Audio is synthetic (Timbre reads `read_as`), so this
+**Decision:** Go for all three. Hindi's one miss (hi-104, खेल heard as the expected खेत) is
+the same hidden-misread pattern as ta-102 below. Audio is synthetic (Timbre reads `read_as`), so this
 measures the transcriber, not a classroom. Kannada passes in both scoring modes. Tamil passes
 under loose scoring; its strict false-flag rate (11%) is one word over the line and comes only
 from spelling variants (trailing ள்/ல், க், word merging), not passage errors. One genuine miss:

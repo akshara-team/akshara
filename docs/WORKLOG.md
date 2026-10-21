@@ -32,3 +32,6 @@ Built a 60 s silent demo from slides plus two real screenshots (app served offli
 
 ## 2026-10-20: docs refreshed
 README status, PLAN outcome note, Gnani message drafts (docs/GNANI_MESSAGES.md).
+
+## 2026-10-21: merged results and number check restored
+Committed the open-set phone, noise, child-pitch and repeat/self-correction result files, which were missing from git, and pointed `scripts/check_numbers.py` back at them; a missing result file now fails the check instead of being skipped. GO_NO_GO.md shows the Hindi row from the Oct 19 run. Ledger merged from both machines (1,930 calls).

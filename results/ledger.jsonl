@@ -499,3 +499,1432 @@
 {"t": 1792569775.209523, "kind": "stt", "file": "kn-112.wav", "bytes": 81964}
 {"t": 1792584164.8150651, "kind": "stt", "file": "kn-101.wav", "bytes": 145110}
 {"t": 1792586807.023838, "kind": "tts", "chars": 12, "voice": "Shivani", "language": "kn-IN"}
+{"t": 1792503144.3308666, "kind": "tts", "chars": 73, "voice": "Vasudha", "language": "hi-IN"}
+{"t": 1792503147.2885582, "kind": "tts", "chars": 64, "voice": "Riyaa", "language": "hi-IN"}
+{"t": 1792503150.1324537, "kind": "tts", "chars": 76, "voice": "Tarika", "language": "hi-IN"}
+{"t": 1792503153.1598332, "kind": "tts", "chars": 80, "voice": "Avinash", "language": "hi-IN"}
+{"t": 1792503156.0097852, "kind": "tts", "chars": 77, "voice": "Shubham", "language": "hi-IN"}
+{"t": 1792503159.4614341, "kind": "tts", "chars": 86, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792503162.416347, "kind": "tts", "chars": 80, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792503165.459535, "kind": "tts", "chars": 89, "voice": "Yashraj", "language": "hi-IN"}
+{"t": 1792503169.0619385, "kind": "tts", "chars": 41, "voice": "Harshad", "language": "hi-IN"}
+{"t": 1792503171.5572002, "kind": "tts", "chars": 101, "voice": "Shivani", "language": "hi-IN"}
+{"t": 1792503174.7662318, "kind": "tts", "chars": 59, "voice": "Lakshmi", "language": "hi-IN"}
+{"t": 1792503177.4534774, "kind": "tts", "chars": 95, "voice": "Kalpana", "language": "hi-IN"}
+{"t": 1792503180.5916307, "kind": "tts", "chars": 61, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792503183.8247957, "kind": "tts", "chars": 101, "voice": "Vasudha", "language": "hi-IN"}
+{"t": 1792503187.0912924, "kind": "tts", "chars": 36, "voice": "Riyaa", "language": "hi-IN"}
+{"t": 1792503189.8298347, "kind": "tts", "chars": 43, "voice": "Tarika", "language": "hi-IN"}
+{"t": 1792503192.7589123, "kind": "tts", "chars": 67, "voice": "Avinash", "language": "hi-IN"}
+{"t": 1792503195.4742324, "kind": "tts", "chars": 89, "voice": "Shubham", "language": "hi-IN"}
+{"t": 1792503198.4717498, "kind": "tts", "chars": 54, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792503201.354492, "kind": "tts", "chars": 89, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792503204.4832451, "kind": "tts", "chars": 71, "voice": "Yashraj", "language": "hi-IN"}
+{"t": 1792503207.230609, "kind": "tts", "chars": 37, "voice": "Harshad", "language": "hi-IN"}
+{"t": 1792503209.7397437, "kind": "tts", "chars": 57, "voice": "Shivani", "language": "hi-IN"}
+{"t": 1792503212.418577, "kind": "tts", "chars": 65, "voice": "Lakshmi", "language": "hi-IN"}
+{"t": 1792503215.2552292, "kind": "tts", "chars": 53, "voice": "Kalpana", "language": "hi-IN"}
+{"t": 1792503218.185729, "kind": "tts", "chars": 79, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792503221.2747118, "kind": "tts", "chars": 89, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792503224.8513916, "kind": "tts", "chars": 145, "voice": "Riyaa", "language": "kn-IN"}
+{"t": 1792503229.4397962, "kind": "tts", "chars": 135, "voice": "Tarika", "language": "kn-IN"}
+{"t": 1792503234.1048484, "kind": "tts", "chars": 143, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792503237.9603198, "kind": "tts", "chars": 97, "voice": "Shubham", "language": "kn-IN"}
+{"t": 1792503241.1330793, "kind": "tts", "chars": 158, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792503244.7641356, "kind": "tts", "chars": 74, "voice": "Devansh", "language": "kn-IN"}
+{"t": 1792503247.7957842, "kind": "tts", "chars": 92, "voice": "Yashraj", "language": "kn-IN"}
+{"t": 1792503251.2518249, "kind": "tts", "chars": 55, "voice": "Harshad", "language": "kn-IN"}
+{"t": 1792503254.0203726, "kind": "tts", "chars": 116, "voice": "Shivani", "language": "kn-IN"}
+{"t": 1792503257.4730573, "kind": "tts", "chars": 70, "voice": "Lakshmi", "language": "kn-IN"}
+{"t": 1792503260.4643667, "kind": "tts", "chars": 121, "voice": "Kalpana", "language": "kn-IN"}
+{"t": 1792503264.7332218, "kind": "tts", "chars": 59, "voice": "Chetana", "language": "kn-IN"}
+{"t": 1792503267.3991053, "kind": "tts", "chars": 147, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792503271.36218, "kind": "tts", "chars": 117, "voice": "Riyaa", "language": "kn-IN"}
+{"t": 1792503274.6919065, "kind": "tts", "chars": 128, "voice": "Tarika", "language": "kn-IN"}
+{"t": 1792503279.433758, "kind": "tts", "chars": 90, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792503282.4635117, "kind": "tts", "chars": 110, "voice": "Shubham", "language": "kn-IN"}
+{"t": 1792503285.8380926, "kind": "tts", "chars": 68, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792503289.092274, "kind": "tts", "chars": 164, "voice": "Devansh", "language": "kn-IN"}
+{"t": 1792503292.9072247, "kind": "tts", "chars": 75, "voice": "Yashraj", "language": "kn-IN"}
+{"t": 1792503295.7262678, "kind": "tts", "chars": 151, "voice": "Harshad", "language": "kn-IN"}
+{"t": 1792503299.426325, "kind": "tts", "chars": 155, "voice": "Shivani", "language": "kn-IN"}
+{"t": 1792503303.2478564, "kind": "tts", "chars": 104, "voice": "Lakshmi", "language": "kn-IN"}
+{"t": 1792503307.1486268, "kind": "tts", "chars": 53, "voice": "Kalpana", "language": "kn-IN"}
+{"t": 1792503309.792807, "kind": "tts", "chars": 150, "voice": "Chetana", "language": "kn-IN"}
+{"t": 1792503313.6774836, "kind": "tts", "chars": 111, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792503317.023527, "kind": "tts", "chars": 124, "voice": "Riyaa", "language": "kn-IN"}
+{"t": 1792503321.401846, "kind": "tts", "chars": 74, "voice": "Tarika", "language": "kn-IN"}
+{"t": 1792503324.3389792, "kind": "tts", "chars": 102, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792503327.5812287, "kind": "tts", "chars": 107, "voice": "Shubham", "language": "ta-IN"}
+{"t": 1792503330.8855596, "kind": "tts", "chars": 125, "voice": "Prakash", "language": "ta-IN"}
+{"t": 1792503333.9452713, "kind": "tts", "chars": 90, "voice": "Devansh", "language": "ta-IN"}
+{"t": 1792503336.8243973, "kind": "tts", "chars": 172, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792503340.4242966, "kind": "tts", "chars": 175, "voice": "Harshad", "language": "ta-IN"}
+{"t": 1792503343.7837389, "kind": "tts", "chars": 98, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792503347.3573194, "kind": "tts", "chars": 74, "voice": "Lakshmi", "language": "ta-IN"}
+{"t": 1792503350.4015493, "kind": "tts", "chars": 167, "voice": "Kalpana", "language": "ta-IN"}
+{"t": 1792503354.9512448, "kind": "tts", "chars": 143, "voice": "Chetana", "language": "ta-IN"}
+{"t": 1792503358.4604106, "kind": "tts", "chars": 160, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792503363.2581522, "kind": "tts", "chars": 117, "voice": "Riyaa", "language": "ta-IN"}
+{"t": 1792503366.5869482, "kind": "tts", "chars": 167, "voice": "Tarika", "language": "ta-IN"}
+{"t": 1792503370.1173267, "kind": "tts", "chars": 144, "voice": "Avinash", "language": "ta-IN"}
+{"t": 1792503373.4146993, "kind": "tts", "chars": 143, "voice": "Shubham", "language": "ta-IN"}
+{"t": 1792503377.3594615, "kind": "tts", "chars": 180, "voice": "Prakash", "language": "ta-IN"}
+{"t": 1792503381.7680132, "kind": "tts", "chars": 119, "voice": "Devansh", "language": "ta-IN"}
+{"t": 1792503385.246673, "kind": "tts", "chars": 100, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792503388.231453, "kind": "tts", "chars": 129, "voice": "Harshad", "language": "ta-IN"}
+{"t": 1792503391.4206495, "kind": "tts", "chars": 126, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792503395.2424817, "kind": "tts", "chars": 170, "voice": "Lakshmi", "language": "ta-IN"}
+{"t": 1792503398.9956086, "kind": "tts", "chars": 113, "voice": "Kalpana", "language": "ta-IN"}
+{"t": 1792503402.9783177, "kind": "tts", "chars": 183, "voice": "Chetana", "language": "ta-IN"}
+{"t": 1792503407.4382195, "kind": "tts", "chars": 70, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792503410.3368337, "kind": "tts", "chars": 121, "voice": "Riyaa", "language": "ta-IN"}
+{"t": 1792503413.4612067, "kind": "tts", "chars": 73, "voice": "Tarika", "language": "ta-IN"}
+{"t": 1792503416.1303096, "kind": "tts", "chars": 225, "voice": "Avinash", "language": "ta-IN"}
+{"t": 1792503420.3920622, "kind": "tts", "chars": 158, "voice": "Shubham", "language": "ta-IN"}
+{"t": 1792503424.6162415, "kind": "tts", "chars": 164, "voice": "Prakash", "language": "ta-IN"}
+{"t": 1792503428.9133773, "kind": "tts", "chars": 147, "voice": "Devansh", "language": "ta-IN"}
+{"t": 1792503432.3287597, "kind": "tts", "chars": 103, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792503452.993744, "kind": "stt", "file": "sw-204765.wav", "bytes": 224756}
+{"t": 1792503454.8463428, "kind": "tts", "chars": 13, "voice": "Shivani", "language": "hi-IN"}
+{"t": 1792503455.3427231, "kind": "stt", "file": "sw-958.wav", "bytes": 119510}
+{"t": 1792503457.2595541, "kind": "tts", "chars": 11, "voice": "Shivani", "language": "hi-IN"}
+{"t": 1792503459.4901342, "kind": "tts", "chars": 14, "voice": "Shivani", "language": "hi-IN"}
+{"t": 1792503461.8705344, "kind": "tts", "chars": 12, "voice": "Shivani", "language": "hi-IN"}
+{"t": 1792503464.047743, "kind": "tts", "chars": 14, "voice": "Shivani", "language": "hi-IN"}
+{"t": 1792503466.4258358, "kind": "tts", "chars": 14, "voice": "Shivani", "language": "hi-IN"}
+{"t": 1792503468.733447, "kind": "tts", "chars": 15, "voice": "Vasudha", "language": "hi-IN"}
+{"t": 1792503471.2102647, "kind": "tts", "chars": 17, "voice": "Vasudha", "language": "hi-IN"}
+{"t": 1792503473.486162, "kind": "tts", "chars": 11, "voice": "Vasudha", "language": "hi-IN"}
+{"t": 1792503475.7754867, "kind": "tts", "chars": 13, "voice": "Vasudha", "language": "hi-IN"}
+{"t": 1792503478.3602786, "kind": "tts", "chars": 9, "voice": "Vasudha", "language": "hi-IN"}
+{"t": 1792503480.7776387, "kind": "tts", "chars": 3, "voice": "Vasudha", "language": "hi-IN"}
+{"t": 1792503482.8985107, "kind": "tts", "chars": 13, "voice": "Tarika", "language": "hi-IN"}
+{"t": 1792503485.1729298, "kind": "tts", "chars": 11, "voice": "Tarika", "language": "hi-IN"}
+{"t": 1792503487.3797884, "kind": "tts", "chars": 12, "voice": "Tarika", "language": "hi-IN"}
+{"t": 1792503489.8052802, "kind": "tts", "chars": 16, "voice": "Tarika", "language": "hi-IN"}
+{"t": 1792503492.314497, "kind": "tts", "chars": 14, "voice": "Tarika", "language": "hi-IN"}
+{"t": 1792503494.5248103, "kind": "tts", "chars": 5, "voice": "Tarika", "language": "hi-IN"}
+{"t": 1792503496.9824014, "kind": "tts", "chars": 10, "voice": "Lakshmi", "language": "hi-IN"}
+{"t": 1792503499.1982088, "kind": "tts", "chars": 11, "voice": "Lakshmi", "language": "hi-IN"}
+{"t": 1792503501.7302148, "kind": "tts", "chars": 12, "voice": "Lakshmi", "language": "hi-IN"}
+{"t": 1792503503.9644, "kind": "tts", "chars": 5, "voice": "Lakshmi", "language": "hi-IN"}
+{"t": 1792503506.0597956, "kind": "tts", "chars": 14, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792503508.4696622, "kind": "tts", "chars": 13, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792503510.8219957, "kind": "tts", "chars": 13, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792503513.1251595, "kind": "tts", "chars": 10, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792503515.4076695, "kind": "tts", "chars": 12, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792503517.6966195, "kind": "tts", "chars": 13, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792503519.901778, "kind": "tts", "chars": 13, "voice": "Harshad", "language": "hi-IN"}
+{"t": 1792503522.3386664, "kind": "tts", "chars": 12, "voice": "Harshad", "language": "hi-IN"}
+{"t": 1792503524.7812765, "kind": "tts", "chars": 10, "voice": "Harshad", "language": "hi-IN"}
+{"t": 1792503527.0566382, "kind": "tts", "chars": 3, "voice": "Harshad", "language": "hi-IN"}
+{"t": 1792503527.8559725, "kind": "stt", "file": "sw-342.wav", "bytes": 196310}
+{"t": 1792503529.3102012, "kind": "tts", "chars": 11, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792503529.9193006, "kind": "stt", "file": "sw-812.wav", "bytes": 190622}
+{"t": 1792503531.8228166, "kind": "tts", "chars": 10, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792503534.3519928, "kind": "tts", "chars": 13, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792503536.6763296, "kind": "tts", "chars": 10, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792503538.8647785, "kind": "tts", "chars": 12, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792503541.5706189, "kind": "tts", "chars": 10, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792503543.8926392, "kind": "tts", "chars": 10, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792503546.2464585, "kind": "tts", "chars": 14, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792503547.3413463, "kind": "stt", "file": "sw-241493.wav", "bytes": 210532}
+{"t": 1792503548.5992873, "kind": "tts", "chars": 11, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792503549.4569402, "kind": "stt", "file": "sw-1277.wav", "bytes": 167866}
+{"t": 1792503550.8909428, "kind": "tts", "chars": 9, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792503551.5340018, "kind": "stt", "file": "sw-13328.wav", "bytes": 230444}
+{"t": 1792503553.2771642, "kind": "tts", "chars": 13, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792503553.6937172, "kind": "stt", "file": "sw-164.wav", "bytes": 202000}
+{"t": 1792503555.5347912, "kind": "tts", "chars": 16, "voice": "Riyaa", "language": "hi-IN"}
+{"t": 1792503555.7864034, "kind": "stt", "file": "sw-50302.wav", "bytes": 210532}
+{"t": 1792503558.0127075, "kind": "tts", "chars": 14, "voice": "Riyaa", "language": "hi-IN"}
+{"t": 1792503560.2351072, "kind": "tts", "chars": 18, "voice": "Riyaa", "language": "hi-IN"}
+{"t": 1792503562.7685118, "kind": "tts", "chars": 13, "voice": "Riyaa", "language": "hi-IN"}
+{"t": 1792503564.8188846, "kind": "stt", "file": "sw-21228.wav", "bytes": 221910}
+{"t": 1792503566.925339, "kind": "stt", "file": "sw-30025.wav", "bytes": 227600}
+{"t": 1792503567.521268, "kind": "tts", "chars": 14, "voice": "Riyaa", "language": "hi-IN"}
+{"t": 1792503568.995913, "kind": "stt", "file": "sw-10335.wav", "bytes": 236132}
+{"t": 1792503569.9568763, "kind": "tts", "chars": 11, "voice": "Riyaa", "language": "hi-IN"}
+{"t": 1792503571.180159, "kind": "stt", "file": "sw-15507.wav", "bytes": 119510}
+{"t": 1792503572.2158434, "kind": "tts", "chars": 9, "voice": "Riyaa", "language": "hi-IN"}
+{"t": 1792503573.3415127, "kind": "stt", "file": "sw-43535.wav", "bytes": 264578}
+{"t": 1792503574.5321085, "kind": "tts", "chars": 12, "voice": "Avinash", "language": "hi-IN"}
+{"t": 1792503575.4864771, "kind": "stt", "file": "sw-15506.wav", "bytes": 150800}
+{"t": 1792503576.7927318, "kind": "tts", "chars": 15, "voice": "Avinash", "language": "hi-IN"}
+{"t": 1792503577.5733185, "kind": "stt", "file": "sw-13701.wav", "bytes": 236132}
+{"t": 1792503579.2595654, "kind": "tts", "chars": 11, "voice": "Avinash", "language": "hi-IN"}
+{"t": 1792503579.7651799, "kind": "stt", "file": "sw-62764.wav", "bytes": 182088}
+{"t": 1792503581.532687, "kind": "tts", "chars": 10, "voice": "Avinash", "language": "hi-IN"}
+{"t": 1792503581.832235, "kind": "stt", "file": "sw-1037.wav", "bytes": 278800}
+{"t": 1792503583.8167794, "kind": "tts", "chars": 14, "voice": "Avinash", "language": "hi-IN"}
+{"t": 1792503583.9925027, "kind": "stt", "file": "sw-15518.wav", "bytes": 96756}
+{"t": 1792503586.0791676, "kind": "tts", "chars": 13, "voice": "Avinash", "language": "hi-IN"}
+{"t": 1792503588.4623256, "kind": "tts", "chars": 12, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792503590.901184, "kind": "tts", "chars": 13, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792503593.295743, "kind": "tts", "chars": 13, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792503595.5611339, "kind": "tts", "chars": 11, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792503597.8350332, "kind": "tts", "chars": 8, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792503600.0054088, "kind": "tts", "chars": 15, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792503601.3945959, "kind": "stt", "file": "sw-695.wav", "bytes": 122356}
+{"t": 1792503602.333565, "kind": "tts", "chars": 8, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792503603.4902565, "kind": "stt", "file": "sw-45934.wav", "bytes": 165022}
+{"t": 1792503604.5284555, "kind": "tts", "chars": 16, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792503605.577084, "kind": "stt", "file": "sw-170.wav", "bytes": 227600}
+{"t": 1792503606.829224, "kind": "tts", "chars": 13, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792503607.674305, "kind": "stt", "file": "sw-203930.wav", "bytes": 119510}
+{"t": 1792503609.1199021, "kind": "tts", "chars": 14, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792503609.9808156, "kind": "stt", "file": "sw-16139.wav", "bytes": 241822}
+{"t": 1792503611.3774943, "kind": "tts", "chars": 8, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792503612.123446, "kind": "stt", "file": "sw-55764.wav", "bytes": 173556}
+{"t": 1792503613.6987722, "kind": "tts", "chars": 13, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792503614.2312593, "kind": "stt", "file": "sw-8.wav", "bytes": 88222}
+{"t": 1792503615.9292352, "kind": "tts", "chars": 12, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792503616.3068101, "kind": "stt", "file": "sw-410.wav", "bytes": 150800}
+{"t": 1792503618.1304092, "kind": "tts", "chars": 11, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792503618.3717465, "kind": "stt", "file": "sw-99.wav", "bytes": 176400}
+{"t": 1792503620.4039936, "kind": "tts", "chars": 13, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792503622.7896645, "kind": "tts", "chars": 8, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792503625.3389509, "kind": "tts", "chars": 13, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792503627.7815237, "kind": "tts", "chars": 13, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792503630.3164241, "kind": "tts", "chars": 12, "voice": "Yashraj", "language": "hi-IN"}
+{"t": 1792503632.608096, "kind": "tts", "chars": 18, "voice": "Yashraj", "language": "hi-IN"}
+{"t": 1792503635.1614394, "kind": "tts", "chars": 12, "voice": "Yashraj", "language": "hi-IN"}
+{"t": 1792503635.770893, "kind": "stt", "file": "sw-444.wav", "bytes": 136578}
+{"t": 1792503637.562699, "kind": "tts", "chars": 11, "voice": "Yashraj", "language": "hi-IN"}
+{"t": 1792503637.8631926, "kind": "stt", "file": "sw-13324.wav", "bytes": 224756}
+{"t": 1792503639.7286057, "kind": "tts", "chars": 14, "voice": "Yashraj", "language": "hi-IN"}
+{"t": 1792503640.0042834, "kind": "stt", "file": "sw-25737.wav", "bytes": 238978}
+{"t": 1792503641.9691136, "kind": "tts", "chars": 24, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792503644.5142887, "kind": "tts", "chars": 16, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792503644.963987, "kind": "stt", "file": "sw-104253.wav", "bytes": 381200}
+{"t": 1792503647.2006943, "kind": "tts", "chars": 26, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792503649.678256, "kind": "tts", "chars": 20, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792503652.2753906, "kind": "tts", "chars": 13, "voice": "Riyaa", "language": "kn-IN"}
+{"t": 1792503654.1497257, "kind": "stt", "file": "sw-371.wav", "bytes": 386888}
+{"t": 1792503656.528032, "kind": "stt", "file": "sw-11761.wav", "bytes": 401110}
+{"t": 1792503658.9876928, "kind": "stt", "file": "sw-36.wav", "bytes": 230444}
+{"t": 1792503661.3376014, "kind": "tts", "chars": 16, "voice": "Riyaa", "language": "kn-IN"}
+{"t": 1792503663.6997328, "kind": "tts", "chars": 21, "voice": "Riyaa", "language": "kn-IN"}
+{"t": 1792503666.1194472, "kind": "tts", "chars": 35, "voice": "Riyaa", "language": "kn-IN"}
+{"t": 1792503668.108529, "kind": "stt", "file": "sw-557049.wav", "bytes": 349910}
+{"t": 1792503670.8658037, "kind": "tts", "chars": 18, "voice": "Riyaa", "language": "kn-IN"}
+{"t": 1792503673.4682546, "kind": "tts", "chars": 20, "voice": "Riyaa", "language": "kn-IN"}
+{"t": 1792503675.8336585, "kind": "tts", "chars": 16, "voice": "Riyaa", "language": "kn-IN"}
+{"t": 1792503678.226954, "kind": "tts", "chars": 22, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792503680.5871615, "kind": "tts", "chars": 15, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792503682.852483, "kind": "tts", "chars": 22, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792503685.2315123, "kind": "tts", "chars": 23, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792503687.5992029, "kind": "tts", "chars": 22, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792503689.9614527, "kind": "tts", "chars": 16, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792503692.292379, "kind": "tts", "chars": 17, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792503694.5825663, "kind": "tts", "chars": 16, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792503697.2564762, "kind": "tts", "chars": 18, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792503699.611799, "kind": "tts", "chars": 31, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792503702.0314598, "kind": "tts", "chars": 22, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792503704.7145703, "kind": "tts", "chars": 25, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792503707.0389857, "kind": "tts", "chars": 27, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792503709.4056838, "kind": "tts", "chars": 13, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792503711.911511, "kind": "tts", "chars": 32, "voice": "Shubham", "language": "kn-IN"}
+{"t": 1792503714.5808916, "kind": "tts", "chars": 20, "voice": "Shubham", "language": "kn-IN"}
+{"t": 1792503717.1587274, "kind": "tts", "chars": 23, "voice": "Shubham", "language": "kn-IN"}
+{"t": 1792503719.917025, "kind": "tts", "chars": 19, "voice": "Shubham", "language": "kn-IN"}
+{"t": 1792503722.359554, "kind": "tts", "chars": 19, "voice": "Devansh", "language": "kn-IN"}
+{"t": 1792503724.9098194, "kind": "tts", "chars": 29, "voice": "Devansh", "language": "kn-IN"}
+{"t": 1792503727.5075626, "kind": "tts", "chars": 24, "voice": "Devansh", "language": "kn-IN"}
+{"t": 1792503730.1084116, "kind": "tts", "chars": 35, "voice": "Yashraj", "language": "kn-IN"}
+{"t": 1792503732.543712, "kind": "tts", "chars": 24, "voice": "Yashraj", "language": "kn-IN"}
+{"t": 1792503735.040989, "kind": "tts", "chars": 17, "voice": "Yashraj", "language": "kn-IN"}
+{"t": 1792503737.4316447, "kind": "tts", "chars": 13, "voice": "Yashraj", "language": "kn-IN"}
+{"t": 1792503740.0032604, "kind": "tts", "chars": 11, "voice": "Lakshmi", "language": "kn-IN"}
+{"t": 1792503741.1570575, "kind": "stt", "file": "sw-261.wav", "bytes": 190622}
+{"t": 1792503742.3289065, "kind": "tts", "chars": 19, "voice": "Lakshmi", "language": "kn-IN"}
+{"t": 1792503743.3746126, "kind": "stt", "file": "sw-30140.wav", "bytes": 216222}
+{"t": 1792503744.8590057, "kind": "tts", "chars": 24, "voice": "Lakshmi", "language": "kn-IN"}
+{"t": 1792503745.6071575, "kind": "stt", "file": "sw-336.wav", "bytes": 145110}
+{"t": 1792503747.2664642, "kind": "tts", "chars": 13, "voice": "Lakshmi", "language": "kn-IN"}
+{"t": 1792503747.7935011, "kind": "stt", "file": "sw-61668.wav", "bytes": 295866}
+{"t": 1792503749.7356184, "kind": "tts", "chars": 27, "voice": "Chetana", "language": "kn-IN"}
+{"t": 1792503750.004412, "kind": "stt", "file": "sw-214545.wav", "bytes": 213378}
+{"t": 1792503752.3852882, "kind": "tts", "chars": 15, "voice": "Chetana", "language": "kn-IN"}
+{"t": 1792503754.661133, "kind": "tts", "chars": 15, "voice": "Chetana", "language": "kn-IN"}
+{"t": 1792503757.1316335, "kind": "tts", "chars": 20, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792503759.1199918, "kind": "stt", "file": "sw-999.wav", "bytes": 327156}
+{"t": 1792503761.3100212, "kind": "stt", "file": "sw-162.wav", "bytes": 136578}
+{"t": 1792503761.8443353, "kind": "tts", "chars": 26, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792503763.5043716, "kind": "stt", "file": "sw-45045.wav", "bytes": 423866}
+{"t": 1792503764.4837015, "kind": "tts", "chars": 26, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792503765.9017231, "kind": "stt", "file": "sw-15066.wav", "bytes": 301556}
+{"t": 1792503766.9486234, "kind": "tts", "chars": 15, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792503768.2069736, "kind": "stt", "file": "sw-29539.wav", "bytes": 366978}
+{"t": 1792503769.145679, "kind": "tts", "chars": 23, "voice": "Shivani", "language": "kn-IN"}
+{"t": 1792503770.47526, "kind": "stt", "file": "sw-18764.wav", "bytes": 221910}
+{"t": 1792503771.4674635, "kind": "tts", "chars": 21, "voice": "Shivani", "language": "kn-IN"}
+{"t": 1792503772.7409801, "kind": "stt", "file": "sw-13652.wav", "bytes": 310088}
+{"t": 1792503773.8262324, "kind": "tts", "chars": 23, "voice": "Shivani", "language": "kn-IN"}
+{"t": 1792503774.864822, "kind": "stt", "file": "sw-13715.wav", "bytes": 182088}
+{"t": 1792503776.1757941, "kind": "tts", "chars": 27, "voice": "Shivani", "language": "kn-IN"}
+{"t": 1792503776.959366, "kind": "stt", "file": "sw-124.wav", "bytes": 409644}
+{"t": 1792503778.9095657, "kind": "tts", "chars": 18, "voice": "Shivani", "language": "kn-IN"}
+{"t": 1792503779.2218988, "kind": "stt", "file": "sw-223544.wav", "bytes": 167866}
+{"t": 1792503781.142101, "kind": "tts", "chars": 15, "voice": "Kalpana", "language": "kn-IN"}
+{"t": 1792503781.39718, "kind": "stt", "file": "sw-96775.wav", "bytes": 358444}
+{"t": 1792503783.6526492, "kind": "tts", "chars": 25, "voice": "Kalpana", "language": "kn-IN"}
+{"t": 1792503786.0839176, "kind": "tts", "chars": 21, "voice": "Kalpana", "language": "kn-IN"}
+{"t": 1792503788.5717976, "kind": "tts", "chars": 16, "voice": "Kalpana", "language": "kn-IN"}
+{"t": 1792503790.912309, "kind": "tts", "chars": 19, "voice": "Kalpana", "language": "kn-IN"}
+{"t": 1792503793.3019843, "kind": "tts", "chars": 20, "voice": "Kalpana", "language": "kn-IN"}
+{"t": 1792503795.5747337, "kind": "tts", "chars": 19, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792503798.2007952, "kind": "tts", "chars": 24, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792503799.2211418, "kind": "stt", "file": "sw-97697.wav", "bytes": 403956}
+{"t": 1792503800.9075432, "kind": "tts", "chars": 16, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792503801.536318, "kind": "stt", "file": "sw-7770.wav", "bytes": 273110}
+{"t": 1792503803.2568023, "kind": "tts", "chars": 20, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792503803.784361, "kind": "stt", "file": "sw-8740.wav", "bytes": 145110}
+{"t": 1792503805.7646518, "kind": "tts", "chars": 22, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792503808.182334, "kind": "tts", "chars": 21, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792503810.4615245, "kind": "tts", "chars": 19, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792503813.177695, "kind": "tts", "chars": 15, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792503815.5516667, "kind": "tts", "chars": 11, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792503818.1046011, "kind": "tts", "chars": 24, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792503820.563338, "kind": "tts", "chars": 15, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792503821.2215688, "kind": "stt", "file": "sw-36583.wav", "bytes": 415332}
+{"t": 1792503823.0261238, "kind": "tts", "chars": 28, "voice": "Tarika", "language": "kn-IN"}
+{"t": 1792503823.6050284, "kind": "stt", "file": "sw-50303.wav", "bytes": 310088}
+{"t": 1792503825.7262254, "kind": "tts", "chars": 18, "voice": "Tarika", "language": "kn-IN"}
+{"t": 1792503828.1762059, "kind": "tts", "chars": 18, "voice": "Tarika", "language": "kn-IN"}
+{"t": 1792503830.648587, "kind": "tts", "chars": 23, "voice": "Tarika", "language": "kn-IN"}
+{"t": 1792503833.2910452, "kind": "tts", "chars": 17, "voice": "Tarika", "language": "kn-IN"}
+{"t": 1792503833.958656, "kind": "stt", "file": "sw-1004.wav", "bytes": 344222}
+{"t": 1792503835.5442884, "kind": "tts", "chars": 19, "voice": "Tarika", "language": "kn-IN"}
+{"t": 1792503836.2147992, "kind": "stt", "file": "sw-220008.wav", "bytes": 193466}
+{"t": 1792503838.389968, "kind": "tts", "chars": 28, "voice": "Shubham", "language": "ta-IN"}
+{"t": 1792503840.9678836, "kind": "tts", "chars": 15, "voice": "Shubham", "language": "ta-IN"}
+{"t": 1792503843.2855866, "kind": "tts", "chars": 18, "voice": "Shubham", "language": "ta-IN"}
+{"t": 1792503845.1667871, "kind": "stt", "file": "sw-112440.wav", "bytes": 281644}
+{"t": 1792503847.5032732, "kind": "stt", "file": "sw-591721.wav", "bytes": 216222}
+{"t": 1792503849.6217687, "kind": "stt", "file": "sw-38422.wav", "bytes": 238978}
+{"t": 1792503852.0809872, "kind": "stt", "file": "sw-636889.wav", "bytes": 193466}
+{"t": 1792503854.3433077, "kind": "stt", "file": "sw-96776.wav", "bytes": 358444}
+{"t": 1792503856.7212086, "kind": "stt", "file": "sw-543803.wav", "bytes": 304400}
+{"t": 1792503858.979034, "kind": "stt", "file": "sw-45.wav", "bytes": 236132}
+{"t": 1792503860.6732683, "kind": "tts", "chars": 31, "voice": "Shubham", "language": "ta-IN"}
+{"t": 1792503861.1786468, "kind": "stt", "file": "sw-44632.wav", "bytes": 207688}
+{"t": 1792503863.0510902, "kind": "tts", "chars": 11, "voice": "Shubham", "language": "ta-IN"}
+{"t": 1792503863.46619, "kind": "stt", "file": "sw-38483.wav", "bytes": 389732}
+{"t": 1792503865.4022243, "kind": "tts", "chars": 26, "voice": "Prakash", "language": "ta-IN"}
+{"t": 1792503865.7785485, "kind": "stt", "file": "sw-577818.wav", "bytes": 330000}
+{"t": 1792503868.0630224, "kind": "tts", "chars": 24, "voice": "Prakash", "language": "ta-IN"}
+{"t": 1792503870.5508573, "kind": "tts", "chars": 23, "voice": "Prakash", "language": "ta-IN"}
+{"t": 1792503872.9326036, "kind": "tts", "chars": 27, "voice": "Prakash", "language": "ta-IN"}
+{"t": 1792503875.2774994, "kind": "tts", "chars": 21, "voice": "Prakash", "language": "ta-IN"}
+{"t": 1792503876.0903594, "kind": "stt", "file": "sw-33637.wav", "bytes": 423866}
+{"t": 1792503877.7094576, "kind": "tts", "chars": 27, "voice": "Harshad", "language": "ta-IN"}
+{"t": 1792503878.3894603, "kind": "stt", "file": "sw-587067.wav", "bytes": 295866}
+{"t": 1792503880.0884438, "kind": "tts", "chars": 32, "voice": "Harshad", "language": "ta-IN"}
+{"t": 1792503880.6732557, "kind": "stt", "file": "sw-32407.wav", "bytes": 341378}
+{"t": 1792503882.704914, "kind": "tts", "chars": 17, "voice": "Harshad", "language": "ta-IN"}
+{"t": 1792503885.2949944, "kind": "tts", "chars": 38, "voice": "Harshad", "language": "ta-IN"}
+{"t": 1792503887.98251, "kind": "tts", "chars": 25, "voice": "Harshad", "language": "ta-IN"}
+{"t": 1792503890.5215282, "kind": "tts", "chars": 20, "voice": "Harshad", "language": "ta-IN"}
+{"t": 1792503890.8462613, "kind": "stt", "file": "sw-61460.wav", "bytes": 295866}
+{"t": 1792503893.0853565, "kind": "tts", "chars": 10, "voice": "Harshad", "language": "ta-IN"}
+{"t": 1792503895.3001177, "kind": "tts", "chars": 22, "voice": "Lakshmi", "language": "ta-IN"}
+{"t": 1792503897.8847792, "kind": "tts", "chars": 35, "voice": "Lakshmi", "language": "ta-IN"}
+{"t": 1792503899.9740598, "kind": "stt", "file": "sw-91601.wav", "bytes": 304400}
+{"t": 1792503902.2807808, "kind": "stt", "file": "sw-552964.wav", "bytes": 352756}
+{"t": 1792503904.577846, "kind": "stt", "file": "sw-1041.wav", "bytes": 224756}
+{"t": 1792503907.0384955, "kind": "tts", "chars": 15, "voice": "Lakshmi", "language": "ta-IN"}
+{"t": 1792503909.5709586, "kind": "tts", "chars": 23, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792503912.1303434, "kind": "tts", "chars": 25, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792503913.7804687, "kind": "stt", "file": "sw-577824.wav", "bytes": 221910}
+{"t": 1792503914.4493022, "kind": "tts", "chars": 23, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792503915.9950974, "kind": "stt", "file": "sw-37201.wav", "bytes": 261732}
+{"t": 1792503916.8442872, "kind": "tts", "chars": 23, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792503919.064592, "kind": "tts", "chars": 22, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792503921.5976062, "kind": "tts", "chars": 29, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792503924.0114124, "kind": "tts", "chars": 21, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792503926.5468001, "kind": "tts", "chars": 30, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792503928.974693, "kind": "tts", "chars": 15, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792503931.2663403, "kind": "tts", "chars": 16, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792503933.6355252, "kind": "tts", "chars": 34, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792503936.086886, "kind": "tts", "chars": 16, "voice": "Riyaa", "language": "ta-IN"}
+{"t": 1792503938.4099174, "kind": "tts", "chars": 27, "voice": "Riyaa", "language": "ta-IN"}
+{"t": 1792503940.7856293, "kind": "tts", "chars": 20, "voice": "Riyaa", "language": "ta-IN"}
+{"t": 1792503943.1212063, "kind": "tts", "chars": 27, "voice": "Riyaa", "language": "ta-IN"}
+{"t": 1792503945.5170422, "kind": "tts", "chars": 23, "voice": "Riyaa", "language": "ta-IN"}
+{"t": 1792503947.847454, "kind": "tts", "chars": 17, "voice": "Avinash", "language": "ta-IN"}
+{"t": 1792503950.1322956, "kind": "tts", "chars": 24, "voice": "Avinash", "language": "ta-IN"}
+{"t": 1792503952.6420052, "kind": "tts", "chars": 26, "voice": "Avinash", "language": "ta-IN"}
+{"t": 1792503955.169722, "kind": "tts", "chars": 28, "voice": "Avinash", "language": "ta-IN"}
+{"t": 1792503957.843397, "kind": "tts", "chars": 35, "voice": "Avinash", "language": "ta-IN"}
+{"t": 1792503960.2753916, "kind": "tts", "chars": 9, "voice": "Avinash", "language": "ta-IN"}
+{"t": 1792503962.4384317, "kind": "tts", "chars": 26, "voice": "Kalpana", "language": "ta-IN"}
+{"t": 1792503964.7306967, "kind": "tts", "chars": 24, "voice": "Kalpana", "language": "ta-IN"}
+{"t": 1792503967.1164217, "kind": "tts", "chars": 29, "voice": "Kalpana", "language": "ta-IN"}
+{"t": 1792503969.7183309, "kind": "tts", "chars": 22, "voice": "Kalpana", "language": "ta-IN"}
+{"t": 1792503972.0421894, "kind": "tts", "chars": 27, "voice": "Kalpana", "language": "ta-IN"}
+{"t": 1792503974.4759738, "kind": "tts", "chars": 34, "voice": "Kalpana", "language": "ta-IN"}
+{"t": 1792503976.8901222, "kind": "tts", "chars": 24, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792503979.2826421, "kind": "tts", "chars": 20, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792503981.5384722, "kind": "tts", "chars": 27, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792503984.1858108, "kind": "tts", "chars": 36, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792503986.6304562, "kind": "tts", "chars": 17, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792503988.9724288, "kind": "stt", "file": "sw-577837.wav", "bytes": 278800}
+{"t": 1792503989.093247, "kind": "tts", "chars": 23, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792503991.1214876, "kind": "stt", "file": "sw-48488.wav", "bytes": 389732}
+{"t": 1792503993.482927, "kind": "stt", "file": "sw-63562.wav", "bytes": 270266}
+{"t": 1792503995.6555026, "kind": "stt", "file": "sw-304.wav", "bytes": 381200}
+{"t": 1792503997.8883622, "kind": "stt", "file": "sw-187453.wav", "bytes": 193466}
+{"t": 1792503999.9441845, "kind": "stt", "file": "sw-61669.wav", "bytes": 256044}
+{"t": 1792504002.062877, "kind": "stt", "file": "sw-577825.wav", "bytes": 159332}
+{"t": 1792504004.198295, "kind": "stt", "file": "sw-115494.wav", "bytes": 509200}
+{"t": 1792504006.5812097, "kind": "tts", "chars": 7, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792504008.765298, "kind": "tts", "chars": 21, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792504011.0759292, "kind": "tts", "chars": 21, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792504013.4042952, "kind": "tts", "chars": 37, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792504013.7402065, "kind": "stt", "file": "sw-50304.wav", "bytes": 344222}
+{"t": 1792504015.9975631, "kind": "tts", "chars": 18, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792504018.521625, "kind": "tts", "chars": 21, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792504020.8413446, "kind": "tts", "chars": 23, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792504023.4574592, "kind": "tts", "chars": 19, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792504024.0094926, "kind": "stt", "file": "sw-59999.wav", "bytes": 335688}
+{"t": 1792504025.9003546, "kind": "tts", "chars": 26, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792504026.2483194, "kind": "stt", "file": "sw-50260.wav", "bytes": 290178}
+{"t": 1792504028.1843812, "kind": "tts", "chars": 27, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792504028.530013, "kind": "stt", "file": "sw-14779.wav", "bytes": 216222}
+{"t": 1792504030.7015395, "kind": "tts", "chars": 5, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792504032.819213, "kind": "tts", "chars": 36, "voice": "Tarika", "language": "ta-IN"}
+{"t": 1792504035.798816, "kind": "tts", "chars": 27, "voice": "Tarika", "language": "ta-IN"}
+{"t": 1792504038.227453, "kind": "tts", "chars": 25, "voice": "Tarika", "language": "ta-IN"}
+{"t": 1792504040.6830373, "kind": "tts", "chars": 23, "voice": "Tarika", "language": "ta-IN"}
+{"t": 1792504042.9544356, "kind": "tts", "chars": 29, "voice": "Tarika", "language": "ta-IN"}
+{"t": 1792504045.5143595, "kind": "tts", "chars": 22, "voice": "Tarika", "language": "ta-IN"}
+{"t": 1792504047.7754872, "kind": "tts", "chars": 24, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792504050.1951292, "kind": "tts", "chars": 18, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792504052.5817127, "kind": "tts", "chars": 26, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792504055.2168252, "kind": "tts", "chars": 30, "voice": "Tarika", "language": "ta-IN"}
+{"t": 1792504057.6227088, "kind": "tts", "chars": 23, "voice": "Tarika", "language": "ta-IN"}
+{"t": 1792504059.9692018, "kind": "tts", "chars": 18, "voice": "Tarika", "language": "ta-IN"}
+{"t": 1792504139.6151435, "kind": "tts", "chars": 83, "voice": "Shivani", "language": "hi-IN"}
+{"t": 1792504142.8013997, "kind": "tts", "chars": 74, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792504145.8042488, "kind": "tts", "chars": 76, "voice": "Tarika", "language": "hi-IN"}
+{"t": 1792504149.1722808, "kind": "tts", "chars": 86, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792504152.1779509, "kind": "tts", "chars": 81, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792504155.1767864, "kind": "tts", "chars": 41, "voice": "Harshad", "language": "hi-IN"}
+{"t": 1792504157.7587976, "kind": "tts", "chars": 95, "voice": "Kalpana", "language": "hi-IN"}
+{"t": 1792504161.3921344, "kind": "tts", "chars": 62, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792504164.1614983, "kind": "tts", "chars": 36, "voice": "Riyaa", "language": "hi-IN"}
+{"t": 1792504166.86989, "kind": "tts", "chars": 89, "voice": "Shubham", "language": "hi-IN"}
+{"t": 1792504169.8127308, "kind": "tts", "chars": 54, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792504172.62922, "kind": "tts", "chars": 71, "voice": "Yashraj", "language": "hi-IN"}
+{"t": 1792504175.5170257, "kind": "tts", "chars": 89, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792504178.8245025, "kind": "tts", "chars": 142, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792504182.6924572, "kind": "tts", "chars": 97, "voice": "Shubham", "language": "kn-IN"}
+{"t": 1792504185.7647321, "kind": "tts", "chars": 74, "voice": "Devansh", "language": "kn-IN"}
+{"t": 1792504188.654691, "kind": "tts", "chars": 116, "voice": "Shivani", "language": "kn-IN"}
+{"t": 1792504192.5035923, "kind": "tts", "chars": 70, "voice": "Lakshmi", "language": "kn-IN"}
+{"t": 1792504195.8417237, "kind": "tts", "chars": 59, "voice": "Chetana", "language": "kn-IN"}
+{"t": 1792504198.9200976, "kind": "tts", "chars": 130, "voice": "Tarika", "language": "kn-IN"}
+{"t": 1792504202.641286, "kind": "tts", "chars": 89, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792504205.6672418, "kind": "tts", "chars": 68, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792504208.4744582, "kind": "tts", "chars": 151, "voice": "Harshad", "language": "kn-IN"}
+{"t": 1792504212.9362793, "kind": "tts", "chars": 155, "voice": "Shivani", "language": "kn-IN"}
+{"t": 1792504217.6006036, "kind": "tts", "chars": 53, "voice": "Kalpana", "language": "kn-IN"}
+{"t": 1792504220.2632363, "kind": "tts", "chars": 107, "voice": "Shubham", "language": "ta-IN"}
+{"t": 1792504223.8619761, "kind": "tts", "chars": 174, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792504227.5588892, "kind": "tts", "chars": 175, "voice": "Harshad", "language": "ta-IN"}
+{"t": 1792504231.061238, "kind": "tts", "chars": 74, "voice": "Lakshmi", "language": "ta-IN"}
+{"t": 1792504234.025943, "kind": "tts", "chars": 160, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792504237.7335877, "kind": "tts", "chars": 117, "voice": "Riyaa", "language": "ta-IN"}
+{"t": 1792504241.0366642, "kind": "tts", "chars": 144, "voice": "Avinash", "language": "ta-IN"}
+{"t": 1792504245.0991473, "kind": "tts", "chars": 122, "voice": "Devansh", "language": "ta-IN"}
+{"t": 1792504248.850732, "kind": "tts", "chars": 100, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792504251.8912466, "kind": "tts", "chars": 126, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792504256.259265, "kind": "tts", "chars": 183, "voice": "Chetana", "language": "ta-IN"}
+{"t": 1792504260.9733925, "kind": "tts", "chars": 70, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792504264.1923237, "kind": "tts", "chars": 73, "voice": "Tarika", "language": "ta-IN"}
+{"t": 1792504267.9237201, "kind": "stt", "file": "sw-204765.wav", "bytes": 233288}
+{"t": 1792504270.1406362, "kind": "stt", "file": "sw-958.wav", "bytes": 119510}
+{"t": 1792504343.0169969, "kind": "stt", "file": "sw-812.wav", "bytes": 213378}
+{"t": 1792504345.1390057, "kind": "stt", "file": "sw-13328.wav", "bytes": 219066}
+{"t": 1792504347.3673327, "kind": "stt", "file": "sw-21228.wav", "bytes": 230444}
+{"t": 1792504349.497583, "kind": "stt", "file": "sw-30025.wav", "bytes": 213378}
+{"t": 1792504351.6638103, "kind": "stt", "file": "sw-15507.wav", "bytes": 128044}
+{"t": 1792504353.7238011, "kind": "stt", "file": "sw-13701.wav", "bytes": 238978}
+{"t": 1792504355.7984567, "kind": "stt", "file": "sw-62764.wav", "bytes": 165022}
+{"t": 1792504357.8738418, "kind": "stt", "file": "sw-15518.wav", "bytes": 99600}
+{"t": 1792504359.9158278, "kind": "stt", "file": "sw-170.wav", "bytes": 219066}
+{"t": 1792504361.9812598, "kind": "stt", "file": "sw-203930.wav", "bytes": 122356}
+{"t": 1792504364.0249052, "kind": "stt", "file": "sw-55764.wav", "bytes": 196310}
+{"t": 1792504366.0692677, "kind": "stt", "file": "sw-25737.wav", "bytes": 270266}
+{"t": 1792504368.3496358, "kind": "stt", "file": "sw-11761.wav", "bytes": 398266}
+{"t": 1792504370.5113966, "kind": "stt", "file": "sw-36.wav", "bytes": 253200}
+{"t": 1792504372.7494164, "kind": "stt", "file": "sw-557049.wav", "bytes": 349910}
+{"t": 1792504445.628253, "kind": "stt", "file": "sw-261.wav", "bytes": 196310}
+{"t": 1792504447.790349, "kind": "stt", "file": "sw-61668.wav", "bytes": 287332}
+{"t": 1792504449.958525, "kind": "stt", "file": "sw-214545.wav", "bytes": 193466}
+{"t": 1792504452.1530437, "kind": "stt", "file": "sw-162.wav", "bytes": 139422}
+{"t": 1792504454.3905005, "kind": "stt", "file": "sw-29539.wav", "bytes": 386888}
+{"t": 1792504456.6904895, "kind": "stt", "file": "sw-18764.wav", "bytes": 221910}
+{"t": 1792504458.9825506, "kind": "stt", "file": "sw-13715.wav", "bytes": 179244}
+{"t": 1792504461.2077034, "kind": "stt", "file": "sw-96775.wav", "bytes": 349910}
+{"t": 1792504463.625629, "kind": "stt", "file": "sw-97697.wav", "bytes": 386888}
+{"t": 1792504465.7683654, "kind": "stt", "file": "sw-8740.wav", "bytes": 145110}
+{"t": 1792504467.8768072, "kind": "stt", "file": "sw-591721.wav", "bytes": 216222}
+{"t": 1792504470.070022, "kind": "stt", "file": "sw-96776.wav", "bytes": 366978}
+{"t": 1792504472.3179052, "kind": "stt", "file": "sw-543803.wav", "bytes": 321466}
+{"t": 1792504474.5615273, "kind": "stt", "file": "sw-44632.wav", "bytes": 202000}
+{"t": 1792504476.855624, "kind": "stt", "file": "sw-33637.wav", "bytes": 381200}
+{"t": 1792504479.0356128, "kind": "stt", "file": "sw-587067.wav", "bytes": 273110}
+{"t": 1792504481.321932, "kind": "stt", "file": "sw-61460.wav", "bytes": 310088}
+{"t": 1792504483.5875473, "kind": "stt", "file": "sw-1041.wav", "bytes": 261732}
+{"t": 1792504485.7458456, "kind": "stt", "file": "sw-577824.wav", "bytes": 219066}
+{"t": 1792504487.9201117, "kind": "stt", "file": "sw-37201.wav", "bytes": 261732}
+{"t": 1792504560.8261933, "kind": "stt", "file": "sw-577837.wav", "bytes": 298710}
+{"t": 1792504563.1567364, "kind": "stt", "file": "sw-304.wav", "bytes": 389732}
+{"t": 1792504565.4412415, "kind": "stt", "file": "sw-187453.wav", "bytes": 182088}
+{"t": 1792504567.6453435, "kind": "stt", "file": "sw-577825.wav", "bytes": 165022}
+{"t": 1792504611.3963666, "kind": "tts", "chars": 4, "voice": "Shivani", "language": "hi-IN"}
+{"t": 1792504613.7126477, "kind": "stt", "file": "sw-204765.wav", "bytes": 28488}
+{"t": 1792504615.748542, "kind": "tts", "chars": 7, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792504618.0186374, "kind": "stt", "file": "sw-812.wav", "bytes": 42710}
+{"t": 1792504620.0086868, "kind": "tts", "chars": 8, "voice": "Vasudha", "language": "hi-IN"}
+{"t": 1792504622.2279377, "kind": "stt", "file": "sw-241493.wav", "bytes": 34178}
+{"t": 1792504624.197612, "kind": "tts", "chars": 5, "voice": "Tarika", "language": "hi-IN"}
+{"t": 1792504626.4558134, "kind": "stt", "file": "sw-13328.wav", "bytes": 34178}
+{"t": 1792504628.3840504, "kind": "tts", "chars": 4, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792504630.5630484, "kind": "stt", "file": "sw-21228.wav", "bytes": 28488}
+{"t": 1792504632.528191, "kind": "tts", "chars": 5, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792504634.7526157, "kind": "stt", "file": "sw-30025.wav", "bytes": 37022}
+{"t": 1792504636.7319558, "kind": "tts", "chars": 4, "voice": "Harshad", "language": "hi-IN"}
+{"t": 1792504638.8791075, "kind": "stt", "file": "sw-15507.wav", "bytes": 37022}
+{"t": 1792504640.7853727, "kind": "tts", "chars": 4, "voice": "Kalpana", "language": "hi-IN"}
+{"t": 1792504643.3209586, "kind": "stt", "file": "sw-13701.wav", "bytes": 54088}
+{"t": 1792504645.492197, "kind": "tts", "chars": 5, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792504647.6079614, "kind": "stt", "file": "sw-62764.wav", "bytes": 25644}
+{"t": 1792504649.5650036, "kind": "tts", "chars": 4, "voice": "Riyaa", "language": "hi-IN"}
+{"t": 1792504651.6700456, "kind": "stt", "file": "sw-15518.wav", "bytes": 25644}
+{"t": 1792504653.6308298, "kind": "tts", "chars": 4, "voice": "Shubham", "language": "hi-IN"}
+{"t": 1792504655.9493797, "kind": "stt", "file": "sw-170.wav", "bytes": 25644}
+{"t": 1792504657.9363406, "kind": "tts", "chars": 4, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792504660.0475695, "kind": "stt", "file": "sw-203930.wav", "bytes": 28488}
+{"t": 1792504661.9608061, "kind": "tts", "chars": 6, "voice": "Yashraj", "language": "hi-IN"}
+{"t": 1792504664.160102, "kind": "stt", "file": "sw-55764.wav", "bytes": 28488}
+{"t": 1792504666.1206093, "kind": "tts", "chars": 8, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792504668.4296498, "kind": "stt", "file": "sw-25737.wav", "bytes": 37022}
+{"t": 1792504670.4047396, "kind": "tts", "chars": 10, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792504672.836663, "kind": "stt", "file": "sw-11761.wav", "bytes": 42710}
+{"t": 1792504674.8092668, "kind": "tts", "chars": 16, "voice": "Shubham", "language": "kn-IN"}
+{"t": 1792504677.0491173, "kind": "stt", "file": "sw-36.wav", "bytes": 45556}
+{"t": 1792504679.114723, "kind": "tts", "chars": 8, "voice": "Devansh", "language": "kn-IN"}
+{"t": 1792504681.4315429, "kind": "stt", "file": "sw-261.wav", "bytes": 31332}
+{"t": 1792504683.470866, "kind": "tts", "chars": 13, "voice": "Shivani", "language": "kn-IN"}
+{"t": 1792504685.709742, "kind": "stt", "file": "sw-61668.wav", "bytes": 37022}
+{"t": 1792504687.80533, "kind": "tts", "chars": 5, "voice": "Lakshmi", "language": "kn-IN"}
+{"t": 1792504690.256777, "kind": "stt", "file": "sw-214545.wav", "bytes": 42710}
+{"t": 1792504692.2569928, "kind": "tts", "chars": 4, "voice": "Chetana", "language": "kn-IN"}
+{"t": 1792504694.3659236, "kind": "stt", "file": "sw-162.wav", "bytes": 25644}
+{"t": 1792504696.4580903, "kind": "tts", "chars": 6, "voice": "Tarika", "language": "kn-IN"}
+{"t": 1792504698.554579, "kind": "stt", "file": "sw-29539.wav", "bytes": 25644}
+{"t": 1792504701.6132612, "kind": "tts", "chars": 10, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792504703.803277, "kind": "stt", "file": "sw-18764.wav", "bytes": 34178}
+{"t": 1792504705.7554946, "kind": "tts", "chars": 10, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792504707.8977542, "kind": "stt", "file": "sw-13715.wav", "bytes": 31332}
+{"t": 1792504710.0101702, "kind": "tts", "chars": 8, "voice": "Harshad", "language": "kn-IN"}
+{"t": 1792504712.397185, "kind": "stt", "file": "sw-96775.wav", "bytes": 34178}
+{"t": 1792504714.4690154, "kind": "tts", "chars": 14, "voice": "Shivani", "language": "kn-IN"}
+{"t": 1792504716.886899, "kind": "stt", "file": "sw-97697.wav", "bytes": 42710}
+{"t": 1792504718.8760703, "kind": "tts", "chars": 5, "voice": "Kalpana", "language": "kn-IN"}
+{"t": 1792504721.011436, "kind": "stt", "file": "sw-8740.wav", "bytes": 31332}
+{"t": 1792504723.0591702, "kind": "tts", "chars": 11, "voice": "Shubham", "language": "ta-IN"}
+{"t": 1792504725.2967718, "kind": "stt", "file": "sw-591721.wav", "bytes": 45556}
+{"t": 1792504727.2840059, "kind": "tts", "chars": 9, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792504729.3843677, "kind": "stt", "file": "sw-96776.wav", "bytes": 28488}
+{"t": 1792504731.4825997, "kind": "tts", "chars": 7, "voice": "Harshad", "language": "ta-IN"}
+{"t": 1792504733.8067002, "kind": "stt", "file": "sw-543803.wav", "bytes": 28488}
+{"t": 1792504735.872999, "kind": "tts", "chars": 9, "voice": "Lakshmi", "language": "ta-IN"}
+{"t": 1792504738.2516458, "kind": "stt", "file": "sw-44632.wav", "bytes": 68310}
+{"t": 1792504740.3885503, "kind": "tts", "chars": 7, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792504742.7175815, "kind": "stt", "file": "sw-33637.wav", "bytes": 34178}
+{"t": 1792504744.7751613, "kind": "tts", "chars": 5, "voice": "Riyaa", "language": "ta-IN"}
+{"t": 1792504746.9824908, "kind": "stt", "file": "sw-587067.wav", "bytes": 31332}
+{"t": 1792504749.0440133, "kind": "tts", "chars": 8, "voice": "Avinash", "language": "ta-IN"}
+{"t": 1792504751.210899, "kind": "stt", "file": "sw-61460.wav", "bytes": 31332}
+{"t": 1792504753.195638, "kind": "tts", "chars": 11, "voice": "Devansh", "language": "ta-IN"}
+{"t": 1792504755.3553407, "kind": "stt", "file": "sw-1041.wav", "bytes": 31332}
+{"t": 1792504757.3651824, "kind": "tts", "chars": 11, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792504759.6085835, "kind": "stt", "file": "sw-577824.wav", "bytes": 37022}
+{"t": 1792504761.7669938, "kind": "tts", "chars": 7, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792504763.9705944, "kind": "stt", "file": "sw-577837.wav", "bytes": 37022}
+{"t": 1792504766.052348, "kind": "tts", "chars": 5, "voice": "Chetana", "language": "ta-IN"}
+{"t": 1792504768.339103, "kind": "stt", "file": "sw-304.wav", "bytes": 22800}
+{"t": 1792504770.3937554, "kind": "tts", "chars": 10, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792504772.6472938, "kind": "stt", "file": "sw-187453.wav", "bytes": 37022}
+{"t": 1792504774.626923, "kind": "tts", "chars": 5, "voice": "Tarika", "language": "ta-IN"}
+{"t": 1792504776.8175461, "kind": "stt", "file": "sw-577825.wav", "bytes": 31332}
+{"t": 1792504804.8695076, "kind": "tts", "chars": 13, "voice": "Shivani", "language": "hi-IN"}
+{"t": 1792504807.2259996, "kind": "tts", "chars": 11, "voice": "Shivani", "language": "hi-IN"}
+{"t": 1792504809.3943503, "kind": "tts", "chars": 14, "voice": "Shivani", "language": "hi-IN"}
+{"t": 1792504812.039441, "kind": "tts", "chars": 12, "voice": "Shivani", "language": "hi-IN"}
+{"t": 1792504814.4125543, "kind": "tts", "chars": 14, "voice": "Shivani", "language": "hi-IN"}
+{"t": 1792504816.716735, "kind": "tts", "chars": 14, "voice": "Shivani", "language": "hi-IN"}
+{"t": 1792504819.0523708, "kind": "tts", "chars": 15, "voice": "Vasudha", "language": "hi-IN"}
+{"t": 1792504821.3449876, "kind": "tts", "chars": 17, "voice": "Vasudha", "language": "hi-IN"}
+{"t": 1792504823.5817971, "kind": "tts", "chars": 11, "voice": "Vasudha", "language": "hi-IN"}
+{"t": 1792504825.819464, "kind": "tts", "chars": 13, "voice": "Vasudha", "language": "hi-IN"}
+{"t": 1792504828.1516106, "kind": "tts", "chars": 9, "voice": "Vasudha", "language": "hi-IN"}
+{"t": 1792504830.4890168, "kind": "tts", "chars": 3, "voice": "Vasudha", "language": "hi-IN"}
+{"t": 1792504832.747717, "kind": "tts", "chars": 13, "voice": "Tarika", "language": "hi-IN"}
+{"t": 1792504835.0323112, "kind": "tts", "chars": 11, "voice": "Tarika", "language": "hi-IN"}
+{"t": 1792504837.3889124, "kind": "tts", "chars": 12, "voice": "Tarika", "language": "hi-IN"}
+{"t": 1792504839.6685371, "kind": "tts", "chars": 16, "voice": "Tarika", "language": "hi-IN"}
+{"t": 1792504842.151709, "kind": "tts", "chars": 14, "voice": "Tarika", "language": "hi-IN"}
+{"t": 1792504844.6685438, "kind": "tts", "chars": 5, "voice": "Tarika", "language": "hi-IN"}
+{"t": 1792504846.8925133, "kind": "tts", "chars": 10, "voice": "Lakshmi", "language": "hi-IN"}
+{"t": 1792504848.9626908, "kind": "stt", "file": "sw-958.wav", "bytes": 119510}
+{"t": 1792504849.0560634, "kind": "tts", "chars": 11, "voice": "Lakshmi", "language": "hi-IN"}
+{"t": 1792504851.5940182, "kind": "tts", "chars": 12, "voice": "Lakshmi", "language": "hi-IN"}
+{"t": 1792504853.832365, "kind": "tts", "chars": 5, "voice": "Lakshmi", "language": "hi-IN"}
+{"t": 1792504856.1563592, "kind": "tts", "chars": 14, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792504858.5510604, "kind": "tts", "chars": 15, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792504860.7908506, "kind": "tts", "chars": 12, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792504863.1400614, "kind": "tts", "chars": 10, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792504865.3940687, "kind": "tts", "chars": 12, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792504867.6103358, "kind": "tts", "chars": 13, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792504869.8500657, "kind": "tts", "chars": 13, "voice": "Harshad", "language": "hi-IN"}
+{"t": 1792504872.3018084, "kind": "tts", "chars": 12, "voice": "Harshad", "language": "hi-IN"}
+{"t": 1792504874.7234712, "kind": "tts", "chars": 10, "voice": "Harshad", "language": "hi-IN"}
+{"t": 1792504876.953751, "kind": "tts", "chars": 3, "voice": "Harshad", "language": "hi-IN"}
+{"t": 1792504879.1638274, "kind": "tts", "chars": 11, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792504881.416805, "kind": "tts", "chars": 10, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792504883.7971797, "kind": "tts", "chars": 15, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792504886.0785048, "kind": "tts", "chars": 10, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792504888.3436441, "kind": "tts", "chars": 13, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792504890.5713115, "kind": "tts", "chars": 10, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792504892.9030123, "kind": "tts", "chars": 9, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792504895.1009588, "kind": "tts", "chars": 14, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792504897.4645612, "kind": "tts", "chars": 13, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792504899.6918662, "kind": "tts", "chars": 9, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792504902.1560297, "kind": "tts", "chars": 13, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792504904.303647, "kind": "tts", "chars": 16, "voice": "Riyaa", "language": "hi-IN"}
+{"t": 1792504906.704744, "kind": "tts", "chars": 14, "voice": "Riyaa", "language": "hi-IN"}
+{"t": 1792504908.9619074, "kind": "tts", "chars": 18, "voice": "Riyaa", "language": "hi-IN"}
+{"t": 1792504911.4887345, "kind": "tts", "chars": 13, "voice": "Riyaa", "language": "hi-IN"}
+{"t": 1792504913.8853476, "kind": "tts", "chars": 14, "voice": "Riyaa", "language": "hi-IN"}
+{"t": 1792504916.2060626, "kind": "tts", "chars": 11, "voice": "Riyaa", "language": "hi-IN"}
+{"t": 1792504918.5229995, "kind": "tts", "chars": 9, "voice": "Riyaa", "language": "hi-IN"}
+{"t": 1792504920.7290678, "kind": "tts", "chars": 12, "voice": "Avinash", "language": "hi-IN"}
+{"t": 1792504921.746327, "kind": "stt", "file": "sw-557049.wav", "bytes": 349910}
+{"t": 1792504923.2524052, "kind": "tts", "chars": 15, "voice": "Avinash", "language": "hi-IN"}
+{"t": 1792504925.7970865, "kind": "tts", "chars": 11, "voice": "Avinash", "language": "hi-IN"}
+{"t": 1792504928.1844618, "kind": "tts", "chars": 10, "voice": "Avinash", "language": "hi-IN"}
+{"t": 1792504930.5130887, "kind": "tts", "chars": 14, "voice": "Avinash", "language": "hi-IN"}
+{"t": 1792504932.916022, "kind": "tts", "chars": 13, "voice": "Avinash", "language": "hi-IN"}
+{"t": 1792504935.07531, "kind": "tts", "chars": 12, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792504937.3878949, "kind": "tts", "chars": 13, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792504940.0125685, "kind": "tts", "chars": 13, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792504942.2625713, "kind": "tts", "chars": 11, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792504944.6205819, "kind": "tts", "chars": 8, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792504947.1075668, "kind": "tts", "chars": 15, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792504949.5074165, "kind": "tts", "chars": 8, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792504951.9701056, "kind": "tts", "chars": 16, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792504954.2610333, "kind": "tts", "chars": 13, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792504956.6180744, "kind": "tts", "chars": 14, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792504958.8031623, "kind": "tts", "chars": 8, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792504961.0699146, "kind": "tts", "chars": 13, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792504963.3453455, "kind": "tts", "chars": 12, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792504965.5394719, "kind": "tts", "chars": 11, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792504967.7620726, "kind": "tts", "chars": 13, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792504970.1997964, "kind": "tts", "chars": 8, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792504972.538719, "kind": "tts", "chars": 13, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792504974.7995064, "kind": "tts", "chars": 13, "voice": "Devansh", "language": "hi-IN"}
+{"t": 1792504976.96389, "kind": "tts", "chars": 12, "voice": "Yashraj", "language": "hi-IN"}
+{"t": 1792504979.508498, "kind": "tts", "chars": 18, "voice": "Yashraj", "language": "hi-IN"}
+{"t": 1792504981.8381617, "kind": "tts", "chars": 12, "voice": "Yashraj", "language": "hi-IN"}
+{"t": 1792504984.2417073, "kind": "tts", "chars": 11, "voice": "Yashraj", "language": "hi-IN"}
+{"t": 1792504986.6877997, "kind": "tts", "chars": 14, "voice": "Yashraj", "language": "hi-IN"}
+{"t": 1792504989.0189278, "kind": "tts", "chars": 24, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792504991.6296005, "kind": "tts", "chars": 16, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792504994.1716301, "kind": "tts", "chars": 26, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792504994.876714, "kind": "stt", "file": "sw-37201.wav", "bytes": 261732}
+{"t": 1792504996.8779497, "kind": "tts", "chars": 20, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792504999.704134, "kind": "tts", "chars": 13, "voice": "Riyaa", "language": "kn-IN"}
+{"t": 1792505002.1667242, "kind": "tts", "chars": 16, "voice": "Riyaa", "language": "kn-IN"}
+{"t": 1792505004.4052076, "kind": "tts", "chars": 21, "voice": "Riyaa", "language": "kn-IN"}
+{"t": 1792505006.695195, "kind": "tts", "chars": 35, "voice": "Riyaa", "language": "kn-IN"}
+{"t": 1792505009.0121865, "kind": "tts", "chars": 18, "voice": "Riyaa", "language": "kn-IN"}
+{"t": 1792505011.5989003, "kind": "tts", "chars": 20, "voice": "Riyaa", "language": "kn-IN"}
+{"t": 1792505014.2734945, "kind": "tts", "chars": 16, "voice": "Riyaa", "language": "kn-IN"}
+{"t": 1792505016.66254, "kind": "tts", "chars": 22, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792505019.11798, "kind": "tts", "chars": 15, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792505021.7740667, "kind": "tts", "chars": 22, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792505024.1638353, "kind": "tts", "chars": 23, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792505026.8075206, "kind": "tts", "chars": 22, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792505029.4933412, "kind": "tts", "chars": 15, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792505031.7356505, "kind": "tts", "chars": 17, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792505034.0551496, "kind": "tts", "chars": 16, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792505036.378475, "kind": "tts", "chars": 18, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792505038.7054653, "kind": "tts", "chars": 31, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792505041.0995202, "kind": "tts", "chars": 22, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792505043.6511567, "kind": "tts", "chars": 25, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792505046.2574005, "kind": "tts", "chars": 27, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792505048.886293, "kind": "tts", "chars": 13, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792505051.1641843, "kind": "tts", "chars": 32, "voice": "Shubham", "language": "kn-IN"}
+{"t": 1792505053.8644843, "kind": "tts", "chars": 20, "voice": "Shubham", "language": "kn-IN"}
+{"t": 1792505056.2746897, "kind": "tts", "chars": 23, "voice": "Shubham", "language": "kn-IN"}
+{"t": 1792505058.6677225, "kind": "tts", "chars": 19, "voice": "Shubham", "language": "kn-IN"}
+{"t": 1792505061.1310406, "kind": "tts", "chars": 19, "voice": "Devansh", "language": "kn-IN"}
+{"t": 1792505063.5031512, "kind": "tts", "chars": 29, "voice": "Devansh", "language": "kn-IN"}
+{"t": 1792505065.8704698, "kind": "tts", "chars": 24, "voice": "Devansh", "language": "kn-IN"}
+{"t": 1792505068.1769886, "kind": "tts", "chars": 35, "voice": "Yashraj", "language": "kn-IN"}
+{"t": 1792505070.7975867, "kind": "tts", "chars": 24, "voice": "Yashraj", "language": "kn-IN"}
+{"t": 1792505073.162601, "kind": "tts", "chars": 17, "voice": "Yashraj", "language": "kn-IN"}
+{"t": 1792505075.44008, "kind": "tts", "chars": 13, "voice": "Yashraj", "language": "kn-IN"}
+{"t": 1792505077.9559457, "kind": "tts", "chars": 11, "voice": "Lakshmi", "language": "kn-IN"}
+{"t": 1792505080.1920877, "kind": "tts", "chars": 19, "voice": "Lakshmi", "language": "kn-IN"}
+{"t": 1792505082.557223, "kind": "tts", "chars": 24, "voice": "Lakshmi", "language": "kn-IN"}
+{"t": 1792505084.987424, "kind": "tts", "chars": 13, "voice": "Lakshmi", "language": "kn-IN"}
+{"t": 1792505087.2965236, "kind": "tts", "chars": 27, "voice": "Chetana", "language": "kn-IN"}
+{"t": 1792505089.8685622, "kind": "tts", "chars": 15, "voice": "Chetana", "language": "kn-IN"}
+{"t": 1792505092.3033454, "kind": "tts", "chars": 15, "voice": "Chetana", "language": "kn-IN"}
+{"t": 1792505094.7712648, "kind": "tts", "chars": 16, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792505097.2839227, "kind": "tts", "chars": 26, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792505099.8945017, "kind": "tts", "chars": 29, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792505102.553935, "kind": "tts", "chars": 15, "voice": "Avinash", "language": "kn-IN"}
+{"t": 1792505104.7961438, "kind": "tts", "chars": 23, "voice": "Shivani", "language": "kn-IN"}
+{"t": 1792505107.3750713, "kind": "tts", "chars": 21, "voice": "Shivani", "language": "kn-IN"}
+{"t": 1792505110.1416078, "kind": "tts", "chars": 23, "voice": "Shivani", "language": "kn-IN"}
+{"t": 1792505112.6574667, "kind": "tts", "chars": 27, "voice": "Shivani", "language": "kn-IN"}
+{"t": 1792505115.5100603, "kind": "tts", "chars": 18, "voice": "Shivani", "language": "kn-IN"}
+{"t": 1792505117.763669, "kind": "tts", "chars": 15, "voice": "Kalpana", "language": "kn-IN"}
+{"t": 1792505120.0293558, "kind": "tts", "chars": 25, "voice": "Kalpana", "language": "kn-IN"}
+{"t": 1792505122.5053596, "kind": "tts", "chars": 21, "voice": "Kalpana", "language": "kn-IN"}
+{"t": 1792505124.8065455, "kind": "tts", "chars": 16, "voice": "Kalpana", "language": "kn-IN"}
+{"t": 1792505127.1858733, "kind": "tts", "chars": 19, "voice": "Kalpana", "language": "kn-IN"}
+{"t": 1792505129.524839, "kind": "tts", "chars": 20, "voice": "Kalpana", "language": "kn-IN"}
+{"t": 1792505131.744811, "kind": "tts", "chars": 19, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792505134.2436388, "kind": "tts", "chars": 24, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792505136.9171183, "kind": "tts", "chars": 16, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792505139.2464588, "kind": "tts", "chars": 20, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792505141.9392607, "kind": "tts", "chars": 22, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792505144.283749, "kind": "tts", "chars": 21, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792505146.6407382, "kind": "tts", "chars": 19, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792505149.219603, "kind": "tts", "chars": 15, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792505151.6202455, "kind": "tts", "chars": 11, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792505153.9130433, "kind": "tts", "chars": 24, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792505156.3175702, "kind": "tts", "chars": 15, "voice": "Prakash", "language": "kn-IN"}
+{"t": 1792505158.7898114, "kind": "tts", "chars": 28, "voice": "Tarika", "language": "kn-IN"}
+{"t": 1792505161.2501032, "kind": "tts", "chars": 19, "voice": "Tarika", "language": "kn-IN"}
+{"t": 1792505163.7214873, "kind": "tts", "chars": 18, "voice": "Tarika", "language": "kn-IN"}
+{"t": 1792505166.1585295, "kind": "tts", "chars": 23, "voice": "Tarika", "language": "kn-IN"}
+{"t": 1792505168.8888366, "kind": "tts", "chars": 17, "voice": "Tarika", "language": "kn-IN"}
+{"t": 1792505171.2067375, "kind": "tts", "chars": 20, "voice": "Tarika", "language": "kn-IN"}
+{"t": 1792505173.9349399, "kind": "tts", "chars": 28, "voice": "Shubham", "language": "ta-IN"}
+{"t": 1792505176.3625338, "kind": "tts", "chars": 15, "voice": "Shubham", "language": "ta-IN"}
+{"t": 1792505178.7921011, "kind": "tts", "chars": 18, "voice": "Shubham", "language": "ta-IN"}
+{"t": 1792505181.1127691, "kind": "tts", "chars": 31, "voice": "Shubham", "language": "ta-IN"}
+{"t": 1792505183.5281575, "kind": "tts", "chars": 11, "voice": "Shubham", "language": "ta-IN"}
+{"t": 1792505185.9154096, "kind": "tts", "chars": 26, "voice": "Prakash", "language": "ta-IN"}
+{"t": 1792505188.708778, "kind": "tts", "chars": 24, "voice": "Prakash", "language": "ta-IN"}
+{"t": 1792505190.9729943, "kind": "tts", "chars": 23, "voice": "Prakash", "language": "ta-IN"}
+{"t": 1792505193.6497269, "kind": "tts", "chars": 27, "voice": "Prakash", "language": "ta-IN"}
+{"t": 1792505196.047676, "kind": "tts", "chars": 21, "voice": "Prakash", "language": "ta-IN"}
+{"t": 1792505198.2862213, "kind": "tts", "chars": 27, "voice": "Harshad", "language": "ta-IN"}
+{"t": 1792505200.675809, "kind": "tts", "chars": 32, "voice": "Harshad", "language": "ta-IN"}
+{"t": 1792505203.333714, "kind": "tts", "chars": 17, "voice": "Harshad", "language": "ta-IN"}
+{"t": 1792505205.5209327, "kind": "tts", "chars": 38, "voice": "Harshad", "language": "ta-IN"}
+{"t": 1792505207.909088, "kind": "tts", "chars": 25, "voice": "Harshad", "language": "ta-IN"}
+{"t": 1792505210.2564113, "kind": "tts", "chars": 20, "voice": "Harshad", "language": "ta-IN"}
+{"t": 1792505212.532578, "kind": "tts", "chars": 10, "voice": "Harshad", "language": "ta-IN"}
+{"t": 1792505214.6361907, "kind": "tts", "chars": 22, "voice": "Lakshmi", "language": "ta-IN"}
+{"t": 1792505217.0268624, "kind": "tts", "chars": 35, "voice": "Lakshmi", "language": "ta-IN"}
+{"t": 1792505219.6503315, "kind": "tts", "chars": 15, "voice": "Lakshmi", "language": "ta-IN"}
+{"t": 1792505222.155184, "kind": "tts", "chars": 25, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792505224.7345111, "kind": "tts", "chars": 25, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792505227.1268027, "kind": "tts", "chars": 23, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792505229.5147808, "kind": "tts", "chars": 23, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792505231.798899, "kind": "tts", "chars": 22, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792505234.230365, "kind": "tts", "chars": 29, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792505236.5906498, "kind": "tts", "chars": 21, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792505238.9123943, "kind": "tts", "chars": 30, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792505241.309149, "kind": "tts", "chars": 15, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792505243.766882, "kind": "tts", "chars": 16, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792505246.0759761, "kind": "tts", "chars": 34, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792505248.6851761, "kind": "tts", "chars": 16, "voice": "Riyaa", "language": "ta-IN"}
+{"t": 1792505250.9957957, "kind": "tts", "chars": 27, "voice": "Riyaa", "language": "ta-IN"}
+{"t": 1792505253.531714, "kind": "tts", "chars": 20, "voice": "Riyaa", "language": "ta-IN"}
+{"t": 1792505255.7809806, "kind": "tts", "chars": 27, "voice": "Riyaa", "language": "ta-IN"}
+{"t": 1792505258.2303655, "kind": "tts", "chars": 23, "voice": "Riyaa", "language": "ta-IN"}
+{"t": 1792505260.883328, "kind": "tts", "chars": 17, "voice": "Avinash", "language": "ta-IN"}
+{"t": 1792505263.1696203, "kind": "tts", "chars": 24, "voice": "Avinash", "language": "ta-IN"}
+{"t": 1792505265.6058767, "kind": "tts", "chars": 26, "voice": "Avinash", "language": "ta-IN"}
+{"t": 1792505267.9334648, "kind": "tts", "chars": 28, "voice": "Avinash", "language": "ta-IN"}
+{"t": 1792505270.3627286, "kind": "tts", "chars": 35, "voice": "Avinash", "language": "ta-IN"}
+{"t": 1792505272.9436514, "kind": "tts", "chars": 9, "voice": "Avinash", "language": "ta-IN"}
+{"t": 1792505275.4304423, "kind": "tts", "chars": 26, "voice": "Kalpana", "language": "ta-IN"}
+{"t": 1792505278.1095352, "kind": "tts", "chars": 24, "voice": "Kalpana", "language": "ta-IN"}
+{"t": 1792505280.5169287, "kind": "tts", "chars": 29, "voice": "Kalpana", "language": "ta-IN"}
+{"t": 1792505282.8940537, "kind": "tts", "chars": 22, "voice": "Kalpana", "language": "ta-IN"}
+{"t": 1792505285.2716706, "kind": "tts", "chars": 27, "voice": "Kalpana", "language": "ta-IN"}
+{"t": 1792505287.7249105, "kind": "tts", "chars": 34, "voice": "Kalpana", "language": "ta-IN"}
+{"t": 1792505290.1204355, "kind": "tts", "chars": 24, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792505292.5484793, "kind": "tts", "chars": 20, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792505294.9277635, "kind": "tts", "chars": 27, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792505297.3148685, "kind": "tts", "chars": 36, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792505299.7388809, "kind": "tts", "chars": 17, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792505302.1047385, "kind": "tts", "chars": 21, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792505304.4850621, "kind": "tts", "chars": 9, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792505306.632417, "kind": "tts", "chars": 21, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792505308.9806924, "kind": "tts", "chars": 21, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792505311.3017838, "kind": "tts", "chars": 37, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792505313.697898, "kind": "tts", "chars": 18, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792505316.1076262, "kind": "tts", "chars": 21, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792505318.4280283, "kind": "tts", "chars": 23, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792505320.8340359, "kind": "tts", "chars": 19, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792505323.1832056, "kind": "tts", "chars": 26, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792505325.5760307, "kind": "tts", "chars": 27, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792505327.8595715, "kind": "tts", "chars": 5, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792505329.984188, "kind": "tts", "chars": 36, "voice": "Tarika", "language": "ta-IN"}
+{"t": 1792505332.3876493, "kind": "tts", "chars": 27, "voice": "Tarika", "language": "ta-IN"}
+{"t": 1792505334.8451986, "kind": "tts", "chars": 25, "voice": "Tarika", "language": "ta-IN"}
+{"t": 1792505337.1650875, "kind": "tts", "chars": 23, "voice": "Tarika", "language": "ta-IN"}
+{"t": 1792505339.6532044, "kind": "tts", "chars": 29, "voice": "Tarika", "language": "ta-IN"}
+{"t": 1792505342.2000256, "kind": "tts", "chars": 22, "voice": "Tarika", "language": "ta-IN"}
+{"t": 1792505344.4890954, "kind": "tts", "chars": 24, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792505346.8356812, "kind": "tts", "chars": 18, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792505349.1020136, "kind": "tts", "chars": 26, "voice": "Vasudha", "language": "ta-IN"}
+{"t": 1792505351.5590293, "kind": "tts", "chars": 30, "voice": "Tarika", "language": "ta-IN"}
+{"t": 1792505353.9614124, "kind": "tts", "chars": 23, "voice": "Tarika", "language": "ta-IN"}
+{"t": 1792505356.2177758, "kind": "tts", "chars": 18, "voice": "Tarika", "language": "ta-IN"}
+{"t": 1792505361.181056, "kind": "stt", "file": "sw-204765.wav", "bytes": 340488}
+{"t": 1792505363.4665582, "kind": "stt", "file": "sw-204765-c0.wav", "bytes": 38444}
+{"t": 1792505365.4236858, "kind": "stt", "file": "sw-204765-c1.wav", "bytes": 35884}
+{"t": 1792505367.4124126, "kind": "stt", "file": "sw-204765-c2.wav", "bytes": 49324}
+{"t": 1792505369.429648, "kind": "stt", "file": "sw-204765-c3.wav", "bytes": 28844}
+{"t": 1792505371.7625375, "kind": "stt", "file": "sw-204765-c4.wav", "bytes": 51244}
+{"t": 1792505373.7222145, "kind": "stt", "file": "sw-204765-c5.wav", "bytes": 42924}
+{"t": 1792505375.7560546, "kind": "stt", "file": "sw-241493.wav", "bytes": 377466}
+{"t": 1792505377.9230747, "kind": "stt", "file": "sw-241493-c0.wav", "bytes": 44204}
+{"t": 1792505379.9139917, "kind": "stt", "file": "sw-241493-c1.wav", "bytes": 49964}
+{"t": 1792505381.9379017, "kind": "stt", "file": "sw-241493-c2.wav", "bytes": 53804}
+{"t": 1792505383.9590898, "kind": "stt", "file": "sw-241493-c3.wav", "bytes": 18604}
+{"t": 1792505385.909186, "kind": "stt", "file": "sw-241493-c4.wav", "bytes": 33964}
+{"t": 1792505387.8612373, "kind": "stt", "file": "sw-241493-c5.wav", "bytes": 19884}
+{"t": 1792505389.8230736, "kind": "stt", "file": "sw-241493-c6.wav", "bytes": 23084}
+{"t": 1792505391.8003206, "kind": "stt", "file": "sw-241493-c7.wav", "bytes": 21164}
+{"t": 1792505393.751162, "kind": "stt", "file": "sw-13328.wav", "bytes": 326266}
+{"t": 1792505395.961565, "kind": "stt", "file": "sw-13328-c0.wav", "bytes": 40364}
+{"t": 1792505397.960331, "kind": "stt", "file": "sw-13328-c1.wav", "bytes": 32684}
+{"t": 1792505399.9263854, "kind": "stt", "file": "sw-13328-c2.wav", "bytes": 23724}
+{"t": 1792505401.899611, "kind": "stt", "file": "sw-13328-c3.wav", "bytes": 21804}
+{"t": 1792505403.8429985, "kind": "stt", "file": "sw-13328-c4.wav", "bytes": 53164}
+{"t": 1792505405.8411293, "kind": "stt", "file": "sw-13328-c5.wav", "bytes": 48684}
+{"t": 1792505407.795993, "kind": "stt", "file": "sw-13328-c6.wav", "bytes": 21804}
+{"t": 1792505409.753099, "kind": "stt", "file": "sw-958.wav", "bytes": 190088}
+{"t": 1792505411.8478065, "kind": "stt", "file": "sw-958-c0.wav", "bytes": 30764}
+{"t": 1792505413.7938306, "kind": "stt", "file": "sw-958-c1.wav", "bytes": 48684}
+{"t": 1792505415.816101, "kind": "stt", "file": "sw-958-c2.wav", "bytes": 33964}
+{"t": 1792505417.8194637, "kind": "stt", "file": "sw-958-c3.wav", "bytes": 14764}
+{"t": 1792505419.8229122, "kind": "stt", "file": "sw-30025.wav", "bytes": 329110}
+{"t": 1792505421.9839523, "kind": "stt", "file": "sw-30025-c0.wav", "bytes": 39724}
+{"t": 1792505423.9583461, "kind": "stt", "file": "sw-30025-c1.wav", "bytes": 37804}
+{"t": 1792505425.9242077, "kind": "stt", "file": "sw-30025-c2.wav", "bytes": 41644}
+{"t": 1792505427.9374728, "kind": "stt", "file": "sw-30025-c3.wav", "bytes": 26284}
+{"t": 1792505429.895017, "kind": "stt", "file": "sw-30025-c4.wav", "bytes": 22444}
+{"t": 1792505431.8106475, "kind": "stt", "file": "sw-30025-c5.wav", "bytes": 27564}
+{"t": 1792505433.7598872, "kind": "stt", "file": "sw-30025-c6.wav", "bytes": 13484}
+{"t": 1792505435.7188706, "kind": "stt", "file": "sw-30025-c7.wav", "bytes": 33324}
+{"t": 1792505437.6982102, "kind": "stt", "file": "sw-15507.wav", "bytes": 192934}
+{"t": 1792505439.8081276, "kind": "stt", "file": "sw-15507-c0.wav", "bytes": 42284}
+{"t": 1792505441.7605689, "kind": "stt", "file": "sw-15507-c1.wav", "bytes": 33964}
+{"t": 1792505443.7026324, "kind": "stt", "file": "sw-15507-c2.wav", "bytes": 37164}
+{"t": 1792505445.6611211, "kind": "stt", "file": "sw-15507-c3.wav", "bytes": 19244}
+{"t": 1792505447.7130792, "kind": "stt", "file": "sw-812.wav", "bytes": 309200}
+{"t": 1792505449.891388, "kind": "stt", "file": "sw-812-c0.wav", "bytes": 36524}
+{"t": 1792505451.8384652, "kind": "stt", "file": "sw-812-c1.wav", "bytes": 40364}
+{"t": 1792505453.7865853, "kind": "stt", "file": "sw-812-c2.wav", "bytes": 21164}
+{"t": 1792505455.731934, "kind": "stt", "file": "sw-812-c3.wav", "bytes": 27564}
+{"t": 1792505457.661484, "kind": "stt", "file": "sw-812-c4.wav", "bytes": 27564}
+{"t": 1792505459.5961907, "kind": "stt", "file": "sw-812-c5.wav", "bytes": 35884}
+{"t": 1792505461.544324, "kind": "stt", "file": "sw-812-c6.wav", "bytes": 31404}
+{"t": 1792505463.5078459, "kind": "stt", "file": "sw-62764.wav", "bytes": 252488}
+{"t": 1792505465.6710405, "kind": "stt", "file": "sw-62764-c0.wav", "bytes": 30764}
+{"t": 1792505467.684602, "kind": "stt", "file": "sw-62764-c1.wav", "bytes": 39724}
+{"t": 1792505469.7619805, "kind": "stt", "file": "sw-62764-c2.wav", "bytes": 35244}
+{"t": 1792505471.7750583, "kind": "stt", "file": "sw-62764-c3.wav", "bytes": 14124}
+{"t": 1792505473.75475, "kind": "stt", "file": "sw-62764-c4.wav", "bytes": 21804}
+{"t": 1792505475.8828886, "kind": "stt", "file": "sw-62764-c5.wav", "bytes": 33324}
+{"t": 1792505477.8478272, "kind": "stt", "file": "sw-1277.wav", "bytes": 232754}
+{"t": 1792505479.961948, "kind": "stt", "file": "sw-1277-c0.wav", "bytes": 51244}
+{"t": 1792505481.906518, "kind": "stt", "file": "sw-1277-c1.wav", "bytes": 36524}
+{"t": 1792505483.8937075, "kind": "stt", "file": "sw-1277-c2.wav", "bytes": 50604}
+{"t": 1792505485.922092, "kind": "stt", "file": "sw-1277-c3.wav", "bytes": 37804}
+{"t": 1792505487.881862, "kind": "stt", "file": "sw-15518.wav", "bytes": 161822}
+{"t": 1792505490.0011158, "kind": "stt", "file": "sw-15518-c0.wav", "bytes": 42284}
+{"t": 1792505492.0447702, "kind": "stt", "file": "sw-15518-c1.wav", "bytes": 17324}
+{"t": 1792505494.1200502, "kind": "stt", "file": "sw-15518-c2.wav", "bytes": 33324}
+{"t": 1792505496.086709, "kind": "stt", "file": "sw-15518-c3.wav", "bytes": 25004}
+{"t": 1792505498.0610583, "kind": "stt", "file": "sw-164.wav", "bytes": 357556}
+{"t": 1792505500.2853727, "kind": "stt", "file": "sw-164-c0.wav", "bytes": 32684}
+{"t": 1792505502.2770894, "kind": "stt", "file": "sw-164-c1.wav", "bytes": 51884}
+{"t": 1792505504.3097336, "kind": "stt", "file": "sw-164-c2.wav", "bytes": 38444}
+{"t": 1792505506.301058, "kind": "stt", "file": "sw-164-c3.wav", "bytes": 42284}
+{"t": 1792505508.3088408, "kind": "stt", "file": "sw-164-c4.wav", "bytes": 38444}
+{"t": 1792505510.2685726, "kind": "stt", "file": "sw-164-c5.wav", "bytes": 32684}
+{"t": 1792505512.2489312, "kind": "stt", "file": "sw-21228.wav", "bytes": 400042}
+{"t": 1792505514.4598045, "kind": "stt", "file": "sw-21228-c0.wav", "bytes": 39724}
+{"t": 1792505516.4209282, "kind": "stt", "file": "sw-21228-c1.wav", "bytes": 31404}
+{"t": 1792505518.3735332, "kind": "stt", "file": "sw-21228-c2.wav", "bytes": 14764}
+{"t": 1792505520.3063517, "kind": "stt", "file": "sw-21228-c3.wav", "bytes": 39724}
+{"t": 1792505522.2707083, "kind": "stt", "file": "sw-21228-c4.wav", "bytes": 30764}
+{"t": 1792505524.2114697, "kind": "stt", "file": "sw-21228-c5.wav", "bytes": 39724}
+{"t": 1792505526.1821673, "kind": "stt", "file": "sw-21228-c6.wav", "bytes": 35884}
+{"t": 1792505528.141703, "kind": "stt", "file": "sw-21228-c7.wav", "bytes": 29484}
+{"t": 1792505530.123393, "kind": "stt", "file": "sw-203930.wav", "bytes": 212844}
+{"t": 1792505532.2076344, "kind": "stt", "file": "sw-203930-c0.wav", "bytes": 40364}
+{"t": 1792505534.2045758, "kind": "stt", "file": "sw-203930-c1.wav", "bytes": 39724}
+{"t": 1792505536.167656, "kind": "stt", "file": "sw-203930-c2.wav", "bytes": 33324}
+{"t": 1792505538.137698, "kind": "stt", "file": "sw-203930-c3.wav", "bytes": 28204}
+{"t": 1792505540.1157017, "kind": "stt", "file": "sw-16139.wav", "bytes": 363070}
+{"t": 1792505542.2430801, "kind": "stt", "file": "sw-16139-c0.wav", "bytes": 44204}
+{"t": 1792505544.272004, "kind": "stt", "file": "sw-16139-c1.wav", "bytes": 35244}
+{"t": 1792505546.2366252, "kind": "stt", "file": "sw-16139-c2.wav", "bytes": 43564}
+{"t": 1792505548.2646356, "kind": "stt", "file": "sw-16139-c3.wav", "bytes": 42924}
+{"t": 1792505550.249117, "kind": "stt", "file": "sw-16139-c4.wav", "bytes": 14764}
+{"t": 1792505552.3137848, "kind": "stt", "file": "sw-16139-c5.wav", "bytes": 21164}
+{"t": 1792505554.2811627, "kind": "stt", "file": "sw-16139-c6.wav", "bytes": 37164}
+{"t": 1792505556.2365627, "kind": "stt", "file": "sw-16139-c7.wav", "bytes": 32044}
+{"t": 1792505558.1762645, "kind": "stt", "file": "sw-55764.wav", "bytes": 303688}
+{"t": 1792505560.3668272, "kind": "stt", "file": "sw-55764-c0.wav", "bytes": 47404}
+{"t": 1792505562.373443, "kind": "stt", "file": "sw-55764-c1.wav", "bytes": 18604}
+{"t": 1792505564.342485, "kind": "stt", "file": "sw-55764-c2.wav", "bytes": 35884}
+{"t": 1792505566.3271942, "kind": "stt", "file": "sw-55764-c3.wav", "bytes": 30764}
+{"t": 1792505568.2846215, "kind": "stt", "file": "sw-55764-c4.wav", "bytes": 23084}
+{"t": 1792505570.2575595, "kind": "stt", "file": "sw-55764-c5.wav", "bytes": 15404}
+{"t": 1792505572.2034717, "kind": "stt", "file": "sw-55764-c6.wav", "bytes": 43564}
+{"t": 1792505574.1973994, "kind": "stt", "file": "sw-25737.wav", "bytes": 343688}
+{"t": 1792505576.5071669, "kind": "stt", "file": "sw-25737-c0.wav", "bytes": 76844}
+{"t": 1792505578.613548, "kind": "stt", "file": "sw-25737-c1.wav", "bytes": 25644}
+{"t": 1792505580.658735, "kind": "stt", "file": "sw-25737-c2.wav", "bytes": 33324}
+{"t": 1792505582.804747, "kind": "stt", "file": "sw-25737-c3.wav", "bytes": 71724}
+{"t": 1792505584.9363449, "kind": "stt", "file": "sw-25737-c4.wav", "bytes": 69804}
+{"t": 1792505587.1827, "kind": "stt", "file": "sw-104253.wav", "bytes": 502442}
+{"t": 1792505589.622792, "kind": "stt", "file": "sw-104253-c0.wav", "bytes": 48684}
+{"t": 1792505591.7504082, "kind": "stt", "file": "sw-104253-c1.wav", "bytes": 36524}
+{"t": 1792505593.8518496, "kind": "stt", "file": "sw-104253-c2.wav", "bytes": 49964}
+{"t": 1792505595.9566612, "kind": "stt", "file": "sw-104253-c3.wav", "bytes": 92204}
+{"t": 1792505598.007309, "kind": "stt", "file": "sw-104253-c4.wav", "bytes": 66604}
+{"t": 1792505600.1306524, "kind": "stt", "file": "sw-104253-c5.wav", "bytes": 61484}
+{"t": 1792505602.1465476, "kind": "stt", "file": "sw-104253-c6.wav", "bytes": 56364}
+{"t": 1792505604.2427573, "kind": "stt", "file": "sw-11761.wav", "bytes": 528044}
+{"t": 1792505606.6625865, "kind": "stt", "file": "sw-11761-c0.wav", "bytes": 58924}
+{"t": 1792505608.6497803, "kind": "stt", "file": "sw-11761-c1.wav", "bytes": 60844}
+{"t": 1792505610.7873235, "kind": "stt", "file": "sw-11761-c2.wav", "bytes": 78124}
+{"t": 1792505612.7931063, "kind": "stt", "file": "sw-11761-c3.wav", "bytes": 61484}
+{"t": 1792505614.7895708, "kind": "stt", "file": "sw-11761-c4.wav", "bytes": 76844}
+{"t": 1792505616.894965, "kind": "stt", "file": "sw-11761-c5.wav", "bytes": 42284}
+{"t": 1792505619.0210493, "kind": "stt", "file": "sw-11761-c6.wav", "bytes": 44844}
+{"t": 1792505621.0614922, "kind": "stt", "file": "sw-557049.wav", "bytes": 516666}
+{"t": 1792505623.531897, "kind": "stt", "file": "sw-557049-c0.wav", "bytes": 58284}
+{"t": 1792505625.533674, "kind": "stt", "file": "sw-557049-c1.wav", "bytes": 44204}
+{"t": 1792505627.6416714, "kind": "stt", "file": "sw-557049-c2.wav", "bytes": 71084}
+{"t": 1792505629.687495, "kind": "stt", "file": "sw-557049-c3.wav", "bytes": 65324}
+{"t": 1792505631.7019, "kind": "stt", "file": "sw-557049-c4.wav", "bytes": 62124}
+{"t": 1792505633.730775, "kind": "stt", "file": "sw-557049-c5.wav", "bytes": 58924}
+{"t": 1792505635.7311978, "kind": "stt", "file": "sw-557049-c6.wav", "bytes": 42284}
+{"t": 1792505637.8327165, "kind": "stt", "file": "sw-36.wav", "bytes": 349378}
+{"t": 1792505640.1054523, "kind": "stt", "file": "sw-36-c0.wav", "bytes": 73644}
+{"t": 1792505642.11586, "kind": "stt", "file": "sw-36-c1.wav", "bytes": 65964}
+{"t": 1792505644.2374854, "kind": "stt", "file": "sw-36-c2.wav", "bytes": 27564}
+{"t": 1792505646.1749923, "kind": "stt", "file": "sw-36-c3.wav", "bytes": 44204}
+{"t": 1792505648.1619778, "kind": "stt", "file": "sw-36-c4.wav", "bytes": 48684}
+{"t": 1792505650.2797208, "kind": "stt", "file": "sw-36-c5.wav", "bytes": 14764}
+{"t": 1792505652.2401412, "kind": "stt", "file": "sw-261.wav", "bytes": 218712}
+{"t": 1792505654.5183835, "kind": "stt", "file": "sw-261-c0.wav", "bytes": 55724}
+{"t": 1792505656.5267541, "kind": "stt", "file": "sw-261-c1.wav", "bytes": 72364}
+{"t": 1792505658.5431838, "kind": "stt", "file": "sw-261-c2.wav", "bytes": 62764}
+{"t": 1792505660.5591772, "kind": "stt", "file": "sw-30140.wav", "bytes": 301022}
+{"t": 1792505754.142022, "kind": "stt", "file": "sw-30140.wav", "bytes": 301022}
+{"t": 1792505827.3094988, "kind": "stt", "file": "sw-214545.wav", "bytes": 286798}
+{"t": 1792505829.5679972, "kind": "stt", "file": "sw-214545-c0.wav", "bytes": 42284}
+{"t": 1792505831.6873865, "kind": "stt", "file": "sw-214545-c1.wav", "bytes": 53164}
+{"t": 1792505833.80174, "kind": "stt", "file": "sw-214545-c2.wav", "bytes": 78124}
+{"t": 1792505835.8055987, "kind": "stt", "file": "sw-214545-c3.wav", "bytes": 49324}
+{"t": 1792505837.966719, "kind": "stt", "file": "sw-162.wav", "bytes": 181734}
+{"t": 1792505840.063743, "kind": "stt", "file": "sw-162-c0.wav", "bytes": 63404}
+{"t": 1792505842.074348, "kind": "stt", "file": "sw-162-c1.wav", "bytes": 41004}
+{"t": 1792505844.2084439, "kind": "stt", "file": "sw-162-c2.wav", "bytes": 42924}
+{"t": 1792505846.3674972, "kind": "stt", "file": "sw-18764.wav", "bytes": 278266}
+{"t": 1792505848.578047, "kind": "stt", "file": "sw-18764-c0.wav", "bytes": 42284}
+{"t": 1792505850.5911484, "kind": "stt", "file": "sw-18764-c1.wav", "bytes": 65324}
+{"t": 1792505852.6082573, "kind": "stt", "file": "sw-18764-c2.wav", "bytes": 81324}
+{"t": 1792505854.6440287, "kind": "stt", "file": "sw-18764-c3.wav", "bytes": 40364}
+{"t": 1792505856.634984, "kind": "stt", "file": "sw-61668.wav", "bytes": 397554}
+{"t": 1792505858.858758, "kind": "stt", "file": "sw-61668-c0.wav", "bytes": 62764}
+{"t": 1792505860.8881376, "kind": "stt", "file": "sw-61668-c1.wav", "bytes": 67244}
+{"t": 1792505862.8696382, "kind": "stt", "file": "sw-61668-c2.wav", "bytes": 60204}
+{"t": 1792505864.883358, "kind": "stt", "file": "sw-61668-c3.wav", "bytes": 87724}
+{"t": 1792505866.9479158, "kind": "stt", "file": "sw-61668-c4.wav", "bytes": 44204}
+{"t": 1792505868.969767, "kind": "stt", "file": "sw-999.wav", "bytes": 431512}
+{"t": 1792505871.2244163, "kind": "stt", "file": "sw-999-c0.wav", "bytes": 44204}
+{"t": 1792505873.2198784, "kind": "stt", "file": "sw-999-c1.wav", "bytes": 79404}
+{"t": 1792505875.2402961, "kind": "stt", "file": "sw-999-c2.wav", "bytes": 62124}
+{"t": 1792505877.3818028, "kind": "stt", "file": "sw-999-c3.wav", "bytes": 58924}
+{"t": 1792505879.4098449, "kind": "stt", "file": "sw-999-c4.wav", "bytes": 68524}
+{"t": 1792505881.553444, "kind": "stt", "file": "sw-999-c5.wav", "bytes": 49964}
+{"t": 1792505883.6930485, "kind": "stt", "file": "sw-45045.wav", "bytes": 553644}
+{"t": 1792505885.9656618, "kind": "stt", "file": "sw-45045-c0.wav", "bytes": 48684}
+{"t": 1792505887.997319, "kind": "stt", "file": "sw-45045-c1.wav", "bytes": 80044}
+{"t": 1792505890.044547, "kind": "stt", "file": "sw-45045-c2.wav", "bytes": 63404}
+{"t": 1792505892.0415528, "kind": "stt", "file": "sw-45045-c3.wav", "bytes": 51244}
+{"t": 1792505894.1530435, "kind": "stt", "file": "sw-45045-c4.wav", "bytes": 24364}
+{"t": 1792505896.081112, "kind": "stt", "file": "sw-45045-c5.wav", "bytes": 66604}
+{"t": 1792505898.1052048, "kind": "stt", "file": "sw-45045-c6.wav", "bytes": 56364}
+{"t": 1792505900.1240268, "kind": "stt", "file": "sw-45045-c7.wav", "bytes": 68524}
+{"t": 1792505902.514192, "kind": "stt", "file": "sw-13715.wav", "bytes": 289644}
+{"t": 1792505904.713791, "kind": "stt", "file": "sw-13715-c0.wav", "bytes": 24364}
+{"t": 1792505906.6691225, "kind": "stt", "file": "sw-13715-c1.wav", "bytes": 23724}
+{"t": 1792505908.6452653, "kind": "stt", "file": "sw-13715-c2.wav", "bytes": 19884}
+{"t": 1792505910.6222868, "kind": "stt", "file": "sw-13715-c3.wav", "bytes": 46764}
+{"t": 1792505912.6121914, "kind": "stt", "file": "sw-13715-c4.wav", "bytes": 71724}
+{"t": 1792505914.7605407, "kind": "stt", "file": "sw-13715-c5.wav", "bytes": 37804}
+{"t": 1792505916.7708678, "kind": "stt", "file": "sw-29539.wav", "bytes": 482710}
+{"t": 1792505919.012415, "kind": "stt", "file": "sw-29539-c0.wav", "bytes": 87724}
+{"t": 1792505921.0426958, "kind": "stt", "file": "sw-29539-c1.wav", "bytes": 21164}
+{"t": 1792505923.0068173, "kind": "stt", "file": "sw-29539-c2.wav", "bytes": 44204}
+{"t": 1792505925.0224438, "kind": "stt", "file": "sw-29539-c3.wav", "bytes": 57004}
+{"t": 1792505927.0523465, "kind": "stt", "file": "sw-29539-c4.wav", "bytes": 74284}
+{"t": 1792505929.177166, "kind": "stt", "file": "sw-29539-c5.wav", "bytes": 51884}
+{"t": 1792505931.1786518, "kind": "stt", "file": "sw-29539-c6.wav", "bytes": 64684}
+{"t": 1792505933.2586122, "kind": "stt", "file": "sw-591721.wav", "bytes": 317912}
+{"t": 1792505935.5993938, "kind": "stt", "file": "sw-591721-c0.wav", "bytes": 57004}
+{"t": 1792505937.7864628, "kind": "stt", "file": "sw-591721-c1.wav", "bytes": 44844}
+{"t": 1792505939.9268873, "kind": "stt", "file": "sw-591721-c2.wav", "bytes": 51244}
+{"t": 1792505941.9844356, "kind": "stt", "file": "sw-591721-c3.wav", "bytes": 53804}
+{"t": 1792505944.1053255, "kind": "stt", "file": "sw-591721-c4.wav", "bytes": 21164}
+{"t": 1792505946.2169735, "kind": "stt", "file": "sw-38422.wav", "bytes": 352046}
+{"t": 1792505948.4951904, "kind": "stt", "file": "sw-38422-c0.wav", "bytes": 58284}
+{"t": 1792505950.6436126, "kind": "stt", "file": "sw-38422-c1.wav", "bytes": 40364}
+{"t": 1792505952.7778652, "kind": "stt", "file": "sw-38422-c2.wav", "bytes": 62764}
+{"t": 1792505954.7409794, "kind": "stt", "file": "sw-38422-c3.wav", "bytes": 65964}
+{"t": 1792505956.7900336, "kind": "stt", "file": "sw-38422-c4.wav", "bytes": 41644}
+{"t": 1792505958.9595442, "kind": "stt", "file": "sw-543803.wav", "bytes": 434178}
+{"t": 1792505961.343503, "kind": "stt", "file": "sw-543803-c0.wav", "bytes": 58284}
+{"t": 1792505963.458294, "kind": "stt", "file": "sw-543803-c1.wav", "bytes": 59564}
+{"t": 1792505965.5578392, "kind": "stt", "file": "sw-543803-c2.wav", "bytes": 35244}
+{"t": 1792505967.6051373, "kind": "stt", "file": "sw-543803-c3.wav", "bytes": 64684}
+{"t": 1792505969.6183934, "kind": "stt", "file": "sw-543803-c4.wav", "bytes": 56364}
+{"t": 1792505971.814987, "kind": "stt", "file": "sw-543803-c5.wav", "bytes": 44844}
+{"t": 1792505973.9575143, "kind": "stt", "file": "sw-543803-c6.wav", "bytes": 18604}
+{"t": 1792505976.0658967, "kind": "stt", "file": "sw-44632.wav", "bytes": 267066}
+{"t": 1792505978.2382429, "kind": "stt", "file": "sw-44632-c0.wav", "bytes": 64044}
+{"t": 1792505980.3596125, "kind": "stt", "file": "sw-44632-c1.wav", "bytes": 110764}
+{"t": 1792505982.5588849, "kind": "stt", "file": "sw-44632-c2.wav", "bytes": 53804}
+{"t": 1792505984.6233416, "kind": "stt", "file": "sw-96776.wav", "bytes": 496756}
+{"t": 1792505986.985167, "kind": "stt", "file": "sw-96776-c0.wav", "bytes": 46124}
+{"t": 1792505989.1403809, "kind": "stt", "file": "sw-96776-c1.wav", "bytes": 59564}
+{"t": 1792505991.1226761, "kind": "stt", "file": "sw-96776-c2.wav", "bytes": 57004}
+{"t": 1792505993.1923556, "kind": "stt", "file": "sw-96776-c3.wav", "bytes": 44204}
+{"t": 1792505995.1821847, "kind": "stt", "file": "sw-96776-c4.wav", "bytes": 38444}
+{"t": 1792505997.2727668, "kind": "stt", "file": "sw-96776-c5.wav", "bytes": 12844}
+{"t": 1792505999.2079797, "kind": "stt", "file": "sw-96776-c6.wav", "bytes": 67884}
+{"t": 1792506001.2390149, "kind": "stt", "file": "sw-96776-c7.wav", "bytes": 39724}
+{"t": 1792506003.4663877, "kind": "stt", "file": "sw-45.wav", "bytes": 295332}
+{"t": 1792506005.7858372, "kind": "stt", "file": "sw-45-c0.wav", "bytes": 72364}
+{"t": 1792506007.9398954, "kind": "stt", "file": "sw-45-c1.wav", "bytes": 47404}
+{"t": 1792506009.968283, "kind": "stt", "file": "sw-45-c2.wav", "bytes": 49964}
+{"t": 1792506011.9566622, "kind": "stt", "file": "sw-45-c3.wav", "bytes": 73004}
+{"t": 1792506014.0406547, "kind": "stt", "file": "sw-587067.wav", "bytes": 357734}
+{"t": 1792506016.1771767, "kind": "stt", "file": "sw-587067-c0.wav", "bytes": 51244}
+{"t": 1792506018.3290746, "kind": "stt", "file": "sw-587067-c1.wav", "bytes": 59564}
+{"t": 1792506020.4871523, "kind": "stt", "file": "sw-587067-c2.wav", "bytes": 55724}
+{"t": 1792506022.4861715, "kind": "stt", "file": "sw-587067-c3.wav", "bytes": 58924}
+{"t": 1792506024.731349, "kind": "stt", "file": "sw-587067-c4.wav", "bytes": 69804}
+{"t": 1792506026.7467203, "kind": "stt", "file": "sw-61460.wav", "bytes": 414444}
+{"t": 1792506029.0302248, "kind": "stt", "file": "sw-61460-c0.wav", "bytes": 48044}
+{"t": 1792506031.0717702, "kind": "stt", "file": "sw-61460-c1.wav", "bytes": 55084}
+{"t": 1792506033.0790236, "kind": "stt", "file": "sw-61460-c2.wav", "bytes": 59564}
+{"t": 1792506035.1042924, "kind": "stt", "file": "sw-61460-c3.wav", "bytes": 66604}
+{"t": 1792506037.2462752, "kind": "stt", "file": "sw-61460-c4.wav", "bytes": 69804}
+{"t": 1792506039.4279032, "kind": "stt", "file": "sw-61460-c5.wav", "bytes": 26924}
+{"t": 1792506041.4454193, "kind": "stt", "file": "sw-38483.wav", "bytes": 496932}
+{"t": 1792506115.4724343, "kind": "stt", "file": "sw-33637.wav", "bytes": 519512}
+{"t": 1792506117.770903, "kind": "stt", "file": "sw-33637-c0.wav", "bytes": 59564}
+{"t": 1792506119.8161733, "kind": "stt", "file": "sw-33637-c1.wav", "bytes": 53164}
+{"t": 1792506121.8488014, "kind": "stt", "file": "sw-33637-c2.wav", "bytes": 61484}
+{"t": 1792506123.8885589, "kind": "stt", "file": "sw-33637-c3.wav", "bytes": 89644}
+{"t": 1792506125.9467573, "kind": "stt", "file": "sw-33637-c4.wav", "bytes": 51244}
+{"t": 1792506127.9614289, "kind": "stt", "file": "sw-33637-c5.wav", "bytes": 39724}
+{"t": 1792506129.9643805, "kind": "stt", "file": "sw-33637-c6.wav", "bytes": 28204}
+{"t": 1792506131.9707026, "kind": "stt", "file": "sw-33637-c7.wav", "bytes": 26284}
+{"t": 1792506133.9415548, "kind": "stt", "file": "sw-577824.wav", "bytes": 292488}
+{"t": 1792506136.1028466, "kind": "stt", "file": "sw-577824-c0.wav", "bytes": 49964}
+{"t": 1792506138.1914456, "kind": "stt", "file": "sw-577824-c1.wav", "bytes": 25004}
+{"t": 1792506140.1378696, "kind": "stt", "file": "sw-577824-c2.wav", "bytes": 28844}
+{"t": 1792506142.2603333, "kind": "stt", "file": "sw-577824-c3.wav", "bytes": 66604}
+{"t": 1792506144.4166641, "kind": "stt", "file": "sw-577824-c4.wav", "bytes": 50604}
+{"t": 1792506146.5297976, "kind": "stt", "file": "sw-577837.wav", "bytes": 425820}
+{"t": 1792506148.986326, "kind": "stt", "file": "sw-577837-c0.wav", "bytes": 57004}
+{"t": 1792506151.0325797, "kind": "stt", "file": "sw-577837-c1.wav", "bytes": 71084}
+{"t": 1792506153.067414, "kind": "stt", "file": "sw-577837-c2.wav", "bytes": 61484}
+{"t": 1792506155.0439289, "kind": "stt", "file": "sw-577837-c3.wav", "bytes": 69804}
+{"t": 1792506157.2474148, "kind": "stt", "file": "sw-577837-c4.wav", "bytes": 57004}
+{"t": 1792506159.396252, "kind": "stt", "file": "sw-577837-c5.wav", "bytes": 20524}
+{"t": 1792506161.4637496, "kind": "stt", "file": "sw-32407.wav", "bytes": 465644}
+{"t": 1792506163.7726142, "kind": "stt", "file": "sw-32407-c0.wav", "bytes": 76844}
+{"t": 1792506165.795483, "kind": "stt", "file": "sw-32407-c1.wav", "bytes": 76844}
+{"t": 1792506167.9664626, "kind": "stt", "file": "sw-32407-c2.wav", "bytes": 64044}
+{"t": 1792506170.0819528, "kind": "stt", "file": "sw-32407-c3.wav", "bytes": 49964}
+{"t": 1792506172.0727406, "kind": "stt", "file": "sw-32407-c4.wav", "bytes": 67244}
+{"t": 1792506174.094105, "kind": "stt", "file": "sw-32407-c5.wav", "bytes": 42924}
+{"t": 1792506176.1345117, "kind": "stt", "file": "sw-187453.wav", "bytes": 230088}
+{"t": 1792506178.4208798, "kind": "stt", "file": "sw-187453-c0.wav", "bytes": 79404}
+{"t": 1792506180.5021434, "kind": "stt", "file": "sw-187453-c1.wav", "bytes": 42924}
+{"t": 1792506182.495, "kind": "stt", "file": "sw-187453-c2.wav", "bytes": 73004}
+{"t": 1792506261.5964022, "kind": "stt", "file": "sw-577825.wav", "bytes": 195956}
+{"t": 1792506263.8469388, "kind": "stt", "file": "sw-577825-c0.wav", "bytes": 73644}
+{"t": 1792506266.0099444, "kind": "stt", "file": "sw-577825-c1.wav", "bytes": 46124}
+{"t": 1792506268.0930426, "kind": "stt", "file": "sw-577825-c2.wav", "bytes": 44844}
+{"t": 1792510342.5056417, "kind": "stt", "file": "sw-204765.wav", "bytes": 233288}
+{"t": 1792510343.7970538, "kind": "stt", "file": "sw-204765.wav", "bytes": 116666}
+{"t": 1792510344.3251119, "kind": "stt", "file": "sw-25737.wav", "bytes": 270266}
+{"t": 1792510345.2143142, "kind": "stt", "file": "sw-25737.wav", "bytes": 135156}
+{"t": 1792510345.9378366, "kind": "stt", "file": "sw-591721.wav", "bytes": 216222}
+{"t": 1792510346.7539895, "kind": "stt", "file": "sw-591721.wav", "bytes": 108134}
+{"t": 1792510356.6687453, "kind": "stt", "file": "sw-204765.wav", "bytes": 233288}
+{"t": 1792510357.5912504, "kind": "stt", "file": "sw-204765.wav", "bytes": 116666}
+{"t": 1792510358.2388968, "kind": "stt", "file": "sw-25737.wav", "bytes": 270266}
+{"t": 1792510359.0462945, "kind": "stt", "file": "sw-25737.wav", "bytes": 135156}
+{"t": 1792510359.844191, "kind": "stt", "file": "sw-591721.wav", "bytes": 216222}
+{"t": 1792510360.6864328, "kind": "stt", "file": "sw-591721.wav", "bytes": 108134}
+{"t": 1792510524.1629171, "kind": "stt", "file": "sw-204765.wav", "bytes": 116666}
+{"t": 1792510526.406033, "kind": "stt", "file": "sw-958.wav", "bytes": 59778}
+{"t": 1792510528.4547765, "kind": "stt", "file": "sw-342.wav", "bytes": 98178}
+{"t": 1792510530.4639535, "kind": "stt", "file": "sw-812.wav", "bytes": 106712}
+{"t": 1792510532.5592484, "kind": "stt", "file": "sw-241493.wav", "bytes": 105288}
+{"t": 1792510534.6395538, "kind": "stt", "file": "sw-1277.wav", "bytes": 83956}
+{"t": 1792510536.6328895, "kind": "stt", "file": "sw-13328.wav", "bytes": 109556}
+{"t": 1792510538.7794085, "kind": "stt", "file": "sw-164.wav", "bytes": 101022}
+{"t": 1792510540.8324594, "kind": "stt", "file": "sw-50302.wav", "bytes": 105288}
+{"t": 1792510542.8560443, "kind": "stt", "file": "sw-21228.wav", "bytes": 115244}
+{"t": 1792510544.9661386, "kind": "stt", "file": "sw-30025.wav", "bytes": 106712}
+{"t": 1792510547.050047, "kind": "stt", "file": "sw-10335.wav", "bytes": 118088}
+{"t": 1792510549.171939, "kind": "stt", "file": "sw-15507.wav", "bytes": 64044}
+{"t": 1792510551.2041044, "kind": "stt", "file": "sw-43535.wav", "bytes": 132312}
+{"t": 1792510553.3228877, "kind": "stt", "file": "sw-15506.wav", "bytes": 75422}
+{"t": 1792510555.34011, "kind": "stt", "file": "sw-13701.wav", "bytes": 119512}
+{"t": 1792510557.4143758, "kind": "stt", "file": "sw-62764.wav", "bytes": 82534}
+{"t": 1792510559.4972103, "kind": "stt", "file": "sw-1037.wav", "bytes": 139422}
+{"t": 1792510561.6429467, "kind": "stt", "file": "sw-15518.wav", "bytes": 49822}
+{"t": 1792510563.7436466, "kind": "stt", "file": "sw-695.wav", "bytes": 61200}
+{"t": 1792510565.7947288, "kind": "stt", "file": "sw-45934.wav", "bytes": 82534}
+{"t": 1792510567.8546543, "kind": "stt", "file": "sw-170.wav", "bytes": 109556}
+{"t": 1792510570.3473244, "kind": "stt", "file": "sw-203930.wav", "bytes": 61200}
+{"t": 1792510572.368885, "kind": "stt", "file": "sw-16139.wav", "bytes": 120934}
+{"t": 1792510574.4741757, "kind": "stt", "file": "sw-55764.wav", "bytes": 98178}
+{"t": 1792510576.4996564, "kind": "stt", "file": "sw-8.wav", "bytes": 44134}
+{"t": 1792510578.5163229, "kind": "stt", "file": "sw-410.wav", "bytes": 75422}
+{"t": 1792510580.5627217, "kind": "stt", "file": "sw-99.wav", "bytes": 88222}
+{"t": 1792510582.5883906, "kind": "stt", "file": "sw-444.wav", "bytes": 68312}
+{"t": 1792510584.3878934, "kind": "tts", "chars": 42, "voice": "Shivani", "language": "hi-IN"}
+{"t": 1792510584.6236603, "kind": "stt", "file": "sw-13324.wav", "bytes": 112400}
+{"t": 1792510587.0390375, "kind": "tts", "chars": 87, "voice": "Lakshmi", "language": "hi-IN"}
+{"t": 1792510590.0560331, "kind": "tts", "chars": 85, "voice": "Kalpana", "language": "hi-IN"}
+{"t": 1792510593.8639657, "kind": "tts", "chars": 74, "voice": "Chetana", "language": "hi-IN"}
+{"t": 1792510597.1051862, "kind": "tts", "chars": 107, "voice": "Vasudha", "language": "hi-IN"}
+{"t": 1792510600.4575396, "kind": "tts", "chars": 44, "voice": "Riyaa", "language": "hi-IN"}
+{"t": 1792510601.9349067, "kind": "stt", "file": "sw-25737.wav", "bytes": 135156}
+{"t": 1792510603.1296206, "kind": "tts", "chars": 77, "voice": "Tarika", "language": "hi-IN"}
+{"t": 1792510604.1719027, "kind": "stt", "file": "sw-104253.wav", "bytes": 190622}
+{"t": 1792510606.1196136, "kind": "tts", "chars": 73, "voice": "Avinash", "language": "hi-IN"}
+{"t": 1792510606.4660892, "kind": "stt", "file": "sw-371.wav", "bytes": 193466}
+{"t": 1792510608.7588875, "kind": "tts", "chars": 92, "voice": "Shubham", "language": "hi-IN"}
+{"t": 1792510612.290139, "kind": "tts", "chars": 93, "voice": "Prakash", "language": "hi-IN"}
+{"t": 1792510615.4414818, "kind": "tts", "chars": 102, "voice": "Devansh", "language": "kn-IN"}
+{"t": 1792510615.993855, "kind": "stt", "file": "sw-11761.wav", "bytes": 199156}
+{"t": 1792510618.9823549, "kind": "tts", "chars": 106, "voice": "Yashraj", "language": "kn-IN"}
+{"t": 1792510620.73583, "kind": "stt", "file": "sw-36.wav", "bytes": 126622}
+{"t": 1792510622.1074839, "kind": "tts", "chars": 113, "voice": "Harshad", "language": "kn-IN"}
+{"t": 1792510622.9247167, "kind": "stt", "file": "sw-557049.wav", "bytes": 174978}
+{"t": 1792510625.444298, "kind": "tts", "chars": 103, "voice": "Shivani", "language": "kn-IN"}
+{"t": 1792510629.0140953, "kind": "tts", "chars": 153, "voice": "Lakshmi", "language": "kn-IN"}
+{"t": 1792510632.9231644, "kind": "tts", "chars": 75, "voice": "Kalpana", "language": "kn-IN"}
+{"t": 1792510636.8272717, "kind": "tts", "chars": 148, "voice": "Chetana", "language": "kn-IN"}
+{"t": 1792510641.522066, "kind": "tts", "chars": 159, "voice": "Vasudha", "language": "kn-IN"}
+{"t": 1792510645.534464, "kind": "tts", "chars": 106, "voice": "Riyaa", "language": "kn-IN"}
+{"t": 1792510648.844261, "kind": "tts", "chars": 61, "voice": "Tarika", "language": "kn-IN"}
+{"t": 1792510651.5893052, "kind": "tts", "chars": 99, "voice": "Avinash", "language": "ta-IN"}
+{"t": 1792510655.1101708, "kind": "tts", "chars": 169, "voice": "Shubham", "language": "ta-IN"}
+{"t": 1792510657.04152, "kind": "stt", "file": "sw-261.wav", "bytes": 98178}
+{"t": 1792510659.238078, "kind": "stt", "file": "sw-30140.wav", "bytes": 108134}
+{"t": 1792510661.941541, "kind": "tts", "chars": 189, "voice": "Prakash", "language": "ta-IN"}
+{"t": 1792510663.7584593, "kind": "stt", "file": "sw-336.wav", "bytes": 72578}
+{"t": 1792510665.6246495, "kind": "tts", "chars": 205, "voice": "Devansh", "language": "ta-IN"}
+{"t": 1792510665.8234427, "kind": "stt", "file": "sw-61668.wav", "bytes": 143688}
+{"t": 1792510669.5261097, "kind": "tts", "chars": 153, "voice": "Yashraj", "language": "ta-IN"}
+{"t": 1792510670.284527, "kind": "stt", "file": "sw-214545.wav", "bytes": 96756}
+{"t": 1792510673.024331, "kind": "tts", "chars": 129, "voice": "Harshad", "language": "ta-IN"}
+{"t": 1792510674.756285, "kind": "stt", "file": "sw-999.wav", "bytes": 163600}
+{"t": 1792510676.721821, "kind": "tts", "chars": 99, "voice": "Shivani", "language": "ta-IN"}
+{"t": 1792510676.9116228, "kind": "stt", "file": "sw-162.wav", "bytes": 69734}
+{"t": 1792510679.7762678, "kind": "tts", "chars": 89, "voice": "Lakshmi", "language": "ta-IN"}
+{"t": 1792510681.3555133, "kind": "stt", "file": "sw-45045.wav", "bytes": 211956}
+{"t": 1792510683.0427325, "kind": "tts", "chars": 187, "voice": "Kalpana", "language": "ta-IN"}
+{"t": 1792510683.5521615, "kind": "stt", "file": "sw-15066.wav", "bytes": 150800}
+{"t": 1792510687.7939546, "kind": "tts", "chars": 122, "voice": "Chetana", "language": "ta-IN"}
+{"t": 1792510688.1259003, "kind": "stt", "file": "sw-29539.wav", "bytes": 193466}
+{"t": 1792510692.7112129, "kind": "stt", "file": "sw-18764.wav", "bytes": 110978}
+{"t": 1792510694.7891567, "kind": "stt", "file": "sw-13652.wav", "bytes": 155066}
+{"t": 1792510697.171131, "kind": "stt", "file": "sw-13715.wav", "bytes": 89644}
+{"t": 1792510699.217059, "kind": "stt", "file": "sw-124.wav", "bytes": 204844}
+{"t": 1792510701.3607132, "kind": "stt", "file": "sw-223544.wav", "bytes": 83956}
+{"t": 1792510703.4238143, "kind": "stt", "file": "sw-96775.wav", "bytes": 174978}
+{"t": 1792510705.5693562, "kind": "stt", "file": "sw-97697.wav", "bytes": 193466}
+{"t": 1792510707.7364333, "kind": "stt", "file": "sw-7770.wav", "bytes": 136578}
+{"t": 1792510709.860475, "kind": "stt", "file": "sw-8740.wav", "bytes": 72578}
+{"t": 1792510711.9241388, "kind": "stt", "file": "sw-36583.wav", "bytes": 207688}
+{"t": 1792510714.1043768, "kind": "stt", "file": "sw-50303.wav", "bytes": 155066}
+{"t": 1792510716.2291446, "kind": "stt", "file": "sw-1004.wav", "bytes": 172134}
+{"t": 1792510718.36864, "kind": "stt", "file": "sw-220008.wav", "bytes": 96756}
+{"t": 1792510720.4298537, "kind": "stt", "file": "sw-112440.wav", "bytes": 140844}
+{"t": 1792510722.5299537, "kind": "stt", "file": "sw-591721.wav", "bytes": 108134}
+{"t": 1792510724.8142297, "kind": "stt", "file": "sw-38422.wav", "bytes": 119512}
+{"t": 1792510727.038156, "kind": "stt", "file": "sw-636889.wav", "bytes": 96756}
+{"t": 1792510729.1137314, "kind": "stt", "file": "sw-96776.wav", "bytes": 183512}
+{"t": 1792510731.245548, "kind": "stt", "file": "sw-543803.wav", "bytes": 160756}
+{"t": 1792510733.4855814, "kind": "stt", "file": "sw-45.wav", "bytes": 118088}
+{"t": 1792510735.6915612, "kind": "stt", "file": "sw-44632.wav", "bytes": 101022}
+{"t": 1792510737.7775497, "kind": "stt", "file": "sw-38483.wav", "bytes": 194888}
+{"t": 1792510740.079393, "kind": "stt", "file": "sw-577818.wav", "bytes": 165022}
+{"t": 1792510742.1633863, "kind": "stt", "file": "sw-33637.wav", "bytes": 190622}
+{"t": 1792510744.5886393, "kind": "stt", "file": "sw-587067.wav", "bytes": 136578}
+{"t": 1792510746.7939887, "kind": "stt", "file": "sw-32407.wav", "bytes": 170712}
+{"t": 1792510748.932557, "kind": "stt", "file": "sw-61460.wav", "bytes": 155066}
+{"t": 1792510751.1463866, "kind": "stt", "file": "sw-91601.wav", "bytes": 152222}
+{"t": 1792510753.3279433, "kind": "stt", "file": "sw-552964.wav", "bytes": 176400}
+{"t": 1792510755.4730656, "kind": "stt", "file": "sw-1041.wav", "bytes": 130888}
+{"t": 1792510757.6034446, "kind": "stt", "file": "sw-577824.wav", "bytes": 109556}
+{"t": 1792510759.795946, "kind": "stt", "file": "sw-37201.wav", "bytes": 130888}
+{"t": 1792510762.032715, "kind": "stt", "file": "sw-577837.wav", "bytes": 149378}
+{"t": 1792510764.1274087, "kind": "stt", "file": "sw-48488.wav", "bytes": 194888}
+{"t": 1792510766.291272, "kind": "stt", "file": "sw-63562.wav", "bytes": 135156}
+{"t": 1792510768.4317245, "kind": "stt", "file": "sw-304.wav", "bytes": 194888}
+{"t": 1792510770.6273696, "kind": "stt", "file": "sw-187453.wav", "bytes": 91066}
+{"t": 1792510772.6979485, "kind": "stt", "file": "sw-61669.wav", "bytes": 128044}
+{"t": 1792510774.7928536, "kind": "stt", "file": "sw-577825.wav", "bytes": 82534}
+{"t": 1792510776.8707347, "kind": "stt", "file": "sw-115494.wav", "bytes": 254622}
+{"t": 1792510779.1475387, "kind": "stt", "file": "sw-50304.wav", "bytes": 172134}
+{"t": 1792510781.307754, "kind": "stt", "file": "sw-59999.wav", "bytes": 167866}
+{"t": 1792510783.4682245, "kind": "stt", "file": "sw-50260.wav", "bytes": 145112}
+{"t": 1792510785.5876653, "kind": "stt", "file": "sw-14779.wav", "bytes": 108134}
+{"t": 1792510788.6385932, "kind": "stt", "file": "sw-204765.wav", "bytes": 233288}
+{"t": 1792510790.9446518, "kind": "stt", "file": "sw-958.wav", "bytes": 119510}
+{"t": 1792510793.0266352, "kind": "stt", "file": "sw-342.wav", "bytes": 196310}
+{"t": 1792510795.2715979, "kind": "stt", "file": "sw-812.wav", "bytes": 213378}
+{"t": 1792510797.5789514, "kind": "stt", "file": "sw-241493.wav", "bytes": 210532}
+{"t": 1792510799.741306, "kind": "stt", "file": "sw-1277.wav", "bytes": 167866}
+{"t": 1792510801.763363, "kind": "stt", "file": "sw-13328.wav", "bytes": 219066}
+{"t": 1792510803.9454844, "kind": "stt", "file": "sw-164.wav", "bytes": 202000}
+{"t": 1792510806.0635104, "kind": "stt", "file": "sw-50302.wav", "bytes": 210532}
+{"t": 1792510808.2093036, "kind": "stt", "file": "sw-21228.wav", "bytes": 230444}
+{"t": 1792510810.377214, "kind": "stt", "file": "sw-30025.wav", "bytes": 213378}
+{"t": 1792510812.459581, "kind": "stt", "file": "sw-10335.wav", "bytes": 236132}
+{"t": 1792510814.6003354, "kind": "stt", "file": "sw-15507.wav", "bytes": 128044}
+{"t": 1792510816.7133632, "kind": "stt", "file": "sw-43535.wav", "bytes": 264578}
+{"t": 1792510818.9002597, "kind": "stt", "file": "sw-15506.wav", "bytes": 150800}
+{"t": 1792510820.9021263, "kind": "stt", "file": "sw-13701.wav", "bytes": 238978}
+{"t": 1792510823.1022458, "kind": "stt", "file": "sw-62764.wav", "bytes": 165022}
+{"t": 1792510825.205083, "kind": "stt", "file": "sw-1037.wav", "bytes": 278800}
+{"t": 1792510827.340202, "kind": "stt", "file": "sw-15518.wav", "bytes": 99600}
+{"t": 1792510829.3253021, "kind": "stt", "file": "sw-695.wav", "bytes": 122356}
+{"t": 1792510831.3817194, "kind": "stt", "file": "sw-45934.wav", "bytes": 165022}
+{"t": 1792510833.4881423, "kind": "stt", "file": "sw-170.wav", "bytes": 219066}
+{"t": 1792510835.610146, "kind": "stt", "file": "sw-203930.wav", "bytes": 122356}
+{"t": 1792510837.581453, "kind": "stt", "file": "sw-16139.wav", "bytes": 241822}
+{"t": 1792510839.8018968, "kind": "stt", "file": "sw-55764.wav", "bytes": 196310}
+{"t": 1792510841.9360468, "kind": "stt", "file": "sw-8.wav", "bytes": 88222}
+{"t": 1792510843.951069, "kind": "stt", "file": "sw-410.wav", "bytes": 150800}
+{"t": 1792510846.0440342, "kind": "stt", "file": "sw-99.wav", "bytes": 176400}
+{"t": 1792510848.1193707, "kind": "stt", "file": "sw-444.wav", "bytes": 136578}
+{"t": 1792510850.1299512, "kind": "stt", "file": "sw-13324.wav", "bytes": 224756}
+{"t": 1792510852.2717686, "kind": "stt", "file": "sw-25737.wav", "bytes": 270266}
+{"t": 1792510854.6363397, "kind": "stt", "file": "sw-104253.wav", "bytes": 381200}
+{"t": 1792510856.8117168, "kind": "stt", "file": "sw-371.wav", "bytes": 386888}
+{"t": 1792510859.091316, "kind": "stt", "file": "sw-11761.wav", "bytes": 398266}
+{"t": 1792510861.4502192, "kind": "stt", "file": "sw-36.wav", "bytes": 253200}
+{"t": 1792510863.6444666, "kind": "stt", "file": "sw-557049.wav", "bytes": 349910}
+{"t": 1792510865.9435508, "kind": "stt", "file": "sw-261.wav", "bytes": 196310}
+{"t": 1792510868.1113927, "kind": "stt", "file": "sw-30140.wav", "bytes": 216222}
+{"t": 1792510870.2537467, "kind": "stt", "file": "sw-336.wav", "bytes": 145110}
+{"t": 1792510872.3483965, "kind": "stt", "file": "sw-61668.wav", "bytes": 287332}
+{"t": 1792510874.6458051, "kind": "stt", "file": "sw-214545.wav", "bytes": 193466}
+{"t": 1792510876.8966568, "kind": "stt", "file": "sw-999.wav", "bytes": 327156}
+{"t": 1792510879.1617732, "kind": "stt", "file": "sw-162.wav", "bytes": 139422}
+{"t": 1792510881.3283148, "kind": "stt", "file": "sw-45045.wav", "bytes": 423866}
+{"t": 1792510883.628744, "kind": "stt", "file": "sw-15066.wav", "bytes": 301556}
+{"t": 1792510885.8935046, "kind": "stt", "file": "sw-29539.wav", "bytes": 386888}
+{"t": 1792510888.2259207, "kind": "stt", "file": "sw-18764.wav", "bytes": 221910}
+{"t": 1792510890.4322865, "kind": "stt", "file": "sw-13652.wav", "bytes": 310088}
+{"t": 1792510892.6169124, "kind": "stt", "file": "sw-13715.wav", "bytes": 179244}
+{"t": 1792510894.6783133, "kind": "stt", "file": "sw-124.wav", "bytes": 409644}
+{"t": 1792510896.9585738, "kind": "stt", "file": "sw-223544.wav", "bytes": 167866}
+{"t": 1792510899.1577938, "kind": "stt", "file": "sw-96775.wav", "bytes": 349910}
+{"t": 1792510901.5725236, "kind": "stt", "file": "sw-97697.wav", "bytes": 386888}
+{"t": 1792510904.0360296, "kind": "stt", "file": "sw-7770.wav", "bytes": 273110}
+{"t": 1792510906.2614272, "kind": "stt", "file": "sw-8740.wav", "bytes": 145110}
+{"t": 1792510908.360359, "kind": "stt", "file": "sw-36583.wav", "bytes": 415332}
+{"t": 1792510910.586325, "kind": "stt", "file": "sw-50303.wav", "bytes": 310088}
+{"t": 1792510912.8530421, "kind": "stt", "file": "sw-1004.wav", "bytes": 344222}
+{"t": 1792510915.1608284, "kind": "stt", "file": "sw-220008.wav", "bytes": 193466}
+{"t": 1792510917.3282397, "kind": "stt", "file": "sw-112440.wav", "bytes": 281644}
+{"t": 1792510919.4820728, "kind": "stt", "file": "sw-591721.wav", "bytes": 216222}
+{"t": 1792510921.696883, "kind": "stt", "file": "sw-38422.wav", "bytes": 238978}
+{"t": 1792510923.9358869, "kind": "stt", "file": "sw-636889.wav", "bytes": 193466}
+{"t": 1792510926.1057477, "kind": "stt", "file": "sw-96776.wav", "bytes": 366978}
+{"t": 1792510928.4201162, "kind": "stt", "file": "sw-543803.wav", "bytes": 321466}
+{"t": 1792510930.7137523, "kind": "stt", "file": "sw-45.wav", "bytes": 236132}
+{"t": 1792510933.1014698, "kind": "stt", "file": "sw-44632.wav", "bytes": 202000}
+{"t": 1792510935.2925801, "kind": "stt", "file": "sw-38483.wav", "bytes": 389732}
+{"t": 1792510937.6254637, "kind": "stt", "file": "sw-577818.wav", "bytes": 330000}
+{"t": 1792510939.9403164, "kind": "stt", "file": "sw-33637.wav", "bytes": 381200}
+{"t": 1792510942.2308881, "kind": "stt", "file": "sw-587067.wav", "bytes": 273110}
+{"t": 1792510944.4725597, "kind": "stt", "file": "sw-32407.wav", "bytes": 341378}
+{"t": 1792510946.7219238, "kind": "stt", "file": "sw-61460.wav", "bytes": 310088}
+{"t": 1792510949.0301173, "kind": "stt", "file": "sw-91601.wav", "bytes": 304400}
+{"t": 1792510951.30481, "kind": "stt", "file": "sw-552964.wav", "bytes": 352756}
+{"t": 1792510953.5845404, "kind": "stt", "file": "sw-1041.wav", "bytes": 261732}
+{"t": 1792510955.7574565, "kind": "stt", "file": "sw-577824.wav", "bytes": 219066}
+{"t": 1792510957.9469612, "kind": "stt", "file": "sw-37201.wav", "bytes": 261732}
+{"t": 1792510960.16263, "kind": "stt", "file": "sw-577837.wav", "bytes": 298710}
+{"t": 1792510962.635698, "kind": "stt", "file": "sw-48488.wav", "bytes": 389732}
+{"t": 1792510964.8883715, "kind": "stt", "file": "sw-63562.wav", "bytes": 270266}
+{"t": 1792510967.2763958, "kind": "stt", "file": "sw-304.wav", "bytes": 389732}
+{"t": 1792510969.55234, "kind": "stt", "file": "sw-187453.wav", "bytes": 182088}
+{"t": 1792510971.9072287, "kind": "stt", "file": "sw-61669.wav", "bytes": 256044}
+{"t": 1792510974.07424, "kind": "stt", "file": "sw-577825.wav", "bytes": 165022}
+{"t": 1792510976.2012005, "kind": "stt", "file": "sw-115494.wav", "bytes": 509200}
+{"t": 1792510978.6071942, "kind": "stt", "file": "sw-50304.wav", "bytes": 344222}
+{"t": 1792510980.9641156, "kind": "stt", "file": "sw-59999.wav", "bytes": 335688}
+{"t": 1792510983.128756, "kind": "stt", "file": "sw-50260.wav", "bytes": 290178}
+{"t": 1792510985.539442, "kind": "stt", "file": "sw-14779.wav", "bytes": 216222}
+{"t": 1792510988.7829812, "kind": "stt", "file": "sw-204765.wav", "bytes": 232476}
+{"t": 1792510991.1127412, "kind": "stt", "file": "sw-958.wav", "bytes": 118698}
+{"t": 1792510993.2669532, "kind": "stt", "file": "sw-342.wav", "bytes": 195498}
+{"t": 1792510995.364854, "kind": "stt", "file": "sw-812.wav", "bytes": 212566}
+{"t": 1792510997.5975342, "kind": "stt", "file": "sw-241493.wav", "bytes": 209722}
+{"t": 1792510999.750746, "kind": "stt", "file": "sw-1277.wav", "bytes": 166648}
+{"t": 1792511001.8776283, "kind": "stt", "file": "sw-13328.wav", "bytes": 217848}
+{"t": 1792511004.0393026, "kind": "stt", "file": "sw-164.wav", "bytes": 201188}
+{"t": 1792511006.1188123, "kind": "stt", "file": "sw-50302.wav", "bytes": 209722}
+{"t": 1792511008.3281584, "kind": "stt", "file": "sw-21228.wav", "bytes": 229226}
+{"t": 1792511010.7043724, "kind": "stt", "file": "sw-30025.wav", "bytes": 212566}
+{"t": 1792511012.9491525, "kind": "stt", "file": "sw-10335.wav", "bytes": 235322}
+{"t": 1792511015.3108962, "kind": "stt", "file": "sw-15507.wav", "bytes": 126826}
+{"t": 1792511017.4283917, "kind": "stt", "file": "sw-43535.wav", "bytes": 263766}
+{"t": 1792511019.5943046, "kind": "stt", "file": "sw-15506.wav", "bytes": 149988}
+{"t": 1792511021.6724873, "kind": "stt", "file": "sw-13701.wav", "bytes": 238166}
+{"t": 1792511023.881718, "kind": "stt", "file": "sw-62764.wav", "bytes": 164210}
+{"t": 1792511025.9822824, "kind": "stt", "file": "sw-1037.wav", "bytes": 277988}
+{"t": 1792511028.2163723, "kind": "stt", "file": "sw-15518.wav", "bytes": 98788}
+{"t": 1792511030.2858684, "kind": "stt", "file": "sw-695.wav", "bytes": 121138}
+{"t": 1792511032.3482096, "kind": "stt", "file": "sw-45934.wav", "bytes": 164210}
+{"t": 1792511034.4674644, "kind": "stt", "file": "sw-170.wav", "bytes": 217848}
+{"t": 1792511036.6286077, "kind": "stt", "file": "sw-203930.wav", "bytes": 121138}
+{"t": 1792511038.7263358, "kind": "stt", "file": "sw-16139.wav", "bytes": 241010}
+{"t": 1792511041.05396, "kind": "stt", "file": "sw-55764.wav", "bytes": 195498}
+{"t": 1792511043.1250415, "kind": "stt", "file": "sw-8.wav", "bytes": 87410}
+{"t": 1792511045.1557274, "kind": "stt", "file": "sw-410.wav", "bytes": 149988}
+{"t": 1792511047.49089, "kind": "stt", "file": "sw-99.wav", "bytes": 175588}
+{"t": 1792511049.6270971, "kind": "stt", "file": "sw-444.wav", "bytes": 135766}
+{"t": 1792511051.7552788, "kind": "stt", "file": "sw-13324.wav", "bytes": 223538}
+{"t": 1792511054.0410411, "kind": "stt", "file": "sw-25737.wav", "bytes": 269048}
+{"t": 1792511056.216354, "kind": "stt", "file": "sw-104253.wav", "bytes": 380388}
+{"t": 1792511058.400018, "kind": "stt", "file": "sw-371.wav", "bytes": 386076}
+{"t": 1792511060.5618057, "kind": "stt", "file": "sw-11761.wav", "bytes": 397048}
+{"t": 1792511062.7430909, "kind": "stt", "file": "sw-36.wav", "bytes": 252388}
+{"t": 1792511064.8995297, "kind": "stt", "file": "sw-557049.wav", "bytes": 349098}
+{"t": 1792511067.3312914, "kind": "stt", "file": "sw-261.wav", "bytes": 195498}
+{"t": 1792511069.4347105, "kind": "stt", "file": "sw-30140.wav", "bytes": 215410}
+{"t": 1792511071.6432476, "kind": "stt", "file": "sw-336.wav", "bytes": 144298}
+{"t": 1792511073.721875, "kind": "stt", "file": "sw-61668.wav", "bytes": 286522}
+{"t": 1792511075.8816752, "kind": "stt", "file": "sw-214545.wav", "bytes": 192248}
+{"t": 1792511078.0928588, "kind": "stt", "file": "sw-999.wav", "bytes": 325938}
+{"t": 1792511080.2808542, "kind": "stt", "file": "sw-162.wav", "bytes": 138610}
+{"t": 1792511082.4408188, "kind": "stt", "file": "sw-45045.wav", "bytes": 422648}
+{"t": 1792511084.6547883, "kind": "stt", "file": "sw-15066.wav", "bytes": 300338}
+{"t": 1792511086.8651223, "kind": "stt", "file": "sw-29539.wav", "bytes": 386076}
+{"t": 1792511089.1385448, "kind": "stt", "file": "sw-18764.wav", "bytes": 221098}
+{"t": 1792511091.2364957, "kind": "stt", "file": "sw-13652.wav", "bytes": 309276}
+{"t": 1792511093.6542726, "kind": "stt", "file": "sw-13715.wav", "bytes": 178026}
+{"t": 1792511095.8523397, "kind": "stt", "file": "sw-124.wav", "bytes": 408426}
+{"t": 1792511098.047544, "kind": "stt", "file": "sw-223544.wav", "bytes": 166648}
+{"t": 1792511100.1225698, "kind": "stt", "file": "sw-96775.wav", "bytes": 349098}
+{"t": 1792511102.4171655, "kind": "stt", "file": "sw-97697.wav", "bytes": 386076}
+{"t": 1792511104.5615761, "kind": "stt", "file": "sw-7770.wav", "bytes": 272298}
+{"t": 1792511106.679722, "kind": "stt", "file": "sw-8740.wav", "bytes": 144298}
+{"t": 1792511108.7908838, "kind": "stt", "file": "sw-36583.wav", "bytes": 414522}
+{"t": 1792511110.9837286, "kind": "stt", "file": "sw-50303.wav", "bytes": 309276}
+{"t": 1792511113.144282, "kind": "stt", "file": "sw-1004.wav", "bytes": 343410}
+{"t": 1792511115.517657, "kind": "stt", "file": "sw-220008.wav", "bytes": 192248}
+{"t": 1792511117.7791674, "kind": "stt", "file": "sw-112440.wav", "bytes": 280426}
+{"t": 1792511119.9400074, "kind": "stt", "file": "sw-591721.wav", "bytes": 215410}
+{"t": 1792511122.2258856, "kind": "stt", "file": "sw-38422.wav", "bytes": 238166}
+{"t": 1792511124.549377, "kind": "stt", "file": "sw-636889.wav", "bytes": 192248}
+{"t": 1792511126.6617942, "kind": "stt", "file": "sw-96776.wav", "bytes": 366166}
+{"t": 1792511128.8648539, "kind": "stt", "file": "sw-543803.wav", "bytes": 320248}
+{"t": 1792511131.010581, "kind": "stt", "file": "sw-45.wav", "bytes": 235322}
+{"t": 1792511133.3336222, "kind": "stt", "file": "sw-44632.wav", "bytes": 201188}
+{"t": 1792511135.3700101, "kind": "stt", "file": "sw-38483.wav", "bytes": 388922}
+{"t": 1792511137.8979676, "kind": "stt", "file": "sw-577818.wav", "bytes": 329188}
+{"t": 1792511140.266495, "kind": "stt", "file": "sw-33637.wav", "bytes": 380388}
+{"t": 1792511142.475979, "kind": "stt", "file": "sw-587067.wav", "bytes": 272298}
+{"t": 1792511144.6474175, "kind": "stt", "file": "sw-32407.wav", "bytes": 340566}
+{"t": 1792511146.915312, "kind": "stt", "file": "sw-61460.wav", "bytes": 309276}
+{"t": 1792511149.3151286, "kind": "stt", "file": "sw-91601.wav", "bytes": 303588}
+{"t": 1792511151.6622, "kind": "stt", "file": "sw-552964.wav", "bytes": 351538}
+{"t": 1792511154.1352985, "kind": "stt", "file": "sw-1041.wav", "bytes": 260922}
+{"t": 1792511156.3011765, "kind": "stt", "file": "sw-577824.wav", "bytes": 217848}
+{"t": 1792511158.5344572, "kind": "stt", "file": "sw-37201.wav", "bytes": 260922}
+{"t": 1792511160.888512, "kind": "stt", "file": "sw-577837.wav", "bytes": 297898}
+{"t": 1792511163.2762418, "kind": "stt", "file": "sw-48488.wav", "bytes": 388922}
+{"t": 1792511165.3942153, "kind": "stt", "file": "sw-63562.wav", "bytes": 269048}
+{"t": 1792511167.537701, "kind": "stt", "file": "sw-304.wav", "bytes": 388922}
+{"t": 1792511169.8139722, "kind": "stt", "file": "sw-187453.wav", "bytes": 181276}
+{"t": 1792511172.042662, "kind": "stt", "file": "sw-61669.wav", "bytes": 254826}
+{"t": 1792511174.1450624, "kind": "stt", "file": "sw-577825.wav", "bytes": 164210}
+{"t": 1792511176.2519977, "kind": "stt", "file": "sw-115494.wav", "bytes": 508388}
+{"t": 1792511178.4554436, "kind": "stt", "file": "sw-50304.wav", "bytes": 343410}
+{"t": 1792511180.695798, "kind": "stt", "file": "sw-59999.wav", "bytes": 334876}
+{"t": 1792511183.1019876, "kind": "stt", "file": "sw-50260.wav", "bytes": 289366}
+{"t": 1792511185.5403907, "kind": "stt", "file": "sw-14779.wav", "bytes": 215410}
+{"t": 1792511210.791291, "kind": "stt", "file": "sw-205058-d.wav", "bytes": 122356}
+{"t": 1792511213.023322, "kind": "stt", "file": "sw-8827-d.wav", "bytes": 221910}
+{"t": 1792511215.313281, "kind": "stt", "file": "sw-22440-d.wav", "bytes": 224756}
+{"t": 1792511217.4336944, "kind": "stt", "file": "sw-45949-d.wav", "bytes": 190622}
+{"t": 1792511219.5541773, "kind": "stt", "file": "sw-203-d.wav", "bytes": 290178}
+{"t": 1792511221.9677553, "kind": "stt", "file": "sw-101-d.wav", "bytes": 150800}
+{"t": 1792511224.0549932, "kind": "stt", "file": "sw-265-d.wav", "bytes": 230444}
+{"t": 1792511226.2110715, "kind": "stt", "file": "sw-22386-d.wav", "bytes": 150800}
+{"t": 1792511228.313871, "kind": "stt", "file": "sw-42655-d.wav", "bytes": 238978}
+{"t": 1792511230.5501096, "kind": "stt", "file": "sw-370-d.wav", "bytes": 256044}
+{"t": 1792511232.9186845, "kind": "stt", "file": "sw-15028-d.wav", "bytes": 250356}
+{"t": 1792511235.1841981, "kind": "stt", "file": "sw-22423-d.wav", "bytes": 258888}
+{"t": 1792511237.4362118, "kind": "stt", "file": "sw-32363-d.wav", "bytes": 295866}
+{"t": 1792511239.5408978, "kind": "stt", "file": "sw-205-d.wav", "bytes": 247510}
+{"t": 1792511241.6986291, "kind": "stt", "file": "sw-29055-d.wav", "bytes": 403956}
+{"t": 1792511244.1721358, "kind": "stt", "file": "sw-12209-d.wav", "bytes": 224756}
+{"t": 1792511246.4093637, "kind": "stt", "file": "sw-24874-d.wav", "bytes": 429556}
+{"t": 1792511249.3747187, "kind": "stt", "file": "sw-948-d.wav", "bytes": 460844}
+{"t": 1792511251.639348, "kind": "stt", "file": "sw-44006-d.wav", "bytes": 281644}
+{"t": 1792511254.0715811, "kind": "stt", "file": "sw-51-d.wav", "bytes": 176400}
+{"t": 1792511256.1645145, "kind": "stt", "file": "sw-22890-d.wav", "bytes": 221910}
+{"t": 1792511258.4502397, "kind": "stt", "file": "sw-269095-d.wav", "bytes": 389732}
+{"t": 1792511260.6657233, "kind": "stt", "file": "sw-675080-d.wav", "bytes": 386888}
+{"t": 1792511333.9136503, "kind": "stt", "file": "sw-10932-d.wav", "bytes": 418178}
+{"t": 1792511336.3613973, "kind": "stt", "file": "sw-35181-d.wav", "bytes": 330000}
+{"t": 1792511338.5807483, "kind": "stt", "file": "sw-132154-d.wav", "bytes": 278800}
+{"t": 1792511340.874945, "kind": "stt", "file": "sw-594404-d.wav", "bytes": 247510}
+{"t": 1792511342.9910054, "kind": "stt", "file": "sw-194437-d.wav", "bytes": 193466}
+{"t": 1792511345.114166, "kind": "stt", "file": "sw-101374-d.wav", "bytes": 432400}
+{"t": 1792511347.3773289, "kind": "stt", "file": "sw-55767-d.wav", "bytes": 264578}
