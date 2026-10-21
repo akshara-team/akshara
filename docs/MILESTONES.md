@@ -87,8 +87,11 @@ is its own branch → PR → CI green on the branch → merge. Details: [web/REA
       attempts (migration 2) scored against that part only; live web mode uses them
 - [x] Phase 4 — performance gate: `web/scripts/budget.mjs` fails CI past 120 kB JS / 160 kB
       total gzip (measured build: ~73 kB JS / ~78 kB total); runs after the build and in `run.sh check`
-- [ ] Phase 5 — deploy the demo (mock mode) for the post — **blocked: GitHub Pages needs repo
-      admin (Achindra)**; the workflow is ready apart from enabling Pages
+- [ ] Phase 5 — deploy the demo (mock mode) for the post — **ready, waits on the repo going
+      public**: `.github/workflows/pages.yml` builds mock mode under `/akshara/` with a 404.html
+      deep-link fallback (checked in a browser on a Pages-like local server). GitHub's free
+      plan serves Pages only from public repos, so the job skips while private. To go live:
+      make the repo public, Settings → Pages → Source: GitHub Actions, re-run "Pages"
 - [x] Phase 6 — accessibility pass: skip link; focus moves to each new screen's heading; `lang` on all Kannada/Tamil/Hindi text
       so screen readers use the right voice; word results spoken, not only coloured; a quiet
       recording timer; named progress bars and avatar buttons; axe on 12 routes and a theme
