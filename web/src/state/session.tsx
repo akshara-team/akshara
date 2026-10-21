@@ -21,6 +21,8 @@ type SessionValue = {
   parts: Part[];
   beginPassage: (passage: Passage, partTexts: string[]) => void;
   currentPart: number;
+  /** Identifies this run of a story, so the result is saved exactly once. */
+  sessionId: string | null;
   recordAttempt: (partIndex: number, attempt: Attempt, seconds: number | null) => void;
   goToNextPart: () => void;
   /** Held between recording and the "checking" screen. */
@@ -38,12 +40,14 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const [parts, setParts] = useState<Part[]>([]);
   const [currentPart, setCurrentPart] = useState(1);
   const [pending, setPending] = useState<Pending | null>(null);
+  const [sessionId, setSessionId] = useState<string | null>(null);
 
   const beginPassage = useCallback((p: Passage, partTexts: string[]) => {
     setPassage(p);
     setParts(partTexts.map((text, index) => ({ index, text, attempt: null, seconds: null })));
     setCurrentPart(1);
     setPending(null);
+    setSessionId(crypto.randomUUID?.() ?? String(Date.now()));
   }, []);
 
   const recordAttempt = useCallback(
@@ -66,6 +70,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     setParts([]);
     setCurrentPart(1);
     setPending(null);
+    setSessionId(null);
   }, []);
 
   const value = useMemo<SessionValue>(
@@ -78,6 +83,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       parts,
       beginPassage,
       currentPart,
+      sessionId,
       recordAttempt,
       goToNextPart,
       pending,
@@ -91,6 +97,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       parts,
       beginPassage,
       currentPart,
+      sessionId,
       recordAttempt,
       goToNextPart,
       pending,

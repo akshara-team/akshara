@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { CheckingScreen } from "./screens/child/CheckingScreen";
+import { ChildHome } from "./screens/child/ChildHome";
 import { ChooseReader } from "./screens/child/ChooseReader";
 import { FeedbackScreen } from "./screens/child/FeedbackScreen";
 import { ReadingScreen } from "./screens/child/ReadingScreen";
@@ -15,6 +16,7 @@ import { ChildProfile } from "./screens/teacher/ChildProfile";
 import { SelectStory } from "./screens/teacher/SelectStory";
 import { TeacherDashboard } from "./screens/teacher/TeacherDashboard";
 import { SessionProvider } from "./state/session";
+import { load as loadChild } from "./state/storage";
 import { useOfflineRedirect } from "./state/useOffline";
 import "./components/components.css";
 import "./screens/screens.css";
@@ -40,13 +42,24 @@ function Shell({ children }: { children: ReactNode }) {
   );
 }
 
+/**
+ * `/` is the entry only once. A child with a saved name goes straight home, so
+ * reopening the app never asks "student or teacher?" again. `/switch` is the
+ * explicit way back to role selection.
+ */
+function Entry() {
+  return loadChild().reader ? <Navigate to="/home" replace /> : <RoleSelection />;
+}
+
 export function App() {
   return (
     <SessionProvider>
       <Shell>
         <Routes>
           {/* Child flow */}
-          <Route path="/" element={<Screen><RoleSelection /></Screen>} />
+          <Route path="/" element={<Screen><Entry /></Screen>} />
+          <Route path="/switch" element={<Screen><RoleSelection /></Screen>} />
+          <Route path="/home" element={<Screen><ChildHome /></Screen>} />
           <Route path="/reader" element={<Screen><ChooseReader /></Screen>} />
           <Route path="/read/:passageId" element={<Screen><ReadingScreen /></Screen>} />
           <Route path="/checking" element={<Screen><CheckingScreen /></Screen>} />

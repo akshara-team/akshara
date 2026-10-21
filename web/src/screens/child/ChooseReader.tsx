@@ -4,6 +4,7 @@ import { api } from "../../api";
 import type { Reader } from "../../api/types";
 import { Avatar, Button, Card, CheckIcon, TopBar } from "../../components";
 import { useSession } from "../../state/session";
+import { setReaderAndLang } from "../../state/storage";
 import { scriptClass, scriptName } from "../../theme/script";
 
 /** Mock readers — the API only knows a single `learner` alias. */
@@ -23,6 +24,7 @@ export function ChooseReader() {
     setBusy(true);
     setError(null);
     setReader(selected);
+    setReaderAndLang(selected, lang);
     try {
       const passages = await api.listPassages(lang);
       const passage = passages[0];

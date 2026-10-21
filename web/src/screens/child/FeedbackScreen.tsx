@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import type { WordOut } from "../../api/types";
 import {
   Button,
   CheckIcon,
@@ -13,18 +12,11 @@ import {
   SwapIcon,
   TopBar,
   WordChip,
-  type WordStatus,
+  wordStatus,
 } from "../../components";
 import { useSession } from "../../state/session";
 import { scriptClass } from "../../theme/script";
 import { flowCopy } from "./copy";
-
-function statusOf(w: WordOut): WordStatus {
-  if (w.check) return "uncertain";
-  if (w.op === "substituted") return "substituted";
-  if (w.op === "skipped") return "skipped";
-  return "correct";
-}
 
 export function FeedbackScreen() {
   const { lang, passage, parts, currentPart, goToNextPart } = useSession();
@@ -102,7 +94,7 @@ export function FeedbackScreen() {
               {words.map((w, i) => (
                 <WordChip
                   key={`${w.index ?? i}-${w.word ?? ""}`}
-                  status={statusOf(w)}
+                  status={wordStatus(w)}
                   word={w.word ?? ""}
                   lang={lang}
                 />

@@ -10,6 +10,7 @@ import {
   UsersIcon,
 } from "../../components";
 import { useSession } from "../../state/session";
+import { setLanguage as persistLanguage } from "../../state/storage";
 import { LANGS, scriptClass, scriptEnglish, scriptName, type Lang } from "../../theme/script";
 
 const HELLO: Record<Lang, string> = {
@@ -52,7 +53,14 @@ export function RoleSelection() {
             </div>
             <div className="stack" role="radiogroup" aria-label="Reading language">
               {LANGS.map((l) => (
-                <Radio key={l} selected={l === lang} onSelect={() => setLang(l)}>
+                <Radio
+                  key={l}
+                  selected={l === lang}
+                  onSelect={() => {
+                    setLang(l);
+                    persistLanguage(l);
+                  }}
+                >
                   <span className={scriptClass(l)}>{scriptName(l)}</span>{" "}
                   <span className="reader-meta">{scriptEnglish(l)}</span>
                 </Radio>

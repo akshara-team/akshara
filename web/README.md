@@ -24,6 +24,20 @@ final results. Recovery: microphone permission, story loading, connection delay,
 speech-recognition failure, service error (`/recovery/:kind`). Teacher: dashboard, story
 picker, child profile and history, attempt details, add/edit child.
 
+The child lands on **`/home`** once a name is saved — not back at role selection. It shows
+their name and language, one big **Read a story**, **Read again**, the last three readings
+with word chips, and three progress bars. A returning child goes straight there from `/`;
+`/switch` is the explicit way back to role selection.
+
+## Saved on this device
+
+The reader, language and reading history live in `localStorage` under `akshara.v1`
+(`src/state/storage.ts`): newest first, deduped by session id, capped at 50 readings, and
+defensive against a missing or blocked store. When the API answers, the learner's row from
+`/v1/class/summary` is shown as a synced total beside the local history — local readings stay
+the history because the API has no per-attempt endpoint. It is not synced across devices,
+and the home screen says so.
+
 ## Desktop layouts
 
 Figma has desktop frames **only for the teacher side** (section 03). Sections 02 (child) and
