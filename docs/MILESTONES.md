@@ -81,7 +81,8 @@ is its own branch → PR → CI green on the branch → merge. Details: [web/REA
       through a tested `toRoster` mapper, with the demo class as the fallback
 - [ ] Phase 2 — `GET /v1/feedback/audio`: Timbre audio behind a cache, so Listen plays the model
 - [ ] Phase 3 — story chunking: `split_parts`, `part_index` on attempts, parts from the API
-- [ ] Phase 4 — performance gate: a bundle-size budget in CI
+- [x] Phase 4 — performance gate: `web/scripts/budget.mjs` fails CI past 120 kB JS / 160 kB
+      total gzip (measured build: ~73 kB JS / ~78 kB total); runs after the build and in `run.sh check`
 - [ ] Phase 5 — deploy the demo (GitHub Pages, mock mode) for the post
 - [ ] Phase 6 — accessibility pass: focus, skip link, live regions, axe
 - [x] Phase 7 — child home + saved progress: reader, language and readings in `localStorage`,

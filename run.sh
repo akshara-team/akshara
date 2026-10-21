@@ -199,6 +199,8 @@ typecheck_all() {
 build_all() {
   log "Web build"
   ( cd "$WEB" && npm run build )
+  log "Bundle budget"
+  ( cd "$WEB" && npm run budget )
 }
 
 check_all() {
