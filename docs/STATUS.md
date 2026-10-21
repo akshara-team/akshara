@@ -16,7 +16,7 @@ either of us to see where the project stands.*
 | Missed-word audio (`GET /v1/feedback/audio`) | Done: Timbre behind a content cache |
 | Bundle-size budget in CI | Done: 120 kB JS / 160 kB total gzip |
 | **Deploy the demo** | **Blocked** — GitHub Pages needs repo admin (Achindra) |
-| Story chunking (real parts) | Not started |
+| Story chunking (real parts) | Done: `parts` on passages, `part_index` scored per part |
 | Accessibility pass | Not started |
 
 ## Who owns what
@@ -31,11 +31,9 @@ Both are interviewed separately, so each should be able to explain their own par
 
 1. **Accessibility pass** — focus ring, skip link, live regions, contrast, axe on the main
    screens. Small and self-contained.
-2. **Story chunking** — `split_parts()`, a `part_index` migration, parts from the API, scoring
-   per part. The last substantive backend change.
-3. **Deploy** — needs Achindra to enable Pages (Settings → Pages → Source: GitHub Actions) or an
+2. **Deploy** — needs Achindra to enable Pages (Settings → Pages → Source: GitHub Actions) or an
    alternative host. Everything is ready apart from that switch.
-4. **Submission track** — post the demo, make the repo public, fill in the form (both of us).
+3. **Submission track** — post the demo, make the repo public, fill in the form (both of us).
 
 ## How to run it
 
@@ -48,7 +46,7 @@ Both are interviewed separately, so each should be able to explain their own par
 
 ## Current numbers
 
-- **98 Python tests**, **46 web tests**; CI runs both jobs on every PR.
+- **114 Python tests**, **55 web tests**; CI runs both jobs on every PR.
 - Production web bundle: **73 kB JS / 78 kB total gzip**.
 - Ledger: **1,930** paid calls logged in `results/ledger.jsonl` (both machines merged). The
   `AKSHARA_MAX_CALLS` cap counts this file, so with a cap of 2,500 about 570 calls are left

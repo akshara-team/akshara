@@ -9,7 +9,15 @@ from akshara.providers.base import ProviderError
 from akshara.providers.fixture import FixtureSTT
 from akshara.settings import Settings
 
-BANK = {"p1": {"id": "p1", "lang": "hi-IN", "reference": "राम स्कूल जाता है"}}
+BANK = {
+    "p1": {"id": "p1", "lang": "hi-IN", "reference": "राम स्कूल जाता है"},
+    # two sentences of 8 words: more than one 12-word part
+    "p2": {
+        "id": "p2", "lang": "hi-IN",
+        "reference": "राम रोज़ सुबह जल्दी उठकर स्कूल जाता है। "
+        "वहाँ वह अपने दोस्तों के साथ खेलता है।",
+    },
+}  # fmt: skip
 
 
 def wav(seconds: float = 1.0) -> bytes:
@@ -101,7 +109,7 @@ def test_unknown_is_404(path):
 
 def test_list_passages_filters_by_language():
     c = client(FixtureSTT({}))
-    assert [p["id"] for p in c.get("/v1/passages?lang=hi-IN").json()] == ["p1"]
+    assert [p["id"] for p in c.get("/v1/passages?lang=hi-IN").json()] == ["p1", "p2"]
     assert c.get("/v1/passages?lang=ta-IN").json() == []
 
 
@@ -114,3 +122,39 @@ def test_attempt_carries_notice_and_no_check_on_exact_words():
     body = post(client(FixtureSTT({"clip": "राम स्कूल जाता"})), wav()).json()
     assert "does not prove" in body["notice"]
     assert not any(w["check"] for w in body["words"])
+
+
+def post_part(c: TestClient, part_index: int | str, rid: str = "r-part"):
+    return c.post(
+        "/v1/attempts",
+        files={"audio": ("clip.wav", wav(), "audio/wav")},
+        data={"learner": "asha", "passage_id": "p2", "part_index": str(part_index)},
+        headers={"X-Request-ID": rid},
+    )
+
+
+def test_passages_carry_parts():
+    c = client(FixtureSTT({}))
+    assert c.get("/v1/passages/p1").json()["parts"] == ["राम स्कूल जाता है"]
+    parts = c.get("/v1/passages/p2").json()["parts"]
+    assert parts == ["राम रोज़ सुबह जल्दी उठकर स्कूल जाता है।", "वहाँ वह अपने दोस्तों के साथ खेलता है।"]
+
+
+def test_attempt_on_a_part_is_scored_against_that_part_only():
+    c = client(FixtureSTT({"clip": "वहाँ वह अपने दोस्तों के साथ है"}))
+    body = post_part(c, 1).json()
+    assert body["part_index"] == 1
+    assert [w["word"] for w in body["words"] if w["op"] == "skipped"] == ["खेलता"]
+    assert len(body["words"]) == 8  # the first sentence is not counted as skipped
+    assert c.get("/v1/attempts/r-part").json()["part_index"] == 1
+
+
+def test_whole_passage_attempt_has_no_part_index():
+    body = post(client(FixtureSTT({"clip": "राम स्कूल जाता है"})), wav()).json()
+    assert body["part_index"] is None
+
+
+@pytest.mark.parametrize("bad", [-1, 2, "x"])
+def test_part_index_out_of_range_is_rejected(bad):
+    r = post_part(client(FixtureSTT({"clip": "x"})), bad)
+    assert r.status_code in (400, 422)

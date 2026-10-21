@@ -22,6 +22,7 @@ class Attempt:
     accuracy: float
     wcpm: float | None
     words: list[dict]  # one entry per passage word: op, word, said
+    part_index: int | None = None  # None: the whole passage was read
 
 
 def audio_seconds(path: Path) -> float | None:
@@ -42,13 +43,15 @@ def assess(
     reference: str,
     language: str,
     request_id: str | None = None,
+    part_index: int | None = None,
 ) -> Attempt:
+    """Score one reading of `reference`, which is the whole passage or the part being read."""
     request_id = request_id or uuid.uuid4().hex
     done = store.attempt(request_id)
     if done:  # a retried request returns the stored result, with no second paid call
         return Attempt(
             request_id, learner, passage_id, language, done["provider"], done["transcript"],
-            done["accuracy"], done["wcpm"], done["trace"],
+            done["accuracy"], done["wcpm"], done["trace"], done["part_index"],
         )  # fmt: skip
     t0 = time.perf_counter()
     transcript = stt.transcribe(audio, language)
@@ -75,7 +78,9 @@ def assess(
         wcpm=s.wcpm,
         trace=trace,
         latency_ms=latency_ms,
+        part_index=part_index,
     )
     return Attempt(
-        request_id, learner, passage_id, language, stt.name, transcript, s.accuracy, s.wcpm, trace
-    )
+        request_id, learner, passage_id, language, stt.name, transcript, s.accuracy, s.wcpm,
+        trace, part_index,
+    )  # fmt: skip

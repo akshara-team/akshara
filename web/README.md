@@ -118,17 +118,19 @@ src/
 - **Teacher data.** The dashboard reads `GET /v1/class/summary` when the API answers and falls
   back to the demo class otherwise; the other teacher screens are invented demo data, as the
   handoff specifies (the API has no children, roster or history endpoints yet).
-- **Not built yet:** teacher screens do not persist; live mode reads a passage as one part
-  (the API has no chunking); no performance budget or Lighthouse gate.
+- **Parts.** Live mode reads the passage in the parts the API sends (`passage.parts`, from
+  `core/parts.py`) and posts `part_index`, so each part is scored on its own. An older
+  backend with no `parts` falls back to one part.
+- **Not built yet:** teacher screens do not persist; no Lighthouse gate (manual step).
 
 ## Roadmap
 
 Each phase is its own branch → PR → CI green on the branch → merge.
 
 - [x] Phase 1 — class-summary wiring (`GET /v1/class/summary` → the dashboard)
-- [ ] Phase 2 — real missed-word audio (`/v1/feedback/audio`, cached Timbre)
-- [ ] Phase 3 — story chunking (real parts from the API)
-- [ ] Phase 4 — bundle-size budget in CI
+- [x] Phase 2 — real missed-word audio (`/v1/feedback/audio`, cached Timbre)
+- [x] Phase 3 — story chunking (real parts from the API, scored per part)
+- [x] Phase 4 — bundle-size budget in CI
 - [ ] Phase 5 — deploy the demo (GitHub Pages, mock mode)
 - [ ] Phase 6 — accessibility pass (focus, skip link, live regions, axe)
 

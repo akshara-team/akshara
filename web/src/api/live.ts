@@ -29,6 +29,11 @@ async function getJson<T>(path: string): Promise<T> {
 
 /** Live adapter — talks to FastAPI through the dev proxy (or VITE_API_BASE). */
 export const liveApi = {
+  /** The backend's parts; an older backend sends none, so the passage is read whole. */
+  partsOf(passage: Passage): string[] {
+    return passage.parts?.length ? passage.parts : [passage.text];
+  },
+
   listPassages(lang: string): Promise<Passage[]> {
     return getJson<Passage[]>(`/v1/passages?lang=${encodeURIComponent(lang)}`);
   },
@@ -37,12 +42,15 @@ export const liveApi = {
     audio: Blob;
     learner: string;
     passageId: string;
+    /** Which part was read; scored against that part only. Omit for the whole passage. */
+    partIndex?: number;
     requestId?: string;
   }): Promise<Attempt> {
     const form = new FormData();
     form.append("audio", args.audio, `${args.passageId}.wav`);
     form.append("learner", args.learner);
     form.append("passage_id", args.passageId);
+    if (args.partIndex !== undefined) form.append("part_index", String(args.partIndex));
     const res = await fetch(`${BASE}/v1/attempts`, {
       method: "POST",
       body: form,

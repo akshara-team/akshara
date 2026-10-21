@@ -10,6 +10,10 @@ Normalises Unicode (NFC), drops punctuation and zero-width characters, splits on
 Word-level edit distance between the passage and the transcript. Each passage word is `correct`, `substituted` or `skipped`; extra spoken words are `inserted`. Accuracy is correct ÷ words; WCPM is correct ÷ minutes. `insertion_near` finds an extra word beside a given passage word (used for repeats).
 **Remember:** ties prefer a match, then a substitution, so one wrong word is one substitution, not a skip plus an insert.
 
+## `core/parts.py`: split a passage into parts
+Cuts the passage at sentence ends and packs whole sentences up to 12 words per part (about 15–20 s for a child). A sentence is only cut when it alone passes 20 words, and then into near-equal pieces. A part under 4 words ("Why?") joins its neighbour. The API sends the parts and scores an attempt against just the part read.
+**Remember:** joining the parts gives back exactly the passage's words, so per-part scores add up to the whole. Tests: `tests/test_parts.py`.
+
 ## `core/plant.py`: plant mistakes for the study
 Given a passage and a list of error kinds, returns what a reader would say and where each error is. Kinds: skip, near-sound (one consonant, never the last letter), distant (another word), half (first part only), repeat, self-correct. Seeded, so the same input always gives the same output. Errors are never adjacent.
 **Remember:** a near-sound change may be a non-word; children produce those too. Tests: `tests/test_plant.py`.

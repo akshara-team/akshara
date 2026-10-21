@@ -28,6 +28,7 @@ class AttemptOut(BaseModel):
     accuracy: float
     wcpm: float | None
     words: list[WordOut]
+    part_index: int | None = None  # which part was read; null for the whole passage
 
 
 class LearnerSummary(BaseModel):
