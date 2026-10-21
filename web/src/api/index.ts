@@ -1,7 +1,7 @@
 import type { Lang } from "../theme/script";
 import { liveApi } from "./live";
-import { MOCK_PARTS, mockAttempt, mockPassages } from "./mock";
-import type { Attempt, Passage } from "./types";
+import { MOCK_PARTS, mockAttempt, mockClassSummary, mockPassages } from "./mock";
+import type { Attempt, LearnerSummary, Passage } from "./types";
 
 /**
  * The one seam between the screens and the backend. `mock` runs the whole app
@@ -19,6 +19,7 @@ export type Api = {
     lang: Lang;
     partIndex: number;
   }) => Promise<Attempt>;
+  classSummary: () => Promise<LearnerSummary[]>;
 };
 
 const mock: Api = {
@@ -26,6 +27,7 @@ const mock: Api = {
   partsOf: () => MOCK_PARTS.map((p) => p.text),
   submitAttempt: async ({ passageId, lang, partIndex }) =>
     mockAttempt(passageId, lang, partIndex),
+  classSummary: async () => mockClassSummary(),
 };
 
 const live: Api = {
@@ -34,6 +36,7 @@ const live: Api = {
   partsOf: (passage) => [passage.text],
   submitAttempt: ({ audio, learner, passageId }) =>
     liveApi.submitAttempt({ audio, learner, passageId }),
+  classSummary: () => liveApi.classSummary(),
 };
 
 export const isMock = import.meta.env.VITE_API_MODE !== "live";

@@ -53,6 +53,32 @@ Check off as each one is done and verified. Dates are targets; deadline Nov 10, 
 - [ ] Submission form filled with post link
 - [ ] Submitted before Nov 10, 11:59 PM IST
 
+## M6. Web app (MVP)
+
+The frontend for the Figma handoff ("Akshara · Product UI"), in [`web/`](../web). Every phase
+is its own branch → PR → CI green on the branch → merge. Details: [web/README.md](../web/README.md).
+
+**Built**
+
+- [x] 17 design-system components and 12 screens: child flow (role selection, choose reader,
+      reading, checking, feedback, results), six recovery states, teacher dashboard, story
+      picker, child profile and history, attempt details, add/edit child
+- [x] API seam with a mock adapter (the handoff's demo attempt) and a live adapter for `/v1`
+- [x] Per-screen error boundaries so one broken screen leaves the rest working
+- [x] `web` CI job: npm ci, lint, typecheck, 27 tests, build
+- [x] Desktop teacher layout, offline redirect, real Listen audio (model audio with a
+      device-voice fallback)
+
+**Phases**
+
+- [x] Phase 1 — class-summary wiring: `GET /v1/class/summary` feeds the teacher dashboard
+      through a tested `toRoster` mapper, with the demo class as the fallback
+- [ ] Phase 2 — `GET /v1/feedback/audio`: Timbre audio behind a cache, so Listen plays the model
+- [ ] Phase 3 — story chunking: `split_parts`, `part_index` on attempts, parts from the API
+- [ ] Phase 4 — performance gate: a bundle-size budget in CI
+- [ ] Phase 5 — deploy the demo (GitHub Pages, mock mode) for the post
+- [ ] Phase 6 — accessibility pass: focus, skip link, live regions, axe
+
 ## Stretch
 
 - [ ] Second opinion from an open acoustic model (only if there is slack)

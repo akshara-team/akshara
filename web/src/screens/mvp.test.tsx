@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { api } from "../api";
 import { App } from "../App";
 
 function at(path: string) {
@@ -11,12 +12,35 @@ function at(path: string) {
   );
 }
 
+afterEach(() => vi.restoreAllMocks());
+
 describe("MVP routes", () => {
-  it("renders the teacher dashboard with the class roster", () => {
+  it("renders the teacher dashboard with the class roster", async () => {
     at("/teacher");
+    expect(await screen.findByText("Aarav Gowda")).toBeTruthy();
     expect(screen.getByText(/your reading class/i)).toBeTruthy();
-    expect(screen.getByText("Aarav Gowda")).toBeTruthy();
     expect(screen.getByText("Rohan M.")).toBeTruthy();
+  });
+
+  it("renders the roster from the class-summary API and its computed metrics", async () => {
+    vi.spyOn(api, "classSummary").mockResolvedValue([
+      { alias: "Meera S.", language: "kn-IN", attempts: 2, accuracy: 0.75, wcpm: 30 },
+      { alias: "Kabir", language: "kn-IN", attempts: 1, accuracy: 0.95, wcpm: 45 },
+    ]);
+    at("/teacher");
+    expect(await screen.findByText("Meera S.")).toBeTruthy();
+    expect(screen.getByText("Kabir")).toBeTruthy();
+    // mean WCPM (30 + 45) / 2 = 38, accuracy (0.75 + 0.95) / 2 = 85%
+    expect(screen.getByText("38")).toBeTruthy();
+    expect(screen.getByText("85%")).toBeTruthy();
+    expect(screen.getByText("1 / 2")).toBeTruthy(); // Meera is below the band
+  });
+
+  it("falls back to the demo class when the summary API fails", async () => {
+    vi.spyOn(api, "classSummary").mockRejectedValue(new Error("offline"));
+    at("/teacher");
+    expect(await screen.findByText("Aarav Gowda")).toBeTruthy();
+    expect(screen.getByText(/3 children · latest attempts · demo data/)).toBeTruthy();
   });
 
   it("renders a child profile with history", () => {

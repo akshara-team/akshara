@@ -4,6 +4,9 @@ Gnani evaluates and interviews each of us separately, so log what you did. Newes
 
 | Date | Who | What |
 |---|---|---|
+| 2026-10-21 | Partner | Built the web app (`web/`): Vite + React + TS PWA with the child flow, teacher screens and six recovery states from the Figma handoff, on mock + live API adapters with per-screen error boundaries |
+| 2026-10-21 | Partner | Added the `web` CI job; fixed `check_numbers.py` filename drift so CI is green (92 Python + 27 web tests) |
+| 2026-10-21 | Partner | Phase 1 of the web MVP: `GET /v1/class/summary` wired into the teacher dashboard via a tested `toRoster` mapper, with the demo class as the fallback |
 | 2026-10-21 | Partner | Generated the Kannada + Tamil go/no-go clips with Timbre TTS (24 clips, mono 16 kHz) via `scripts/make_test_audio.py`, replacing hand recording; one clip fixed by re-rendering after a Cloudflare 403 |
 | 2026-10-21 | Partner | Ran the go/no-go test on the synthetic clips: Kannada 100% catch / 1% false-flag, Tamil 95% / 5% (loose) — both pass; result and decision written into GO_NO_GO.md |
 | 2026-10-20 | Achindra | Open passages: fetched StoryWeaver catalogue descriptions, added deterministic mistake planting (skip, near-sound, distant, half-word) with tests, built 90 study passages (156 planted mistakes) |
