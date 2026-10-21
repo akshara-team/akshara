@@ -15,7 +15,7 @@ Decide per language. If two of three pass, build it for those languages.
 
 ## Steps
 
-### 1. Write the passages (Partner: Kannada, Tamil · Achindra: Hindi)
+### 1. Write the passages (Daniel: Kannada, Tamil · Achindra: Hindi)
 
 Add 20 passages per language to `data/go_no_go/passages.jsonl`. Copy the format from `passages.example.jsonl`:
 

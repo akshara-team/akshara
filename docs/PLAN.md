@@ -109,7 +109,7 @@ A voice explainer for official papers: photograph a government letter, electrici
 
 ## 8. How we work
 
-The code and experiments are largely AI-assisted. Achindra and the partner have very little time, so **the plan assumes no passage review, no teacher outreach and no public testing.** Everything that would normally need a person is replaced by something checkable, and the limits are stated openly. Every other entrant also uses AI coding, so code volume and a polished README don't set us apart. These do:
+The code and experiments are largely AI-assisted. Achindra and Daniel have very little time, so **the plan assumes no passage review, no teacher outreach and no public testing.** Everything that would normally need a person is replaced by something checkable, and the limits are stated openly. Every other entrant also uses AI coding, so code volume and a polished README don't set us apart. These do:
 
 - **Real numbers from a live API and an honest failure analysis**, not a mock.
 - **Content we didn't write.** Passages come from published, openly licensed children's books (StoryWeaver, CC BY 4.0) with their reading levels, not from sentences we composed. This avoids Kannada and Tamil errors by us. The `spec.*.jsonl` passages written so far are placeholders for the pipeline test only.

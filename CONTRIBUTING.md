@@ -33,6 +33,8 @@ whole process tree (npm leaves Vite running otherwise).
 
 ## Workflow
 
+- **Where things stand:** [docs/STATUS.md](docs/STATUS.md) — what is done, what is next, and who
+  owns what. Update it when a piece of work lands.
 - **Branch, never push to `main`.** `git switch -c feat/<short-name> main` → work → commit →
   `gh pr create` → CI runs on the branch → merge only when it is green (squash, delete the branch).
 - The other person reviews. Small PRs.

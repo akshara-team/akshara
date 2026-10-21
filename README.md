@@ -29,8 +29,12 @@ Speech-to-text tends to correct a misread word into the expected one, which hide
 | Mitigation for autocorrected mistakes | Tried, does not help (result recorded) |
 | HTTP API, storage, offline fixture provider, CI gate | Done |
 | Reading screen, trace view, class summary, limits notice | Done (v0.1); microphone path untested live |
-| **Web app** (`web/`, Vite + React + TS PWA) | Child flow, teacher screens and recovery states built from the Figma handoff; 27 tests, own CI job. See [web/README.md](web/README.md) |
+| **Web app** (`web/`, Vite + React + TS PWA) | Child flow, child home with saved progress, teacher screens and recovery states; mock + live modes; 46 tests, own CI job. See [web/README.md](web/README.md) |
+| Missed-word audio | Done: `GET /v1/feedback/audio`, Timbre behind a content cache |
+| Performance gate | Done: bundle budget in CI (73 kB JS / 78 kB total gzip) |
 | Demo video | [docs/demo/akshara_demo.mp4](docs/demo/akshara_demo.mp4) |
+
+**Where things stand, and what is next:** [docs/STATUS.md](docs/STATUS.md).
 
 ## Quick start
 
@@ -72,6 +76,7 @@ set `VITE_API_MODE=live` to talk to the API. Screens, data modes and known gaps:
 
 | File | What's in it |
 |---|---|
+| [docs/STATUS.md](docs/STATUS.md) | What is done, what is next, who owns what |
 | [docs/WRITEUP.md](docs/WRITEUP.md) | One-page explanation |
 | [docs/DECISIONS.md](docs/DECISIONS.md) | Why each choice was made |
 | [docs/WALKTHROUGH.md](docs/WALKTHROUGH.md) | One section per module |
@@ -96,5 +101,9 @@ Synthetic audio only. No real children's voices. See [CONTRIBUTING.md](CONTRIBUT
 ## Team
 
 Achindra and Daniel.
+
+- **Achindra** — scorer, providers, service/store/API, the reliability studies, demo video.
+- **Daniel** — the web app, the API contract, the frontend stack decision, and the Kannada and
+  Tamil go/no-go passages.
 
 #GnaniAI #GreatIndianAIInternshipChallenge
