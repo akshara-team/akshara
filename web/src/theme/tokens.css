@@ -1,0 +1,105 @@
+/* Design tokens, read from the Figma handoff frames
+   ("Exact colour foundation" 2:41891, "Layout foundation" 2:41939). */
+
+:root {
+  /* Brand + feedback */
+  --color-brand-primary: #fde047;
+  --color-secondary: #2563eb;
+  --color-feedback-success: #22c55e;
+  --color-feedback-warning: #f59e0b;
+  --color-feedback-danger: #ef4444;
+
+  /* Surfaces */
+  --color-background: #ffffff;
+  --color-background-soft: #eff6ff;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f9fafb;
+
+  /* Text */
+  --color-text-primary: #111827;
+  --color-text-secondary: #374151;
+  --color-muted: #6b7280;
+  --color-border: #d1d5db;
+
+  /* WordChip states (Figma: WordChip 2:42372) */
+  --chip-correct-bg: #dcfce7;
+  --chip-correct-border: #22c55e;
+  --chip-substituted-bg: #fef3c7;
+  --chip-substituted-border: #f59e0b;
+  --chip-skipped-bg: #fee2e2;
+  --chip-skipped-border: #ef4444;
+  /* Not in the Figma component, but our scorer emits it (spelling-variant
+     matches). Dashed, so it reads as "look at this" rather than pass/fail. */
+  --chip-uncertain-bg: #eff6ff;
+  --chip-uncertain-border: #2563eb;
+
+  /* Type */
+  --font-ui: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-kn: "Noto Sans Kannada", var(--font-ui);
+  --font-ta: "Noto Sans Tamil", var(--font-ui);
+  --font-hi: "Noto Sans Devanagari", var(--font-ui);
+  --text-heading-1: 28px;
+  --text-heading-2: 24px;
+  --text-heading-3: 20px;
+  --text-body: 16px;
+  --text-secondary: 14px;
+  --text-meta: 12px;
+  --text-reading: 32px; /* native-script reading, supported range 32-44 */
+
+  /* Spacing scale */
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-56: 56px;
+  --space-64: 64px;
+
+  /* Shape */
+  --radius-12: 12px;
+  --radius-16: 16px;
+  --radius-pill: 999px;
+
+  --tap-min: 44px; /* minimum touch target */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: var(--font-ui);
+  font-size: var(--text-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Native-script text: pick the right Noto family. */
+.script-kn {
+  font-family: var(--font-kn);
+}
+.script-ta {
+  font-family: var(--font-ta);
+}
+.script-hi {
+  font-family: var(--font-hi);
+}
+
+/* Reading passage: the design's native-script reading size (32-44 px). */
+.reading-text {
+  font-size: var(--text-reading);
+  line-height: 1.6;
+}
