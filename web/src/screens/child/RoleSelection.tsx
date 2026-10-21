@@ -41,7 +41,7 @@ export function RoleSelection() {
               <div className="greeting">
                 <p className="eyebrow">Welcome · Demo school</p>
                 <p className="greeting__school">Govt Primary School, Mandya</p>
-                <p className={`greeting__hello ${scriptClass(lang)}`}>
+                <p className={`greeting__hello ${scriptClass(lang)}`} lang={lang}>
                   {HELLO[lang]} <HandIcon className="inline-icon" />
                 </p>
               </div>
@@ -61,7 +61,7 @@ export function RoleSelection() {
                     persistLanguage(l);
                   }}
                 >
-                  <span className={scriptClass(l)}>{scriptName(l)}</span>{" "}
+                  <span className={scriptClass(l)} lang={l}>{scriptName(l)}</span>{" "}
                   <span className="reader-meta">{scriptEnglish(l)}</span>
                 </Radio>
               ))}

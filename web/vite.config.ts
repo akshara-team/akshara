@@ -8,6 +8,8 @@ export default defineConfig({
     globals: true,
     setupFiles: ["./src/test/setup.ts"],
     include: ["src/**/*.test.{ts,tsx}"],
+    // CSS is skipped in tests by default; the contrast test reads theme.css as raw text.
+    css: { include: [/theme\.css/] },
   },
   plugins: [
     react(),

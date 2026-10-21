@@ -51,7 +51,7 @@ export function ChooseReader() {
           <div className="stack">
             <Card>
               <p className="eyebrow">Welcome · Demo school</p>
-              <p className={`reader-name ${scriptClass(lang)}`}>
+              <p className={`reader-name ${scriptClass(lang)}`} lang={lang}>
                 Reading in {scriptName(lang)}
               </p>
               <p className="reader-meta">Pick the name the child recognises.</p>
@@ -77,7 +77,7 @@ export function ChooseReader() {
                   <Avatar initials={r.initials} selected={r.id === selected.id} />
                   <span className="reader-info">
                     <span className="reader-name">{r.alias}</span>
-                    <span className={`reader-meta ${scriptClass(lang)}`}>
+                    <span className={`reader-meta ${scriptClass(lang)}`} lang={lang}>
                       {r.level} · {scriptName(lang)}
                     </span>
                   </span>

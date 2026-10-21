@@ -108,6 +108,7 @@ export function ChildHome() {
                       <span className="reader-meta">{r.storyTitle}</span>
                       <ProgressBar
                         value={r.wcpm ? (r.wcpm / NIPUN_BAND.max) * 100 : 0}
+                        label={`${r.storyTitle}: reading speed against the class target`}
                       />
                       <span className="reader-meta">
                         {r.wcpm ?? "—"} WCPM · {Math.round(r.accuracy * 100)}%

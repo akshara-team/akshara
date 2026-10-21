@@ -85,7 +85,7 @@ export function ReadingScreen() {
               <LanguageBadge lang={lang} />
               <div className="metarow__text">
                 <span className="eyebrow">Child reading · Demo story</span>
-                <span className={`metarow__title ${scriptClass(lang)}`}>
+                <span className={`metarow__title ${scriptClass(lang)}`} lang={lang}>
                   {copy.storyTitle}
                 </span>
               </div>
@@ -96,7 +96,7 @@ export function ReadingScreen() {
                 <span>{copy.partOf(currentPart, total)}</span>
                 <ProgressDots total={total} current={currentPart} />
               </div>
-              <ProgressBar value={(currentPart / total) * 100} />
+              <ProgressBar value={(currentPart / total) * 100} label="Reading progress" />
             </div>
 
             <ListenButton text={text} lang={lang} label={copy.listen} block />
@@ -106,14 +106,17 @@ export function ReadingScreen() {
           <div className="stack">
             <div className="passage-card">
               <div className="passage-card__accent" aria-hidden="true" />
-              <p className={`reading-text ${scriptClass(lang)}`}>{text}</p>
+              <p className={`reading-text ${scriptClass(lang)}`} lang={lang}>
+                {text}
+              </p>
             </div>
 
             <div className="controls">
               <MicButton state={phase} onClick={onMic} label={label} />
               <p className="controls__label">{label}</p>
               {phase === "recording" && (
-                <p className="controls__timer" aria-live="polite">
+                // role="timer" is not announced every tick, unlike aria-live.
+                <p className="controls__timer" role="timer" aria-label={`Recording, ${elapsed} s`}>
                   {elapsed}s
                 </p>
               )}

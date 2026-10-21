@@ -91,7 +91,7 @@ export function CheckingScreen() {
               <LanguageBadge lang={lang} />
               <div className="metarow__text">
                 <span className="eyebrow">Child reading · Checking</span>
-                <span className={`metarow__title ${scriptClass(lang)}`}>
+                <span className={`metarow__title ${scriptClass(lang)}`} lang={lang}>
                   {passage ? passage.text.split(/\s+/).slice(0, 3).join(" ") : "Your story"}
                 </span>
               </div>
@@ -120,7 +120,7 @@ export function CheckingScreen() {
 
             <div className="passage-card">
               <div className="passage-card__accent" aria-hidden="true" />
-              <p className={`reading-text ${scriptClass(lang)}`}>
+              <p className={`reading-text ${scriptClass(lang)}`} lang={lang}>
                 {parts[currentPart - 1]?.text ?? "Your story"}
               </p>
             </div>

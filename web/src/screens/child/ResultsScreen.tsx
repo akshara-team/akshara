@@ -92,7 +92,7 @@ export function ResultsScreen() {
                 </p>
                 {missed.map((w, i) => (
                   <div className="practice__row" key={`${w.word}-${i}`}>
-                    <span className={`reading-text ${scriptClass(lang)}`}>{w.word}</span>
+                    <span className={`reading-text ${scriptClass(lang)}`} lang={lang}>{w.word}</span>
                     <ListenButton text={w.word ?? ""} lang={lang} label={copy.listen} />
                   </div>
                 ))}
