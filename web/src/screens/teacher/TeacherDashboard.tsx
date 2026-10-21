@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { api, isMock } from "../../api";
 import { toRoster } from "../../api/classSummary";
 import { CHILDREN, CLASSROOM, CLASS_METRICS, DEMO_SUMMARY } from "../../api/teacherData";
-import { Avatar, Card, Select, StatusBadge, TopBar } from "../../components";
+import { Avatar, Card, Select, StatusBadge, PageHeader } from "../../components";
 import { useIsDesktop } from "../../state/useMediaQuery";
 import { scriptName, type Lang } from "../../theme/script";
 
@@ -47,7 +47,7 @@ export function TeacherDashboard() {
 
   return (
     <>
-      <TopBar
+      <PageHeader
         back
         backTo="/"
         badge={CLASSROOM.className}

@@ -6,7 +6,7 @@ import {
   RepeatIcon,
   SparklesIcon,
   StatCard,
-  TopBar,
+  PageHeader,
   TrendingUpIcon,
 } from "../../components";
 import { useSession } from "../../state/session";
@@ -51,7 +51,7 @@ export function ResultsScreen() {
 
   return (
     <>
-      <TopBar back={false} />
+      <PageHeader back backTo="/home" />
       <div className="screen-body">
         <div className="workspace workspace--w360">
           {/* Left: celebration and the two headline numbers. */}

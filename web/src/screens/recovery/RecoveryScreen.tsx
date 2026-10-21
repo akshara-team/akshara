@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, LanguageBadge, TopBar } from "../../components";
+import { Button, LanguageBadge, PageHeader } from "../../components";
 import { useSession } from "../../state/session";
 import { scriptClass } from "../../theme/script";
 import { recoveryVariant } from "./config";
@@ -18,7 +18,7 @@ export function RecoveryScreen() {
 
   return (
     <>
-      <TopBar back backTo="/reader" />
+      <PageHeader back backTo="/home" />
       <div className="recovery-hero">
         <h1 className="recovery-hero__title">{v.title}</h1>
         {v.subtitle && <p className="recovery-hero__sub">{v.subtitle}</p>}

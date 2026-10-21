@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../api";
 import type { Reader } from "../../api/types";
-import { Avatar, Button, Card, CheckIcon, TopBar } from "../../components";
+import { Avatar, Button, Card, CheckIcon, PageHeader } from "../../components";
 import { useSession } from "../../state/session";
 import { setReaderAndLang } from "../../state/storage";
 import { scriptClass, scriptName } from "../../theme/script";
@@ -39,7 +39,7 @@ export function ChooseReader() {
 
   return (
     <>
-      <TopBar back backTo="/" />
+      <PageHeader back backTo="/switch" />
       <div className="hero">
         <h1 className="hero__title">Who is reading?</h1>
         <p className="hero__sub">Choose your name to begin.</p>

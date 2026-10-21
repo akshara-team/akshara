@@ -6,7 +6,7 @@ import {
   HandIcon,
   Radio,
   StarIcon,
-  TopBar,
+  PageHeader,
   UsersIcon,
 } from "../../components";
 import { useSession } from "../../state/session";
@@ -25,7 +25,7 @@ export function RoleSelection() {
 
   return (
     <>
-      <TopBar />
+      <PageHeader />
       <div className="hero">
         <h1 className="hero__title">A little reading.</h1>
         <p className="hero__sub">

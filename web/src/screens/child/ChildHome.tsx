@@ -7,7 +7,7 @@ import {
   Card,
   LanguageBadge,
   ProgressBar,
-  TopBar,
+  PageHeader,
   WordChip,
   wordStatus,
 } from "../../components";
@@ -55,7 +55,7 @@ export function ChildHome() {
 
   return (
     <>
-      <TopBar />
+      <PageHeader />
       <div className="home">
         <div className="home__hero">
           <p className="eyebrow">My reading</p>

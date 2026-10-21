@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { childById, HISTORY, NIPUN_BAND } from "../../api/teacherData";
-import { Avatar, Button, Card, StatCard, Table, TopBar } from "../../components";
+import { Avatar, Button, Card, StatCard, Table, PageHeader } from "../../components";
 import { scriptEnglish, scriptName } from "../../theme/script";
 
 export function ChildProfile() {
@@ -13,7 +13,7 @@ export function ChildProfile() {
 
   return (
     <>
-      <TopBar
+      <PageHeader
         back
         backTo="/teacher"
         badge={child.level}

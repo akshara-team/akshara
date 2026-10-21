@@ -96,6 +96,9 @@
   /* ---------- Component sizes ---------- */
   --size-tap: 44px; /* minimum touch target */
   --size-control: 52px; /* buttons, inputs, selects, radios */
+  --size-control-sm: 40px; /* inline row actions */
+  --size-avatar-sm: 40px;
+  --logo-height: 32px;
   --size-topbar: 72px;
   --size-avatar: 56px;
   --size-mic: 112px;
@@ -136,6 +139,21 @@
   /* ---------- Motion ---------- */
   --duration-spin: 0.9s;
   --duration-spin-reduced: 2.5s;
+  --duration-fast: 120ms;
+  --duration-base: 180ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* ---------- Focus ---------- */
+  --focus-ring: 2px solid var(--color-focus);
+  --focus-ring-offset: 2px;
+
+  /* ---------- Grouping ---------- */
+  --gap-section: var(--space-24);
+  --gap-group: var(--space-12);
+
+  /* ---------- Info surface ---------- */
+  --color-info-bg: var(--color-background-soft);
+  --color-info-border: var(--color-secondary);
 }
 
 * {
@@ -173,4 +191,10 @@ body {
 .reading-text {
   font-size: var(--text-reading);
   line-height: var(--line-height-reading);
+}
+
+/* Keyboard focus is always visible; the mouse does not show a ring. */
+:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
 }

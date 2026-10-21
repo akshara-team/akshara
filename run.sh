@@ -198,9 +198,11 @@ typecheck_all() {
 
 build_all() {
   log "Web build"
-  ( cd "$WEB" && npm run build )
+  # A production build regardless of a NODE_ENV=development shell, otherwise the
+  # bundle carries React's development code and blows the budget.
+  ( export NODE_ENV=production; cd "$WEB" && npm run build )
   log "Bundle budget"
-  ( cd "$WEB" && npm run budget )
+  ( export NODE_ENV=production; cd "$WEB" && npm run budget )
 }
 
 check_all() {
