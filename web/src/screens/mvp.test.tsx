@@ -12,7 +12,24 @@ function at(path: string) {
   );
 }
 
-afterEach(() => vi.restoreAllMocks());
+afterEach(() => {
+  vi.restoreAllMocks();
+  vi.unstubAllGlobals();
+});
+
+/** Pretend the viewport is the design's desktop size. */
+function stubDesktopViewport() {
+  vi.stubGlobal("matchMedia", (query: string) => ({
+    matches: true,
+    media: query,
+    onchange: null,
+    addEventListener: () => {},
+    removeEventListener: () => {},
+    addListener: () => {},
+    removeListener: () => {},
+    dispatchEvent: () => false,
+  }));
+}
 
 describe("MVP routes", () => {
   it("renders the teacher dashboard with the class roster", async () => {
@@ -41,6 +58,21 @@ describe("MVP routes", () => {
     at("/teacher");
     expect(await screen.findByText("Aarav Gowda")).toBeTruthy();
     expect(screen.getByText(/3 children · latest attempts · demo data/)).toBeTruthy();
+  });
+
+  it("renders the five-column roster table on a desktop viewport", async () => {
+    stubDesktopViewport();
+    at("/teacher");
+    expect(await screen.findByRole("columnheader", { name: /latest wcpm/i })).toBeTruthy();
+    expect(screen.getByRole("columnheader", { name: /^accuracy$/i })).toBeTruthy();
+    expect(screen.getByRole("columnheader", { name: /previous/i })).toBeTruthy();
+    expect(screen.getByRole("columnheader", { name: /status/i })).toBeTruthy();
+  });
+
+  it("shows the teacher navigation on the desktop frames", async () => {
+    stubDesktopViewport();
+    at("/teacher/child/aarav");
+    expect(await screen.findByRole("navigation", { name: /teacher/i })).toBeTruthy();
   });
 
   it("renders a child profile with history", () => {

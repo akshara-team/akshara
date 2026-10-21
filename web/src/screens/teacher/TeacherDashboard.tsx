@@ -4,10 +4,12 @@ import { api, isMock } from "../../api";
 import { toRoster } from "../../api/classSummary";
 import { CHILDREN, CLASSROOM, CLASS_METRICS, DEMO_SUMMARY } from "../../api/teacherData";
 import { Avatar, Card, Select, StatusBadge, TopBar } from "../../components";
+import { useIsDesktop } from "../../state/useMediaQuery";
 import { scriptName, type Lang } from "../../theme/script";
 
 export function TeacherDashboard() {
   const navigate = useNavigate();
+  const isDesktop = useIsDesktop();
   const [className, setClassName] = useState("class-3");
   const [language, setLanguage] = useState("kn-IN");
 
@@ -38,15 +40,23 @@ export function TeacherDashboard() {
   const metrics = [
     { value: data.metrics.avgWcpm == null ? "—" : String(data.metrics.avgWcpm), label: "Avg WCPM" },
     { value: `${Math.round(data.metrics.accuracy * 100)}%`, label: "Accuracy" },
-    {
-      value: `${data.metrics.needHelp} / ${data.metrics.total}`,
-      label: "Need help",
-    },
+    { value: `${data.metrics.needHelp} / ${data.metrics.total}`, label: "Need help" },
   ];
+
+  const openChild = (id: string) => navigate(`/teacher/child/${id}`);
 
   return (
     <>
-      <TopBar back backTo="/" />
+      <TopBar
+        back
+        backTo="/"
+        badge={CLASSROOM.className}
+        nav={[
+          { label: "Class", to: "/teacher" },
+          { label: "Story", to: "/teacher/story" },
+          { label: "Add child", to: "/teacher/add" },
+        ]}
+      />
       <div className="screen-body">
         <p className="eyebrow">{CLASSROOM.eyebrow}</p>
         <h1 className="card__title">Your reading class</h1>
@@ -88,36 +98,74 @@ export function TeacherDashboard() {
             <div className="metric" key={m.label}>
               <span className="metric__value">{m.value}</span>
               <span className="metric__label">{m.label}</span>
-              {usingDemo && (
-                <span className="metric__delta">{CLASS_METRICS[i]?.delta}</span>
-              )}
+              {usingDemo && <span className="metric__delta">{CLASS_METRICS[i]?.delta}</span>}
             </div>
           ))}
         </div>
 
         <p className="step__label">{data.metrics.total} children · latest attempts</p>
 
-        <div className="stack--tight stack">
-          {data.roster.map((c) => (
-            <button
-              key={c.id}
-              type="button"
-              className="reader-row"
-              onClick={() => navigate(`/teacher/child/${c.id}`)}
-            >
-              <Avatar initials={c.initials} />
-              <span className="reader-info">
-                <span className="reader-name">{c.name}</span>
-                <span className="reader-meta">
-                  {c.wcpm ?? "—"} WCPM · {Math.round(c.accuracy * 100)}% accuracy
+        {isDesktop ? (
+          /* Desktop frame: a five-column roster table. */
+          <table className="roster-table">
+            <thead>
+              <tr>
+                <th scope="col">Child</th>
+                <th scope="col">Latest WCPM</th>
+                <th scope="col">Accuracy</th>
+                <th scope="col">Previous</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.roster.map((c) => (
+                <tr key={c.id} onClick={() => openChild(c.id)}>
+                  <td>
+                    <span className="roster-table__child">
+                      <Avatar initials={c.initials} />
+                      <span>
+                        <span className="roster-table__name">{c.name}</span>
+                        <br />
+                        <span className="reader-meta">{c.level}</span>
+                      </span>
+                    </span>
+                  </td>
+                  <td>{c.wcpm ?? "—"}</td>
+                  <td>{Math.round(c.accuracy * 100)}%</td>
+                  <td className="reader-meta">—</td>
+                  <td>
+                    <StatusBadge tone={c.status === "in-target" ? "success" : "warning"}>
+                      {c.status === "in-target" ? "In target band" : "Practise together"}
+                    </StatusBadge>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          /* Mobile frame: the same rows as cards. */
+          <div className="stack--tight stack">
+            {data.roster.map((c) => (
+              <button
+                key={c.id}
+                type="button"
+                className="reader-row"
+                onClick={() => openChild(c.id)}
+              >
+                <Avatar initials={c.initials} />
+                <span className="reader-info">
+                  <span className="reader-name">{c.name}</span>
+                  <span className="reader-meta">
+                    {c.wcpm ?? "—"} WCPM · {Math.round(c.accuracy * 100)}% accuracy
+                  </span>
                 </span>
-              </span>
-              <StatusBadge tone={c.status === "in-target" ? "success" : "warning"}>
-                {c.status === "in-target" ? "In target band" : "Practise together"}
-              </StatusBadge>
-            </button>
-          ))}
-        </div>
+                <StatusBadge tone={c.status === "in-target" ? "success" : "warning"}>
+                  {c.status === "in-target" ? "In target band" : "Practise together"}
+                </StatusBadge>
+              </button>
+            ))}
+          </div>
+        )}
 
         <div className="actions">
           <button

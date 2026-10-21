@@ -8,14 +8,16 @@
 /* Mobile-first: the design's primary frame is 375 x 812. */
 .app-main {
   width: 100%;
-  max-width: 375px;
+  max-width: var(--size-error-card);
   min-height: 100dvh;
   background: var(--color-background);
   display: flex;
   flex-direction: column;
 }
 
-/* Teacher screens use the design's desktop frames on wide viewports. */
+/* Teacher screens use the design's desktop frames on wide viewports: 1280 wide
+   with a 40px content inset (1024 x 768 in the compact frames).
+   The 900px literal is --breakpoint-desktop; media queries cannot read vars. */
 @media (min-width: 900px) {
   .app-shell {
     padding: var(--space-24) 0;
@@ -23,33 +25,14 @@
   .app-main {
     min-height: calc(100dvh - var(--space-48));
     border-radius: var(--radius-16);
-    border: 1px solid var(--color-border);
+    border: var(--border-width) solid var(--color-border);
   }
   .app-main--wide {
-    max-width: 1100px;
+    max-width: var(--size-shell-desktop);
   }
-}
-
-/* Teacher desktop: a two-column body. Headings, labels and the action block
-   span the full width; everything else flows into the columns. */
-@media (min-width: 900px) {
   .app-main--wide .screen-body {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-24);
-    align-items: start;
-  }
-  .app-main--wide .screen-body > * {
-    min-width: 0;
-  }
-  .app-main--wide .screen-body > .eyebrow,
-  .app-main--wide .screen-body > h1,
-  .app-main--wide .screen-body > .step__label,
-  .app-main--wide .screen-body > .actions {
-    grid-column: 1 / -1;
-  }
-  .app-main--wide .screen-body > .actions {
-    margin-top: 0;
+    padding: var(--space-40);
+    gap: var(--space-20);
   }
 }
 
@@ -81,8 +64,8 @@
 
 /* Inline SVG sitting in a line of text. */
 .inline-icon {
-  width: 1em;
-  height: 1em;
-  vertical-align: -0.125em;
+  width: var(--inline-icon-size);
+  height: var(--inline-icon-size);
+  vertical-align: var(--inline-icon-offset);
   flex: none;
 }

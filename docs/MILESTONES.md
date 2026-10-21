@@ -68,6 +68,10 @@ is its own branch → PR → CI green on the branch → merge. Details: [web/REA
 - [x] `web` CI job: npm ci, lint, typecheck, 27 tests, build
 - [x] Desktop teacher layout, offline redirect, real Listen audio (model audio with a
       device-voice fallback)
+- [x] Desktop layouts taken from the design's desktop frames: dashboard with a 5-column roster
+      table, and 360/808, 320/848, 300/868 and 340/560 workspaces on the other teacher screens
+- [x] One theme file (`web/src/theme/theme.css`): every colour, size, space, radius, weight
+      and duration is a custom property; component and screen CSS only use `var(--…)`
 
 **Phases**
 

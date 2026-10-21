@@ -18,7 +18,7 @@
 .hero__title {
   margin: 0;
   font-size: var(--text-heading-1);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 .hero__sub {
   margin: var(--space-4) 0 0;
@@ -28,7 +28,7 @@
 .eyebrow {
   margin: 0;
   font-size: var(--text-meta);
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
   color: var(--color-muted);
 }
@@ -39,7 +39,7 @@
 }
 .greeting__school {
   margin: 0;
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
 }
 .greeting__hello {
   margin: 0;
@@ -52,17 +52,17 @@
   gap: var(--space-12);
 }
 .step__num {
-  width: 28px;
-  height: 28px;
+  width: var(--size-step-num);
+  height: var(--size-step-num);
   flex: none;
   display: grid;
   place-items: center;
   border-radius: var(--radius-pill);
   background: var(--color-brand-primary);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 .step__label {
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
 }
 
 .stack {
@@ -79,7 +79,7 @@
   align-items: center;
   gap: var(--space-16);
   padding: var(--space-16);
-  border: 1px solid var(--color-border);
+  border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-16);
   background: var(--color-surface);
   font: inherit;
@@ -94,7 +94,7 @@
 }
 .rolecard__title {
   display: block;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 .rolecard__sub {
   display: block;
@@ -118,7 +118,7 @@
   align-items: center;
   gap: var(--space-12);
   padding: var(--space-12) var(--space-16);
-  border: 1px solid var(--color-border);
+  border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-16);
   background: var(--color-surface);
   width: 100%;
@@ -128,14 +128,14 @@
 }
 .reader-row--selected {
   border-color: var(--color-brand-primary);
-  background: #fffbeb;
+  background: var(--color-surface-selected);
 }
 .reader-info {
   display: flex;
   flex-direction: column;
 }
 .reader-name {
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
 }
 .reader-meta {
   color: var(--color-text-secondary);
@@ -144,7 +144,7 @@
 .reader-check {
   margin-left: auto;
   color: var(--color-feedback-success);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 
 /* ---------- Reading ---------- */
@@ -159,7 +159,7 @@
 }
 .metarow__title {
   font-size: var(--text-heading-3);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
 }
 
 .context {
@@ -177,16 +177,16 @@
 
 .passage-card {
   position: relative;
-  border: 1px solid var(--color-border);
+  border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-16);
   padding: var(--space-24) var(--space-20);
   background: var(--color-surface);
-  min-height: 260px;
+  min-height: var(--size-reading-min);
 }
 .passage-card__accent {
   position: absolute;
   inset: var(--space-8) var(--space-20) auto;
-  height: 6px;
+  height: var(--size-accent-bar);
   border-radius: var(--radius-pill);
   background: var(--color-brand-primary);
 }
@@ -205,7 +205,7 @@
 .controls__label {
   margin: 0;
   font-size: var(--text-heading-3);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   text-align: center;
 }
 .controls__desc {
@@ -226,7 +226,7 @@
 .feedback-hero__title {
   margin: 0;
   font-size: var(--text-heading-2);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 .feedback-hero__sub {
   margin: 0;
@@ -267,7 +267,7 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-12);
-  border: 1px solid var(--color-border);
+  border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-12);
   padding: var(--space-8) var(--space-12);
 }
@@ -285,7 +285,7 @@
 }
 .progress-note__journey {
   font-size: var(--text-heading-3);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 .nipun {
   display: flex;
@@ -297,7 +297,7 @@
   background: var(--color-background-soft);
   border-radius: var(--radius-pill);
   padding: var(--space-4) var(--space-8);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
 }
 
 .actions {
@@ -321,15 +321,15 @@
 .metric {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  border: 1px solid var(--color-border);
+  gap: var(--space-2);
+  border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-12);
   padding: var(--space-12);
   background: var(--color-surface);
 }
 .metric__value {
   font-size: var(--text-heading-3);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 .metric__label {
   font-size: var(--text-meta);
@@ -344,7 +344,7 @@
   display: flex;
   align-items: flex-end;
   gap: var(--space-16);
-  height: 140px;
+  height: var(--size-chart-height);
   padding-top: var(--space-12);
 }
 .chart__col {
@@ -357,17 +357,17 @@
   gap: var(--space-4);
 }
 .chart__bar {
-  width: 32px;
+  width: var(--size-chart-bar);
   border-radius: var(--radius-12) var(--radius-12) 0 0;
   background: var(--color-secondary);
-  min-height: 6px;
+  min-height: var(--size-chart-min);
 }
 .chart__bar--ok {
   background: var(--color-feedback-success);
 }
 .chart__value {
   font-size: var(--text-meta);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
 }
 .chart__label {
   font-size: var(--text-meta);
@@ -404,7 +404,7 @@
 .recovery-hero__title {
   margin: 0;
   font-size: var(--text-heading-2);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 .recovery-hero__sub {
   margin: 0;
@@ -424,20 +424,20 @@
   display: flex;
   align-items: flex-start;
   gap: var(--space-12);
-  border: 1px solid var(--color-border);
+  border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-12);
   padding: var(--space-12);
 }
 .steps__num {
   flex: none;
-  width: 24px;
-  height: 24px;
+  width: var(--size-steps-num);
+  height: var(--size-steps-num);
   display: grid;
   place-items: center;
   border-radius: var(--radius-pill);
   background: var(--color-background-soft);
   font-size: var(--text-meta);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 
 .checking {
@@ -447,4 +447,110 @@
   gap: var(--space-8);
   text-align: center;
   padding: var(--space-16) 0;
+}
+
+/* ---------- Desktop workspaces ----------
+   Two columns taken from the Figma desktop frames: a fixed side column and a
+   flexible main column, 32px apart. Side widths are the frames' own values:
+   profile 360 | 808, attempt 320 | 848, story 300 | 868, add child 340 | 560. */
+.workspace {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+@media (min-width: 900px) {
+  .workspace {
+    display: grid;
+    grid-template-columns: var(--side, 360px) minmax(0, 1fr);
+    gap: var(--space-32);
+    align-items: start;
+  }
+  .workspace--w360 {
+    --side: var(--workspace-side-profile);
+  }
+  .workspace--w320 {
+    --side: var(--workspace-side-attempt);
+  }
+  .workspace--w300 {
+    --side: var(--workspace-side-story);
+  }
+  .workspace--w340 {
+    --side: var(--workspace-side-form);
+    margin-top: var(--space-24);
+  }
+  .workspace > * {
+    min-width: 0;
+  }
+}
+
+/* The roster is a table on desktop and a card list on mobile, as in the design.
+   Which one renders is decided in JS (useIsDesktop), so the DOM never holds both. */
+.roster-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-16);
+  overflow: hidden;
+}
+.roster-table th {
+  text-align: left;
+  padding: var(--space-12) var(--space-20);
+  border-bottom: var(--border-width) solid var(--color-border);
+  color: var(--color-text-secondary);
+  font-size: var(--text-secondary);
+  font-weight: var(--font-weight-semibold);
+}
+.roster-table td {
+  padding: var(--space-12) var(--space-20);
+  border-bottom: var(--border-width) solid var(--color-border);
+  font-size: var(--text-secondary);
+}
+.roster-table tbody tr {
+  cursor: pointer;
+}
+.roster-table tbody tr:hover {
+  background: var(--color-surface-muted);
+}
+.roster-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.roster-table__child {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+}
+.roster-table__name {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+/* Top-bar teacher navigation: desktop only, as in the design. */
+.topbar__nav {
+  display: none;
+}
+@media (min-width: 900px) {
+  .topbar__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-24);
+  }
+}
+.topbar__link {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: var(--text-secondary);
+}
+.topbar__link--active {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+  border-bottom: var(--border-width-3) solid var(--color-brand-primary);
+  padding-bottom: var(--space-2);
+}
+.topbar__badge {
+  background: var(--color-background-soft);
+  border-radius: var(--radius-pill);
+  padding: var(--space-6) var(--space-16);
+  font-size: var(--text-meta);
+  font-weight: var(--font-weight-semibold);
 }
