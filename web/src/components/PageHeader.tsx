@@ -76,7 +76,7 @@ export function PageHeader({
     <header className="page-header">
       <div className="page-header__row">
         <Link className="page-header__logo" to={home} aria-label={`${brand} home`}>
-          <img src="/logo.png" alt={brand} height={32} />
+          <img src={`${import.meta.env.BASE_URL}logo.png`} alt={brand} height={32} />
         </Link>
 
         {back && (

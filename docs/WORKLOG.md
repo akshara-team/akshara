@@ -41,3 +41,6 @@ Committed the open-set phone, noise, child-pitch and repeat/self-correction resu
 
 ## 2026-10-22: accessibility pass (M6 phase 6)
 Skip link, focus moved to each new screen's heading, `lang` on all native-script text, spoken word results on chips, a quiet recording timer. axe-core (dev only) runs on 12 routes in the web tests and found two real issues, both fixed: an unnamed progress bar and three unnamed avatar buttons. A theme contrast test checks the text pairs at 4.5:1. Not tested with a real screen reader.
+
+## 2026-10-22: Pages deploy prepared (M6 phase 5)
+No Pages workflow existed yet. Added `.github/workflows/pages.yml` (mock-mode build under `/akshara/`, 404.html fallback for deep links) and made the app base-path aware: router basename and logo from `BASE_URL`, relative manifest scope. Checked deep links, logo and navigation in a browser against a local Pages-like server. The job skips while the repo is private, since the free plan serves Pages only from public repos.

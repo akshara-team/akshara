@@ -131,7 +131,7 @@ Each phase is its own branch → PR → CI green on the branch → merge.
 - [x] Phase 2 — real missed-word audio (`/v1/feedback/audio`, cached Timbre)
 - [x] Phase 3 — story chunking (real parts from the API, scored per part)
 - [x] Phase 4 — bundle-size budget in CI
-- [ ] Phase 5 — deploy the demo (GitHub Pages, mock mode)
+- [ ] Phase 5 — deploy the demo (GitHub Pages, mock mode): workflow ready, live once the repo is public
 - [x] Phase 6 — accessibility pass (see Accessibility below)
 
 ## Accessibility

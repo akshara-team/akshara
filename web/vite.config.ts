@@ -24,7 +24,9 @@ export default defineConfig({
         background_color: "#FFFFFF",
         display: "standalone",
         orientation: "portrait",
-        start_url: "/",
+        // Relative, so the installed app opens under whatever base it was built for.
+        start_url: ".",
+        scope: ".",
         // TODO: add 192/512 PNG icons before deploy; svg is enough to install while building.
         icons: [{ src: "favicon.svg", sizes: "any", type: "image/svg+xml" }],
       },

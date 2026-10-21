@@ -15,7 +15,7 @@ either of us to see where the project stands.*
 | Web app (`web/`, Vite + React + TS PWA) | MVP: child flow, teacher screens, six recovery states, child home, saved progress |
 | Missed-word audio (`GET /v1/feedback/audio`) | Done: Timbre behind a content cache |
 | Bundle-size budget in CI | Done: 120 kB JS / 160 kB total gzip |
-| **Deploy the demo** | **Blocked** — GitHub Pages needs repo admin (Achindra) |
+| **Deploy the demo** | **Ready, waits on public repo** — `pages.yml` skips while the repo is private |
 | Story chunking (real parts) | Done: `parts` on passages, `part_index` scored per part |
 | Accessibility pass | Done: skip link, focus on route change, `lang` on scripts, axe in tests |
 
@@ -29,8 +29,9 @@ Both are interviewed separately, so each should be able to explain their own par
 
 ## What is next, in order
 
-1. **Deploy** — needs Achindra to enable Pages (Settings → Pages → Source: GitHub Actions) or an
-   alternative host. Everything is ready apart from that switch.
+1. **Deploy** — the Pages workflow is in place, but the free plan serves Pages only from public
+   repos. When the repo goes public: Settings → Pages → Source: GitHub Actions, then re-run the
+   "Pages" workflow. The demo will be at `https://achindra2003.github.io/akshara/`.
 2. **Submission track** — post the demo, make the repo public, fill in the form (both of us).
 
 ## How to run it
