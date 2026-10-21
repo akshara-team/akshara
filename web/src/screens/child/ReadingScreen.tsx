@@ -67,47 +67,58 @@ export function ReadingScreen() {
     <>
       <TopBar back backTo="/reader" />
       <div className="screen-body">
-        <div className="metarow">
-          <LanguageBadge lang={lang} />
-          <div className="metarow__text">
-            <span className="eyebrow">Child reading · Demo story</span>
-            <span className={`metarow__title ${scriptClass(lang)}`}>{copy.storyTitle}</span>
+        <div className="workspace workspace--w360">
+          {/* Left: story and part context, plus Listen. */}
+          <div className="stack">
+            <div className="metarow">
+              <LanguageBadge lang={lang} />
+              <div className="metarow__text">
+                <span className="eyebrow">Child reading · Demo story</span>
+                <span className={`metarow__title ${scriptClass(lang)}`}>
+                  {copy.storyTitle}
+                </span>
+              </div>
+            </div>
+
+            <div className="context">
+              <div className="context__row">
+                <span>{copy.partOf(currentPart, total)}</span>
+                <ProgressDots total={total} current={currentPart} />
+              </div>
+              <ProgressBar value={(currentPart / total) * 100} />
+            </div>
+
+            <ListenButton text={text} lang={lang} label={copy.listen} block />
           </div>
-        </div>
 
-        <div className="context">
-          <div className="context__row">
-            <span>{copy.partOf(currentPart, total)}</span>
-            <ProgressDots total={total} current={currentPart} />
+          {/* Right: the passage and the mic. */}
+          <div className="stack">
+            <div className="passage-card">
+              <div className="passage-card__accent" aria-hidden="true" />
+              <p className={`reading-text ${scriptClass(lang)}`}>{text}</p>
+            </div>
+
+            <div className="controls">
+              <MicButton state={phase} onClick={onMic} label={label} />
+              <p className="controls__label">{label}</p>
+              <p className="controls__desc">{desc}</p>
+
+              {error && (
+                <p className="field__error" role="alert">
+                  {error}
+                </p>
+              )}
+
+              {isMock && phase === "idle" && (
+                <Button
+                  variant="ghost"
+                  onClick={() => handOver(MOCK_DURATIONS[currentPart - 1] ?? 12, null)}
+                >
+                  Use demo reading
+                </Button>
+              )}
+            </div>
           </div>
-          <ProgressBar value={(currentPart / total) * 100} />
-        </div>
-
-        <div className="passage-card">
-          <div className="passage-card__accent" aria-hidden="true" />
-          <p className={`reading-text ${scriptClass(lang)}`}>{text}</p>
-        </div>
-
-        <div className="controls">
-          <ListenButton text={text} lang={lang} label={copy.listen} />
-          <MicButton state={phase} onClick={onMic} label={label} />
-          <p className="controls__label">{label}</p>
-          <p className="controls__desc">{desc}</p>
-
-          {error && (
-            <p className="field__error" role="alert">
-              {error}
-            </p>
-          )}
-
-          {isMock && phase === "idle" && (
-            <Button
-              variant="ghost"
-              onClick={() => handOver(MOCK_DURATIONS[currentPart - 1] ?? 12, null)}
-            >
-              Use demo reading
-            </Button>
-          )}
         </div>
       </div>
     </>

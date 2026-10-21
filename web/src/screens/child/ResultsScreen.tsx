@@ -35,52 +35,60 @@ export function ResultsScreen() {
     <>
       <TopBar back={false} />
       <div className="screen-body">
-        <p className="eyebrow">Child · Demo attempt · 19 Oct 2026</p>
+        <div className="workspace workspace--w360">
+          {/* Left: celebration and the two headline numbers. */}
+          <div className="stack">
+            <p className="eyebrow">Child · Demo attempt · 19 Oct 2026</p>
 
-        <div className="stack--tight stack">
-          <h1 className="card__title">
-            You read the whole story! <SparklesIcon className="inline-icon" />
-          </h1>
-          <p className="reader-meta">{copy.wellRead}</p>
-        </div>
+            <div className="stack--tight stack">
+              <h1 className="card__title">
+                You read the whole story! <SparklesIcon className="inline-icon" />
+              </h1>
+              <p className="reader-meta">{copy.wellRead}</p>
+            </div>
 
-        <div className="stats-grid">
-          <StatCard label="Correct words/min" value={wcpm == null ? "—" : String(wcpm)} />
-          <StatCard label="Word accuracy" value={`${Math.round(accuracy * 100)}%`} />
-        </div>
-
-        <div className="progress-note">
-          <p className="eyebrow">
-            Your progress <TrendingUpIcon className="inline-icon" />
-          </p>
-          <span className="progress-note__journey">30 → 36 → {wcpm ?? "—"} WCPM</span>
-          <span className="note">5 Oct → 12 Oct → Today · Demo practice history</span>
-          <div className="nipun">
-            <span className="nipun__pill">NIPUN target: 35–54 CWPM</span>
-            <span>Classes 2–3</span>
+            <div className="stats-grid">
+              <StatCard label="Correct words/min" value={wcpm == null ? "—" : String(wcpm)} />
+              <StatCard label="Word accuracy" value={`${Math.round(accuracy * 100)}%`} />
+            </div>
           </div>
-        </div>
 
-        {missed.length > 0 && (
-          <div className="practice">
-            <p className="practice__eyebrow">
-              Practise these words again <RepeatIcon className="inline-icon" />
-            </p>
-            {missed.map((w, i) => (
-              <div className="practice__row" key={`${w.word}-${i}`}>
-                <span className={`reading-text ${scriptClass(lang)}`}>{w.word}</span>
-                <ListenButton text={w.word ?? ""} lang={lang} label={copy.listen} />
+          {/* Right: progress, practice and the way out. */}
+          <div className="stack">
+            <div className="progress-note">
+              <p className="eyebrow">
+                Your progress <TrendingUpIcon className="inline-icon" />
+              </p>
+              <span className="progress-note__journey">30 → 36 → {wcpm ?? "—"} WCPM</span>
+              <span className="note">5 Oct → 12 Oct → Today · Demo practice history</span>
+              <div className="nipun">
+                <span className="nipun__pill">NIPUN target: 35–54 CWPM</span>
+                <span>Classes 2–3</span>
               </div>
-            ))}
+            </div>
+
+            {missed.length > 0 && (
+              <div className="practice">
+                <p className="practice__eyebrow">
+                  Practise these words again <RepeatIcon className="inline-icon" />
+                </p>
+                {missed.map((w, i) => (
+                  <div className="practice__row" key={`${w.word}-${i}`}>
+                    <span className={`reading-text ${scriptClass(lang)}`}>{w.word}</span>
+                    <ListenButton text={w.word ?? ""} lang={lang} label={copy.listen} />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <p className="note">For adults: WCPM means correct words per minute.</p>
+
+            <div className="actions">
+              <Button block onClick={finish}>
+                Finish reading
+              </Button>
+            </div>
           </div>
-        )}
-
-        <p className="note">For adults: WCPM means correct words per minute.</p>
-
-        <div className="actions">
-          <Button block onClick={finish}>
-            Finish reading
-          </Button>
         </div>
       </div>
     </>

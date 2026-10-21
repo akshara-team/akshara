@@ -13,12 +13,25 @@ function at(path: string) {
 }
 
 describe("shell", () => {
-  it("uses the wide shell for teacher routes only", () => {
-    const { container: teacher } = at("/teacher");
-    expect(teacher.querySelector(".app-main--wide")).toBeTruthy();
+  it("renders one responsive shell for every route", () => {
+    for (const path of ["/", "/read/kn-101", "/teacher", "/recovery/offline"]) {
+      const { container, unmount } = at(path);
+      expect(container.querySelector(".app-main")).toBeTruthy();
+      unmount();
+    }
+  });
 
-    const { container: child } = at("/reader");
-    expect(child.querySelector(".app-main--wide")).toBeNull();
+  it("gives the child flow a desktop workspace", () => {
+    const { container: role } = at("/");
+    expect(role.querySelector(".workspace--w360")).toBeTruthy();
+
+    const { container: reading } = at("/read/kn-101");
+    expect(reading.querySelector(".workspace--w360")).toBeTruthy();
+  });
+
+  it("gives recovery a desktop workspace", () => {
+    const { container } = at("/recovery/microphone");
+    expect(container.querySelector(".workspace--w320")).toBeTruthy();
   });
 
   it("routes to the offline recovery screen when the browser goes offline", async () => {

@@ -26,23 +26,33 @@ picker, child profile and history, attempt details, add/edit child.
 
 ## Desktop layouts
 
-The design ships desktop frames for the teacher side (section 03) and only phone frames for
-the child flow (section 02). So the teacher screens get real desktop layouts, and the child
-screens stay a 375 px column, centred as a card on wide viewports.
+Figma has desktop frames **only for the teacher side** (section 03). Sections 02 (child) and
+04 (recovery) are phone-only — verified by listing every frame in the file (185 frames; the
+66 at desktop width all belong to the teacher section, its wireframes, or the handoff).
 
-Values come from the frames, not guesses:
+So the teacher screens are **ported** from their frames, and the child/recovery screens are
+**derived** from the same desktop language: 1280 shell, 40px inset, 32px column gap, 360 or
+320 side column.
 
-| Screen | Desktop frame | Layout |
+| Screen | Baseline | Layout |
 |---|---|---|
-| Teacher dashboard | 1280 × 800 | 40 px inset, 3 stat cards (~389 px each), roster as a **5-column table** |
-| Child profile | 1280 × 800 | **360** side column + 808 main |
-| Attempt details | 1280 × 800 | **320** side column + 848 main |
-| Select story | 1280 × 800 | **300** side column + 868 main |
-| Add child | 1280 × 800 | **340** purpose column + 560 form panel |
+| Teacher dashboard | frame | 40px inset, 3 stat cards, roster as a **5-column table** |
+| Child profile | frame | **360** side + 808 main |
+| Attempt details | frame | **320** side + 848 main |
+| Select story | frame | **300** side + 868 main |
+| Add / Edit child | frame | **340** purpose + 560 form |
+| Role selection | derived | 360 (greeting + language) + main (roles + start) |
+| Choose reader | derived | 360 (context) + main (readers + continue) |
+| Reading | derived | 360 (story, part, Listen) + main (passage capped at 640px, mic) |
+| Checking | derived | 360 (context) + main (waiting + passage preview) |
+| After-part feedback | derived | 360 (progress + notice) + main (chips + practice) |
+| Final results | derived | 360 (celebration + stats) + main (progress + practice) |
+| Recovery | derived | 320 (title + context) + main (the 3 steps + actions) |
 
-The teacher top bar gains its desktop navigation (Class / Story / Add child + a class badge);
-the mobile frames use a back button instead. Which roster renders is decided in JS
-(`useIsDesktop`), so the DOM never contains both the table and the card list.
+The shell is one responsive frame: 375 below 900px, 1280 with a 40px inset above. The teacher
+top bar gains desktop navigation (Class / Story / Add child + a class badge); mobile uses a
+back button. Which roster renders is decided in JS (`useIsDesktop`), so the DOM never contains
+both the table and the card list.
 
 ## Theme
 
