@@ -23,9 +23,17 @@ export type Attempt = {
   accuracy: number;
   wcpm: number | null;
   words: WordOut[];
+  /** Which part was read; null when the whole passage was read. */
+  part_index?: number | null;
 };
 
-export type Passage = { id: string; language: string; text: string };
+export type Passage = {
+  id: string;
+  language: string;
+  text: string;
+  /** The parts the child reads one at a time, from the backend's split_parts(). */
+  parts?: string[];
+};
 
 export type LearnerSummary = {
   alias: string;

@@ -29,7 +29,7 @@ Speech-to-text tends to correct a misread word into the expected one, which hide
 | Mitigation for autocorrected mistakes | Tried, does not help (result recorded) |
 | HTTP API, storage, offline fixture provider, CI gate | Done |
 | Reading screen, trace view, class summary, limits notice | Done (v0.1); microphone path untested live |
-| **Web app** (`web/`, Vite + React + TS PWA) | Child flow, child home with saved progress, teacher screens and recovery states; mock + live modes; 46 tests, own CI job. See [web/README.md](web/README.md) |
+| **Web app** (`web/`, Vite + React + TS PWA) | Child flow, child home with saved progress, teacher screens and recovery states; mock + live modes, passages read in parts; 55 tests, own CI job. See [web/README.md](web/README.md) |
 | Missed-word audio | Done: `GET /v1/feedback/audio`, Timbre behind a content cache |
 | Performance gate | Done: bundle budget in CI (73 kB JS / 78 kB total gzip) |
 | Demo video | [docs/demo/akshara_demo.mp4](docs/demo/akshara_demo.mp4) |

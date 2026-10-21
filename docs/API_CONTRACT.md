@@ -32,18 +32,20 @@ see "Not built (deferred)" at the bottom, which is kept as the wish-list.*
 ### `GET /v1/passages?lang=kn-IN`
 
 Passages for one language (omit `lang` for all). `text` is the reference the child reads.
+`parts` is the same text split for reading one part at a time (`core/parts.py`): whole
+sentences packed up to 12 words, a sentence cut only past 20 words, and a part under 4 words
+joined to its neighbour. Joining `parts` with spaces gives back the words of `text`.
 
 ```json
 [
-  {"id": "kn-101", "language": "kn-IN", "text": "ರಾಮು ಪ್ರತಿದಿನ ಶಾಲೆಗೆ ಹೋಗುತ್ತಾನೆ. ..."}
+  {"id": "kn-101", "language": "kn-IN", "text": "ರಾಮು ಪ್ರತಿದಿನ ಶಾಲೆಗೆ ಹೋಗುತ್ತಾನೆ. ...",
+   "parts": ["ರಾಮು ಪ್ರತಿದಿನ ಶಾಲೆಗೆ ಹೋಗುತ್ತಾನೆ. ...", "..."]}
 ]
 ```
 
 ### `GET /v1/passages/{passage_id}`
 
-```json
-{"id": "kn-101", "language": "kn-IN", "text": "ರಾಮು ಪ್ರತಿದಿನ ಶಾಲೆಗೆ ಹೋಗುತ್ತಾನೆ. ..."}
-```
+Same shape as one item above, `parts` included.
 
 ### `GET /v1/feedback/audio?lang=kn-IN&word=ಹಾರುತ್ತಿತ್ತು`
 
@@ -55,7 +57,10 @@ failure is `502`. Costs one Timbre call on a cache miss.
 
 ### `POST /v1/attempts` (multipart)
 
-Fields: `audio` (WAV file), `learner` (alias, 1–40 chars), `passage_id`.
+Fields: `audio` (WAV file), `learner` (alias, 1–40 chars), `passage_id`, and optional
+`part_index` (0-based index into the passage's `parts`). With `part_index` the reading is
+scored against that part only, so the rest of the passage is not counted as skipped; an index
+out of range is `400`. Without it the whole passage is the reference.
 Optional header `X-Request-ID` makes the call idempotent (resending returns the stored
 result and makes no second paid call). Runs Prisma (verbatim, **no `bias_list`**) then the
 pure scorer.
@@ -71,6 +76,7 @@ pure scorer.
   "transcript": "ರಾಮು ಪ್ರತಿದಿನ ಮನೆಗೆ ಹೋಗುತ್ತಾನೆ ...",
   "accuracy": 0.86,
   "wcpm": 42.5,
+  "part_index": 0,
   "words": [
     {"op": "correct", "word": "ರಾಮು", "said": "ರಾಮು", "index": 0, "check": false},
     {"op": "skipped", "word": "ಬೆಳಿಗ್ಗೆ", "said": null, "index": 1, "check": false},
@@ -104,11 +110,8 @@ One row per learner (class-level, not per child).
 
 Things the earlier draft wanted, not implemented and not needed for the demo:
 
-- `stories` with an explicit `chunks` split — passages are read whole and each is already
-  under 30 s.
 - Per-child progress (`/children/{id}/progress`) and an attempt-history list — the class
   summary covers the demo.
-- Timbre **feedback audio** for a missed word — would turn the screener into a tutor.
 - Evon story generation.
 
 ## Still open

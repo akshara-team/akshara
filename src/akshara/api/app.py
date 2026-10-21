@@ -12,6 +12,7 @@ from fastapi.responses import FileResponse, Response
 
 from akshara import passages as passage_bank
 from akshara.api.schemas import AttemptOut, LearnerSummary
+from akshara.core.parts import split_parts
 from akshara.providers.audio_cache import CachedTTS
 from akshara.providers.base import ProviderError, SpeechToText, TextToSpeech
 from akshara.providers.fixture import FixtureSTT
@@ -56,6 +57,13 @@ def create_app(
     store = Store(settings.db_path)
     bank = bank if bank is not None else passage_bank.load(PASSAGES)
     stt_lock = threading.Lock()  # Prisma allows one active request at a time
+
+    def passage_out(p: dict) -> dict:
+        return {
+            "id": p["id"], "language": p["lang"], "text": p["reference"],
+            "parts": split_parts(p["reference"]),
+        }  # fmt: skip
+
     hits: dict[str, deque[float]] = defaultdict(deque)
     app = FastAPI(title="Akshara", version="0.1.0")
 
@@ -77,18 +85,14 @@ def create_app(
 
     @app.get("/v1/passages")
     def list_passages(lang: str | None = None) -> list[dict]:
-        return [
-            {"id": p["id"], "language": p["lang"], "text": p["reference"]}
-            for p in bank.values()
-            if lang in (None, p["lang"])
-        ]
+        return [passage_out(p) for p in bank.values() if lang in (None, p["lang"])]
 
     @app.get("/v1/passages/{passage_id}")
     def get_passage(passage_id: str) -> dict:
         p = bank.get(passage_id)
         if not p:
             raise HTTPException(404, "unknown passage")
-        return {"id": p["id"], "language": p["lang"], "text": p["reference"]}
+        return passage_out(p)
 
     @app.get("/v1/feedback/audio")
     def feedback_audio(lang: str, word: str) -> Response:
@@ -111,12 +115,19 @@ def create_app(
         audio: UploadFile = File(...),
         learner: str = Form(..., min_length=1, max_length=40),
         passage_id: str = Form(...),
+        part_index: int | None = Form(default=None),
         x_request_id: str | None = Header(default=None),
     ) -> AttemptOut:
         limit(request)
         passage = bank.get(passage_id)
         if not passage:
             raise HTTPException(404, "unknown passage")
+        reference = passage["reference"]
+        if part_index is not None:  # score against just the part that was read
+            parts = split_parts(reference)
+            if not 0 <= part_index < len(parts):
+                raise HTTPException(400, f"part_index must be 0-{len(parts) - 1}")
+            reference = parts[part_index]
         data = audio.file.read(settings.max_upload_bytes + 1)
         if len(data) > settings.max_upload_bytes:
             raise HTTPException(413, "audio too large")
@@ -132,8 +143,8 @@ def create_app(
                 with stt_lock:
                     a = assess(
                         stt=stt, store=store, audio=path, learner=learner, passage_id=passage_id,
-                        reference=passage["reference"], language=passage["lang"],
-                        request_id=x_request_id,
+                        reference=reference, language=passage["lang"],
+                        request_id=x_request_id, part_index=part_index,
                     )  # fmt: skip
             except ProviderError as e:
                 log.warning("provider failed: %s", e)
@@ -153,6 +164,7 @@ def create_app(
             request_id=request_id, learner=learner, passage_id=row["passage_id"],
             language=row["language"], provider=row["provider"], transcript=row["transcript"],
             accuracy=row["accuracy"], wcpm=row["wcpm"], words=row["trace"],
+            part_index=row["part_index"],
         )  # fmt: skip
 
     @app.get("/v1/class/summary", response_model=list[LearnerSummary])

@@ -35,10 +35,9 @@ const mock: Api = {
 
 const live: Api = {
   listPassages: (lang) => liveApi.listPassages(lang),
-  // The backend serves whole passages; one part until chunking exists.
-  partsOf: (passage) => [passage.text],
-  submitAttempt: ({ audio, learner, passageId }) =>
-    liveApi.submitAttempt({ audio, learner, passageId }),
+  partsOf: (passage) => liveApi.partsOf(passage),
+  submitAttempt: ({ audio, learner, passageId, partIndex }) =>
+    liveApi.submitAttempt({ audio, learner, passageId, partIndex }),
   classSummary: () => liveApi.classSummary(),
   feedbackAudio: (word, lang) => liveApi.feedbackAudio(word, lang),
 };

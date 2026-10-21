@@ -25,3 +25,17 @@ def test_variant_spelling_is_marked_check(tmp_path):
     )  # fmt: skip
     assert [w["check"] for w in a.words] == [True, False, False]
     assert a.accuracy == 1.0
+
+
+def test_old_database_gains_part_index(tmp_path):
+    import sqlite3
+
+    path = tmp_path / "old.sqlite"
+    db = sqlite3.connect(path)
+    db.executescript(MIGRATIONS[0])
+    db.execute("PRAGMA user_version = 1")
+    db.commit()
+    db.close()
+    s = Store(path)  # opening runs only the missing migration
+    cols = [r["name"] for r in s.db.execute("PRAGMA table_info(attempts)")]
+    assert "part_index" in cols

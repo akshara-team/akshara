@@ -28,6 +28,8 @@ MIGRATIONS = [
         created_at REAL NOT NULL
     );
     """,
+    # 2: which part of the passage was read; NULL means the whole passage
+    "ALTER TABLE attempts ADD COLUMN part_index INTEGER;",
 ]
 
 
@@ -58,11 +60,13 @@ class Store:
 
     def save_attempt(self, **a) -> None:
         """Idempotent on request_id: a retried upload does not create a second attempt."""
+        a.setdefault("part_index", None)
         self.db.execute(
             "INSERT OR IGNORE INTO attempts (request_id, learner_id, passage_id, language,"
-            " provider, transcript, duration_s, accuracy, wcpm, trace, latency_ms, created_at)"
+            " provider, transcript, duration_s, accuracy, wcpm, trace, latency_ms, created_at,"
+            " part_index)"
             " VALUES (:request_id, :learner_id, :passage_id, :language, :provider, :transcript,"
-            " :duration_s, :accuracy, :wcpm, :trace, :latency_ms, :created_at)",
+            " :duration_s, :accuracy, :wcpm, :trace, :latency_ms, :created_at, :part_index)",
             {**a, "trace": json.dumps(a["trace"], ensure_ascii=False), "created_at": time.time()},
         )
         self.db.commit()

@@ -35,3 +35,6 @@ README status, PLAN outcome note, Gnani message drafts (docs/GNANI_MESSAGES.md).
 
 ## 2026-10-21: merged results and number check restored
 Committed the open-set phone, noise, child-pitch and repeat/self-correction result files, which were missing from git, and pointed `scripts/check_numbers.py` back at them; a missing result file now fails the check instead of being skipped. GO_NO_GO.md shows the Hindi row from the Oct 19 run. Ledger merged from both machines (1,930 calls).
+
+## 2026-10-22: story chunking (M6 phase 3)
+`core/parts.py` splits passages into parts (whole sentences up to 12 words, cut only past 20, tiny parts joined). The API returns `parts` and accepts `part_index`, stored by migration 2 and scored against that part only. Web live mode reads the real parts. On the 90 open passages: 34 read in one part, 54 in two, 2 in three; parts are 4–20 words.

@@ -65,7 +65,7 @@ is its own branch → PR → CI green on the branch → merge. Details: [web/REA
       picker, child profile and history, attempt details, add/edit child
 - [x] API seam with a mock adapter (the handoff's demo attempt) and a live adapter for `/v1`
 - [x] Per-screen error boundaries so one broken screen leaves the rest working
-- [x] `web` CI job: npm ci, lint, typecheck, 46 tests, build, bundle budget
+- [x] `web` CI job: npm ci, lint, typecheck, 55 tests, build, bundle budget
 - [x] Desktop teacher layout, offline redirect, real Listen audio (model audio with a
       device-voice fallback)
 - [x] Desktop layouts taken from the design's desktop frames: dashboard with a 5-column roster
@@ -82,7 +82,9 @@ is its own branch → PR → CI green on the branch → merge. Details: [web/REA
 - [x] Phase 2 — `GET /v1/feedback/audio`: Timbre audio behind a content cache (one paid call
       per new word, then free); validated lang/word, 502 on provider failure; the web app
       tries it before falling back to the device voice
-- [ ] Phase 3 — story chunking: `split_parts`, `part_index` on attempts, parts from the API
+- [x] Phase 3 — story chunking: `core/parts.py` `split_parts` (whole sentences up to 12
+      words, cut only past 20, tiny parts joined), `parts` on passages, `part_index` on
+      attempts (migration 2) scored against that part only; live web mode uses them
 - [x] Phase 4 — performance gate: `web/scripts/budget.mjs` fails CI past 120 kB JS / 160 kB
       total gzip (measured build: ~73 kB JS / ~78 kB total); runs after the build and in `run.sh check`
 - [ ] Phase 5 — deploy the demo (mock mode) for the post — **blocked: GitHub Pages needs repo
