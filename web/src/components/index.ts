@@ -5,6 +5,7 @@ export { EmptyState } from "./EmptyState";
 export { ErrorBoundary } from "./ErrorBoundary";
 export { Input } from "./Input";
 export { LanguageBadge } from "./LanguageBadge";
+export { ListenButton } from "./ListenButton";
 export { MicButton, type MicState } from "./MicButton";
 export { ProgressBar } from "./ProgressBar";
 export { ProgressDots } from "./ProgressDots";

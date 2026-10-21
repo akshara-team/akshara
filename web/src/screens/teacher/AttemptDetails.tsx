@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ATTEMPT, childById } from "../../api/teacherData";
 import { mockAttempt } from "../../api/mock";
 import type { WordOut } from "../../api/types";
-import { Button, Card, LanguageBadge, StatCard, TopBar, WordChip, type WordStatus } from "../../components";
+import { Button, Card, LanguageBadge, ListenButton, StatCard, TopBar, WordChip, type WordStatus } from "../../components";
 import { scriptClass } from "../../theme/script";
 
 function statusOf(w: WordOut): WordStatus {
@@ -74,9 +74,7 @@ export function AttemptDetails() {
           {ATTEMPT.practice.map((word) => (
             <div className="practice__row" key={word}>
               <span className={`reading-text ${scriptClass(child.lang)}`}>{word}</span>
-              <Button variant="outline" icon="audio" onClick={() => undefined}>
-                Listen
-              </Button>
+              <ListenButton text={word} lang={child.lang} />
             </div>
           ))}
         </div>

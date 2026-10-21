@@ -1,5 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import { Button, RepeatIcon, SparklesIcon, StatCard, TopBar, TrendingUpIcon } from "../../components";
+import {
+  Button,
+  ListenButton,
+  RepeatIcon,
+  SparklesIcon,
+  StatCard,
+  TopBar,
+  TrendingUpIcon,
+} from "../../components";
 import { useSession } from "../../state/session";
 import { scriptClass } from "../../theme/script";
 import { flowCopy } from "./copy";
@@ -61,9 +69,7 @@ export function ResultsScreen() {
             {missed.map((w, i) => (
               <div className="practice__row" key={`${w.word}-${i}`}>
                 <span className={`reading-text ${scriptClass(lang)}`}>{w.word}</span>
-                <Button variant="outline" icon="audio" onClick={() => undefined}>
-                  {copy.listen}
-                </Button>
+                <ListenButton text={w.word ?? ""} lang={lang} label={copy.listen} />
               </div>
             ))}
           </div>

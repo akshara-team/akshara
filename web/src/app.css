@@ -15,6 +15,44 @@
   flex-direction: column;
 }
 
+/* Teacher screens use the design's desktop frames on wide viewports. */
+@media (min-width: 900px) {
+  .app-shell {
+    padding: var(--space-24) 0;
+  }
+  .app-main {
+    min-height: calc(100dvh - var(--space-48));
+    border-radius: var(--radius-16);
+    border: 1px solid var(--color-border);
+  }
+  .app-main--wide {
+    max-width: 1100px;
+  }
+}
+
+/* Teacher desktop: a two-column body. Headings, labels and the action block
+   span the full width; everything else flows into the columns. */
+@media (min-width: 900px) {
+  .app-main--wide .screen-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-24);
+    align-items: start;
+  }
+  .app-main--wide .screen-body > * {
+    min-width: 0;
+  }
+  .app-main--wide .screen-body > .eyebrow,
+  .app-main--wide .screen-body > h1,
+  .app-main--wide .screen-body > .step__label,
+  .app-main--wide .screen-body > .actions {
+    grid-column: 1 / -1;
+  }
+  .app-main--wide .screen-body > .actions {
+    margin-top: 0;
+  }
+}
+
 /* Temporary scaffolding for the screen stubs; replaced as screens are built. */
 .screen {
   display: flex;

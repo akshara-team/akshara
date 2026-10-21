@@ -5,6 +5,7 @@ import { MOCK_DURATIONS, createRecorder, type Recorder } from "../../api/mock";
 import {
   Button,
   LanguageBadge,
+  ListenButton,
   MicButton,
   ProgressBar,
   ProgressDots,
@@ -88,9 +89,7 @@ export function ReadingScreen() {
         </div>
 
         <div className="controls">
-          <Button variant="outline" icon="audio">
-            {copy.listen}
-          </Button>
+          <ListenButton text={text} lang={lang} label={copy.listen} />
           <MicButton state={phase} onClick={onMic} label={label} />
           <p className="controls__label">{label}</p>
           <p className="controls__desc">{desc}</p>
