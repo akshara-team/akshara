@@ -44,50 +44,62 @@ export function ChooseReader() {
       </div>
 
       <div className="screen-body">
-        <Card>
-          <p className="eyebrow">Welcome · Demo school</p>
-          <p className="reader-meta">Reading in {scriptName(lang)}</p>
-        </Card>
+        <div className="workspace workspace--w360">
+          {/* Left: context. */}
+          <div className="stack">
+            <Card>
+              <p className="eyebrow">Welcome · Demo school</p>
+              <p className={`reader-name ${scriptClass(lang)}`}>
+                Reading in {scriptName(lang)}
+              </p>
+              <p className="reader-meta">Pick the name the child recognises.</p>
+            </Card>
 
-        <div className="stack" role="radiogroup" aria-label="Reader">
-          {READERS.map((r) => (
-            <button
-              key={r.id}
-              type="button"
-              role="radio"
-              aria-checked={r.id === selected.id}
-              className={`reader-row ${r.id === selected.id ? "reader-row--selected" : ""}`}
-              onClick={() => setSelected(r)}
-            >
-              <Avatar initials={r.initials} selected={r.id === selected.id} />
-              <span className="reader-info">
-                <span className="reader-name">{r.alias}</span>
-                <span className={`reader-meta ${scriptClass(lang)}`}>
-                  {r.level} · {scriptName(lang)}
-                </span>
-              </span>
-              {r.id === selected.id && (
-                <span className="reader-check" aria-hidden="true">
-                  <CheckIcon width={20} height={20} />
-                </span>
-              )}
-            </button>
-          ))}
-        </div>
+            <Button variant="ghost" block onClick={() => navigate("/")}>
+              Choose another language
+            </Button>
+          </div>
 
-        {error && (
-          <p className="field__error" role="alert">
-            {error}
-          </p>
-        )}
+          {/* Right: readers and continue. */}
+          <div className="stack">
+            <div className="stack" role="radiogroup" aria-label="Reader">
+              {READERS.map((r) => (
+                <button
+                  key={r.id}
+                  type="button"
+                  role="radio"
+                  aria-checked={r.id === selected.id}
+                  className={`reader-row ${r.id === selected.id ? "reader-row--selected" : ""}`}
+                  onClick={() => setSelected(r)}
+                >
+                  <Avatar initials={r.initials} selected={r.id === selected.id} />
+                  <span className="reader-info">
+                    <span className="reader-name">{r.alias}</span>
+                    <span className={`reader-meta ${scriptClass(lang)}`}>
+                      {r.level} · {scriptName(lang)}
+                    </span>
+                  </span>
+                  {r.id === selected.id && (
+                    <span className="reader-check" aria-hidden="true">
+                      <CheckIcon width={20} height={20} />
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
 
-        <div className="actions">
-          <Button block disabled={busy} onClick={start}>
-            {busy ? "Loading…" : `Continue as ${selected.alias}`}
-          </Button>
-          <Button variant="ghost" block onClick={() => navigate("/")}>
-            Choose another language
-          </Button>
+            {error && (
+              <p className="field__error" role="alert">
+                {error}
+              </p>
+            )}
+
+            <div className="actions">
+              <Button block disabled={busy} onClick={start}>
+                {busy ? "Loading…" : `Continue as ${selected.alias}`}
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </>

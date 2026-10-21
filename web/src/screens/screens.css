@@ -483,6 +483,24 @@
   }
 }
 
+/* Desktop: banners take the same 40px inset as the teacher frames, and the
+   reading column is capped so lines stay readable on a wide screen. */
+@media (min-width: 900px) {
+  .hero,
+  .feedback-hero,
+  .recovery-hero {
+    padding: var(--space-40);
+  }
+  .hero__title,
+  .feedback-hero__title,
+  .recovery-hero__title {
+    font-size: var(--text-heading-1);
+  }
+  .passage-card {
+    max-width: var(--size-passage-max);
+  }
+}
+
 /* The roster is a table on desktop and a card list on mobile, as in the design.
    Which one renders is decided in JS (useIsDesktop), so the DOM never holds both. */
 .roster-table {

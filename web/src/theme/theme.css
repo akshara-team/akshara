@@ -115,6 +115,8 @@
   --size-shell-mobile: 375px; /* the design's mobile frame width */
   --size-shell-desktop: 1280px; /* the desktop frames */
   --size-error-card: 375px;
+  --size-passage-max: 640px; /* keeps reading lines short on desktop */
+  --size-recovery-card: 560px;
 
   /* Desktop workspace side columns, straight from the frames. */
   --workspace-side-profile: 360px;

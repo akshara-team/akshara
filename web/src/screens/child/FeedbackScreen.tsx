@@ -69,75 +69,81 @@ export function FeedbackScreen() {
         <h1 className={`feedback-hero__title ${scriptClass(lang)}`}>
           {copy.wellRead} <StarIcon className="inline-icon" />
         </h1>
-        <p className="feedback-hero__sub">
-          Child · Evaluated demo · Part {currentPart}
-        </p>
+        <p className="feedback-hero__sub">Child · Evaluated demo · Part {currentPart}</p>
       </div>
 
       <div className="screen-body">
-        <div className="context">
-          <div className="context__row">
-            <span>
-              {currentPart} of {total}
-            </span>
-            <span>{Math.round(part.attempt.accuracy * 100)}% correct</span>
-          </div>
-          <ProgressBar value={(currentPart / total) * 100} />
-        </div>
-
-        <div className="metarow">
-          <LanguageBadge lang={lang} />
-          <span className="reader-meta">
-            Your reading · Part {currentPart} of {total}
-          </span>
-        </div>
-
-        <div className="chips">
-          {words.map((w, i) => (
-            <WordChip
-              key={`${w.index ?? i}-${w.word ?? ""}`}
-              status={statusOf(w)}
-              word={w.word ?? ""}
-              lang={lang}
-            />
-          ))}
-        </div>
-
-        <div className="legend">
-          <span>
-            <CheckIcon className="inline-icon" /> read correctly
-          </span>
-          <span>
-            <SwapIcon className="inline-icon" /> read as a different word
-          </span>
-          <span>
-            <MinusIcon className="inline-icon" /> skipped
-          </span>
-          <span>
-            <QuestionIcon className="inline-icon" /> check this word
-          </span>
-        </div>
-
-        <p className="note">{part.attempt.notice}</p>
-
-        {missed.length > 0 && (
-          <div className="practice">
-            <p className="practice__eyebrow">
-              <EarIcon className="inline-icon" /> Listen and say · Timbre
-            </p>
-            {missed.map((w, i) => (
-              <div className="practice__row" key={`${w.word}-${i}`}>
-                <span className={`reading-text ${scriptClass(lang)}`}>{w.word}</span>
-                <ListenButton text={w.word ?? ""} lang={lang} label={copy.listen} />
+        <div className="workspace workspace--w360">
+          {/* Left: part context and the honesty notice. */}
+          <div className="stack">
+            <div className="context">
+              <div className="context__row">
+                <span>
+                  {currentPart} of {total}
+                </span>
+                <span>{Math.round(part.attempt.accuracy * 100)}% correct</span>
               </div>
-            ))}
-          </div>
-        )}
+              <ProgressBar value={(currentPart / total) * 100} />
+            </div>
 
-        <div className="actions">
-          <Button block onClick={next}>
-            {isLast ? "See results" : copy.continueToPart(currentPart + 1)}
-          </Button>
+            <div className="metarow">
+              <LanguageBadge lang={lang} />
+              <span className="reader-meta">
+                Your reading · Part {currentPart} of {total}
+              </span>
+            </div>
+
+            <p className="note">{part.attempt.notice}</p>
+          </div>
+
+          {/* Right: the words and what to practise. */}
+          <div className="stack">
+            <div className="chips">
+              {words.map((w, i) => (
+                <WordChip
+                  key={`${w.index ?? i}-${w.word ?? ""}`}
+                  status={statusOf(w)}
+                  word={w.word ?? ""}
+                  lang={lang}
+                />
+              ))}
+            </div>
+
+            <div className="legend">
+              <span>
+                <CheckIcon className="inline-icon" /> read correctly
+              </span>
+              <span>
+                <SwapIcon className="inline-icon" /> read as a different word
+              </span>
+              <span>
+                <MinusIcon className="inline-icon" /> skipped
+              </span>
+              <span>
+                <QuestionIcon className="inline-icon" /> check this word
+              </span>
+            </div>
+
+            {missed.length > 0 && (
+              <div className="practice">
+                <p className="practice__eyebrow">
+                  <EarIcon className="inline-icon" /> Listen and say · Timbre
+                </p>
+                {missed.map((w, i) => (
+                  <div className="practice__row" key={`${w.word}-${i}`}>
+                    <span className={`reading-text ${scriptClass(lang)}`}>{w.word}</span>
+                    <ListenButton text={w.word ?? ""} lang={lang} label={copy.listen} />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className="actions">
+              <Button block onClick={next}>
+                {isLast ? "See results" : copy.continueToPart(currentPart + 1)}
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </>

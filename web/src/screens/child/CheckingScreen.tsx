@@ -84,44 +84,54 @@ export function CheckingScreen() {
     <>
       <TopBar back={false} />
       <div className="screen-body">
-        <div className="metarow">
-          <LanguageBadge lang={lang} />
-          <div className="metarow__text">
-            <span className="eyebrow">Child reading · Checking</span>
-            <span className={`metarow__title ${scriptClass(lang)}`}>
-              {passage ? passage.text.split(/\s+/).slice(0, 3).join(" ") : "Your story"}
-            </span>
+        <div className="workspace workspace--w360">
+          {/* Left: story and part context. */}
+          <div className="stack">
+            <div className="metarow">
+              <LanguageBadge lang={lang} />
+              <div className="metarow__text">
+                <span className="eyebrow">Child reading · Checking</span>
+                <span className={`metarow__title ${scriptClass(lang)}`}>
+                  {passage ? passage.text.split(/\s+/).slice(0, 3).join(" ") : "Your story"}
+                </span>
+              </div>
+            </div>
+
+            <div className="context">
+              <div className="context__row">
+                <span>
+                  Part {currentPart} of {total} · Just finished
+                </span>
+                <ProgressDots total={total} current={currentPart} />
+              </div>
+            </div>
+          </div>
+
+          {/* Right: the wait itself. */}
+          <div className="stack">
+            <div className="checking">
+              <Spinner label="Checking your reading now…" />
+              <h1 className="recovery-hero__title">Great job!</h1>
+              <p className="note">We heard you. Checking your reading now…</p>
+              <p className="note">
+                You read aloud — well done! Your result will appear in a moment.
+              </p>
+            </div>
+
+            <div className="passage-card">
+              <div className="passage-card__accent" aria-hidden="true" />
+              <p className={`reading-text ${scriptClass(lang)}`}>
+                {parts[currentPart - 1]?.text ?? "Your story"}
+              </p>
+            </div>
+
+            {isMock && (
+              <p className="note">
+                Demo mode: results come from fixtures, so this finishes instantly.
+              </p>
+            )}
           </div>
         </div>
-
-        <div className="context">
-          <div className="context__row">
-            <span>
-              Part {currentPart} of {total} · Just finished
-            </span>
-            <ProgressDots total={total} current={currentPart} />
-          </div>
-        </div>
-
-        <div className="checking">
-          <Spinner label="Checking your reading now…" />
-          <h1 className="recovery-hero__title">Great job!</h1>
-          <p className="note">We heard you. Checking your reading now…</p>
-          <p className="note">You read aloud — well done! Your result will appear in a moment.</p>
-        </div>
-
-        <div className="passage-card">
-          <div className="passage-card__accent" aria-hidden="true" />
-          <p className={`reading-text ${scriptClass(lang)}`}>
-            {parts[currentPart - 1]?.text ?? "Your story"}
-          </p>
-        </div>
-
-        {isMock && (
-          <p className="note">
-            Demo mode: results come from fixtures, so this finishes instantly.
-          </p>
-        )}
       </div>
     </>
   );

@@ -30,14 +30,12 @@ function Screen({ children }: { children: ReactNode }) {
   return <ErrorBoundary key={pathname}>{children}</ErrorBoundary>;
 }
 
-/** Owns the shell: the wide (desktop) layout and the offline listener. */
+/** Owns the shell: one responsive frame for every route, plus offline handling. */
 function Shell({ children }: { children: ReactNode }) {
-  const { pathname } = useLocation();
   useOfflineRedirect();
-  const wide = pathname.startsWith("/teacher");
   return (
     <div className="app-shell">
-      <main className={`app-main ${wide ? "app-main--wide" : ""}`}>{children}</main>
+      <main className="app-main">{children}</main>
     </div>
   );
 }

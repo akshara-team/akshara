@@ -25,40 +25,50 @@ export function RecoveryScreen() {
       </div>
 
       <div className="screen-body">
-        <div className="metarow">
-          <LanguageBadge lang={lang} />
-          <div className="metarow__text">
-            <span className="eyebrow">Recovery · Demo state</span>
-            <span className={`metarow__title ${scriptClass(lang)}`}>
-              {passage ? passage.text.split(/\s+/).slice(0, 3).join(" ") : "No story loaded"}
-            </span>
+        <div className="workspace workspace--w320">
+          {/* Left: what is still true about the reading. */}
+          <div className="stack">
+            <div className="metarow">
+              <LanguageBadge lang={lang} />
+              <div className="metarow__text">
+                <span className="eyebrow">Recovery · Demo state</span>
+                <span className={`metarow__title ${scriptClass(lang)}`}>
+                  {passage ? passage.text.split(/\s+/).slice(0, 3).join(" ") : "No story loaded"}
+                </span>
+              </div>
+            </div>
+
+            <p className="note">
+              Part {currentPart} of {total}
+            </p>
           </div>
-        </div>
 
-        <p className="note">Part {currentPart} of {total}</p>
+          {/* Right: what to do next. */}
+          <div className="stack">
+            {v.steps && (
+              <ol className="steps">
+                {v.steps.map((step, i) => (
+                  <li className="steps__item" key={step}>
+                    <span className="steps__num">{i + 1}</span>
+                    <span>{step}</span>
+                  </li>
+                ))}
+              </ol>
+            )}
 
-        {v.steps && (
-          <ol className="steps">
-            {v.steps.map((step, i) => (
-              <li className="steps__item" key={step}>
-                <span className="steps__num">{i + 1}</span>
-                <span>{step}</span>
-              </li>
-            ))}
-          </ol>
-        )}
+            {v.note && <p className="note">{v.note}</p>}
 
-        {v.note && <p className="note">{v.note}</p>}
-
-        <div className="actions">
-          <Button block onClick={() => navigate(v.primary.to)}>
-            {v.primary.label}
-          </Button>
-          {v.secondary && (
-            <Button variant="ghost" block onClick={() => navigate(v.secondary!.to)}>
-              {v.secondary.label}
-            </Button>
-          )}
+            <div className="actions">
+              <Button block onClick={() => navigate(v.primary.to)}>
+                {v.primary.label}
+              </Button>
+              {v.secondary && (
+                <Button variant="ghost" block onClick={() => navigate(v.secondary!.to)}>
+                  {v.secondary.label}
+                </Button>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </>
