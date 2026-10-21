@@ -35,8 +35,17 @@ Speech-to-text tends to correct a misread word into the expected one, which hide
 ## Quick start
 
 ```bash
-uv sync
-cp .env.example .env        # add your GNANI_API_KEY
+./run.sh install     # uv sync + npm install
+cp .env.example .env # add your GNANI_API_KEY (optional: the fixture provider needs none)
+./run.sh             # backend + web together; logs are tagged [backend] / [frontend]
+```
+
+The same commands are available through npm: `npm start`, `npm run dev`, `npm test`,
+`npm run lint`, `npm run typecheck`, `npm run build`, `npm run check`.
+
+Pieces, if you want them separately:
+
+```bash
 uv run pytest
 uv run python scripts/go_no_go.py --dry-run   # no API calls
 uv run uvicorn akshara.api.app:create_app --factory   # API on :8000 (offline fixture provider by default)
