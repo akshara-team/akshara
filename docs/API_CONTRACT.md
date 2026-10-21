@@ -1,6 +1,6 @@
 # API Contract
 
-*Owner: Partner. This documents the live API served by `src/akshara/api/app.py`, so the
+*Owner: Daniel. This documents the live API served by `src/akshara/api/app.py`, so the
 frontend (and anything else) can build against it. An earlier draft proposed a different
 shape (`/api/stories` with chunks, per-child progress, feedback audio); it was superseded —
 see "Not built (deferred)" at the bottom, which is kept as the wish-list.*

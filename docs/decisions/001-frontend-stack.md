@@ -1,6 +1,6 @@
 # 001 — Frontend stack: Vite + React + TypeScript (PWA)
 
-*Status: proposed, awaiting sign-off with Achindra (due Oct 23). Owner: Partner.*
+*Status: proposed, awaiting sign-off with Achindra (due Oct 23). Owner: Daniel.*
 
 ## Decision
 

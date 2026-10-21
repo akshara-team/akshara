@@ -1,5 +1,7 @@
 # Akshara web app
 
+Repo-wide status (what is done, what is next): [../docs/STATUS.md](../docs/STATUS.md).
+
 The child and teacher frontend for Akshara: a Vite + React + TypeScript PWA that talks to
 the FastAPI backend in `../src/akshara/api`.
 
