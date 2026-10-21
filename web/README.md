@@ -75,6 +75,20 @@ custom property; component and screen stylesheets only reference `var(--…)`. T
 exception is the 900 px breakpoint, which CSS cannot read from a variable inside `@media` —
 it is documented there as `--breakpoint-desktop` and must be kept in sync.
 
+## Performance budget
+
+`npm run budget` gzips the build and fails if it grows past **120 kB of JavaScript** or
+**160 kB in total**. It runs after the build in CI and in `./run.sh check`. The measured
+production build is ~73 kB JS / ~78 kB total (257 kB raw). Override the limits when needed:
+
+```bash
+BUDGET_JS_KB=110 npm run budget
+```
+
+Lighthouse is deliberately **not** in CI — it is flaky on shared runners and needs a served
+build. The size budget is the reliable gate; a manual Lighthouse run before the post is still
+worth doing.
+
 ## Layout
 
 ```
