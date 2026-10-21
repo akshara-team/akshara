@@ -5,6 +5,7 @@ import {
   CheckIcon,
   EarIcon,
   LanguageBadge,
+  ListenButton,
   MinusIcon,
   ProgressBar,
   QuestionIcon,
@@ -127,9 +128,7 @@ export function FeedbackScreen() {
             {missed.map((w, i) => (
               <div className="practice__row" key={`${w.word}-${i}`}>
                 <span className={`reading-text ${scriptClass(lang)}`}>{w.word}</span>
-                <Button variant="outline" icon="audio" onClick={() => undefined}>
-                  {copy.listen}
-                </Button>
+                <ListenButton text={w.word ?? ""} lang={lang} label={copy.listen} />
               </div>
             ))}
           </div>

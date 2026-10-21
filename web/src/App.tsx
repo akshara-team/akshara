@@ -15,6 +15,7 @@ import { ChildProfile } from "./screens/teacher/ChildProfile";
 import { SelectStory } from "./screens/teacher/SelectStory";
 import { TeacherDashboard } from "./screens/teacher/TeacherDashboard";
 import { SessionProvider } from "./state/session";
+import { useOfflineRedirect } from "./state/useOffline";
 import "./components/components.css";
 import "./screens/screens.css";
 import "./app.css";
@@ -29,44 +30,54 @@ function Screen({ children }: { children: ReactNode }) {
   return <ErrorBoundary key={pathname}>{children}</ErrorBoundary>;
 }
 
+/** Owns the shell: the wide (desktop) layout and the offline listener. */
+function Shell({ children }: { children: ReactNode }) {
+  const { pathname } = useLocation();
+  useOfflineRedirect();
+  const wide = pathname.startsWith("/teacher");
+  return (
+    <div className="app-shell">
+      <main className={`app-main ${wide ? "app-main--wide" : ""}`}>{children}</main>
+    </div>
+  );
+}
+
 export function App() {
   return (
     <SessionProvider>
-      <div className="app-shell">
-        <main className="app-main">
-          <Routes>
-            {/* Child flow */}
-            <Route path="/" element={<Screen><RoleSelection /></Screen>} />
-            <Route path="/reader" element={<Screen><ChooseReader /></Screen>} />
-            <Route path="/read/:passageId" element={<Screen><ReadingScreen /></Screen>} />
-            <Route path="/checking" element={<Screen><CheckingScreen /></Screen>} />
-            <Route path="/feedback" element={<Screen><FeedbackScreen /></Screen>} />
-            <Route path="/results" element={<Screen><ResultsScreen /></Screen>} />
+      <Shell>
+        <Routes>
+          {/* Child flow */}
+          <Route path="/" element={<Screen><RoleSelection /></Screen>} />
+          <Route path="/reader" element={<Screen><ChooseReader /></Screen>} />
+          <Route path="/read/:passageId" element={<Screen><ReadingScreen /></Screen>} />
+          <Route path="/checking" element={<Screen><CheckingScreen /></Screen>} />
+          <Route path="/feedback" element={<Screen><FeedbackScreen /></Screen>} />
+          <Route path="/results" element={<Screen><ResultsScreen /></Screen>} />
 
-            {/* Recovery */}
-            <Route path="/recovery/:kind" element={<Screen><RecoveryScreen /></Screen>} />
+          {/* Recovery */}
+          <Route path="/recovery/:kind" element={<Screen><RecoveryScreen /></Screen>} />
 
-            {/* Teacher */}
-            <Route path="/teacher" element={<Screen><TeacherDashboard /></Screen>} />
-            <Route path="/teacher/story" element={<Screen><SelectStory /></Screen>} />
-            <Route
-              path="/teacher/child/:childId"
-              element={<Screen><ChildProfile /></Screen>}
-            />
-            <Route
-              path="/teacher/attempt/:childId"
-              element={<Screen><AttemptDetails /></Screen>}
-            />
-            <Route
-              path="/teacher/edit/:childId"
-              element={<Screen><ChildForm mode="edit" /></Screen>}
-            />
-            <Route path="/teacher/add" element={<Screen><ChildForm mode="add" /></Screen>} />
+          {/* Teacher */}
+          <Route path="/teacher" element={<Screen><TeacherDashboard /></Screen>} />
+          <Route path="/teacher/story" element={<Screen><SelectStory /></Screen>} />
+          <Route
+            path="/teacher/child/:childId"
+            element={<Screen><ChildProfile /></Screen>}
+          />
+          <Route
+            path="/teacher/attempt/:childId"
+            element={<Screen><AttemptDetails /></Screen>}
+          />
+          <Route
+            path="/teacher/edit/:childId"
+            element={<Screen><ChildForm mode="edit" /></Screen>}
+          />
+          <Route path="/teacher/add" element={<Screen><ChildForm mode="add" /></Screen>} />
 
-            <Route path="*" element={<Screen><NotFound /></Screen>} />
-          </Routes>
-        </main>
-      </div>
+          <Route path="*" element={<Screen><NotFound /></Screen>} />
+        </Routes>
+      </Shell>
     </SessionProvider>
   );
 }
