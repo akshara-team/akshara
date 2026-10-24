@@ -34,3 +34,9 @@ Fluent Timbre speech has almost no pauses between words (1–4 segments per pass
 
 ## The chunked re-check is not part of the product
 It did not raise near-sound catch (28% vs 31%) and raised Hindi false flags by 6 points ([RESULTS.md](RESULTS.md)). Shipping it would cost extra calls for no measured gain, so the product keeps the single whole-clip pass. The code and the test stay in the repo as a documented negative result.
+
+## The per-word check uses MMS, a research-licence model
+`facebook/mms-1b-all` covers Hindi, Kannada and Tamil in one model, writes each script letter by letter and has no language model, so it has no pull towards real words. That is the property Prisma lacks for reading assessment. It is CC BY-NC 4.0, which is fine for research and the challenge. A commercial build would swap in an MIT-licensed model such as AI4Bharat's IndicConformer behind the same `EvidenceSource` interface (`evidence/base.py`). It runs locally, so it costs no credits. It is an optional dependency group (`uv sync --group evidence`), so CI and the app do not need it.
+
+## Evidence sources never decide
+Each source (Prisma, the per-word check, the timing features) only reports evidence per word. The decision of correct, error or not sure is made in one place, the Phase 3 fusion step. That way sources can be compared alone on the benchmark and swapped without touching the decision rules.

@@ -21,6 +21,10 @@ dev = [
     "pytest>=8.0",
     "ruff>=0.6",
 ]
+evidence = [
+    "torch>=2.14.1",
+    "transformers>=5.20.2",
+]
 
 [build-system]
 requires = ["hatchling"]

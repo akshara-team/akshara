@@ -36,3 +36,4 @@ Thumbs.db
 results/*.sqlite
 data/fonts/
 results/bench/
+results/emissions/

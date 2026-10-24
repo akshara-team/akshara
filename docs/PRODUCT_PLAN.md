@@ -564,7 +564,7 @@ No dates; each phase ends when its exit check passes.
 | Phase | Builds | Exit check |
 |---|---|---|
 | **1. Foundations** *(built 2026-10-24; waiting on native review)* | Script tables and syllabifier (B2), error taxonomy v2 (B1), dataset manifests and splits (B5) | Native review of tables signed off; planter tests pass; dry-run benchmark runs end to end |
-| **2. Evidence** | Forced aligner (A1), verifier (A2), prosody (A3) behind the evidence interface | Each source scored alone on the benchmark; results and predictions committed |
+| **2. Evidence** *(done 2026-10-24; [results](RESULTS.md#checking-each-word-against-the-audio-phase-2))* | Forced aligner (A1), verifier (A2), prosody (A3) behind the evidence interface | Each source scored alone on the benchmark; results and predictions committed |
 | **3. Decisions** | Fusion, calibration, three states, band decisions (A4–A5); Akshara-Bench report (C) | Acceptance table in section 3 met on the held-out engine, or the gap explained |
 | **4. Tutor** | Skill graph, BKT, placement, difficulty model (D); Evon content with validators (E); buddy voice (F) | Simulated learners placed correctly; Evon validator pass rate and native-review rate recorded |
 | **5. Teacher** | Review queue with word clips, TaRL groups, heatmap, rounds, reports, overrides (I) | Simulated class: review time per round measured against target |
@@ -573,6 +573,12 @@ No dates; each phase ends when its exit check passes.
 | **8. Pilot kit** | Shadow mode, protocol, calibration job (15) | A dry run of the whole pilot on simulated data |
 
 Phases 1–3 matter most: they turn the project's known weakness into its main result.
+
+**What Phase 2 changed for Phase 3.** The check works in Hindi: on audible subtle mistakes it catches 20 of 22, against 11 for Prisma. In Kannada and Tamil it does not yet beat Prisma, because long, correctly read words also score low. About half the planted subtle mistakes are probably not audible in the synthetic audio. So Phase 3 should:
+1. Stop counting inaudible mistakes against the system. Keep the planted-mistake check where a second model confirms the change was rendered, and report audible and all mistakes separately.
+2. Score the margin per changed letter, not per frame of the whole word, so a one-letter change in a long Kannada or Tamil word is not diluted.
+3. Make the fusion step use agreement: a word that both Prisma and the check doubt is much more likely wrong than one only the check doubts.
+4. Bring the model's latency under real time (GPU, or a smaller CTC model) before live read-along.
 
 ### Who does what
 

@@ -34,3 +34,20 @@ Predictions:
 8. **Tamil** is the weakest language for the check.
 
 If 2 fails, the per-word check does not rescue near-sound detection on this audio; we will report that and look at prediction 1 to see whether the voice is the cause. If 5's false-flag bound fails, the check costs too much accuracy to combine naively, and Phase 3 has to earn it.
+
+### Verdict, written Oct 24 after the run
+
+Two runs, both on all 480 clips (`results/evidence_report_run1.json`, `results/evidence_report.json`). Run 1 had an alignment bug: the model writes its word separator over the silence at the end of a clip, and the aligner did not accept a separator there, so the last word of every passage was stretched over that silence and scored as misread. Those last words were 31 of the 32 worst-scoring correct words in the Hindi `tune` split, and they set the Hindi threshold at −1.25 instead of −0.16. The fix (separators count as silence, `evidence/words.py`) was found from the `tune` split. Both runs are reported. Run 1's results on `calibrate` + `test` had already been seen when the fix went in, so run 2's numbers there are not blind. Phase 3 reports on `test` only.
+
+| # | Prediction | Run 1 | Run 2 (fixed) | Verdict |
+|---|---|---|---|---|
+| 1 | Model hears ≥ 30% of near-sound swaps that Prisma hid | 10/31, 32% | same (no threshold involved) | **Holds**, barely (interval 19–50%) |
+| 2 | Near-sound catch ≥ 50% on clean audio | 2/17, 12% | 4/17, 24% (10–47%) | **Fails** |
+| 3 | Look-alike, vowel sign, conjunct ≥ 60% each; vowel length ≤ 40% | 67%, 20%, 0%; 0% | 6/9 67%, 2/5 40%, 1/6 17%; 1/12 8% | **Fails** for vowel sign and conjunct; holds for look-alikes and vowel length |
+| 4 | Gross mistakes ≥ 85% | 65/70, 93% | 67/70, 96% | **Holds** |
+| 5 | Either source: near-sound ≥ 55%, false flags ≤ 8% | 18%, 11% | 4/17 24%, 146/1307 11% | **Fails** on both |
+| 6 | Phone audio drops near-sound catch by ≥ 15 points | 12% → 6% | 24% → 18%, 6 points | **Fails**, but the clean rate is too low to drop 15 points |
+| 7 | Longest gap before the paused word in ≥ 13 of 15 clips | 15/15 | 14/15 | **Holds** |
+| 8 | Tamil is the weakest language | yes | Tamil 57%, Kannada 65%, Hindi 87% | **Holds** |
+
+Prediction 2 failed, so, as written above, we looked at prediction 1. It held, but only just: of 123 subtle planted mistakes in clean audio (all splits), the model's own free reading shows the change for 62 and shows the original word for 61. **About half of the subtle mistakes are probably not in the audio at all**, and no detector can catch those. On the 62 that are audible, the check catches 35 and Prisma 30. In Hindi the check catches 20 of 22, against 11 for Prisma. In Kannada (9 of 21) and Tamil (6 of 19) it does worse than Prisma (11 and 8), because long, correctly read words also score low there, which pushes the threshold down. This breakdown was made after the run and is not a test of any prediction. "Audible" is judged by the same model the check uses, so the check's rate on audible words is flattering. Prisma's rate on the same words is the fair comparison.

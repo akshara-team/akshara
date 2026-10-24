@@ -116,3 +116,52 @@ Near-sound swaps caught by one pass only: chunked only 2, whole only 3 (sign tes
 4. Not a clear win in Tamil: **held** (and not a win anywhere).
 
 **Chunking does not recover near-sound mistakes in this data.** Together with the isolated-word control, which found the transcriber often returns the real word even with no sentence at all, this points away from sentence context as the main cause. Alternatives we could not separate: the transcriber's preference for real words, or the synthetic voice not pronouncing the non-word. Limits: 32 near-sound items per condition, so a real difference of 10 points or less could not be seen; the pause finder missed the piece count in 40% of clips; all audio is synthetic.
+
+## Checking each word against the audio (Phase 2)
+
+Generated from `results/evidence_report.json`; rerun with `scripts/evidence_study.py` (local model, no credits) and then `scripts/evidence_report.py`. Predictions and verdict: [PREDICTIONS.md](PREDICTIONS.md).
+
+**What it is.** An open speech model (`facebook/mms-1b-all`, which writes letters with no word list behind it) gives frame-by-frame letter probabilities. The story text is aligned to the audio, so every word gets a start and end time. Then each word's frames are scored against the story word, against its likely misreadings from the script tables, and against the model's own free reading. A word is flagged when its score falls below a per-language threshold, set from correctly read words in the `tune` split so that 5% of them are flagged. The same threshold is used in every audio condition.
+
+**Setup.** 480 benchmark clips: the 90 open passages in 4 conditions, the 90-passage second set (eight new mistake types), and 30 repeat and self-correction clips. Numbers are on the `calibrate` + `test` splits pooled, with 95% intervals. All 480 clips aligned.
+
+### Clean audio: Prisma alone, the check alone, and either
+
+| Language | Prisma catch | Prisma false flags | Check catch | Check false flags | Either catch | Either false flags |
+|---|---|---|---|---|---|---|
+| Hindi | 24/30 (80%) | 19/416 (5%) | 26/30 (87%) | 28/416 (7%) | 26/30 (87%) | 41/416 (10%) |
+| Kannada | 33/49 (67%) | 27/470 (6%) | 32/49 (65%) | 29/470 (6%) | 35/49 (71%) | 51/470 (11%) |
+| Tamil | 26/40 (65%) | 38/421 (9%) | 23/40 (57%) | 24/421 (6%) | 27/40 (68%) | 54/421 (13%) |
+| All | 83/119 (70%) | 84/1307 (6%) | 81/119 (68%) | 81/1307 (6%) | 88/119 (74%) | 146/1307 (11%) |
+
+By type (all languages, clean): the check catches skipped and distant words 20/20 each and gross mistakes 67/70 overall. Subtle mistakes stay hard: near-sound 4/17, look-alike letter 6/9, vowel sign 2/5, conjunct 1/6, vowel length 1/12. Under phone, noise and child-pitch audio the check keeps its false flags at 5–6% while Prisma's rise to 6–10%. Their catch rates are close: 51–54 of 72 each.
+
+### Why subtle mistakes stay hard
+
+Of 123 subtle planted mistakes in clean audio (all splits), the model's free reading shows the change for 62 and the original word for 61. **About half the subtle mistakes were probably never pronounced by the synthetic voice**, which fits the isolated-word control, where Prisma returned the original word for 18 of 39 near-sound swaps even with no sentence around them. Every detector is capped by that, including Prisma. On the 62 audible ones:
+
+| | Hindi | Kannada | Tamil | All |
+|---|---|---|---|---|
+| Check | 20/22 | 9/21 | 6/19 | 35/62 |
+| Prisma | 11/22 | 11/21 | 8/19 | 30/62 |
+
+The check works in Hindi. In Kannada and Tamil it loses to Prisma, because correctly read long words also score low. Agglutinated words, joining consonants and a free reading that runs into the next word all spread the scores of correct words, and that pushes the threshold down. This breakdown was made after the run, and "audible" is judged by the same model, so read the check's row as an upper bound.
+
+### Timing from the alignment
+
+The longest gap in the clip sits right before the paused word in 14 of 15 clips with a planted long pause. Two timing flags, with thresholds again set from plain words in `tune` at 5%:
+
+| Flag | Long pause | Sounded out | Repeat | Self-correction | False flags |
+|---|---|---|---|---|---|
+| Silence before the word ≥ ~0.5 s | 7/7 | 3/8 | 2/6 | 1/6 | 65/1244 (5%) |
+| Speech before the word not in the story | 0/7 | 4/8 | 4/6 | 2/6 | 37/1244 (3%) |
+
+Prisma's text cannot show a pause at all, and this finds every one. Sounding out, repeats and self-corrections are only partly caught. Phase 3 will combine these two flags with Prisma's inserted words.
+
+### Limits
+
+- **Small samples.** Only 17 near-sound swaps in the pooled split, so a single word moves the rate by 6 points.
+- **The fix was not blind.** The alignment fix came after run 1's pooled results had been seen (see the verdict in PREDICTIONS.md).
+- **Too slow for live use yet.** The model is a 1-billion-parameter model on CPU, about 5.7 s per clip on this laptop (clips are 5–10 s), so it runs slower than real time. The plan's target of 4 s after a 20 s part needs a GPU or a smaller model.
+- **Non-commercial licence.** MMS is CC BY-NC 4.0 (see DECISIONS.md).
+- **Synthetic voices only.** Every clip is still synthetic, so none of this has been measured on children.
