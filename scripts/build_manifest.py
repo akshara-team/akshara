@@ -3,7 +3,7 @@
 Three passage sets:
     open        the 90-passage study set, in the four conditions it was transcribed in
     disfluency  the repeat / self-correction set (clean only)
-    v2          the second-set mistake types (text only so far; audio to be rendered)
+    v2          the second-set mistake types (audio by scripts/render_manifest.py)
 
 Voices for existing audio come from the TTS logs in results/, not from guesses. Speed was not
 logged for those clips, so it is left empty. No API calls.
@@ -30,6 +30,7 @@ OPEN_CONDITIONS = {  # condition: (audio folder, committed report)
     "child4": ("variants/child4", "go_no_go_open_child4.json"),
 }
 V2_SPEED = 0.9
+V2_REPORT = "results/go_no_go_v2.json"
 
 
 def rows(path: Path) -> list[dict]:
@@ -104,7 +105,7 @@ def main() -> None:
                 speed=V2_SPEED,
                 conditions=[],
                 audio=f"data/bench/audio/{ENGINE}/{row['id']}.wav",
-                report=None,
+                report=V2_REPORT if (ROOT / V2_REPORT).exists() else None,
                 set_name="v2",
             )
         )

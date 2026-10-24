@@ -1,0 +1,3452 @@
+{
+  "summary": {
+    "strict": {
+      "hi-IN": {
+        "passages": 30,
+        "planted": 42,
+        "caught": 29,
+        "ok_words": 418,
+        "false_flags": 32,
+        "by_type": {
+          "matra": {
+            "planted": 7,
+            "caught": 5
+          },
+          "vowel_length": {
+            "planted": 12,
+            "caught": 4
+          },
+          "visual": {
+            "planted": 7,
+            "caught": 5
+          },
+          "conjunct": {
+            "planted": 2,
+            "caught": 1
+          },
+          "reversal": {
+            "planted": 7,
+            "caught": 7
+          },
+          "first_guess": {
+            "planted": 7,
+            "caught": 7
+          },
+          "decode": {
+            "planted": 5,
+            "caught": 5
+          },
+          "hesitation": {
+            "planted": 5,
+            "caught": 0
+          }
+        },
+        "catch_rate": 0.6904761904761905,
+        "false_flag_rate": 0.07655502392344497,
+        "pass": false
+      },
+      "kn-IN": {
+        "passages": 30,
+        "planted": 41,
+        "caught": 29,
+        "ok_words": 422,
+        "false_flags": 46,
+        "by_type": {
+          "matra": {
+            "planted": 7,
+            "caught": 5
+          },
+          "vowel_length": {
+            "planted": 7,
+            "caught": 2
+          },
+          "visual": {
+            "planted": 7,
+            "caught": 5
+          },
+          "conjunct": {
+            "planted": 7,
+            "caught": 4
+          },
+          "reversal": {
+            "planted": 7,
+            "caught": 7
+          },
+          "first_guess": {
+            "planted": 6,
+            "caught": 6
+          },
+          "decode": {
+            "planted": 6,
+            "caught": 5
+          },
+          "hesitation": {
+            "planted": 5,
+            "caught": 0
+          }
+        },
+        "catch_rate": 0.7073170731707317,
+        "false_flag_rate": 0.10900473933649289,
+        "pass": false
+      },
+      "ta-IN": {
+        "passages": 30,
+        "planted": 41,
+        "caught": 27,
+        "ok_words": 453,
+        "false_flags": 65,
+        "by_type": {
+          "matra": {
+            "planted": 7,
+            "caught": 4
+          },
+          "vowel_length": {
+            "planted": 7,
+            "caught": 3
+          },
+          "visual": {
+            "planted": 7,
+            "caught": 4
+          },
+          "conjunct": {
+            "planted": 7,
+            "caught": 4
+          },
+          "reversal": {
+            "planted": 7,
+            "caught": 6
+          },
+          "first_guess": {
+            "planted": 6,
+            "caught": 6
+          },
+          "decode": {
+            "planted": 6,
+            "caught": 4
+          },
+          "hesitation": {
+            "planted": 5,
+            "caught": 0
+          }
+        },
+        "catch_rate": 0.6585365853658537,
+        "false_flag_rate": 0.1434878587196468,
+        "pass": false
+      }
+    },
+    "loose": {
+      "hi-IN": {
+        "passages": 30,
+        "planted": 42,
+        "caught": 28,
+        "ok_words": 418,
+        "false_flags": 19,
+        "by_type": {
+          "matra": {
+            "planted": 7,
+            "caught": 4
+          },
+          "vowel_length": {
+            "planted": 12,
+            "caught": 4
+          },
+          "visual": {
+            "planted": 7,
+            "caught": 5
+          },
+          "conjunct": {
+            "planted": 2,
+            "caught": 1
+          },
+          "reversal": {
+            "planted": 7,
+            "caught": 7
+          },
+          "first_guess": {
+            "planted": 7,
+            "caught": 7
+          },
+          "decode": {
+            "planted": 5,
+            "caught": 5
+          },
+          "hesitation": {
+            "planted": 5,
+            "caught": 0
+          }
+        },
+        "catch_rate": 0.6666666666666666,
+        "false_flag_rate": 0.045454545454545456,
+        "pass": false
+      },
+      "kn-IN": {
+        "passages": 30,
+        "planted": 41,
+        "caught": 29,
+        "ok_words": 422,
+        "false_flags": 35,
+        "by_type": {
+          "matra": {
+            "planted": 7,
+            "caught": 5
+          },
+          "vowel_length": {
+            "planted": 7,
+            "caught": 2
+          },
+          "visual": {
+            "planted": 7,
+            "caught": 5
+          },
+          "conjunct": {
+            "planted": 7,
+            "caught": 4
+          },
+          "reversal": {
+            "planted": 7,
+            "caught": 7
+          },
+          "first_guess": {
+            "planted": 6,
+            "caught": 6
+          },
+          "decode": {
+            "planted": 6,
+            "caught": 5
+          },
+          "hesitation": {
+            "planted": 5,
+            "caught": 0
+          }
+        },
+        "catch_rate": 0.7073170731707317,
+        "false_flag_rate": 0.08293838862559241,
+        "pass": true
+      },
+      "ta-IN": {
+        "passages": 30,
+        "planted": 41,
+        "caught": 26,
+        "ok_words": 453,
+        "false_flags": 42,
+        "by_type": {
+          "matra": {
+            "planted": 7,
+            "caught": 4
+          },
+          "vowel_length": {
+            "planted": 7,
+            "caught": 2
+          },
+          "visual": {
+            "planted": 7,
+            "caught": 4
+          },
+          "conjunct": {
+            "planted": 7,
+            "caught": 4
+          },
+          "reversal": {
+            "planted": 7,
+            "caught": 6
+          },
+          "first_guess": {
+            "planted": 6,
+            "caught": 6
+          },
+          "decode": {
+            "planted": 6,
+            "caught": 4
+          },
+          "hesitation": {
+            "planted": 5,
+            "caught": 0
+          }
+        },
+        "catch_rate": 0.6341463414634146,
+        "false_flag_rate": 0.09271523178807947,
+        "pass": false
+      }
+    }
+  },
+  "skipped": [],
+  "passages": [
+    {
+      "id": "sw-16077-v2",
+      "lang": "hi-IN",
+      "transcript": "लालच बुरी बला है पर यह चूहे जी को कौन समझाए",
+      "strict": {
+        "planted": [
+          2,
+          6
+        ],
+        "flagged": [],
+        "missed": [
+          2,
+          6
+        ],
+        "false_flags": [],
+        "wcpm": 172.67316371247304
+      },
+      "loose": {
+        "planted": [
+          2,
+          6
+        ],
+        "flagged": [],
+        "missed": [
+          2,
+          6
+        ],
+        "false_flags": [],
+        "wcpm": 172.67316371247304
+      }
+    },
+    {
+      "id": "sw-204765-v2",
+      "lang": "hi-IN",
+      "transcript": "उदास भिंडी को खुश करने के लिए लौकी बैंगन और मिरी कर रहे हैं कोशीश क्या भिंडी खुश होगी",
+      "strict": {
+        "planted": [
+          0,
+          10
+        ],
+        "flagged": [
+          10,
+          12,
+          14
+        ],
+        "missed": [
+          0
+        ],
+        "false_flags": [
+          12,
+          14
+        ],
+        "wcpm": 133.33333333333331
+      },
+      "loose": {
+        "planted": [
+          0,
+          10
+        ],
+        "flagged": [
+          10,
+          12,
+          14
+        ],
+        "missed": [
+          0
+        ],
+        "false_flags": [
+          12,
+          14
+        ],
+        "wcpm": 133.33333333333331
+      }
+    },
+    {
+      "id": "sw-342-v2",
+      "lang": "hi-IN",
+      "transcript": "मेरे बहुत से दोस्त हैं मुझे वे सभी अच्छे लगते हैं पर उनमें से एक सबसे प्यारा है",
+      "strict": {
+        "planted": [
+          9,
+          17
+        ],
+        "flagged": [
+          12,
+          13
+        ],
+        "missed": [
+          9,
+          17
+        ],
+        "false_flags": [
+          12,
+          13
+        ],
+        "wcpm": 147.11582667015225
+      },
+      "loose": {
+        "planted": [
+          9,
+          17
+        ],
+        "flagged": [
+          12,
+          13
+        ],
+        "missed": [
+          9,
+          17
+        ],
+        "false_flags": [
+          12,
+          13
+        ],
+        "wcpm": 147.11582667015225
+      }
+    },
+    {
+      "id": "sw-241493-v2",
+      "lang": "hi-IN",
+      "transcript": "लाल गुरेबलों की दुनिया में सुनहारी लारा की अलग है पहचान क्या पाएगी यह व जान",
+      "strict": {
+        "planted": [
+          1,
+          5
+        ],
+        "flagged": [
+          1,
+          5,
+          14
+        ],
+        "missed": [],
+        "false_flags": [
+          14
+        ],
+        "wcpm": 125.35658322953915
+      },
+      "loose": {
+        "planted": [
+          1,
+          5
+        ],
+        "flagged": [
+          1,
+          5,
+          14
+        ],
+        "missed": [],
+        "false_flags": [
+          14
+        ],
+        "wcpm": 125.35658322953915
+      }
+    },
+    {
+      "id": "sw-13328-v2",
+      "lang": "hi-IN",
+      "transcript": "आप छुपन छुपाई खेलते हैं ना ये देखिए ये सब दोस्त मिलकर कैसी खेलते हैं छुपन छुपाई",
+      "strict": {
+        "planted": [
+          6,
+          12
+        ],
+        "flagged": [
+          5,
+          6,
+          7,
+          12
+        ],
+        "missed": [],
+        "false_flags": [
+          5,
+          7
+        ],
+        "wcpm": 100.86234068518505
+      },
+      "loose": {
+        "planted": [
+          6,
+          12
+        ],
+        "flagged": [
+          5,
+          6,
+          12
+        ],
+        "missed": [],
+        "false_flags": [
+          5
+        ],
+        "wcpm": 108.62098227635312
+      }
+    },
+    {
+      "id": "sw-50302-v2",
+      "lang": "hi-IN",
+      "transcript": "टीना को घी बहुत पसंद है, खासतौर पर अपनी पसंदीदा पूरन पोली पोली के ऊपर पर घी बनता कैसे है।",
+      "strict": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          6
+        ],
+        "missed": [
+          3
+        ],
+        "false_flags": [
+          6
+        ],
+        "wcpm": 139.65554864102543
+      },
+      "loose": {
+        "planted": [
+          3
+        ],
+        "flagged": [],
+        "missed": [
+          3
+        ],
+        "false_flags": [],
+        "wcpm": 147.41419023219353
+      }
+    },
+    {
+      "id": "sw-958-v2",
+      "lang": "hi-IN",
+      "transcript": "आज मेरे घर में सब उलट पुलट है पता नहीं क्यों",
+      "strict": {
+        "planted": [
+          9
+        ],
+        "flagged": [],
+        "missed": [
+          9
+        ],
+        "false_flags": [],
+        "wcpm": 127.46849500265562
+      },
+      "loose": {
+        "planted": [
+          9
+        ],
+        "flagged": [],
+        "missed": [
+          9
+        ],
+        "false_flags": [],
+        "wcpm": 127.46849500265562
+      }
+    },
+    {
+      "id": "sw-30025-v2",
+      "lang": "hi-IN",
+      "transcript": "मकड़ी अशना समय कैसे बिताती हैं चलिए इस मकड़ी के साथ साथ घूमोते हैं और पता लगाते हैं",
+      "strict": {
+        "planted": [
+          1,
+          12
+        ],
+        "flagged": [
+          1,
+          12
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 125.58150943087702
+      },
+      "loose": {
+        "planted": [
+          1,
+          12
+        ],
+        "flagged": [
+          1,
+          12
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 125.58150943087702
+      }
+    },
+    {
+      "id": "sw-15507-v2",
+      "lang": "hi-IN",
+      "transcript": "जंगल में बारिश के दबा ये आवाज़ किसी टप टप टप",
+      "strict": {
+        "planted": [
+          4,
+          7
+        ],
+        "flagged": [
+          4,
+          5,
+          7,
+          10
+        ],
+        "missed": [],
+        "false_flags": [
+          5,
+          10
+        ],
+        "wcpm": 102.71774020971539
+      },
+      "loose": {
+        "planted": [
+          4,
+          7
+        ],
+        "flagged": [
+          4,
+          5,
+          7,
+          10
+        ],
+        "missed": [],
+        "false_flags": [
+          5,
+          10
+        ],
+        "wcpm": 102.71774020971539
+      }
+    },
+    {
+      "id": "sw-15506-v2",
+      "lang": "hi-IN",
+      "transcript": "एक नन्हा लड़की को हर शो में कुछ करना अच्छा लगता है क्या आप भी ऐसे हैं",
+      "strict": {
+        "planted": [
+          1,
+          5
+        ],
+        "flagged": [
+          1,
+          5
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 154.91723915348794
+      },
+      "loose": {
+        "planted": [
+          1,
+          5
+        ],
+        "flagged": [
+          1,
+          5
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 154.91723915348794
+      }
+    },
+    {
+      "id": "sw-812-v2",
+      "lang": "hi-IN",
+      "transcript": "आप भी समीरा और मुचक के साथ बाज़ार बाज़ार की सैर कराइए पर सामानों लाना मत भूलिएगा",
+      "strict": {
+        "planted": [
+          13
+        ],
+        "flagged": [
+          4,
+          10,
+          11,
+          13
+        ],
+        "missed": [],
+        "false_flags": [
+          4,
+          10,
+          11
+        ],
+        "wcpm": 111.07550998611558
+      },
+      "loose": {
+        "planted": [
+          13
+        ],
+        "flagged": [
+          4,
+          10,
+          11,
+          13
+        ],
+        "missed": [],
+        "false_flags": [
+          4,
+          10,
+          11
+        ],
+        "wcpm": 111.07550998611558
+      }
+    },
+    {
+      "id": "sw-62764-v2",
+      "lang": "hi-IN",
+      "transcript": "मलार को नई नई चीजें बनाना पसंद है देखते हैं आज वह, क्या बनाती है",
+      "strict": {
+        "planted": [
+          6
+        ],
+        "flagged": [],
+        "missed": [
+          6
+        ],
+        "false_flags": [],
+        "wcpm": 128.36741607088734
+      },
+      "loose": {
+        "planted": [
+          6
+        ],
+        "flagged": [],
+        "missed": [
+          6
+        ],
+        "false_flags": [],
+        "wcpm": 128.36741607088734
+      }
+    },
+    {
+      "id": "sw-1277-v2",
+      "lang": "hi-IN",
+      "transcript": "मिलिए हमारी निराली दादी से नहें चीज़ें उछालना बहुत अच्छा लगता है।",
+      "strict": {
+        "planted": [
+          5,
+          9
+        ],
+        "flagged": [
+          5
+        ],
+        "missed": [
+          9
+        ],
+        "false_flags": [],
+        "wcpm": 145.5889043607737
+      },
+      "loose": {
+        "planted": [
+          5,
+          9
+        ],
+        "flagged": [
+          5
+        ],
+        "missed": [
+          9
+        ],
+        "false_flags": [],
+        "wcpm": 145.5889043607737
+      }
+    },
+    {
+      "id": "sw-15518-v2",
+      "lang": "hi-IN",
+      "transcript": "मेरा परिवार बहुत बनता है आइए सबसे मिलते हैं।",
+      "strict": {
+        "planted": [
+          3,
+          7
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [
+          7
+        ],
+        "false_flags": [],
+        "wcpm": 120.0
+      },
+      "loose": {
+        "planted": [
+          3,
+          7
+        ],
+        "flagged": [
+          3
+        ],
+        "missed": [
+          7
+        ],
+        "false_flags": [],
+        "wcpm": 120.0
+      }
+    },
+    {
+      "id": "sw-164-v2",
+      "lang": "hi-IN",
+      "transcript": "वीरू को सर्कस देखने में इतना मज़ा मज़ा आया कि उसने घर पर अब का सर्कस बनाने का फैसला कर लिया",
+      "strict": {
+        "planted": [
+          12
+        ],
+        "flagged": [
+          12
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 150.0
+      },
+      "loose": {
+        "planted": [
+          12
+        ],
+        "flagged": [
+          12
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 150.0
+      }
+    },
+    {
+      "id": "sw-21228-v2",
+      "lang": "hi-IN",
+      "transcript": "खरगोश के कान हमेशा लम्बे और दुम छोटी नहीं हुआ करती थी ये तो एक केंकड़े की करामात थी सजखी",
+      "strict": {
+        "planted": [
+          19
+        ],
+        "flagged": [
+          4,
+          12,
+          19
+        ],
+        "missed": [],
+        "false_flags": [
+          4,
+          12
+        ],
+        "wcpm": 108.38236661398079
+      },
+      "loose": {
+        "planted": [
+          19
+        ],
+        "flagged": [
+          12,
+          19
+        ],
+        "missed": [],
+        "false_flags": [
+          12
+        ],
+        "wcpm": 114.75779994421495
+      }
+    },
+    {
+      "id": "sw-45934-v2",
+      "lang": "hi-IN",
+      "transcript": "बाप रे वो क्या था वहाँ वो क्या हिला ज़बरदस्त तिल चिट्ठों पर एक मचल सी कतावी",
+      "strict": {
+        "planted": [
+          13,
+          15
+        ],
+        "flagged": [
+          10,
+          13,
+          15
+        ],
+        "missed": [],
+        "false_flags": [
+          10
+        ],
+        "wcpm": 135.00064904158194
+      },
+      "loose": {
+        "planted": [
+          13,
+          15
+        ],
+        "flagged": [
+          10,
+          13,
+          15
+        ],
+        "missed": [],
+        "false_flags": [
+          10
+        ],
+        "wcpm": 135.00064904158194
+      }
+    },
+    {
+      "id": "sw-203930-v2",
+      "lang": "hi-IN",
+      "transcript": "जलेबी देखा देख मुनिया का दिल लचा लिया क्या मुनिया को जलेबी मिली",
+      "strict": {
+        "planted": [
+          5
+        ],
+        "flagged": [
+          5
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 129.8069122180756
+      },
+      "loose": {
+        "planted": [
+          5
+        ],
+        "flagged": [
+          5
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 129.8069122180756
+      }
+    },
+    {
+      "id": "sw-16139-v2",
+      "lang": "hi-IN",
+      "transcript": "पाँच सदो जब सैर सपाटा करने जाते हैं तो बड़ा मजा आता है और नए चटपटे खाने के तो क्या कहने",
+      "strict": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1,
+          10
+        ],
+        "missed": [],
+        "false_flags": [
+          10
+        ],
+        "wcpm": 124.66595129552802
+      },
+      "loose": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 131.22731715318739
+      }
+    },
+    {
+      "id": "sw-55764-v2",
+      "lang": "hi-IN",
+      "transcript": "दीना की सबसे अच्छी दोस्त सुंदरी सुंदरी कहीं छुप गई है, चलिए मिलकर रुकता ढूंढते हैं",
+      "strict": {
+        "planted": [
+          13
+        ],
+        "flagged": [
+          8,
+          11,
+          12,
+          13,
+          14
+        ],
+        "missed": [],
+        "false_flags": [
+          8,
+          11,
+          12,
+          14
+        ],
+        "wcpm": 88.39261051168943
+      },
+      "loose": {
+        "planted": [
+          13
+        ],
+        "flagged": [
+          11,
+          12,
+          13
+        ],
+        "missed": [],
+        "false_flags": [
+          11,
+          12
+        ],
+        "wcpm": 104.4639942410875
+      }
+    },
+    {
+      "id": "sw-10335-v2",
+      "lang": "hi-IN",
+      "transcript": "कमला बकाया की लेखनी की चपलता देखते ही बनती है नटखट नन्हों के लिए उनकी नित नई नन्हें कविताएं",
+      "strict": {
+        "planted": [
+          17
+        ],
+        "flagged": [
+          17,
+          18
+        ],
+        "missed": [],
+        "false_flags": [
+          18
+        ],
+        "wcpm": 107.74624175562992
+      },
+      "loose": {
+        "planted": [
+          17
+        ],
+        "flagged": [
+          17
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 114.08425597654933
+      }
+    },
+    {
+      "id": "sw-43535-v2",
+      "lang": "hi-IN",
+      "transcript": "छुट्टियाँ तो अनमोल होती हैं ऐसे ही कभी न थमने वाली छुट्टियों की मजेदार ए दास्तान एक अनोखी कविता के रूप में",
+      "strict": {
+        "planted": [
+          13,
+          17
+        ],
+        "flagged": [
+          5,
+          13
+        ],
+        "missed": [
+          17
+        ],
+        "false_flags": [
+          5
+        ],
+        "wcpm": 130.8671382858127
+      },
+      "loose": {
+        "planted": [
+          13,
+          17
+        ],
+        "flagged": [
+          5
+        ],
+        "missed": [
+          13,
+          17
+        ],
+        "false_flags": [
+          5
+        ],
+        "wcpm": 137.75488240611864
+      }
+    },
+    {
+      "id": "sw-8-v2",
+      "lang": "hi-IN",
+      "transcript": "मोटे राजा के साथ दुबाले कुत्ते के पीछे भाई है",
+      "strict": {
+        "planted": [
+          4,
+          8
+        ],
+        "flagged": [
+          4,
+          8
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 138.96931094383322
+      },
+      "loose": {
+        "planted": [
+          4,
+          8
+        ],
+        "flagged": [
+          4,
+          8
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 138.96931094383322
+      }
+    },
+    {
+      "id": "sw-13701-v2",
+      "lang": "hi-IN",
+      "transcript": "एक बार बिलिलियो ने चूहों को अपने यहाँ दावत पर बुलाया आपको क्या लगता है कि वहां क्या हुआ होगा",
+      "strict": {
+        "planted": [
+          2,
+          10
+        ],
+        "flagged": [
+          2,
+          11,
+          12,
+          17
+        ],
+        "missed": [
+          10
+        ],
+        "false_flags": [
+          11,
+          12,
+          17
+        ],
+        "wcpm": 161.61936263344492
+      },
+      "loose": {
+        "planted": [
+          2,
+          10
+        ],
+        "flagged": [
+          2,
+          11,
+          12
+        ],
+        "missed": [
+          10
+        ],
+        "false_flags": [
+          11,
+          12
+        ],
+        "wcpm": 171.12638396482404
+      }
+    },
+    {
+      "id": "sw-410-v2",
+      "lang": "hi-IN",
+      "transcript": "कुदारत के रंग कितने अनोखे हैं, एक चित्रकार की ज़नर से देखिये।",
+      "strict": {
+        "planted": [
+          0,
+          9
+        ],
+        "flagged": [
+          0,
+          9,
+          11
+        ],
+        "missed": [],
+        "false_flags": [
+          11
+        ],
+        "wcpm": 108.4827482296218
+      },
+      "loose": {
+        "planted": [
+          0,
+          9
+        ],
+        "flagged": [
+          0,
+          9
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 120.536386921802
+      }
+    },
+    {
+      "id": "sw-1037-v2",
+      "lang": "hi-IN",
+      "transcript": "नानी हमेशा अब ऐनक कहीं रखकर भूल जाती हैं कभी कभी उन्हें ऐनक ढूंढने के लिए एक जासूस की जरूरत पड़ती है",
+      "strict": {
+        "planted": [
+          2,
+          20
+        ],
+        "flagged": [
+          2,
+          13,
+          19
+        ],
+        "missed": [
+          20
+        ],
+        "false_flags": [
+          13,
+          19
+        ],
+        "wcpm": 144.10087060942658
+      },
+      "loose": {
+        "planted": [
+          2,
+          20
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [
+          20
+        ],
+        "false_flags": [],
+        "wcpm": 159.2693833051557
+      }
+    },
+    {
+      "id": "sw-99-v2",
+      "lang": "hi-IN",
+      "transcript": "आज रानी का स्कूल में पहला दिन है उसने क्या क्या देखा उसे कैसा लगा",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 171.61039672986857
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 171.61039672986857
+      }
+    },
+    {
+      "id": "sw-444-v2",
+      "lang": "hi-IN",
+      "transcript": "घर को रंगना है बेहद मज़ेदार पर फाटक को कौन सा रंग दें",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 168.74898588349828
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 168.74898588349828
+      }
+    },
+    {
+      "id": "sw-13324-v2",
+      "lang": "hi-IN",
+      "transcript": "सुमा बेचारी अकेले अकेले उकता गई है आइये देखिए कि वह अकेलेपन से कैसे निपटती है",
+      "strict": {
+        "planted": [],
+        "flagged": [
+          5,
+          7,
+          8
+        ],
+        "missed": [],
+        "false_flags": [
+          5,
+          7,
+          8
+        ],
+        "wcpm": 111.07550998611558
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [
+          7
+        ],
+        "missed": [],
+        "false_flags": [
+          7
+        ],
+        "wcpm": 128.1640499839795
+      }
+    },
+    {
+      "id": "sw-205058-v2",
+      "lang": "hi-IN",
+      "transcript": "हिना को नाचते देख मोर भी नाचना भूल गया।",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 164.18988255862567
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 164.18988255862567
+      }
+    },
+    {
+      "id": "sw-48474-v2",
+      "lang": "kn-IN",
+      "transcript": "ಈ ಹೆಣ್ಣು ಕೋತೊಗೆ ಕುತೂಹಲ ಜಾಸ್ತಿ ತಲೆತುಂಬ ಪ್ರಶ್ನೆಗಳೇ ಅವುಗಳಿಗೆ ಉತ್ತರ ಹುಡುಕಲು ಎಲ್ಲ ಪ್ರಾಣಿಗಳು ಮುಂದಾದವು ಅದು ಯಾರೂ ಊಹಿಸದಷ್ಟು ಮಜವಾಗಿತ್ತು",
+      "strict": {
+        "planted": [
+          2,
+          9
+        ],
+        "flagged": [
+          2,
+          5,
+          10,
+          11
+        ],
+        "missed": [
+          9
+        ],
+        "false_flags": [
+          5,
+          10,
+          11
+        ],
+        "wcpm": 70.76595069064847
+      },
+      "loose": {
+        "planted": [
+          2,
+          9
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [
+          9
+        ],
+        "false_flags": [],
+        "wcpm": 87.09655469618272
+      }
+    },
+    {
+      "id": "sw-92310-v2",
+      "lang": "kn-IN",
+      "transcript": "ಕೆಲವೊಮ್ಮೆ ನನ್ನ ಮಂಚದ ಕೆಳಗೆ ವಿಚಿತ್ರವಾದ ವಸ್ತುಗಳು ಅಡಗಿರುತ್ತವೆ ಆವತ್ತು ರಾತ್ರಿ ನಾನೇನು ಪತ್ತೆ ಮಾಡಿದೆ ಅಂತ ನೀವು ತಿಳಿಯಬಯನುವಿರಾ",
+      "strict": {
+        "planted": [
+          0,
+          14
+        ],
+        "flagged": [
+          14
+        ],
+        "missed": [
+          0
+        ],
+        "false_flags": [],
+        "wcpm": 91.74750322549816
+      },
+      "loose": {
+        "planted": [
+          0,
+          14
+        ],
+        "flagged": [
+          14
+        ],
+        "missed": [
+          0
+        ],
+        "false_flags": [],
+        "wcpm": 91.74750322549816
+      }
+    },
+    {
+      "id": "sw-16908-v2",
+      "lang": "kn-IN",
+      "transcript": "ನನ್ನ ಕೈಗಳು ಮತ್ತು ಬೆರಳುಗಳು ಎಷ್ಟೊಂದು ವಿನೋದಮಯ ಕೆಲಸಗಳನ್ನು ಮಾಡಬಲ್ಲವು ನಿಮ್ಮವು ಬಾನ್ನಿ ಕೈ ಜೋಡಿಸೋಣ ಬಹುವಿಧದ ಕೆಲಸ ಮಾಡೋಣ",
+      "strict": {
+        "planted": [
+          7,
+          9
+        ],
+        "flagged": [
+          9
+        ],
+        "missed": [
+          7
+        ],
+        "false_flags": [],
+        "wcpm": 85.13495537382735
+      },
+      "loose": {
+        "planted": [
+          7,
+          9
+        ],
+        "flagged": [
+          9
+        ],
+        "missed": [
+          7
+        ],
+        "false_flags": [],
+        "wcpm": 85.13495537382735
+      }
+    },
+    {
+      "id": "sw-214454-v2",
+      "lang": "kn-IN",
+      "transcript": "ಆಮೆ ಮತ್ತು ಮೊಲ ಓಡಿದವು ದಾರಿಯಲ್ಲಿ ಮೊಲವು ದೃಣಿಗೆ ಜಾರಿತು ಮತ್ತು ಆಮೆ ಮುಂದೆ ಹೋಯಿತು ಅಷ್ಟರಲ್ಲಿ ಆಮೆಗೆ ಸಿಂಹ ಸಿಕ್ಕಿತು ಮುಂದೆ ಏನಾಗುತ್ತದೆ",
+      "strict": {
+        "planted": [
+          6,
+          13
+        ],
+        "flagged": [
+          6
+        ],
+        "missed": [
+          13
+        ],
+        "false_flags": [],
+        "wcpm": 98.07692307692308
+      },
+      "loose": {
+        "planted": [
+          6,
+          13
+        ],
+        "flagged": [
+          6
+        ],
+        "missed": [
+          13
+        ],
+        "false_flags": [],
+        "wcpm": 98.07692307692308
+      }
+    },
+    {
+      "id": "sw-24882-v2",
+      "lang": "kn-IN",
+      "transcript": "ಉಮಾ ನಾಟಕದ ಕ್ಲಾಸಿನ ಹುಡುಗಿ ತಿಂಡಿ ಅಂದರೆ ಅಷ್ಟಕ್ಕಷ್ಟೇ ಏನು ಕೊಟ್ರೂ ಆಟದ ವಸ್ತು ಅಮ್ಮನಿಗೆ ಸುಸ್ತು ಸುಸ್ತು ಇವಳ ತಿಂಡಿಯ ಆಟ ನಿಲ್ಲಿಸೋದು ಹೇಗೆ ಬನ್ನಿ ನೋಡೋಣ",
+      "strict": {
+        "planted": [
+          1,
+          18
+        ],
+        "flagged": [
+          1,
+          5,
+          6,
+          8,
+          12
+        ],
+        "missed": [
+          18
+        ],
+        "false_flags": [
+          5,
+          6,
+          8,
+          12
+        ],
+        "wcpm": 89.25614071788435
+      },
+      "loose": {
+        "planted": [
+          1,
+          18
+        ],
+        "flagged": [
+          1,
+          5,
+          8,
+          12
+        ],
+        "missed": [
+          18
+        ],
+        "false_flags": [
+          5,
+          8,
+          12
+        ],
+        "wcpm": 94.83464951275212
+      }
+    },
+    {
+      "id": "sw-228-v2",
+      "lang": "kn-IN",
+      "transcript": "ಮೀನುವಿಗೆ ಮೃದಂಗಾಂ ನುಡಿಸಲು ಇಷ್ಟ ದಮ್ ದಮ್ ಮತ್ತೆ ಅಮ್ಮ ಸ್ಕೂಟರ್ ಕಲಿಯುತ್ತಾರಂತೆ ಗೊತ್ತಾ ಯಾವಾಗದ ಸ ರಾದಲ್ಲಿ ದಸರಾದಲ್ಲಿ",
+      "strict": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1,
+          4,
+          12
+        ],
+        "missed": [],
+        "false_flags": [
+          4,
+          12
+        ],
+        "wcpm": 68.11936370321632
+      },
+      "loose": {
+        "planted": [
+          1
+        ],
+        "flagged": [
+          1,
+          4,
+          12
+        ],
+        "missed": [],
+        "false_flags": [
+          4,
+          12
+        ],
+        "wcpm": 68.11936370321632
+      }
+    },
+    {
+      "id": "sw-16578-v2",
+      "lang": "kn-IN",
+      "transcript": "ಮಕ್ಕಳು ತಮ್ಮ ಅನುಭವವನ್ನು ಇತರರೊಂದಿಗೆ ಹಂಚಿಕೊಳ್ಳಲು ಬಯಸುತ್ತಾರೆ ಪೇಟೆಗೆ ಹೋಗುವುದು ಅಂತಹ ಅನುಭವಗಳು ಹೇಗೆ ಮಜಾ ಕೊಡುತ್ತವೆಂದು ತಿಳಿಸುತ್ತದೆ",
+      "strict": {
+        "planted": [
+          5
+        ],
+        "flagged": [],
+        "missed": [
+          5
+        ],
+        "false_flags": [],
+        "wcpm": 74.48294207621203
+      },
+      "loose": {
+        "planted": [
+          5
+        ],
+        "flagged": [],
+        "missed": [
+          5
+        ],
+        "false_flags": [],
+        "wcpm": 74.48294207621203
+      }
+    },
+    {
+      "id": "sw-29476-v2",
+      "lang": "kn-IN",
+      "transcript": "ರೋಜಾಳ ಅಮ್ಮ ಬೆಳಗ್ಗೆಯೇ ಕೆಲಸಕ್ಕೆ ಹೋಗುತ್ತಾರೆ ರಾತ್ರಿ ಮಲಗುವ ಮೊದಲೇ ಬರುತ್ತೇನೆ ಎಂದು ಮಾತು ಕೊಡುತ್ತಾರೆ ಅಮ್ಮ ಇಲ್ಲದೇ ಇಡೀ ದಿನವನ್ನು ರೋಜಾ ಹೇಗೆ ಕಳೆಯುತ್ತಾರೆ",
+      "strict": {
+        "planted": [
+          2,
+          5
+        ],
+        "flagged": [
+          18
+        ],
+        "missed": [
+          2,
+          5
+        ],
+        "false_flags": [
+          18
+        ],
+        "wcpm": 104.74123822570282
+      },
+      "loose": {
+        "planted": [
+          2,
+          5
+        ],
+        "flagged": [
+          18
+        ],
+        "missed": [
+          2,
+          5
+        ],
+        "false_flags": [
+          18
+        ],
+        "wcpm": 104.74123822570282
+      }
+    },
+    {
+      "id": "sw-617940-v2",
+      "lang": "kn-IN",
+      "transcript": "ನಿಕ್ಕು ಮತ್ತು ಅವನ ಅಕ್ಕ ಓಣಂ ಹಬಬದ ಸಂಭ್ರಮದಲ್ಲಿದ್ದಾರೆ ಅವರು ವಿವಿಧ ಬಗೆಯ ಹೂಗಳಿಂದ ಸುಂದರವಾದ ಪೂಕಳಂ ಬಿಡಿಸುತ್ತಿದ್ದಾರೆ ಅದರಲ್ಲಿ ಬಳಸಿರುವ ಬೇರೆ ಬೇರೆ ಆಕಾರಗಳನ್ನು ಗುರುತಿಸಿ",
+      "strict": {
+        "planted": [
+          5,
+          13
+        ],
+        "flagged": [
+          5,
+          11,
+          12
+        ],
+        "missed": [
+          13
+        ],
+        "false_flags": [
+          11,
+          12
+        ],
+        "wcpm": 80.24466756483002
+      },
+      "loose": {
+        "planted": [
+          5,
+          13
+        ],
+        "flagged": [
+          5,
+          11,
+          12
+        ],
+        "missed": [
+          13
+        ],
+        "false_flags": [
+          11,
+          12
+        ],
+        "wcpm": 80.24466756483002
+      }
+    },
+    {
+      "id": "sw-12256-v2",
+      "lang": "kn-IN",
+      "transcript": "ನಾವು ತಿನ್ನುತ್ತೇವೆ ಹೀಗಾಗಿ ಬದುಕಿದ್ದೇವೆ ಆದರೆ ಏನು ತಿನ್ನಬೇಕೆಂದು ನಮಗೆ ಗೊತ್ತಿದೆಯೇ ಹೇಗೆ ತಿನ್ನಬೇಕು ಎಂದು ಬೂ ಗೊತ್ತಿದೆಯೇ ಗ್ರಹ ಚಿಂತನೆಗೆ ಮತ್ತು ಹೊಟ್ಟೆಗೆ",
+      "strict": {
+        "planted": [
+          2,
+          11
+        ],
+        "flagged": [
+          2,
+          11,
+          13
+        ],
+        "missed": [],
+        "false_flags": [
+          13
+        ],
+        "wcpm": 79.41197324572805
+      },
+      "loose": {
+        "planted": [
+          2,
+          11
+        ],
+        "flagged": [
+          2,
+          11,
+          13
+        ],
+        "missed": [],
+        "false_flags": [
+          13
+        ],
+        "wcpm": 79.41197324572805
+      }
+    },
+    {
+      "id": "sw-13011-v2",
+      "lang": "kn-IN",
+      "transcript": "ಸೋರ್ ಸೋರ್ ಈ ಶಬ್ದ ಮಾಡುತ್ತಿರುವವರು ಯಾರೋ ಅಂದುಕೊಂಡಿರಿ ಈ ಕಥೆಯಲ್ಲಿ ಪ್ರಿಯಾ ಇಲ್ಲದೆ ಪತ್ತೆ ಹಚ್ಚುತ್ತಾಳೆ",
+      "strict": {
+        "planted": [
+          5,
+          10
+        ],
+        "flagged": [
+          0,
+          1,
+          5,
+          10
+        ],
+        "missed": [],
+        "false_flags": [
+          0,
+          1
+        ],
+        "wcpm": 69.03384576049089
+      },
+      "loose": {
+        "planted": [
+          5,
+          10
+        ],
+        "flagged": [
+          0,
+          1,
+          5,
+          10
+        ],
+        "missed": [],
+        "false_flags": [
+          0,
+          1
+        ],
+        "wcpm": 69.03384576049089
+      }
+    },
+    {
+      "id": "sw-12483-v2",
+      "lang": "kn-IN",
+      "transcript": "ಆಕೃತಿಗಳೆಂದರೆ ಈ ಬೆಕ್ಕಿಗೆ ಬಲು ಇಷ್ಟ ಈ ಬೆಕ್ಕುಪುಟ್ಟ ಸ್ನೇಹಿತನ ಜೊತೆ ತಿರುಗಾಡುತ್ತಿರುವ ಯಾವ ಯಾವ ಆಕೃತಿಗಳು ಕಂಡವು ಆಕೃತಿಗಳತ್ತ ನಣ್ಣು ಕಣ್ಣು ಹಾಯಿಸುತ್ತಾ ಮಜಾ ಮಾಡು",
+      "strict": {
+        "planted": [
+          19
+        ],
+        "flagged": [
+          6,
+          7,
+          10,
+          19
+        ],
+        "missed": [],
+        "false_flags": [
+          6,
+          7,
+          10
+        ],
+        "wcpm": 76.0561706510329
+      },
+      "loose": {
+        "planted": [
+          19
+        ],
+        "flagged": [
+          6,
+          7,
+          10,
+          19
+        ],
+        "missed": [],
+        "false_flags": [
+          6,
+          7,
+          10
+        ],
+        "wcpm": 76.0561706510329
+      }
+    },
+    {
+      "id": "sw-220-v2",
+      "lang": "kn-IN",
+      "transcript": "ಯಾವತ್ತಾದ್ರೂ ಪೇಂಟು ಬಳಿದು ಮೋಜಾ ನೋಡಿದ್ದೀರಾ ನಿಮ್ಮ ಮನೆಗೇಟಿಗೆ ಯಾವ ಬಣ್ಣ ಬಳಿಯುವಿರಿ",
+      "strict": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          0,
+          3,
+          6,
+          7
+        ],
+        "missed": [],
+        "false_flags": [
+          0,
+          6,
+          7
+        ],
+        "wcpm": 44.262359868793716
+      },
+      "loose": {
+        "planted": [
+          3
+        ],
+        "flagged": [
+          0,
+          3,
+          6,
+          7
+        ],
+        "missed": [],
+        "false_flags": [
+          0,
+          6,
+          7
+        ],
+        "wcpm": 44.262359868793716
+      }
+    },
+    {
+      "id": "sw-14756-v2",
+      "lang": "kn-IN",
+      "transcript": "ಮಾವಿನ ಹಣ್ಣಿನ ರಸಾಯನದ ರುಚಿ ಲಸ್ಸಿಗಿಂತ ಚೆನ್ನಾಗಿದೆಯೇ ಅಥವಾ ಪಲೂಡಾ ಅವೆರಡಕ್ಕಿಂತಲೂ ರುಚಿಯಾಗಿದೆಯೇ ಅದನ್ನು ತಿಳಿಯಬೇಕೆಂದರೆ ಮೀನುವಿನಂತೆ ಎಲ್ಲವನ್ನು ಕುಡಿದು ಚಪ್ಪರಿಸಿ ಬೇಸಿಗೆಯಲ್ಲಿ",
+      "strict": {
+        "planted": [
+          5,
+          18
+        ],
+        "flagged": [
+          7,
+          13,
+          17,
+          18,
+          19
+        ],
+        "missed": [
+          5
+        ],
+        "false_flags": [
+          7,
+          13,
+          17,
+          19
+        ],
+        "wcpm": 63.28112640404999
+      },
+      "loose": {
+        "planted": [
+          5,
+          18
+        ],
+        "flagged": [
+          7,
+          17,
+          18,
+          19
+        ],
+        "missed": [
+          5
+        ],
+        "false_flags": [
+          7,
+          17,
+          19
+        ],
+        "wcpm": 67.49986816431999
+      }
+    },
+    {
+      "id": "sw-522-v2",
+      "lang": "kn-IN",
+      "transcript": "ಶಾಲೇಸಹಳ್ಳಿ ರಾಣಿ ಮೊದಲ ದಿನ ಏನು ಡಿ ನೋಡಲು ಅವಳಿಗೆ ಏನು ಅನಿಸಿತು",
+      "strict": {
+        "planted": [
+          0,
+          5
+        ],
+        "flagged": [
+          0,
+          5
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 84.3754708452614
+      },
+      "loose": {
+        "planted": [
+          0,
+          5
+        ],
+        "flagged": [
+          0,
+          5
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 84.3754708452614
+      }
+    },
+    {
+      "id": "sw-24158-v2",
+      "lang": "kn-IN",
+      "transcript": "ಸಮರ್ ಮತ್ತು ನಿವ್ಯಾಗೆ ಆ ದಾಂಡಿಗನನ್ನು ಕಂಡರೆ ಅದೇನೋ ಭಯ ಆದರೆ ಆಕೃತಿಗಳು ಹೆದರಿಕೆ ಹುಟ್ಟಿಸುವ ದಾಂಡಿಗ ನಿಜಕ್ಕೂ ಕಟುಕನೆ ಅವನೇನಾದರೂ ನಾಯಿಮರಿಗಳನ್ನು ಬೇಯಿಸಿ ತಿಂದು ಹಾಕುವಸೆ",
+      "strict": {
+        "planted": [
+          9,
+          19
+        ],
+        "flagged": [
+          4,
+          9,
+          12,
+          14,
+          19
+        ],
+        "missed": [],
+        "false_flags": [
+          4,
+          12,
+          14
+        ],
+        "wcpm": 68.8774412030593
+      },
+      "loose": {
+        "planted": [
+          9,
+          19
+        ],
+        "flagged": [
+          4,
+          9,
+          12,
+          19
+        ],
+        "missed": [],
+        "false_flags": [
+          4,
+          12
+        ],
+        "wcpm": 73.46927061659659
+      }
+    },
+    {
+      "id": "sw-50259-v2",
+      "lang": "kn-IN",
+      "transcript": "ಈ ಬೇಸಿಗೆಯಲ್ಲಿ ಹಶೀಮನಿಗೆ ಮಾವಿನಕಾಯಿ ತಿನ್ನಬೇಕು ತಿನ್ನಬೇಕು ಎಂದು ಆಸೆ ಆದರೆ ಮಾವಿನಕಾಯಿ ಬೇಗ ಹಾಳಾಗುತ್ತಿವೆ ಹಾಗಾದರೆ ಅವನು ಏನು ಉಪಾಯ ಮಾಡುವುದು",
+      "strict": {
+        "planted": [
+          15
+        ],
+        "flagged": [
+          15
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 80.99989875012656
+      },
+      "loose": {
+        "planted": [
+          15
+        ],
+        "flagged": [
+          15
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 80.99989875012656
+      }
+    },
+    {
+      "id": "sw-26562-v2",
+      "lang": "kn-IN",
+      "transcript": "ಗುರು ಮತ್ತು ಪೀಚಿಗೆ ಆಟವಾಡಲು ಜಾಗವಿರಲಿಲ್ಲ ಅದಕ್ಕಾಗಿ ಹೊಸ ಭಾಗಗಳನ್ನು ಅವರು ಹುಡುಕಿ ಹೊರಟಿದ್ದಾರೆ ಬನ್ನಿ ನಾವು ಹೋಗೋಣ",
+      "strict": {
+        "planted": [
+          7
+        ],
+        "flagged": [
+          2,
+          7,
+          12
+        ],
+        "missed": [],
+        "false_flags": [
+          2,
+          12
+        ],
+        "wcpm": 58.349633657129594
+      },
+      "loose": {
+        "planted": [
+          7
+        ],
+        "flagged": [
+          2,
+          7
+        ],
+        "missed": [],
+        "false_flags": [
+          2
+        ],
+        "wcpm": 63.65414580777774
+      }
+    },
+    {
+      "id": "sw-26399-v2",
+      "lang": "kn-IN",
+      "transcript": "ರಾಹಿ ಮತ್ತು ಅವಳ ಗೆಳೆಯರು ಶಾಲೆಯಲ್ಲಿ ನಾಟಕದ ತಯಾರಿ ಡುಮಾತಿದ್ದಾರೆ ಎಲ್ಲ ಮಕ್ಕಳಿಗೂ ಕಾತರ ಆತುರ ಮುಂದೆ ಏನಾಗಲಿದೆ",
+      "strict": {
+        "planted": [
+          7,
+          9
+        ],
+        "flagged": [
+          7
+        ],
+        "missed": [
+          9
+        ],
+        "false_flags": [],
+        "wcpm": 87.75013710958922
+      },
+      "loose": {
+        "planted": [
+          7,
+          9
+        ],
+        "flagged": [
+          7
+        ],
+        "missed": [
+          9
+        ],
+        "false_flags": [],
+        "wcpm": 87.75013710958922
+      }
+    },
+    {
+      "id": "sw-24886-v2",
+      "lang": "kn-IN",
+      "transcript": "ತನ್ನ ಡಬ್ಬಿಗೆ ಬಗೆಬಗೆಯ ತಿನಿಸುಗಳನ್ನು ತುಂಬಿಕೊಂಡು ಸ್ನೇಹಿತರನ್ನು ಭೇಟಿಯಾಗಲು ಹೊರಟಿದ್ದಾಳೆ ಫರೀದಾ ಬಗೆಯ ನೀವು ಜೊತೆಯಾಗಿ",
+      "strict": {
+        "planted": [
+          1,
+          9
+        ],
+        "flagged": [
+          9,
+          10
+        ],
+        "missed": [
+          1
+        ],
+        "false_flags": [
+          10
+        ],
+        "wcpm": 80.35691864699038
+      },
+      "loose": {
+        "planted": [
+          1,
+          9
+        ],
+        "flagged": [
+          9
+        ],
+        "missed": [
+          1
+        ],
+        "false_flags": [],
+        "wcpm": 88.39261051168943
+      }
+    },
+    {
+      "id": "sw-12999-v2",
+      "lang": "kn-IN",
+      "transcript": "ಪುಟ್ಟ ಹುಡುಗಿಯೊಬ್ಬಳು ಹುಡುಗಿಯೊಬ್ಬಳು ಮಾವಿನ ಮರದಲ್ಲಿ ಅಡಗಿಕೊಂಡಿದ್ದಳು ಯಾರಿಗೂ ಕಾಣದಂತೆ ಕೂತಿದ್ದ ಅವಳು ಒಬ್ಬೊಬ್ಬರ ಕಣ್ಣಿಗೆ ಕಂಡಳು ಅವರು ಯಾರು",
+      "strict": {
+        "planted": [
+          9
+        ],
+        "flagged": [
+          9
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 79.77295390043723
+      },
+      "loose": {
+        "planted": [
+          9
+        ],
+        "flagged": [
+          9
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 79.77295390043723
+      }
+    },
+    {
+      "id": "sw-13692-v2",
+      "lang": "kn-IN",
+      "transcript": "ಅಕ್ಷರಾಮನು ಮಾಡುವ ಯಾವುದೋ ಒಂದು ಕೆಲಸ ಇಡೀ ಪಟಣವೇ ತಲೆ ಕೆಳಗಾಗುವಂತೆ ಮಾಡುತ್ತದೆ ಅದೇನೆಂದು ತಿಳಿಯಲು ಬಯಸುವಿರಾ",
+      "strict": {
+        "planted": [
+          6
+        ],
+        "flagged": [
+          0,
+          6
+        ],
+        "missed": [],
+        "false_flags": [
+          0
+        ],
+        "wcpm": 61.49080258307954
+      },
+      "loose": {
+        "planted": [
+          6
+        ],
+        "flagged": [
+          0,
+          6
+        ],
+        "missed": [],
+        "false_flags": [
+          0
+        ],
+        "wcpm": 61.49080258307954
+      }
+    },
+    {
+      "id": "sw-79-v2",
+      "lang": "kn-IN",
+      "transcript": "ಕಮಲಾ ಅಕ್ಕೆಯ ಮಕ್ಕಳು ಎತ್ತಾಡುತ್ತಾ ಅತಿ ಮುದ್ದು ಮಾಡುತ್ತಿರುವುದು ಅನಿಗೆ ಇಷ್ಟವಾಗಲಿಲ್ಲ ವಳಿಗೆ ಈ ಮಗುವು ಸ್ವಲ್ಪವೂ ತಿಳುವಳಿಕೆ ಇಲ್ಲದ ಪೆದ್ದು ಎನಿಸಿತು",
+      "strict": {
+        "planted": [
+          2,
+          9
+        ],
+        "flagged": [
+          1,
+          2,
+          7,
+          9,
+          11,
+          13
+        ],
+        "missed": [],
+        "false_flags": [
+          1,
+          7,
+          11,
+          13
+        ],
+        "wcpm": 60.81068240987668
+      },
+      "loose": {
+        "planted": [
+          2,
+          9
+        ],
+        "flagged": [
+          1,
+          2,
+          7,
+          9,
+          11,
+          13
+        ],
+        "missed": [],
+        "false_flags": [
+          1,
+          7,
+          11,
+          13
+        ],
+        "wcpm": 60.81068240987668
+      }
+    },
+    {
+      "id": "sw-15021-v2",
+      "lang": "kn-IN",
+      "transcript": "ಬನ್ನಿ ತಿಮ್ಮಿ ಮತ್ತು ಟಾಮಿಯ ಟಾಮಿಯ ಮಾತುಕತೆಯನ್ನು ಆಲಿರಿಸಿ ನೀವು ಕೂಡ ನಿಮ್ಮ ಮುದ್ದಿನ ಸಾಕುಪ್ರಾಣಿಯೊಂದಿಗೆ ಮಾತಾಡಲು ಬಯಸುತ್ತೀರಾ",
+      "strict": {
+        "planted": [
+          5
+        ],
+        "flagged": [
+          5,
+          7
+        ],
+        "missed": [],
+        "false_flags": [
+          7
+        ],
+        "wcpm": 73.51507894517
+      },
+      "loose": {
+        "planted": [
+          5
+        ],
+        "flagged": [
+          5
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 80.19826794018546
+      }
+    },
+    {
+      "id": "sw-14800-v2",
+      "lang": "kn-IN",
+      "transcript": "ಸೋನಾ ಮೊದಲಿಗಿಂತ ಚೂಟಿ ಈ ರಿಬಾ ಅವಳ ಅಮ್ಮನ ಕೆಲಸ ಅವಳಿಗೆ ಸ್ವಾರಸ್ಯಕರವಾಗಿ ತೋರುತ್ತದೆ",
+      "strict": {
+        "planted": [
+          4
+        ],
+        "flagged": [
+          4
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 79.17917587674442
+      },
+      "loose": {
+        "planted": [
+          4
+        ],
+        "flagged": [
+          4
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 79.17917587674442
+      }
+    },
+    {
+      "id": "sw-29670-v2",
+      "lang": "kn-IN",
+      "transcript": "ಭವ್ಯ ಮತ್ತು ಅಜ್ಜಿ ಇವತ್ತು ಏನು ತಿನ್ನಬೇಕು ತಿನ್ನಬೇಕು ಭವ್ಯಳ ಅನಿಸುತ್ತವೆ ಅಡುಗೆ ಅಂದರೆ ಕಾಮನಬಿಲ್ಲಿನ ಸಾಂಬಾರು ಮಧ್ಯಾಹ್ನದ ರುಚಿಯಾದ ಊಟಕ್ಕೆ ಭವ್ಯ ಮತ್ತು ಅಜ್ಜಿಗೆ ನೀವು ಜತೆಯಾಗಿ",
+      "strict": {
+        "planted": [
+          7
+        ],
+        "flagged": [
+          7,
+          18
+        ],
+        "missed": [],
+        "false_flags": [
+          18
+        ],
+        "wcpm": 83.79319374266566
+      },
+      "loose": {
+        "planted": [
+          7
+        ],
+        "flagged": [
+          7
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 88.44837117281376
+      }
+    },
+    {
+      "id": "sw-36056-v2",
+      "lang": "kn-IN",
+      "transcript": "ಹೆನೊಂದು ಕಂಟು ವಾಸನೆಯು ಮನೆಯಿಂದ ಬೇಸತ್ತು ತಲೆಯಿಂದ ತಲೆಗೆ ಜಿಗಿ ಜಿಗಿ ಜಿಗಿಯುತ್ತಾ ತನ್ನ ಕನಸಿನ ಮನೆಯನ್ನು ಹುಡುಕಿ ಹೊರಟಿತು ಆದರೆ ಹೊಸ ಮನೆಯಲ್ಲಿ ಕಂಡತೇನು",
+      "strict": {
+        "planted": [],
+        "flagged": [
+          0,
+          1,
+          2,
+          18
+        ],
+        "missed": [],
+        "false_flags": [
+          0,
+          1,
+          2,
+          18
+        ],
+        "wcpm": 76.12764067753601
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [
+          0,
+          1,
+          2,
+          18
+        ],
+        "missed": [],
+        "false_flags": [
+          0,
+          1,
+          2,
+          18
+        ],
+        "wcpm": 76.12764067753601
+      }
+    },
+    {
+      "id": "sw-61459-v2",
+      "lang": "kn-IN",
+      "transcript": "ಉದ್ದನೆಯ ಮನೆ ಗಿಡದಲ್ಲಿ ಮನೆ ತೂಗಾಡುವ ಮನೆ ನೆಲದಲ್ಲಿ ಕಟ್ಟಿರುವ ಮನೆ ನಿಮ್ಮ ಸುತ್ತಮುತ್ತ ವಾಸಿಸುವ ಪ್ರಾಣಿ ಪಕ್ಷಿ ಮತ್ತು ಕೀಟಗಳ ಮನೆಗಳಿಗೆ ಹೋಗಿ ಬರೋಣವಾ",
+      "strict": {
+        "planted": [],
+        "flagged": [
+          2,
+          6
+        ],
+        "missed": [],
+        "false_flags": [
+          2,
+          6
+        ],
+        "wcpm": 89.64865636878996
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [
+          2,
+          6
+        ],
+        "missed": [],
+        "false_flags": [
+          2,
+          6
+        ],
+        "wcpm": 89.64865636878996
+      }
+    },
+    {
+      "id": "sw-12783-v2",
+      "lang": "kn-IN",
+      "transcript": "ಚಿಂಟುವನ್ನು ಭೇಟಿ ಮಾಡಿ ಅದೊಂದು ವಿಶೇಷ ನಾಯಿ ಈ ಕಥೆಯಲ್ಲಿ ಬೇರೆ ನಾಯಿಗಳು ಇವೆ ನೀವು ಅವುಗಳನ್ನು ಭೇಟಿ ಮಾಡುವಿರಾ",
+      "strict": {
+        "planted": [],
+        "flagged": [
+          9
+        ],
+        "missed": [],
+        "false_flags": [
+          9
+        ],
+        "wcpm": 106.1795888701038
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 113.76384521796837
+      }
+    },
+    {
+      "id": "sw-12833-v2",
+      "lang": "kn-IN",
+      "transcript": "ಇದು ಪಾಠ ಆಟವನ್ನು ಜೊತೆ ಜೊತೆಯಾಗಿಯೇ ಮಾಡುವ ಅಣ್ಣತಮ್ಮನ ಕಥೆ ಅವರು ಒಟ್ಟಿಗೆ ಇದ್ದಾಗ ಏನೇನು ಮಾಡುತ್ತಾರೆ ಎನ್ನುವುದನ್ನು ಇದು ತಿಳಿಸುತ್ತದೆ",
+      "strict": {
+        "planted": [],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [
+          3
+        ],
+        "wcpm": 89.15068056992757
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [
+          3
+        ],
+        "missed": [],
+        "false_flags": [
+          3
+        ],
+        "wcpm": 89.15068056992757
+      }
+    },
+    {
+      "id": "sw-38419-v2",
+      "lang": "ta-IN",
+      "transcript": "புதிய புதிய விடயங்களை கண்டவுடன் நீங்களும் அவற்றை செய்ய முயல்வீர்கள் இல்லையா எச்சரிக்கையுடன் செயற்படுங்கள் லூவிக்கு என்ன நடந்தது தெரியுமா",
+      "strict": {
+        "planted": [
+          4,
+          9
+        ],
+        "flagged": [
+          2
+        ],
+        "missed": [
+          4,
+          9
+        ],
+        "false_flags": [
+          2
+        ],
+        "wcpm": 82.1736897454083
+      },
+      "loose": {
+        "planted": [
+          4,
+          9
+        ],
+        "flagged": [],
+        "missed": [
+          4,
+          9
+        ],
+        "false_flags": [],
+        "wcpm": 88.04323901293746
+      }
+    },
+    {
+      "id": "sw-137563-v2",
+      "lang": "ta-IN",
+      "transcript": "சிக்கு ஒரு சாதாரண சிறுமி ஆனால் ஒரு நாள் அந்த சாதாரண சிறுமி நாம் யாருமே சாதாரணமானவர்கள் இல்லை என்று காட்டுகிறாள்",
+      "strict": {
+        "planted": [
+          8,
+          11
+        ],
+        "flagged": [
+          7,
+          8
+        ],
+        "missed": [
+          11
+        ],
+        "false_flags": [
+          7
+        ],
+        "wcpm": 99.47376601461022
+      },
+      "loose": {
+        "planted": [
+          8,
+          11
+        ],
+        "flagged": [],
+        "missed": [
+          8,
+          11
+        ],
+        "false_flags": [],
+        "wcpm": 113.6843040166974
+      }
+    },
+    {
+      "id": "sw-51700-v2",
+      "lang": "ta-IN",
+      "transcript": "சுனிதா தன் தொப்புளை அழுத்தினாலோ காதுகளை பிடித்து இழுத்தாலோ என்ன நடக்கும் கரபனையின் ஆற்றல் பற்றிய இக்கதை உடலின் வெவ்வேறு பாகங்களை குழந்தைகளுக்கு அறிமுகமும் செய்கிறது",
+      "strict": {
+        "planted": [
+          9,
+          18
+        ],
+        "flagged": [
+          4,
+          9
+        ],
+        "missed": [
+          18
+        ],
+        "false_flags": [
+          4
+        ],
+        "wcpm": 84.37509693830071
+      },
+      "loose": {
+        "planted": [
+          9,
+          18
+        ],
+        "flagged": [
+          9
+        ],
+        "missed": [
+          18
+        ],
+        "false_flags": [],
+        "wcpm": 89.33833793467134
+      }
+    },
+    {
+      "id": "sw-60928-v2",
+      "lang": "ta-IN",
+      "transcript": "அம்மு மேடியில் பேச வேண்டிய நேரம்னு உதவிவிட்டது ஆனால் அவள் சொல்ல வேண்டிய வரிகளை மறந்து மறந்து போகிறாள் அவள் சொல்லி பார்க்கும் வரிகள் நம்மை சிரிக்க வைப்பவை",
+      "strict": {
+        "planted": [
+          4,
+          7
+        ],
+        "flagged": [
+          1,
+          2,
+          3,
+          4,
+          7,
+          13
+        ],
+        "missed": [],
+        "false_flags": [
+          1,
+          2,
+          3,
+          13
+        ],
+        "wcpm": 66.39348513927071
+      },
+      "loose": {
+        "planted": [
+          4,
+          7
+        ],
+        "flagged": [
+          1,
+          2,
+          3,
+          4,
+          7,
+          13
+        ],
+        "missed": [],
+        "false_flags": [
+          1,
+          2,
+          3,
+          13
+        ],
+        "wcpm": 66.39348513927071
+      }
+    },
+    {
+      "id": "sw-592477-v2",
+      "lang": "ta-IN",
+      "transcript": "ஒருவர் ரெண்டு பேர் ஆறு விருந்தளிங்க இன்று ஓவியன் வீட்டில் எழுந்து நடக்கிறது",
+      "strict": {
+        "planted": [
+          4,
+          8
+        ],
+        "flagged": [
+          4,
+          6,
+          8
+        ],
+        "missed": [],
+        "false_flags": [
+          6
+        ],
+        "wcpm": 76.20948535915988
+      },
+      "loose": {
+        "planted": [
+          4,
+          8
+        ],
+        "flagged": [
+          4,
+          6,
+          8
+        ],
+        "missed": [],
+        "false_flags": [
+          6
+        ],
+        "wcpm": 76.20948535915988
+      }
+    },
+    {
+      "id": "sw-24881-v2",
+      "lang": "ta-IN",
+      "transcript": "உமா காலித் சி ஜூ ஜூனோ டி யை சிற்றுண்டியை ஒருபோதும் சாப்பிட மாட்டாள் அதற்குப் பதிலாக அதோடு விளையாடுவாள் அவள் சாப்பாட்டுடன் விளையாடுவதைத் தடுக்க ஏதேனும் வழி இருக்கிறதா",
+      "strict": {
+        "planted": [
+          8
+        ],
+        "flagged": [
+          1,
+          6
+        ],
+        "missed": [
+          8
+        ],
+        "false_flags": [
+          1,
+          6
+        ],
+        "wcpm": 72.32146892939114
+      },
+      "loose": {
+        "planted": [
+          8
+        ],
+        "flagged": [
+          1
+        ],
+        "missed": [
+          8
+        ],
+        "false_flags": [
+          1
+        ],
+        "wcpm": 77.14290019135055
+      }
+    },
+    {
+      "id": "sw-35183-v2",
+      "lang": "ta-IN",
+      "transcript": "கருவிக்கு தனது இறக்கைகள் மழையில் நனையாமல் பாதுகாக்க ஒரு குடை தேவைப்படுகிறது ஒரு சிறந்த இலை குடையை தேடும் இந்த தேம்பியோடு நீங்களும் சேர்ந்து தேட வாருங்கள்",
+      "strict": {
+        "planted": [
+          8
+        ],
+        "flagged": [
+          0,
+          11,
+          13
+        ],
+        "missed": [
+          8
+        ],
+        "false_flags": [
+          0,
+          11,
+          13
+        ],
+        "wcpm": 64.69642102993107
+      },
+      "loose": {
+        "planted": [
+          8
+        ],
+        "flagged": [
+          0,
+          11
+        ],
+        "missed": [
+          8
+        ],
+        "false_flags": [
+          0,
+          11
+        ],
+        "wcpm": 69.00951576525982
+      }
+    },
+    {
+      "id": "sw-34264-v2",
+      "lang": "ta-IN",
+      "transcript": "ரோஜாவின் அம்மா அதிகாலையில் வேலைக்கு கிளம்புகிறார் இரவில் ரோஜா உறங்கும் நேரத்திற்குள் திரும்பி வந்துவிடுவதா உருதா அழிக்கிறார் அம்மா இல்லாமல் ரோஜா நாள் முழுவதும் என்ன செய்வாஷ்",
+      "strict": {
+        "planted": [
+          11,
+          19
+        ],
+        "flagged": [
+          3,
+          10,
+          11,
+          12,
+          19
+        ],
+        "missed": [],
+        "false_flags": [
+          3,
+          10,
+          12
+        ],
+        "wcpm": 71.80863000104722
+      },
+      "loose": {
+        "planted": [
+          11,
+          19
+        ],
+        "flagged": [
+          10,
+          11,
+          12,
+          19
+        ],
+        "missed": [],
+        "false_flags": [
+          10,
+          12
+        ],
+        "wcpm": 76.59587200111703
+      }
+    },
+    {
+      "id": "sw-95684-v2",
+      "lang": "ta-IN",
+      "transcript": "ராக்கெட் லீலா விண்வெளிக்குப் போவதை ஏவுதளம் மெஹிர் விரும்பவில்லை லீலாவை வானமோ அல்லது கடலோ விழுங்கி விடடால் ஆனால் ராக்கெட் லீலாவிற்கு அதைப் பற்றிய கவலையே இல்லை",
+      "strict": {
+        "planted": [
+          3,
+          12
+        ],
+        "flagged": [
+          5,
+          12
+        ],
+        "missed": [
+          3
+        ],
+        "false_flags": [
+          5
+        ],
+        "wcpm": 93.46148229478227
+      },
+      "loose": {
+        "planted": [
+          3,
+          12
+        ],
+        "flagged": [
+          5,
+          12
+        ],
+        "missed": [
+          3
+        ],
+        "false_flags": [
+          5
+        ],
+        "wcpm": 93.46148229478227
+      }
+    },
+    {
+      "id": "sw-216646-v2",
+      "lang": "ta-IN",
+      "transcript": "ராணிக்கு மாலாவிற்கும் பசித்தது ஆனால் அவர்கள் வீட்டில் செய்து தந்த உணவு பிக்குகவில்லை பின்பு என்ன செய்தார்கள் என்று பார்ப்போமா",
+      "strict": {
+        "planted": [
+          0,
+          9
+        ],
+        "flagged": [
+          0,
+          9
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 82.78277481493274
+      },
+      "loose": {
+        "planted": [
+          0,
+          9
+        ],
+        "flagged": [
+          0,
+          9
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 82.78277481493274
+      }
+    },
+    {
+      "id": "sw-48475-v2",
+      "lang": "ta-IN",
+      "transcript": "இந்து ஆர்வம் நிறைந்த குரங்குக்கு கேள்விகள் ஏராளம் எல்லோருக்கும் உதவ ஆற்றலானால் சில நேரங்களில் எதிர்பாராத பதில்கள் காத்திருக்கின்றனவே",
+      "strict": {
+        "planted": [
+          0,
+          8
+        ],
+        "flagged": [
+          0,
+          5,
+          8,
+          9
+        ],
+        "missed": [],
+        "false_flags": [
+          5,
+          9
+        ],
+        "wcpm": 68.75
+      },
+      "loose": {
+        "planted": [
+          0,
+          8
+        ],
+        "flagged": [
+          0,
+          5,
+          8,
+          9
+        ],
+        "missed": [],
+        "false_flags": [
+          5,
+          9
+        ],
+        "wcpm": 68.75
+      }
+    },
+    {
+      "id": "sw-881-v2",
+      "lang": "ta-IN",
+      "transcript": "ஷாமுக்கு காலையில் எழுந்து பள்ளிக்குச் செல்வதே பிடிக்காத ஒரு நாள் அவன் ஒரு கற்பனை உலகில் மூன் குகி ஷா மூழ்குகிறான் அதன் மூலம் பள்ளியையும் வீட்டையும் ரொம்ப ஜாலியாக மாற்றி விடுகிறான்",
+      "strict": {
+        "planted": [
+          13
+        ],
+        "flagged": [
+          0,
+          5,
+          6,
+          12,
+          17
+        ],
+        "missed": [
+          13
+        ],
+        "false_flags": [
+          0,
+          5,
+          6,
+          12,
+          17
+        ],
+        "wcpm": 60.93749999999999
+      },
+      "loose": {
+        "planted": [
+          13
+        ],
+        "flagged": [
+          0,
+          5,
+          6,
+          12,
+          17
+        ],
+        "missed": [
+          13
+        ],
+        "false_flags": [
+          0,
+          5,
+          6,
+          12,
+          17
+        ],
+        "wcpm": 60.93749999999999
+      }
+    },
+    {
+      "id": "sw-69736-v2",
+      "lang": "ta-IN",
+      "transcript": "புதரிலே வண்டியிலே வீட்டிலே பள்ளியிலே நாம் எங்குதான் துப்பாமல் இருக்கிறோம் மட்டுமில்லாமல் எவ்வளவு துப்புகிறோம் தூ தூ எனத் துப்புவதைப் பற்றியும் இந்த வேடிக்கை கவிதையை வாசித்த பின்னிங்களே முடிவு செய்து கொள்ளுங்கள்",
+      "strict": {
+        "planted": [
+          15
+        ],
+        "flagged": [
+          13,
+          15,
+          17,
+          19,
+          20
+        ],
+        "missed": [],
+        "false_flags": [
+          13,
+          17,
+          19,
+          20
+        ],
+        "wcpm": 60.71674216730308
+      },
+      "loose": {
+        "planted": [
+          15
+        ],
+        "flagged": [
+          15,
+          19,
+          20
+        ],
+        "missed": [],
+        "false_flags": [
+          19,
+          20
+        ],
+        "wcpm": 68.30633493821597
+      }
+    },
+    {
+      "id": "sw-45952-v2",
+      "lang": "ta-IN",
+      "transcript": "ஜான் என்ற பெயரோட ஒரு குட்டி பையனை சந்தியுங்கள் ஆனால் அவனுக்கு இன்னும் நிறைய பெயர்கள் உண்டு உங்களுக்கு எத்தனை பெயர்கள் இருக்கின்றன",
+      "strict": {
+        "planted": [
+          2,
+          16
+        ],
+        "flagged": [
+          0,
+          2,
+          4
+        ],
+        "missed": [
+          16
+        ],
+        "false_flags": [
+          0,
+          4
+        ],
+        "wcpm": 86.69737198591169
+      },
+      "loose": {
+        "planted": [
+          2,
+          16
+        ],
+        "flagged": [
+          0,
+          2
+        ],
+        "missed": [
+          16
+        ],
+        "false_flags": [
+          0
+        ],
+        "wcpm": 92.8900414134768
+      }
+    },
+    {
+      "id": "sw-38722-v2",
+      "lang": "ta-IN",
+      "transcript": "சின்ன பறவை தாயை காத்தன தவிக்கின்றது எதிர்ப்படும் அனைவரிடமும் நீங்களா என் தாய் என விசாரிக்கின்றது இடிவில் தாயை கண்டுகொள்கின்றது சின்ன பறவை தாயை காண என்ன செய்தது",
+      "strict": {
+        "planted": [
+          3,
+          12
+        ],
+        "flagged": [
+          0,
+          2,
+          3,
+          12,
+          13,
+          15,
+          17
+        ],
+        "missed": [],
+        "false_flags": [
+          0,
+          2,
+          13,
+          15,
+          17
+        ],
+        "wcpm": 69.48537394918883
+      },
+      "loose": {
+        "planted": [
+          3,
+          12
+        ],
+        "flagged": [
+          3,
+          12
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 94.30157893104197
+      }
+    },
+    {
+      "id": "sw-25730-v2",
+      "lang": "ta-IN",
+      "transcript": "மனுவுக்கு குதிப்பதும் எண்ணுவதும் மிகவும் பிடிக்கும் ஆனால் அவர்களின் இந்த அரிப்பெடுக்கும் சின்னம்மை வந்ததிலிருந்து ஒரே அரிப்பு அரிப்புதால் அவள் சொரியாமல் இருக்க என்ன செய்தாள்",
+      "strict": {
+        "planted": [
+          6,
+          14
+        ],
+        "flagged": [
+          6,
+          12,
+          14,
+          16
+        ],
+        "missed": [],
+        "false_flags": [
+          12,
+          16
+        ],
+        "wcpm": 77.14290019135055
+      },
+      "loose": {
+        "planted": [
+          6,
+          14
+        ],
+        "flagged": [
+          6,
+          12,
+          14,
+          16
+        ],
+        "missed": [],
+        "false_flags": [
+          12,
+          16
+        ],
+        "wcpm": 77.14290019135055
+      }
+    },
+    {
+      "id": "sw-642130-v2",
+      "lang": "ta-IN",
+      "transcript": "பூனை எலியை துரத்தியது மேலே கீழே உள்ளே வெளியே எல்லா எல்லா இடத்திலும் எலியும் பூனையு புகுந்து ஓடின எலியே பிடித்ததா பூனை",
+      "strict": {
+        "planted": [
+          10
+        ],
+        "flagged": [
+          1,
+          10,
+          13
+        ],
+        "missed": [],
+        "false_flags": [
+          1,
+          13
+        ],
+        "wcpm": 82.00922603792928
+      },
+      "loose": {
+        "planted": [
+          10
+        ],
+        "flagged": [
+          10,
+          13
+        ],
+        "missed": [],
+        "false_flags": [
+          13
+        ],
+        "wcpm": 88.31762804084691
+      }
+    },
+    {
+      "id": "sw-214709-v2",
+      "lang": "ta-IN",
+      "transcript": "கருப்பு எறும்பு ஒரு தைரியமான எறும்பு அது மற்ற விலங்குகளை சந்தித்தது தீயை அணைத்தது வேறு என்ன சாகசங்களை செய்தது என்று பார்ப்போமா",
+      "strict": {
+        "planted": [
+          7
+        ],
+        "flagged": [],
+        "missed": [
+          7
+        ],
+        "false_flags": [],
+        "wcpm": 81.52784785464864
+      },
+      "loose": {
+        "planted": [
+          7
+        ],
+        "flagged": [],
+        "missed": [
+          7
+        ],
+        "false_flags": [],
+        "wcpm": 81.52784785464864
+      }
+    },
+    {
+      "id": "sw-112384-v2",
+      "lang": "ta-IN",
+      "transcript": "நீங்கள் என்ன உடுத்தினாலும் பட்டனுக்கு தெரியாமல் இருக்காது பட்டடனின் வேலையே அதுதானே பட்டனை போலவே அழனகா ஒரு கதை இது",
+      "strict": {
+        "planted": [
+          6,
+          11
+        ],
+        "flagged": [
+          3,
+          6,
+          9,
+          11
+        ],
+        "missed": [],
+        "false_flags": [
+          3,
+          9
+        ],
+        "wcpm": 78.15795901147946
+      },
+      "loose": {
+        "planted": [
+          6,
+          11
+        ],
+        "flagged": [
+          6,
+          11
+        ],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 92.36849701356664
+      }
+    },
+    {
+      "id": "sw-586004-v2",
+      "lang": "ta-IN",
+      "transcript": "இயற்கை முழுவதும் கோடுகள் புள்ளிகள் போன்ற விளையாட வடிவங்களால் ஆனது உங்களைச் சுற்றிலும் கவனித்துப் பாருங்கள் எல்லாவற்றிலும் வடிவங்களைக் காண்பீர்கள்",
+      "strict": {
+        "planted": [
+          0,
+          5
+        ],
+        "flagged": [
+          5
+        ],
+        "missed": [
+          0
+        ],
+        "false_flags": [],
+        "wcpm": 80.08485180727199
+      },
+      "loose": {
+        "planted": [
+          0,
+          5
+        ],
+        "flagged": [
+          5
+        ],
+        "missed": [
+          0
+        ],
+        "false_flags": [],
+        "wcpm": 80.08485180727199
+      }
+    },
+    {
+      "id": "sw-24160-v2",
+      "lang": "ta-IN",
+      "transcript": "சமருக்கும் நிவ்யாவுக்கும் மிட்டாய் கடை முருடனை பார்த்தால் ஒரே நடுக்கமானால் அவன் தோற்றத்திற்கேற்ப அவ்வளவு பயங்கரமானவனா என்ன சின்னச் சின்ன நாய்க்குட்டிகளை சிற்றுண்டியாக உண்பவனா அவன்",
+      "strict": {
+        "planted": [
+          16
+        ],
+        "flagged": [
+          2,
+          4,
+          7,
+          8
+        ],
+        "missed": [
+          16
+        ],
+        "false_flags": [
+          2,
+          4,
+          7,
+          8
+        ],
+        "wcpm": 69.67755983378999
+      },
+      "loose": {
+        "planted": [
+          16
+        ],
+        "flagged": [
+          4,
+          7,
+          8
+        ],
+        "missed": [
+          16
+        ],
+        "false_flags": [
+          4,
+          7,
+          8
+        ],
+        "wcpm": 74.03240732340187
+      }
+    },
+    {
+      "id": "sw-22887-v2",
+      "lang": "ta-IN",
+      "transcript": "காட்டில் எல்லா விலங்குகளுக்கும் பறவைகளுக்கும் புலி வருவது தெரிந்துவிடும் புலி பக்கத்தில் உள்ளதை தெரிவிக்க அவை எழுப்பும் விதவிதமான எச்சரிக்கை ஒலிகளை கேளுங்கள்",
+      "strict": {
+        "planted": [
+          13
+        ],
+        "flagged": [
+          6,
+          7,
+          16
+        ],
+        "missed": [
+          13
+        ],
+        "false_flags": [
+          6,
+          7,
+          16
+        ],
+        "wcpm": 70.7863925800692
+      },
+      "loose": {
+        "planted": [
+          13
+        ],
+        "flagged": [
+          6,
+          7
+        ],
+        "missed": [
+          13
+        ],
+        "false_flags": [
+          6,
+          7
+        ],
+        "wcpm": 80.89873437722196
+      }
+    },
+    {
+      "id": "sw-38359-v2",
+      "lang": "ta-IN",
+      "transcript": "தம்புவுக்கு பட்டம் ஏற்றுவது என்றால் சரியான விருப்பம் ஒரு நாள் தம்பு ஏற்றிய பட்டம் அவளுக்கு விட்டது தம்பு பட்டத்தை பிடிக்க ஓடினான் தம்பு தன்னோட பட்டத்தினை பிடித்தான்",
+      "strict": {
+        "planted": [
+          10,
+          17
+        ],
+        "flagged": [
+          6,
+          10,
+          13,
+          17,
+          18,
+          19
+        ],
+        "missed": [],
+        "false_flags": [
+          6,
+          13,
+          18,
+          19
+        ],
+        "wcpm": 64.28561178952201
+      },
+      "loose": {
+        "planted": [
+          10,
+          17
+        ],
+        "flagged": [
+          6,
+          10,
+          17,
+          19
+        ],
+        "missed": [],
+        "false_flags": [
+          6,
+          19
+        ],
+        "wcpm": 73.46927061659659
+      }
+    },
+    {
+      "id": "sw-94943-v2",
+      "lang": "ta-IN",
+      "transcript": "சுகியா மாமா ஒரு பிரபல பாடகர் அவர் டி நூ டி நூ என்னும் தன்பரம ரசிகனுக்கு நட்சத்தித்தார் இருவரும் நல்ல ஜோடிதான்",
+      "strict": {
+        "planted": [
+          11
+        ],
+        "flagged": [
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "missed": [],
+        "false_flags": [
+          7,
+          8,
+          9,
+          10
+        ],
+        "wcpm": 64.62760586136481
+      },
+      "loose": {
+        "planted": [
+          11
+        ],
+        "flagged": [
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "missed": [],
+        "false_flags": [
+          7,
+          8,
+          9,
+          10
+        ],
+        "wcpm": 64.62760586136481
+      }
+    },
+    {
+      "id": "sw-150017-v2",
+      "lang": "ta-IN",
+      "transcript": "அம்மா மீண்டும் தனது கண்ணாடியைத் தொலைத்துவிட்டார் இப்போது அது மீமுவும் மிர்ச்சியும்தான் கண்டுபிடிக்க வேண்டும் அவர்கள் தேடியல் கண்ணாடியைத் தவிர் வேறு எதையெல்லாம் கண்டுபிடித்தார்கள்",
+      "strict": {
+        "planted": [
+          0
+        ],
+        "flagged": [
+          6,
+          12,
+          14
+        ],
+        "missed": [
+          0
+        ],
+        "false_flags": [
+          6,
+          12,
+          14
+        ],
+        "wcpm": 61.56354924854909
+      },
+      "loose": {
+        "planted": [
+          0
+        ],
+        "flagged": [
+          6,
+          12,
+          14
+        ],
+        "missed": [
+          0
+        ],
+        "false_flags": [
+          6,
+          12,
+          14
+        ],
+        "wcpm": 61.56354924854909
+      }
+    },
+    {
+      "id": "sw-690814-v2",
+      "lang": "ta-IN",
+      "transcript": "சுற்றுலா செல்ல இது ஒரு ஒரு அழகான நாள் அனைவரும் இந்த மகிழ்ச்சியில் கட்டுவதென்றால் விரும்புகிறார்கள்",
+      "strict": {
+        "planted": [
+          9
+        ],
+        "flagged": [
+          0,
+          9
+        ],
+        "missed": [],
+        "false_flags": [
+          0
+        ],
+        "wcpm": 67.5
+      },
+      "loose": {
+        "planted": [
+          9
+        ],
+        "flagged": [
+          0,
+          9
+        ],
+        "missed": [],
+        "false_flags": [
+          0
+        ],
+        "wcpm": 67.5
+      }
+    },
+    {
+      "id": "sw-11118-v2",
+      "lang": "ta-IN",
+      "transcript": "ரோஹனுக்கு பல் தேய்ப்பதோ குளிப்பதோ பிடிக்காது ஆனால் அவனுடைய சகோதரி ரியா சொல்லும் ரகசிய மந்திரம் ஒன்று அவன் மனத்தை மாற்றுகிறது",
+      "strict": {
+        "planted": [],
+        "flagged": [
+          0,
+          11
+        ],
+        "missed": [],
+        "false_flags": [
+          0,
+          11
+        ],
+        "wcpm": 85.19411013796258
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [
+          11
+        ],
+        "missed": [],
+        "false_flags": [
+          11
+        ],
+        "wcpm": 91.74750322549816
+      }
+    },
+    {
+      "id": "sw-691035-v2",
+      "lang": "ta-IN",
+      "transcript": "டோம் டோமிடம் ஒரு பெரிய கேக் உள்ளது அவன் அந்த கேக்கை என்ன செய்யப் போகிறான்",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 137.28831738389485
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 137.28831738389485
+      }
+    },
+    {
+      "id": "sw-38644-v2",
+      "lang": "ta-IN",
+      "transcript": "நீனாவும் அவள் குடும்பமும் கொல்கத்தாவிலிருந்து தில்லிக்கு இடம்பெயர்கிறார்கள் நீனாவிற்கு அது பிடிக்கவே இல்லை இரயில் பயணத்தின் பொழுது அவள் பெற்றோரால் அவளை உற்சாகப்படுத்த முடிந்ததா",
+      "strict": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 93.46148229478227
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [],
+        "missed": [],
+        "false_flags": [],
+        "wcpm": 93.46148229478227
+      }
+    },
+    {
+      "id": "sw-47917-v2",
+      "lang": "ta-IN",
+      "transcript": "ஐயோடா அது என்னது அங்கே என்ன அசைகிறது அட்டகாசம் செய்யும் கருப்பான் பூச்சியை பற்றி ஒரு வேடிக்கை கவிதை",
+      "strict": {
+        "planted": [],
+        "flagged": [
+          0,
+          8,
+          11
+        ],
+        "missed": [],
+        "false_flags": [
+          0,
+          8,
+          11
+        ],
+        "wcpm": 76.70427306721211
+      },
+      "loose": {
+        "planted": [],
+        "flagged": [
+          0,
+          8
+        ],
+        "missed": [],
+        "false_flags": [
+          0,
+          8
+        ],
+        "wcpm": 84.37470037393332
+      }
+    }
+  ]
+}
