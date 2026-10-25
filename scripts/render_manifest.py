@@ -20,39 +20,13 @@ from pathlib import Path
 import numpy as np
 from dotenv import load_dotenv
 
-from akshara.core.text import words
 from akshara.core.wavio import write_wav
-from akshara.dataset import Clip, load
+from akshara.dataset import Clip, load, pieces
 from akshara.providers.timbre import synthesize
 
 ROOT = Path(__file__).resolve().parent.parent
 MANIFEST = ROOT / "data" / "bench" / "manifest-v1.jsonl"
 RATE = 16000
-
-
-def spoken_by_word(clip: Clip) -> list[str]:
-    """What the reader says for each story word ("" for a skip); joins back to read_as."""
-    out = list(words(clip.reference))
-    for e in clip.errors:
-        out[e["index"]] = e.get("said", "")
-    if " ".join(w for w in out if w) != clip.read_as:
-        raise ValueError(f"{clip.clip_id}: errors do not rebuild read_as")
-    return out
-
-
-def pieces(clip: Clip) -> list[tuple[str, float]]:
-    """(text, silence after it in seconds) for each piece to synthesise."""
-    spoken = spoken_by_word(clip)
-    pauses = {e["index"]: e["pause_s"] for e in clip.errors if e["type"] == "hesitation"}
-    out, current = [], []
-    for i, w in enumerate(spoken):
-        if i in pauses and current:
-            out.append((" ".join(current), pauses[i]))
-            current = []
-        if w:
-            current.append(w)
-    out.append((" ".join(current), 0.0))
-    return out
 
 
 def render(clip: Clip) -> np.ndarray:

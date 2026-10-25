@@ -99,3 +99,21 @@ Seen after the run, not tests of any prediction:
 - **The agreement rule table** had false flags 19/1351 (1.4%, 3.5 points below Prisma) and catch 101/139 (73%, 2.9 points below), so it would have passed both margins. We chose the logistic model as the primary decider before the run, so this does not count. A held-out set should test the rule table as a pre-registered system.
 - Plan change 2 (margins per changed letter) did not help. On `tune`, the summed margins separated subtle mistakes from correct words no better than per-frame margins (AUC 0.91 vs 0.94 Hindi, 0.91 vs 0.91 Kannada, 0.77 vs 0.78 Tamil), so the fused model uses per-frame margins.
 - Plan change 1 (count only audible mistakes) cannot be done with Prisma as the "second model". Prisma wrote the planted non-word for only 6 of 41 subtle mistakes on `test`, so it confirms almost nothing. An independent second acoustic model is needed.
+
+## Held-out engine (written Oct 25, before any held-out clip is rendered)
+
+Setup, fixed before the run:
+- **Audio:** the 47 `test` passages read again by AI4Bharat's Indic Parler-TTS (`scripts/render_holdout.py`), in the same four conditions (clean, phone 8 kHz, noise 5 dB, child pitch): 188 clips, split `holdout`. Voices: Rohit and Divya (Hindi), Suresh and Anu (Kannada), Jaya (Tamil).
+- **Systems:** exactly as frozen for Phase 3: same fitted models, calibration and thresholds, all from Timbre clips. Nothing is refitted. Both the fused model and the agreement rule table are primary systems this time.
+- **Exclusions, fixed now:** a clip is dropped only if MMS cannot align it, or if Prisma returns no transcript for it. Clips flagged "unusual length" by the render script are kept. Every exclusion is counted in the report.
+- **Reported:** `results/fusion_report_holdout.json`, all four conditions pooled, with 95% intervals. One run.
+
+Predictions on the held-out engine:
+1. **Prisma is worse on a voice that is not Gnani's own:** its false-flag rate is at least 2 points higher than on `test` (4.9%).
+2. **The thresholds partly carry over:** fused false flags ≤ 7%, and agreement-rule false flags ≤ 4%.
+3. **Mistakes passed as correct:** fused `error` + `unsure` ≥ 75% of planted mistakes.
+4. **Calibration loosens:** fused ECE ≤ 0.08.
+5. **Agreement rule against Prisma:** false flags at least 3 points lower and catch within 3 points. This is the Phase 3 margin.
+6. **Fused against Prisma:** the same margin, and we expect it to **fail** again, as on `test`.
+
+Decision rule, fixed now: if the agreement rule meets prediction 5, the product uses its three states (`unsure` goes to the teacher's listen queue). If neither system meets the margin, the product keeps Prisma's marks and the per-word check stays a research result.

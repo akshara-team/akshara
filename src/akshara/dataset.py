@@ -20,9 +20,12 @@ import json
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
+from akshara.core.text import words
+
 SPLITS = (("tune", 0.6), ("calibrate", 0.2), ("test", 0.2))
-# Engines kept out of tuning and calibration. Empty until a second speech engine renders clips.
-HOLDOUT_ENGINES: frozenset[str] = frozenset()
+# Engines kept out of tuning and calibration: only ever scored, never fitted on.
+HOLDOUT_ENGINE = "indic-parler-tts"  # AI4Bharat's open TTS, rendered by scripts/render_holdout.py
+HOLDOUT_ENGINES: frozenset[str] = frozenset({HOLDOUT_ENGINE})
 _SUFFIXES = ("-ok", "-m", "-d", "-v2")
 
 
@@ -80,3 +83,28 @@ def write(path: Path, clips: list[Clip]) -> None:
 def load(path: Path) -> list[Clip]:
     lines = path.read_text(encoding="utf-8").splitlines()
     return [Clip(**json.loads(line)) for line in lines if line]
+
+
+def spoken_by_word(clip: Clip) -> list[str]:
+    """What the reader says for each story word ("" for a skip); joins back to read_as."""
+    out = list(words(clip.reference))
+    for e in clip.errors:
+        out[e["index"]] = e.get("said", "")
+    if " ".join(w for w in out if w) != clip.read_as:
+        raise ValueError(f"{clip.clip_id}: errors do not rebuild read_as")
+    return out
+
+
+def pieces(clip: Clip) -> list[tuple[str, float]]:
+    """(text, silence after it in seconds) for each piece to synthesise."""
+    spoken = spoken_by_word(clip)
+    pauses = {e["index"]: e["pause_s"] for e in clip.errors if e["type"] == "hesitation"}
+    out, current = [], []
+    for i, w in enumerate(spoken):
+        if i in pauses and current:
+            out.append((" ".join(current), pauses[i]))
+            current = []
+        if w:
+            current.append(w)
+    out.append((" ".join(current), 0.0))
+    return out

@@ -2,9 +2,12 @@
 
     uv run python scripts/fusion_report.py           # fit on tune, show calibrate (development)
     uv run python scripts/fusion_report.py --test    # also score test (only after PREDICTIONS.md)
+    uv run python scripts/fusion_report.py --test --holdout   # also the held-out engine
 
 Reads results/evidence_mms.jsonl and Prisma's committed transcripts; writes
-results/fusion_report.json (or fusion_report_dev.json without --test).
+results/fusion_report.json (or fusion_report_dev.json without --test). With --holdout, the
+held-out engine's clips (split `holdout`, never fitted on) go to results/fusion_report_holdout.json
+instead, so the frozen Phase 3 test report stays as it was.
 
 Fixed rules (docs/PREDICTIONS.md, Phase 3):
 - the logistic model is fitted per language on `tune` (all audio conditions)
@@ -194,6 +197,7 @@ def passages(rows: list[dict], key: str) -> dict:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--test", action="store_true", help="also score the test split")
+    ap.add_argument("--holdout", action="store_true", help="also score the held-out engine")
     args = ap.parse_args()
     sys.stdout.reconfigure(encoding="utf-8")
 
@@ -231,7 +235,9 @@ def main() -> None:
         r["rule"] = rule_state(r["prisma"], check)
 
     systems = ("prisma_s", "check_s", "rule", "fused")
-    splits = ["calibrate"] + (["test"] if args.test else [])
+    splits = ["calibrate"] + (["test"] if args.test else []) + (["holdout"] if args.holdout else [])
+    if args.holdout and not any(r["split"] == "holdout" for r in rows):
+        sys.exit("no held-out clips with evidence and transcripts yet (docs/HOLDOUT_HOWTO.md)")
     for split in splits:
         node = report.setdefault(split, {})
         for cond in (*CONDS, "all"):
@@ -255,7 +261,10 @@ def main() -> None:
                     np.array([r["p"] for r in rs]), np.array([r["y"] for r in rs])
                 )
 
-    out = ROOT / "results" / ("fusion_report.json" if args.test else "fusion_report_dev.json")
+    name = "fusion_report_dev.json"
+    if args.test:
+        name = "fusion_report_holdout.json" if args.holdout else "fusion_report.json"
+    out = ROOT / "results" / name
     out.write_text(json.dumps(report, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 
     for lang, m in report["models"].items():

@@ -1,0 +1,7 @@
+# For scripts/render_holdout.py only, in its own environment (see docs/HOLDOUT_HOWTO.md).
+# Parler-TTS pins its own, older transformers, so it cannot share the project's environment.
+parler-tts @ git+https://github.com/huggingface/parler-tts.git
+torch
+numpy
+scipy
+sentencepiece

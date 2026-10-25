@@ -61,8 +61,8 @@ def word_rows() -> list[dict]:
         ev[r["clip_id"]] = r
     rows = []
     for c in load(MANIFEST):
-        if c.clip_id not in ev:
-            continue
+        if c.clip_id not in ev or c.split == "holdout":
+            continue  # the held-out engine is scored in scripts/fusion_report.py only
         e = ev[c.clip_id]
         by_index = {w["index"]: w for w in e["words"]}
         ref = words(c.reference)
