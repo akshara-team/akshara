@@ -49,6 +49,13 @@ def main() -> None:
     v = [o["verdict"] for o in iso]
     wanted.append(("isolated, read as spoken", f"{v.count('as_read')} non-word reads"))
     wanted.append(("isolated, corrected", f"{v.count('corrected')} corrected"))
+    fusion = load("fusion_report.json")["test"]["all"]["all"]
+    for system in ("prisma_s", "rule", "fused"):
+        w = fusion[system]["words"]
+        for metric in ("catch", "catch_or_unsure", "false_flags", "unsure"):
+            if metric == "unsure" and system == "prisma_s":
+                continue
+            wanted.append((f"phase 3 {system} {metric}", f"{w[metric]['k']}/{w[metric]['n']}"))
     clips = load("halting_study.json")["clips"]
     right = sum(c["pieces"] == c["expected_pieces"] for c in clips)
     wanted.append(("pause finder right count", f"{right} of {len(clips)}"))

@@ -565,7 +565,7 @@ No dates; each phase ends when its exit check passes.
 |---|---|---|
 | **1. Foundations** *(built 2026-10-24; waiting on native review)* | Script tables and syllabifier (B2), error taxonomy v2 (B1), dataset manifests and splits (B5) | Native review of tables signed off; planter tests pass; dry-run benchmark runs end to end |
 | **2. Evidence** *(done 2026-10-24; [results](RESULTS.md#checking-each-word-against-the-audio-phase-2))* | Forced aligner (A1), verifier (A2), prosody (A3) behind the evidence interface | Each source scored alone on the benchmark; results and predictions committed |
-| **3. Decisions** | Fusion, calibration, three states, band decisions (A4–A5); Akshara-Bench report (C) | Acceptance table in section 3 met on the held-out engine, or the gap explained |
+| **3. Decisions** *(built 2026-10-25; exit check not met: no held-out engine yet, and fusion missed its margins; [results](RESULTS.md#deciding-correct-not-sure-or-error-phase-3))* | Fusion, calibration, three states, band decisions (A4–A5); Akshara-Bench report (C) | Acceptance table in section 3 met on the held-out engine, or the gap explained |
 | **4. Tutor** | Skill graph, BKT, placement, difficulty model (D); Evon content with validators (E); buddy voice (F) | Simulated learners placed correctly; Evon validator pass rate and native-review rate recorded |
 | **5. Teacher** | Review queue with word clips, TaRL groups, heatmap, rounds, reports, overrides (I) | Simulated class: review time per round measured against target |
 | **6. Live and channels** | Realtime read-along (G); WhatsApp and phone (H) | Streaming cost measured; codec conditions added to the benchmark |
@@ -579,6 +579,12 @@ Phases 1–3 matter most: they turn the project's known weakness into its main r
 2. Score the margin per changed letter, not per frame of the whole word, so a one-letter change in a long Kannada or Tamil word is not diluted.
 3. Make the fusion step use agreement: a word that both Prisma and the check doubt is much more likely wrong than one only the check doubts.
 4. Bring the model's latency under real time (GPU, or a smaller CTC model) before live read-along.
+
+**What Phase 3 changed.** Fusion lowers false flags and passes fewer mistakes as correct, but it missed the margins set in advance, so the product keeps Prisma's marks for now. Next:
+1. A held-out engine: render the `test` passages with an open TTS (Indic Parler-TTS or IndicF5, locally) and get Prisma transcripts for them. That run costs credits, so it needs approval first.
+2. Pre-register the agreement rule table next to the fused model for that run, since it met both margins after the fact.
+3. Fix the Hindi threshold drift (fit the thresholds on `tune` + `calibrate`, or with a per-condition check).
+4. A second acoustic model (for example IndicConformer) to tell audible planted mistakes from inaudible ones.
 
 ### Who does what
 

@@ -75,3 +75,27 @@ Predictions on `test`:
 9. **Latency** ≤ 4 s for a 20 s part on CPU: **fails**. The Phase 2 run measured 0.69 × real time on this laptop (about 14 s per 20 s), including model loading.
 
 If 1 or 2 fails, fusion does not earn its place over Prisma alone and the product keeps the two-state Prisma marks. If 6 fails, the probabilities are not shown to teachers as numbers.
+
+### Verdict, written Oct 25 after the one `test` run
+
+`results/fusion_report.json`. Test split, all four audio conditions pooled: 139 planted mistakes, 1,351 correct words.
+
+| # | Prediction | Result | Verdict |
+|---|---|---|---|
+| 1 | Fused false flags ≤ 5%, and ≥ 3 points below Prisma | 40/1351 (3.0%) vs Prisma 66/1351 (4.9%): 1.9 points lower | **Fails** on the margin |
+| 2 | Fused catch within 3 points of Prisma; gross ≥ 90% | 100/139 (72%) vs 105/139 (76%): 3.6 points lower; gross 90/98 (92%) | **Fails** on catch, narrowly; gross holds |
+| 3 | `unsure` ≤ 10% of words | 107/1490 (7.2%) | **Holds** |
+| 4 | `error` + `unsure` ≥ 78% of mistakes | 118/139 (85%) | **Holds** |
+| 5 | Near-sound ≥ 60% fails; ≤ 30% as `error` | 5/24 (21%) as `error`, 14/24 not passed as correct | **Holds** (the target fails, as predicted) |
+| 6 | ECE ≤ 0.05 | 0.009 | **Holds** |
+| 7 | Rule table: false flags ≤ 3%, more `unsure` than fused, above 8% | 19/1351 (1.4%); 129/1490 (8.7%) vs 7.2% | **Holds** |
+| 8 | Band misplacement ≤ 5% fails; 15–35% misplaced, 25–50% need a listen | 11/60 (18%) misplaced, 40/100 need a listen | **Holds** (the target fails, as predicted) |
+| 9 | Latency ≤ 4 s per 20 s part on CPU fails | about 14 s | **Holds** (the target fails, as predicted) |
+
+Predictions 1 and 2 failed, so, as written, **the fused decider does not replace Prisma's marks in the product yet.** Fusion did what it was meant to do in direction: fewer false flags (3.0% vs 4.9%), and fewer mistakes passed as correct (21 vs 34 of 139, because doubtful words go to `unsure`). But it did not meet the margins we set. Prisma's false-flag rate on `test` (4.9%) was lower than on `tune` and `calibrate` (9%), which left less room to improve.
+
+Seen after the run, not tests of any prediction:
+- **Hindi went the wrong way.** Fused false flags were 25/323 (7.7%) against Prisma's 9/323 (2.8%). The `calibrate` threshold did not carry over to `test` in Hindi. In Kannada (7/636 vs 25/636) and Tamil (8/392 vs 32/392), fusion cut false flags by two thirds or more.
+- **The agreement rule table** had false flags 19/1351 (1.4%, 3.5 points below Prisma) and catch 101/139 (73%, 2.9 points below), so it would have passed both margins. We chose the logistic model as the primary decider before the run, so this does not count. A held-out set should test the rule table as a pre-registered system.
+- Plan change 2 (margins per changed letter) did not help. On `tune`, the summed margins separated subtle mistakes from correct words no better than per-frame margins (AUC 0.91 vs 0.94 Hindi, 0.91 vs 0.91 Kannada, 0.77 vs 0.78 Tamil), so the fused model uses per-frame margins.
+- Plan change 1 (count only audible mistakes) cannot be done with Prisma as the "second model". Prisma wrote the planted non-word for only 6 of 41 subtle mistakes on `test`, so it confirms almost nothing. An independent second acoustic model is needed.

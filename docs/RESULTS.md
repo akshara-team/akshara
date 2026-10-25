@@ -162,6 +162,40 @@ Prisma's text cannot show a pause at all, and this finds every one. Sounding out
 
 - **Small samples.** Only 17 near-sound swaps in the pooled split, so a single word moves the rate by 6 points.
 - **The fix was not blind.** The alignment fix came after run 1's pooled results had been seen (see the verdict in PREDICTIONS.md).
-- **Too slow for live use yet.** The model is a 1-billion-parameter model on CPU, about 5.7 s per clip on this laptop (clips are 5–10 s), so it runs slower than real time. The plan's target of 4 s after a 20 s part needs a GPU or a smaller model.
+- **Too slow for live use yet.** The model is a 1-billion-parameter model on CPU, about 5.7 s per clip on this laptop (clips average 8.2 s), so about 0.7 × real time including model loading: about 14 s for a 20 s part. The plan's target of 4 s after a 20 s part needs a GPU or a smaller model.
 - **Non-commercial licence.** MMS is CC BY-NC 4.0 (see DECISIONS.md).
 - **Synthetic voices only.** Every clip is still synthetic, so none of this has been measured on children.
+
+## Deciding: correct, not sure, or error (Phase 3)
+
+Generated from `results/fusion_report.json`; rerun with `scripts/fusion_report.py --test` (no credits). Predictions and verdict: [PREDICTIONS.md](PREDICTIONS.md). Code: `src/akshara/fusion.py`.
+
+**What it is.** Each word gets one of three states. Two deciders:
+- **Agreement rule table.** Prisma and the per-word check both doubt the word: `error`. One of them: `unsure`. Neither: `correct`.
+- **Fused model.** A small logistic model per language on ten named features (Prisma's mark, the check's margins, two agreement terms), so every decision can be explained word by word. It is fitted on `tune`, turned into a probability by isotonic calibration on `calibrate`, and cut by two thresholds set on `calibrate`: at most 5% of correct words `error`, at most 10% of all words `unsure`.
+
+`unsure` words are not marked wrong to the child. They go to the teacher's listen queue.
+
+**Setup.** `test` split only (101 clips; 139 planted mistakes and 1,351 correct words, all four audio conditions pooled), scored once with everything frozen, after the predictions were committed.
+
+| System | Caught as `error` | Not passed as correct (`error` or `unsure`) | False flags | `unsure` |
+|---|---|---|---|---|
+| Prisma alone | 105/139 (76%) | 105/139 (76%) | 66/1351 (4.9%) | 0 |
+| Agreement rule | 101/139 (73%) | 113/139 (81%) | 19/1351 (1.4%) | 129/1490 (8.7%) |
+| Fused model | 100/139 (72%) | 118/139 (85%) | 40/1351 (3.0%) | 107/1490 (7.2%) |
+
+By language, false flags (fused vs Prisma): Hindi 25/323 vs 9/323, Kannada 7/636 vs 25/636, Tamil 8/392 vs 32/392. **Fusion cuts false flags by two thirds or more in Kannada and Tamil, and makes them worse in Hindi**, where the `calibrate` threshold did not carry over. Calibration error (ECE) of the fused probability is 0.009.
+
+Near-sound mistakes: 5/24 as `error` for both Prisma and fused. Fused sends another 9 to `unsure`, so 14/24 are not passed as correct.
+
+**Passages.** Reading-accuracy bands (below 90%, 90–95%, 95% and up). An `unsure` word counts both ways. When the result could fall in two bands, the attempt is "needs a listen". Fused: 40 of 100 attempts need a listen, and 11 of the other 60 are placed in the wrong band. Prisma alone places all 100 and misplaces 39. The bands are a hard test here: most passages hold about two mistakes in 15–20 words, right at the 90% line, and about half the subtle mistakes are probably not in the audio, so the "true" band is itself uncertain.
+
+**Verdict.** Against the predictions written before the run, fusion moved the right way but missed both margins we set. False flags were only 1.9 points below Prisma (we required 3), and catch as `error` was 3.6 points below (we allowed 3). So, as written in advance, the product keeps Prisma's marks for now. Everything else held, including calibration (ECE 0.009) and the predicted failures: near-sound catch, band misplacement and CPU latency. After the run we noticed that the agreement rule table would have met both margins (1.4% false flags, 73% catch). That is a lead for the next run, not a result.
+
+### Limits
+
+- **No held-out engine.** Every clip is Timbre v3.0, so the plan's exit check ("met on a held-out engine") could not be run. `test` has unseen passages but the same voice engine.
+- **Small samples.** 24 near-sound mistakes and 100 attempts on `test`. Intervals are in `fusion_report.json`.
+- **`test` was not fully unseen.** Prisma alone and the check alone were already reported on `calibrate` + `test` pooled in Phase 2. Only the fused systems are new on `test`.
+- **The check knows the planting tables.** Its listed misreadings come from the same script tables that planted the mistakes. A child's misreading outside those tables is only caught by the free-reading margin, which is weaker.
+
