@@ -117,3 +117,23 @@ Predictions on the held-out engine:
 6. **Fused against Prisma:** the same margin, and we expect it to **fail** again, as on `test`.
 
 Decision rule, fixed now: if the agreement rule meets prediction 5, the product uses its three states (`unsure` goes to the teacher's listen queue). If neither system meets the margin, the product keeps Prisma's marks and the per-word check stays a research result.
+
+## Phase 4: learner model on simulated children (written Oct 25, before the study runs)
+
+Setup, fixed before the run (`scripts/learner_study.py`, seed 20261025):
+- **Bank:** the 413 StoryWeaver passages in `data/open_passages/candidates.jsonl` (level 1 or 2 per book). The skill order and the passage difficulty are built from this bank (`learner/skills.py`, `core/difficulty.py`).
+- **Difficulty:** mean z-score of six text features, equal weights, nothing fitted. It is compared with StoryWeaver's level tag. That tag describes the book, and our text is the book's short description, so it is a weak label.
+- **Simulated children:** they know the first K skills in teaching order (K uniform), with 10% gaps and 5% skills known early. A word is read right with chance 0.95 when every skill is known, and 0.2 per unknown skill otherwise. During practice, an unknown skill is learned with chance 0.03 each time it is used.
+- **Scorers:** perfect; Prisma alone; fused. The last two use the measured `test` error rates per language from Phase 3.
+- **Placement:** the ASER tree (`learner/placement.py`). "True level" is what a perfect scorer would give with unlimited items. 2,000 children per language.
+- **Tracking:** BKT with default parameters (deliberately not the simulator's numbers), 150 practice words per child drawn by bank frequency, 400 children per language. Skills seen at least 3 times are scored as known/unknown at the end.
+
+Predictions:
+1. **Difficulty:** the score ranks level-2 passages above level-1 with AUC ≥ 0.60 in each language.
+2. **Placement, perfect scorer:** exact level ≥ 80%, within one level ≥ 95%, in each language.
+3. **Placement, fused scorer:** exact ≥ 75% and within one ≥ 95%, in each language, and exact no lower than Prisma alone by more than 2 points.
+4. **Placement length:** mean items per child ≤ 3.2 with the fused scorer (ASER's own test is 2–3 tasks).
+5. **Tracking:** with the fused scorer, the final estimates separate known from unknown skills with AUC ≥ 0.80 in each language. A perfect scorer does better.
+6. **Using `unsure` as weak evidence** gives an AUC at least as high as each of the three alternatives (count it as right, count it as wrong, ignore it), within 0.01, in each language.
+
+What this can and cannot show: the simulated children follow the same skill model that BKT and placement assume, so passing shows the machinery works and how much scoring noise costs. It does not show that real children learn or read this way.
