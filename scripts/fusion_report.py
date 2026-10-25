@@ -15,6 +15,8 @@ Fixed rules (docs/PREDICTIONS.md, Phase 3):
   at most 5% of correct words `error`, at most 10% of words `unsure`
 - the rule table uses the Phase 2 check threshold (from `tune`, clean, 5%)
 - `test` is scored once, with everything frozen
+- `guarded` (added after the test run): the fused model, but a word neither source doubts is at
+  most `unsure`. Its test numbers are not blind; the held-out engine is its judge.
 """
 
 import argparse
@@ -233,8 +235,9 @@ def main() -> None:
         r["prisma_s"] = "error" if r["prisma"] else "correct"
         r["check_s"] = "error" if check else "correct"
         r["rule"] = rule_state(r["prisma"], check)
+        r["guarded"] = state(r["p"], th, doubted=r["prisma"] or check)
 
-    systems = ("prisma_s", "check_s", "rule", "fused")
+    systems = ("prisma_s", "check_s", "rule", "fused", "guarded")
     splits = ["calibrate"] + (["test"] if args.test else []) + (["holdout"] if args.holdout else [])
     if args.holdout and not any(r["split"] == "holdout" for r in rows):
         sys.exit("no held-out clips with evidence and transcripts yet (docs/HOLDOUT_HOWTO.md)")

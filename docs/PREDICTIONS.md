@@ -118,6 +118,15 @@ Predictions on the held-out engine:
 
 Decision rule, fixed now: if the agreement rule meets prediction 5, the product uses its three states (`unsure` goes to the teacher's listen queue). If neither system meets the margin, the product keeps Prisma's marks and the per-word check stays a research result.
 
+### Addendum, written Oct 25 before any held-out clip is rendered: the guarded system
+
+After the Phase 3 test run, a third fused system was added: `guarded`, the fused model, but a word that neither Prisma nor the sound check doubts is `unsure` at most, never `error` (RESULTS.md, "Follow-up: why Hindi false flags rose"). It was designed after seeing `test`, so only the held-out engine can judge it. Fixed now:
+7. **Guarded against fused:** guarded false flags ≤ fused false flags in every language, and catch (`error` only) at most 2 points lower, pooled.
+8. **Hindi:** guarded false flags at least 1 point lower than fused.
+9. **Guarded against Prisma:** the Phase 3 margin (false flags 3 points lower, catch within 3). We expect it to **fail**, as fused does.
+
+The decision rule above does not change. If prediction 9 holds against expectation, guarded counts like the agreement rule: its three states go to the product.
+
 ## Phase 4: learner model on simulated children (written Oct 25, before the study runs)
 
 Setup, fixed before the run (`scripts/learner_study.py`, seed 20261025):
@@ -156,7 +165,7 @@ Three runs (`results/learner_study_run1.json`, `_run2.json`, `results/learner_st
 (Languages in the order Hindi, Kannada, Tamil.)
 
 What the kept run says, with its limits:
-- **Hindi placement is hurt by the fused scorer**: 67.0% exact, against 76.8% with Prisma alone. That is the Phase 3 Hindi false-flag rise (7.7% vs 2.8%) showing up one level higher. Fluent readers get enough correct words flagged to fail the 85% passage rule. In Kannada and Tamil the fused scorer places better than Prisma alone. This is a second, independent reason to fix the Hindi thresholds.
+- **Hindi placement is hurt by the fused scorer**: 67.0% exact, against 76.8% with Prisma alone. That is the Phase 3 Hindi false-flag rise (7.7% vs 2.8%) showing up one level higher. Fluent readers get enough correct words flagged to fail the 85% passage rule. In Kannada the fused scorer places better than Prisma alone. *(Corrected later the same day: the Tamil gap of 2.2 points is within simulation noise of about 3 points, so it is not a finding. The Hindi follow-up found the cause is not the thresholds; see RESULTS.md, "Follow-up: why Hindi false flags rose". The guard it added raises Hindi placement only to 68.0%.)*
 - **How `unsure` is used barely matters for tracking**: the four ways are within 0.016 AUC of each other in every language. Weak evidence is never worse by more than 0.003. It costs nothing and keeps the teacher queue honest, so it stays.
 - **The simulated population is lumpy:** in run 3, very few children land at "letter" or "paragraph" level (13–41 and 0–15 of 2,000). Placement accuracy mostly measures the beginner / word / story calls.
 - Everything here tests the machinery against its own assumptions, as stated before the run.

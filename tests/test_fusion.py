@@ -72,6 +72,8 @@ def test_thresholds_keep_false_flags_and_unsure_within_limits():
 def test_state_and_rules():
     t = Thresholds(error=0.8, correct=0.3)
     assert [state(v, t) for v in (0.1, 0.5, 0.9)] == ["correct", "unsure", "error"]
+    assert state(0.9, t, doubted=False) == "unsure"  # no source doubts it: never `error`
+    assert state(0.1, t, doubted=False) == "correct"
     assert rule_state(True, True) == "error"
     assert rule_state(True, False) == rule_state(False, True) == "unsure"
     assert rule_state(False, False) == "correct"

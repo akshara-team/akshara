@@ -56,14 +56,15 @@ def channels(lang: str) -> dict[str, Channel]:
         True: (1 - rate(p, "false_flags"), 0.0, rate(p, "false_flags")),
         False: (1 - rate(p, "catch"), 0.0, rate(p, "catch")),
     }
-    f = w["fused"]["words"]
-    ok_err, ok_uns = rate(f, "false_flags"), rate(f, "ok_unsure")
-    bad_err = rate(f, "catch")
-    bad_uns = rate(f, "catch_or_unsure") - bad_err
-    out["fused"] = {
-        True: (1 - ok_err - ok_uns, ok_uns, ok_err),
-        False: (1 - bad_err - bad_uns, bad_uns, bad_err),
-    }
+    for name in ("fused", "guarded"):  # guarded last, so earlier channels keep their seeds
+        f = w[name]["words"]
+        ok_err, ok_uns = rate(f, "false_flags"), rate(f, "ok_unsure")
+        bad_err = rate(f, "catch")
+        bad_uns = rate(f, "catch_or_unsure") - bad_err
+        out[name] = {
+            True: (1 - ok_err - ok_uns, ok_uns, ok_err),
+            False: (1 - bad_err - bad_uns, bad_uns, bad_err),
+        }
     return out
 
 
@@ -153,8 +154,10 @@ def main() -> None:
         for ci, (cname, chan) in enumerate(chans.items()):
             exact = near = items = unsure = 0
             confusion: Counter = Counter()
+            # guarded reuses fused's random draws, so the two are compared on the same readings
+            seed = list(chans).index("fused") if cname == "guarded" else ci
             for i, (_, child) in enumerate(truths):
-                rng = np.random.default_rng([SEED, li, 2, ci, i])
+                rng = np.random.default_rng([SEED, li, 2, seed, i])
                 pl = place(child, pl_pools, chan, rng)
                 t = true_level(child, pl_pools)
                 d = abs(LEVELS.index(pl.level) - LEVELS.index(t))

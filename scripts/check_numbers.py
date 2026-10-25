@@ -50,7 +50,7 @@ def main() -> None:
     wanted.append(("isolated, read as spoken", f"{v.count('as_read')} non-word reads"))
     wanted.append(("isolated, corrected", f"{v.count('corrected')} corrected"))
     fusion = load("fusion_report.json")["test"]["all"]["all"]
-    for system in ("prisma_s", "rule", "fused"):
+    for system in ("prisma_s", "rule", "fused", "guarded"):
         w = fusion[system]["words"]
         for metric in ("catch", "catch_or_unsure", "false_flags", "unsure"):
             if metric == "unsure" and system == "prisma_s":

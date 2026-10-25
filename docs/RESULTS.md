@@ -199,6 +199,30 @@ Near-sound mistakes: 5/24 as `error` for both Prisma and fused. Fused sends anot
 - **`test` was not fully unseen.** Prisma alone and the check alone were already reported on `calibrate` + `test` pooled in Phase 2. Only the fused systems are new on `test`.
 - **The check knows the planting tables.** Its listed misreadings come from the same script tables that planted the mistakes. A child's misreading outside those tables is only caught by the free-reading margin, which is weaker.
 
+## Follow-up: why Hindi false flags rose (after Phase 3)
+
+Written after the one `test` run, so nothing here is blind. The held-out engine is the judge (PREDICTIONS.md, held-out addendum). Script: `scripts/fusion_report.py` (system `guarded`).
+
+In Hindi, the fused scorer beat Prisma on `calibrate` (19/597 false flags against 40/597), then lost on `test` (25/323 against 9/323). The thresholds are not drifting. The 25 test false flags have two causes:
+- **One passage.** 13 of the 25 come from one story (sw-50302): the same three words in each of its four audio versions. The sound check hears पूरन as पूरण and पोली as पूली, and splits the word पर badly after the skipped word ऊपर. The word-level intervals treat these as 13 independent words, so they overstate the certainty.
+- **Flags with no evidence.** The Hindi model gives word length a large weight (0.82), so it marked long words such as ज़बरदस्त and पसंदीदा as `error` when neither Prisma nor the sound check doubted them.
+
+**The fix: a flag needs a doubt.** In the `guarded` system, a word neither source doubts is `unsure` at most, never `error`. It only changes Hindi; the Kannada and Tamil models never flag such words.
+
+| Hindi | False flags | Catch | Catch + unsure |
+|---|---|---|---|
+| Fused, tune | 65/1377 | 145/164 | |
+| Guarded, tune | 44/1377 | 141/164 | |
+| Fused, calibrate | 19/597 | 45/55 | |
+| Guarded, calibrate | 15/597 | 42/55 | 46/55 |
+| Fused, test (seen) | 25/323 | 28/29 | |
+| Guarded, test (seen) | 20/323 | 28/29 | 28/29 |
+| Prisma, test | 9/323 | 27/29 | |
+
+All test conditions and languages together: guarded false flags 35/1351, catch 100/139, catch + unsure 118/139, unsure 112/1490. That is 2.3 points under Prisma's false flags (66/1351), still short of the 3-point margin, and catch is still 5 below Prisma's.
+
+**What it does not fix:** Hindi placement in the learner study rises only from 1341 to 1361 of 2000 (Prisma alone 1537). Hindi false flags stay at about 6%, twice Prisma's. Words near a skip are no worse than other words on `tune` and `calibrate`, so there is no general spill-over rule to add. Further Hindi tuning against `test` would be fitting to it, so it stops here until the held-out clips arrive.
+
 ## Learner model on simulated children (Phase 4)
 
 Generated from `results/learner_study.json`; rerun with `scripts/learner_study.py` (no credits, about 2 minutes). Predictions and verdict: [PREDICTIONS.md](PREDICTIONS.md). Code: `src/akshara/learner/`, `src/akshara/core/difficulty.py`.
@@ -218,8 +242,9 @@ Generated from `results/learner_study.json`; rerun with `scripts/learner_study.p
 | Perfect | 1607/2000 (80.3%), 95.9% | 1676/2000 (83.8%), 97.9% | 1680/2000 (84.0%), 98.5% |
 | Prisma alone | 1537/2000 (76.8%), 93.8% | 1418/2000 (70.9%), 94.3% | 1526/2000 (76.3%), 95.9% |
 | Fused | 1341/2000 (67.0%), 87.5% | 1593/2000 (79.7%), 97.0% | 1569/2000 (78.5%), 97.2% |
+| Guarded (added later) | 1361/2000 (68.0%), 88.2% | same as fused | same as fused |
 
-The perfect-scorer row is the ceiling of a 5-letter / 5-word / one-passage test. A child near a pass line can go either way on one item. The fused scorer beats Prisma alone in Kannada and Tamil and loses in Hindi, where its false flags are higher (Phase 3). With the fused scorer a placement takes 2.45–2.73 items, and 16% of Kannada placements are marked uncertain for a teacher to check (Hindi 1.8%, Tamil 4.9%).
+The perfect-scorer row is the ceiling of a 5-letter / 5-word / one-passage test. A child near a pass line can go either way on one item. The fused scorer beats Prisma alone clearly in Kannada and loses clearly in Hindi, where its false flags are higher (Phase 3). The Tamil gap (2.2 points) is within simulation noise: rerunning one scorer with different random draws moves it by up to 2.7 points, so differences under about 3 points mean nothing here. The guarded row uses the same random draws as fused, so that comparison is paired. With the fused scorer a placement takes 2.45–2.73 items, and 16% of Kannada placements are marked uncertain for a teacher to check (Hindi 1.8%, Tamil 4.9%).
 
 **Tracking**, 400 children per language, 150 practice words each. Final estimates separate known from unknown skills with AUC 0.921 Hindi, 0.850 Kannada and 0.910 Tamil (perfect scorer: 0.935, 0.867, 0.931). Using `unsure` as weak evidence, as right, as wrong, or ignoring it changes AUC by at most 0.016.
 

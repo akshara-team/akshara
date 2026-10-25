@@ -160,6 +160,53 @@
      "word->story": 1,
      "word->word": 716
     }
+   },
+   "guarded": {
+    "exact": {
+     "k": 1361,
+     "n": 2000,
+     "rate": 0.6805,
+     "lo": 0.6597348767256828,
+     "hi": 0.7005730438205321
+    },
+    "within_one": {
+     "k": 1764,
+     "n": 2000,
+     "rate": 0.882,
+     "lo": 0.8671233246945145,
+     "hi": 0.8954119974586937
+    },
+    "mean_items": 2.4835,
+    "uncertain": {
+     "k": 69,
+     "n": 2000,
+     "rate": 0.0345,
+     "lo": 0.02735157759580579,
+     "hi": 0.04343325889027176
+    },
+    "confusion": {
+     "beginner->beginner": 496,
+     "beginner->letter": 132,
+     "beginner->word": 15,
+     "letter->beginner": 16,
+     "letter->letter": 24,
+     "letter->word": 1,
+     "paragraph->beginner": 1,
+     "paragraph->letter": 1,
+     "paragraph->paragraph": 2,
+     "paragraph->story": 3,
+     "paragraph->word": 8,
+     "story->beginner": 1,
+     "story->letter": 22,
+     "story->paragraph": 138,
+     "story->story": 113,
+     "story->word": 175,
+     "word->beginner": 20,
+     "word->letter": 81,
+     "word->paragraph": 24,
+     "word->story": 1,
+     "word->word": 726
+    }
    }
   },
   "tracking": {
@@ -339,6 +386,48 @@
      "word->story": 6,
      "word->word": 1059
     }
+   },
+   "guarded": {
+    "exact": {
+     "k": 1593,
+     "n": 2000,
+     "rate": 0.7965,
+     "lo": 0.7782945571468459,
+     "hi": 0.8135685921160498
+    },
+    "within_one": {
+     "k": 1941,
+     "n": 2000,
+     "rate": 0.9705,
+     "lo": 0.9621347389353845,
+     "hi": 0.9770612534025329
+    },
+    "mean_items": 2.73,
+    "uncertain": {
+     "k": 326,
+     "n": 2000,
+     "rate": 0.163,
+     "lo": 0.14746052952907468,
+     "hi": 0.17983160773367107
+    },
+    "confusion": {
+     "beginner->beginner": 508,
+     "beginner->letter": 226,
+     "beginner->word": 49,
+     "letter->beginner": 4,
+     "letter->letter": 9,
+     "paragraph->paragraph": 6,
+     "paragraph->story": 1,
+     "paragraph->word": 2,
+     "story->paragraph": 6,
+     "story->story": 11,
+     "story->word": 2,
+     "word->beginner": 2,
+     "word->letter": 33,
+     "word->paragraph": 76,
+     "word->story": 6,
+     "word->word": 1059
+    }
    }
   },
   "tracking": {
@@ -474,6 +563,45 @@
     }
    },
    "fused": {
+    "exact": {
+     "k": 1569,
+     "n": 2000,
+     "rate": 0.7845,
+     "lo": 0.7659433361879618,
+     "hi": 0.8019658238973463
+    },
+    "within_one": {
+     "k": 1945,
+     "n": 2000,
+     "rate": 0.9725,
+     "lo": 0.9643767208061162,
+     "hi": 0.9788116030613991
+    },
+    "mean_items": 2.674,
+    "uncertain": {
+     "k": 97,
+     "n": 2000,
+     "rate": 0.0485,
+     "lo": 0.03991995050443902,
+     "hi": 0.05881120668882417
+    },
+    "confusion": {
+     "beginner->beginner": 723,
+     "beginner->letter": 291,
+     "beginner->word": 36,
+     "letter->beginner": 2,
+     "letter->letter": 29,
+     "letter->word": 1,
+     "story->paragraph": 4,
+     "story->story": 32,
+     "story->word": 4,
+     "word->beginner": 15,
+     "word->letter": 57,
+     "word->paragraph": 21,
+     "word->word": 785
+    }
+   },
+   "guarded": {
     "exact": {
      "k": 1569,
      "n": 2000,

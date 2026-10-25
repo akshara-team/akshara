@@ -13,6 +13,9 @@ Two deciders, both explainable word by word:
   probability by isotonic calibration, then two thresholds: `error` above one, `correct` below
   the other, `unsure` between.
 
+The guarded variant (`state(..., doubted=False)`) never marks `error` a word that neither source
+doubts. It was added after the Phase 3 test run, so it is judged on the held-out engine.
+
 Thresholds are set to hold false flags (a correctly read word marked `error`) at a target rate
 first; catching mistakes comes second. Telling a child they failed a word they read well is the
 expensive mistake.
@@ -196,9 +199,13 @@ def choose_thresholds(
     return Thresholds(t_err, min(t_ok, t_err))
 
 
-def state(p: float, t: Thresholds) -> str:
+def state(p: float, t: Thresholds, doubted: bool = True) -> str:
+    """The word's state. With `doubted=False` (neither Prisma nor the check doubts the word) it
+    is never `error`, only `unsure` at most: a flag needs a reason a teacher can be shown. The
+    Hindi model otherwise flagged long words no source doubted, because its length weight is
+    large (docs/RESULTS.md, Phase 3 follow-up)."""
     if p >= t.error:
-        return "error"
+        return "error" if doubted else "unsure"
     if p < t.correct:
         return "correct"
     return "unsure"
