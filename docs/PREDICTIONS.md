@@ -51,3 +51,27 @@ Two runs, both on all 480 clips (`results/evidence_report_run1.json`, `results/e
 | 8 | Tamil is the weakest language | yes | Tamil 57%, Kannada 65%, Hindi 87% | **Holds** |
 
 Prediction 2 failed, so, as written above, we looked at prediction 1. It held, but only just: of 123 subtle planted mistakes in clean audio (all splits), the model's own free reading shows the change for 62 and shows the original word for 61. **About half of the subtle mistakes are probably not in the audio at all**, and no detector can catch those. On the 62 that are audible, the check catches 35 and Prisma 30. In Hindi the check catches 20 of 22, against 11 for Prisma. In Kannada (9 of 21) and Tamil (6 of 19) it does worse than Prisma (11 and 8), because long, correctly read words also score low there, which pushes the threshold down. This breakdown was made after the run and is not a test of any prediction. "Audible" is judged by the same model the check uses, so the check's rate on audible words is flattering. Prisma's rate on the same words is the fair comparison.
+
+## Phase 3: fusion into three states (written Oct 25, before the `test` split is scored)
+
+Setup, fixed before the run (`scripts/fusion_report.py`, `src/akshara/fusion.py`):
+- **Inputs per word:** Prisma's mark (loose and strict spelling) and the per-word check's margins against the listed misreadings and against the free reading. Ten named features, listed in `fusion.FEATURES`, including two agreement terms (Prisma flag × check margin).
+- **Model:** L2-regularised logistic regression (penalty 1.0, standardised features), one per language, fitted on `tune` across all audio conditions. Isotonic calibration and both thresholds fitted per language on `calibrate`. `error` is set so that at most 5% of correct words are marked `error`. `correct` is then set as low as possible while at most 10% of words are `unsure`.
+- **Baseline rules:** the agreement table (both doubt: `error`, one: `unsure`, neither: `correct`), with the Phase 2 check threshold.
+- **Passages:** reading-accuracy bands (Betts: below 90% frustration, 90–95% instructional, 95% and up independent). An `unsure` word is counted both ways. If the interval crosses a band line, the attempt is "needs a listen".
+- **Reported:** `test` only, all four audio conditions pooled unless stated, with 95% intervals. Everything frozen. One run.
+- **What we already saw:** Prisma alone and the check alone on `test` (Phase 2 pooled `calibrate` + `test`), and all four systems on `calibrate` while building this. Those `calibrate` numbers set the expectations below, so the predictions are informed, not guesses. `calibrate` itself is not reported as a result.
+- **No held-out engine exists.** All clips are Timbre v3.0, so the plan's exit check ("met on the held-out engine") cannot be run yet. These predictions are for `test`, which is the same engine with unseen passages.
+
+Predictions on `test`:
+1. **False flags:** fused ≤ 5% pooled, and lower than Prisma alone by at least 3 points.
+2. **No loss of catch:** fused `error` catch within 3 points of Prisma alone or better. Gross mistakes ≥ 90%.
+3. **Not sure:** ≤ 10% of words are `unsure`.
+4. **Mistakes passed as correct:** fused `error` + `unsure` covers ≥ 78% of planted mistakes.
+5. **Near-sound catch ≥ 60%** (plan target): **fails**. We expect ≤ 30% as `error`.
+6. **Calibration:** ECE ≤ 0.05 for the fused probability.
+7. **Agreement rule vs fused:** the rule table gives fewer false flags (≤ 3%) but more `unsure` than fused, and its `unsure` exceeds 8%.
+8. **Bands:** misplaced (among attempts not sent for a listen) ≤ 5%: **fails**. We expect 15–35%, because most passages hold about two mistakes in 15–20 words, which sits near the 90% line, and about half the subtle mistakes are probably not in the audio. "Needs a listen" goes to 25–50% of attempts.
+9. **Latency** ≤ 4 s for a 20 s part on CPU: **fails**. The Phase 2 run measured 0.69 × real time on this laptop (about 14 s per 20 s), including model loading.
+
+If 1 or 2 fails, fusion does not earn its place over Prisma alone and the product keeps the two-state Prisma marks. If 6 fails, the probabilities are not shown to teachers as numbers.

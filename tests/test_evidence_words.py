@@ -66,3 +66,13 @@ def test_trailing_separator_frames_do_not_squeeze_the_last_word():
     last = ev[-1]
     assert last.end_s < 0.6  # the word ends where it was said, not at the clip's end
     assert last.score > -0.05
+
+
+def test_sums_are_not_diluted_by_word_length():
+    em = emissions("कमलकमलकमलकमल|लाल")
+    ev = check(em, ["कमलकमलकमलकमल", "लाल"], "hi-IN")
+    assert ev is not None
+    w = ev[0]
+    assert w.frames > 0
+    assert abs(w.margin_free_sum - w.margin_free * w.frames) < 1e-6
+    assert w.free_edits == 0

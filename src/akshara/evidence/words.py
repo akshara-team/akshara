@@ -10,6 +10,9 @@ Given the model's frame-by-frame log-probabilities for a clip and the story word
    - `margin_free`: fit of the story word minus the model's own best free reading of those
      frames (catches misreadings outside the list, at the cost of more noise)
    - `score` is the smaller of the two, per frame. Low or negative: probably misread.
+   - the same two margins as plain sums (`*_sum`, log-probability over the word, not per
+     frame), so a one-letter change in a long word is not diluted by the word's length, and
+     `free_edits`, how many letters the free reading changes
 3. **Time** each word (for pauses and sounding out): the gap before it, and how much of that
    gap holds speech rather than silence.
 
@@ -59,6 +62,10 @@ class WordEvidence:
     margin_alt: float | None  # None when the word has no listed misreadings
     score: float
     dropped_letters: int  # letters of the word the model has no token for
+    frames: int = 0  # frames in the checked segment
+    margin_free_sum: float = 0.0
+    margin_alt_sum: float | None = None
+    free_edits: int = 0  # letter edits between the free reading and the story word
 
     def to_json(self) -> dict:
         d = asdict(self)
@@ -70,10 +77,22 @@ class WordEvidence:
             "margin_free",
             "margin_alt",
             "score",
+            "margin_free_sum",
+            "margin_alt_sum",
         ):
             if isinstance(d[k], float):
                 d[k] = round(d[k], 4)
         return d
+
+
+def _edits(a: list[int], b: list[int]) -> int:
+    prev = list(range(len(b) + 1))
+    for i, x in enumerate(a, 1):
+        cur = [i]
+        for j, y in enumerate(b, 1):
+            cur.append(min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (x != y)))
+        prev = cur
+    return prev[-1]
 
 
 def transcript(em: Emissions) -> str:
@@ -154,6 +173,10 @@ def check(em: Emissions, words: list[str], lang: str) -> list[WordEvidence] | No
                 margin_alt=margin_alt,
                 score=score,
                 dropped_letters=len(w) - len(ids),
+                frames=frames,
+                margin_free_sum=fit - free_fit,
+                margin_alt_sum=None if best_alt is None else fit - best_fit,
+                free_edits=_edits([t for t in free_ids if t != em.sep], ids),
             )
         )
         prev_end = end
