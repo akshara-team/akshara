@@ -9,8 +9,11 @@ A skill is one thing a word asks of the reader:
 - word length in aksharas (`length:short` 1–2, `length:medium` 3–4, `length:long` 5+), for
   holding a longer word together
 
-The order follows the usual way a script is taught. The commonest letters come first, then the
-vowel signs on them, then the other letters, then marks, then conjuncts, then longer words.
+The order follows the usual way a script is taught: the commonest letters, then the vowel signs
+on them, then short words made of those, then the other letters, then medium words, then marks,
+then conjuncts, then long words. Every word needs one length skill, so short words must come
+early: with all lengths last (run 1 and 2 of the Phase 4 study), no word could be read until the
+whole curriculum was known.
 Within each stage the order is by how often the skill appears in the passage bank, so the first
 skills unlock the most text. The order is a proposal for native review
 (docs/review/SKILL_ORDER.md), not a finding.
@@ -30,7 +33,16 @@ CORE_LETTERS = 12  # letters taught before any vowel sign
 COMMON_CONJUNCT_SHARE = 0.8  # conjuncts covering this share of occurrences get their own skill
 MAX_CONJUNCTS = 30
 LENGTHS = ("short", "medium", "long")
-STAGES = ("core letters", "vowel signs", "other letters", "marks", "conjuncts", "word length")
+STAGES = (
+    "core letters",
+    "vowel signs",
+    "short words",
+    "other letters",
+    "medium words",
+    "marks",
+    "conjuncts",
+    "long words",
+)
 
 
 def length_band(n_aksharas: int) -> str:
@@ -134,12 +146,15 @@ def build(texts: Iterable[str], lang: str) -> Curriculum:
     order: list[tuple[str, str]] = []
     order += [(s, STAGES[0]) for s in letters[:CORE_LETTERS]]
     order += [(s, STAGES[1]) for s in by_count(s for s in pooled if s.startswith("sign:"))]
-    order += [(s, STAGES[2]) for s in letters[CORE_LETTERS:]]
-    order += [(s, STAGES[3]) for s in by_count(s for s in pooled if s.startswith("mark:"))]
+    length = {x: [f"length:{x}"] if f"length:{x}" in pooled else [] for x in LENGTHS}
+    order += [(s, STAGES[2]) for s in length["short"]]
+    order += [(s, STAGES[3]) for s in letters[CORE_LETTERS:]]
+    order += [(s, STAGES[4]) for s in length["medium"]]
+    order += [(s, STAGES[5]) for s in by_count(s for s in pooled if s.startswith("mark:"))]
     conj_ids = by_count(common)
     if "conjunct:other" in pooled:
         conj_ids.append("conjunct:other")
-    order += [(s, STAGES[4]) for s in conj_ids]
-    order += [(f"length:{x}", STAGES[5]) for x in LENGTHS if f"length:{x}" in pooled]
+    order += [(s, STAGES[6]) for s in conj_ids]
+    order += [(s, STAGES[7]) for s in length["long"]]
     skills = tuple(Skill(s, stage, pooled[s]) for s, stage in order)
     return Curriculum(lang, skills, frozenset(common))

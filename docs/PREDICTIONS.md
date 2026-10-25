@@ -137,3 +137,26 @@ Predictions:
 6. **Using `unsure` as weak evidence** gives an AUC at least as high as each of the three alternatives (count it as right, count it as wrong, ignore it), within 0.01, in each language.
 
 What this can and cannot show: the simulated children follow the same skill model that BKT and placement assume, so passing shows the machinery works and how much scoring noise costs. It does not show that real children learn or read this way.
+
+### Verdict, written Oct 25 after the study
+
+Three runs (`results/learner_study_run1.json`, `_run2.json`, `results/learner_study.json`). **Only run 1 is a blind test of the predictions.** Runs 2 and 3 fix design bugs found by looking at run 1 and run 2:
+- **Run 1 → 2 (simulator):** gaps were placed anywhere in a child's known skills at 10% each. A word uses about six skills, so even a child who knew the whole curriculum read only about 60% of words right, and 99% of children came out "beginner" or "letter". Now gaps and early skills sit only within 10 skills of the child's edge.
+- **Run 2 → 3 (skill order):** word length came last in the teaching order, but every word needs one length skill, so no simulated child could read a single word until it knew everything, conjuncts included. Short words now come right after the first letters and vowel signs, as the plan's order says. This also changes the skill order sent for native review.
+
+| # | Prediction | Run 1 (blind) | Run 3 (kept, not blind) | Verdict on run 1 |
+|---|---|---|---|---|
+| 1 | Difficulty AUC ≥ 0.60 per language | 0.705, 0.654, 0.600 | same (difficulty does not depend on either fix) | **Holds** (Tamil just: 0.6005) |
+| 2 | Perfect scorer: exact ≥ 80%, within one ≥ 95% | exact 78.3%, 77.7%, 77.4% | 80.3%, 83.8%, 84.0%; within one 95.9–98.5% | **Fails** on exact |
+| 3 | Fused: exact ≥ 75%, within one ≥ 95%, ≤ 2 points under Prisma | 71.7%, 71.2%, 71.7% | Hindi 67.0% (Prisma 76.8%), within one 87.5%; Kannada 79.7% (Prisma 70.9%); Tamil 78.5% (Prisma 76.3%) | **Fails** |
+| 4 | Fused mean items ≤ 3.2 | 3.00, 3.31, 3.09 | 2.45, 2.73, 2.67 | **Fails** in Kannada |
+| 5 | Tracking AUC ≥ 0.80, perfect scorer better | 0.893, 0.806, 0.884; perfect higher | 0.921, 0.850, 0.910; perfect higher | **Holds** |
+| 6 | `unsure` as weak evidence within 0.01 of every alternative | yes, all three | yes, all three | **Holds** |
+
+(Languages in the order Hindi, Kannada, Tamil.)
+
+What the kept run says, with its limits:
+- **Hindi placement is hurt by the fused scorer**: 67.0% exact, against 76.8% with Prisma alone. That is the Phase 3 Hindi false-flag rise (7.7% vs 2.8%) showing up one level higher. Fluent readers get enough correct words flagged to fail the 85% passage rule. In Kannada and Tamil the fused scorer places better than Prisma alone. This is a second, independent reason to fix the Hindi thresholds.
+- **How `unsure` is used barely matters for tracking**: the four ways are within 0.016 AUC of each other in every language. Weak evidence is never worse by more than 0.003. It costs nothing and keeps the teacher queue honest, so it stays.
+- **The simulated population is lumpy:** in run 3, very few children land at "letter" or "paragraph" level (13–41 and 0–15 of 2,000). Placement accuracy mostly measures the beginner / word / story calls.
+- Everything here tests the machinery against its own assumptions, as stated before the run.

@@ -74,10 +74,9 @@ def pools(cur, bank_words: Counter, texts: list[str], scores: list[float], rng) 
         w
         for w, _ in bank_words.most_common()
         if all(
-            cur.skills[cur.position(s)].stage in ("core letters", "vowel signs", "word length")
+            cur.skills[cur.position(s)].stage in ("core letters", "vowel signs", "short words")
             for s in cur.skills_of(w)
         )
-        and "length:long" not in cur.skills_of(w)
     ][:100]
     order = np.argsort(scores)
     third = max(len(order) // 3, 1)

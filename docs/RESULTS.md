@@ -199,3 +199,34 @@ Near-sound mistakes: 5/24 as `error` for both Prisma and fused. Fused sends anot
 - **`test` was not fully unseen.** Prisma alone and the check alone were already reported on `calibrate` + `test` pooled in Phase 2. Only the fused systems are new on `test`.
 - **The check knows the planting tables.** Its listed misreadings come from the same script tables that planted the mistakes. A child's misreading outside those tables is only caught by the free-reading margin, which is weaker.
 
+## Learner model on simulated children (Phase 4)
+
+Generated from `results/learner_study.json`; rerun with `scripts/learner_study.py` (no credits, about 2 minutes). Predictions and verdict: [PREDICTIONS.md](PREDICTIONS.md). Code: `src/akshara/learner/`, `src/akshara/core/difficulty.py`.
+
+**What it is.**
+- **Skill order per script.** Letters, vowel signs, short words, other letters, medium words, marks, conjuncts, long words. Within each stage, skills are ordered by how often they appear in the 413-passage bank. Hindi has 77 skills, Kannada 71 and Tamil 51. Every word maps to the skills it needs. The order is waiting on native review ([review/SKILL_ORDER.md](review/SKILL_ORDER.md)).
+- **Mastery tracking.** Bayesian Knowledge Tracing per skill, with default parameters. A misread word is blamed mostly on its least certain skill. `unsure` counts as weak evidence and a teacher's correction as strong evidence.
+- **Placement.** ASER's tree (paragraph, then story or words, then letters). It gives one extra item when `unsure` words leave the pass/fail call open.
+- **Passage difficulty from text.** The mean of six standardised features, with equal weights and nothing fitted.
+
+**Difficulty against StoryWeaver's level tag** (level 2 ranked above level 1): AUC 0.705 Hindi, 0.654 Kannada, 0.600 Tamil. Total length and word rarity carry most of it. The tag describes the book while our text is its short description, so this is a weak check.
+
+**Placement**, 2,000 simulated children per language. Exact level, and within one level:
+
+| Scorer | Hindi | Kannada | Tamil |
+|---|---|---|---|
+| Perfect | 1607/2000 (80.3%), 95.9% | 1676/2000 (83.8%), 97.9% | 1680/2000 (84.0%), 98.5% |
+| Prisma alone | 1537/2000 (76.8%), 93.8% | 1418/2000 (70.9%), 94.3% | 1526/2000 (76.3%), 95.9% |
+| Fused | 1341/2000 (67.0%), 87.5% | 1593/2000 (79.7%), 97.0% | 1569/2000 (78.5%), 97.2% |
+
+The perfect-scorer row is the ceiling of a 5-letter / 5-word / one-passage test. A child near a pass line can go either way on one item. The fused scorer beats Prisma alone in Kannada and Tamil and loses in Hindi, where its false flags are higher (Phase 3). With the fused scorer a placement takes 2.45–2.73 items, and 16% of Kannada placements are marked uncertain for a teacher to check (Hindi 1.8%, Tamil 4.9%).
+
+**Tracking**, 400 children per language, 150 practice words each. Final estimates separate known from unknown skills with AUC 0.921 Hindi, 0.850 Kannada and 0.910 Tamil (perfect scorer: 0.935, 0.867, 0.931). Using `unsure` as weak evidence, as right, as wrong, or ignoring it changes AUC by at most 0.016.
+
+### Limits
+
+- **Not blind.** The kept run is the third. Two design bugs were fixed after seeing earlier runs (PREDICTIONS.md). Only run 1 was a blind test, and it failed the placement predictions.
+- **The simulated children follow the model's own assumptions.** This shows the machinery works and what scoring noise costs, not that children learn this way.
+- **Lumpy population.** Few simulated children sit at the letter or paragraph level, so those calls are barely tested.
+- **The skill order is unreviewed.** It is built from text frequency and fixed stages, and waits on native review.
+- **Not built yet from Phase 4:** Evon practice passages (waits on where Evon runs), the reading buddy's voice, and equated passages for pre/post tests.

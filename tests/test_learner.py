@@ -21,7 +21,7 @@ def test_curriculum_orders_stages_and_covers_every_word():
     for text in HI:
         for w in text.replace("।", " ").split():
             skills = cur.skills_of(w)
-            assert skills and skills[-1].startswith("length:")
+            assert sum(x.startswith("length:") for x in skills) == 1
             assert [cur.position(s) for s in skills] == sorted(cur.position(s) for s in skills)
 
 

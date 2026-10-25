@@ -1,7 +1,10 @@
 """Simulated learners: children with known skills, to test placement and tracking without children.
 
-A simulated child knows a set of skills: mostly the first K in teaching order, with a few gaps
-and a few skills known early. Reading a word:
+A simulated child knows a set of skills: the first K in teaching order, except near the edge of
+what it knows. Within `FRONTIER` skills of K, some skills before K are gaps and some after K are
+known early. Well inside the known range nothing is missing: a fluent reader does not forget one
+letter in ten. (Run 1 of the study put gaps anywhere, which made almost every child fail the
+paragraph task: see docs/PREDICTIONS.md, Phase 4 verdict.) Reading a word:
 - every skill in it known: right with chance 1 - `SLIP`
 - otherwise: right with chance `GUESS` per unknown skill (multiplied)
 
@@ -27,8 +30,9 @@ from akshara.learner.skills import Curriculum
 
 SLIP = 0.05
 GUESS = 0.2
-HOLE = 0.1  # chance a skill inside the known range is not known
-EARLY = 0.05  # chance a skill past the known range is known anyway
+FRONTIER = 10  # gaps and early skills only within this many skills of the edge
+HOLE = 0.3  # chance a skill just before the edge is not known
+EARLY = 0.15  # chance a skill just past the edge is known anyway
 LEARN = 0.03  # chance an unknown skill becomes known each time it is practised
 
 # P(scorer state | word read right) and P(state | word read wrong), as (correct, unsure, error)
@@ -57,7 +61,10 @@ class Child:
 def make_child(cur: Curriculum, k: int, rng: np.random.Generator) -> Child:
     known = set()
     for i, s in enumerate(cur.skills):
-        if (i < k and rng.random() >= HOLE) or (i >= k and rng.random() < EARLY):
+        near = abs(i - k) < FRONTIER
+        if i < k and not (near and rng.random() < HOLE):
+            known.add(s.id)
+        elif i >= k and near and rng.random() < EARLY:
             known.add(s.id)
     return Child(known)
 

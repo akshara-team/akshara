@@ -56,6 +56,10 @@ def main() -> None:
             if metric == "unsure" and system == "prisma_s":
                 continue
             wanted.append((f"phase 3 {system} {metric}", f"{w[metric]['k']}/{w[metric]['n']}"))
+    learner = load("learner_study.json")
+    for lang in ("hi-IN", "kn-IN", "ta-IN"):
+        for system, p in learner[lang]["placement"].items():
+            wanted.append((f"phase 4 {lang} {system} exact", f"{p['exact']['k']}/2000"))
     clips = load("halting_study.json")["clips"]
     right = sum(c["pieces"] == c["expected_pieces"] for c in clips)
     wanted.append(("pause finder right count", f"{right} of {len(clips)}"))
