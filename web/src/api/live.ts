@@ -9,6 +9,8 @@ import type {
   PlacementRead,
   Practice,
   Reading,
+  ReviewItem,
+  ReviewResult,
   Skills,
 } from "./types";
 
@@ -151,6 +153,23 @@ export const liveApi = {
     const res = await fetch(`${BASE}/v1/practice`, { method: "POST", body: form });
     if (!res.ok) throw new ApiError(res.status, await detail(res));
     return (await res.json()) as Practice;
+  },
+
+  reviewQueue(lang?: string): Promise<ReviewItem[]> {
+    return getJson<ReviewItem[]>(lang ? `/v1/review?lang=${encodeURIComponent(lang)}` : "/v1/review");
+  },
+
+  async markWord(requestId: string, index: number, result: ReviewResult): Promise<void> {
+    const res = await fetch(`${BASE}/v1/review`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ request_id: requestId, index, result }),
+    });
+    if (!res.ok) throw new ApiError(res.status, await detail(res));
+  },
+
+  clipUrl(requestId: string, index: number): string {
+    return `${BASE}/v1/attempts/${encodeURIComponent(requestId)}/words/${index}/clip`;
   },
 
   answerPlacement(id: number, states: MarkState[]): Promise<Placement> {

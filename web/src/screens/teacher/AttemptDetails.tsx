@@ -15,12 +15,9 @@ import {
 import { useLoad } from "../../state/useLoad";
 import { scriptClass, type Lang } from "../../theme/script";
 import { shortDate } from "./ChildProfile";
+import { TEACHER_NAV } from "./nav";
 
-const NAV = [
-  { label: "Class", to: "/teacher" },
-  { label: "Story", to: "/teacher/story" },
-  { label: "Add child", to: "/teacher/add" },
-];
+const NAV = TEACHER_NAV;
 
 /** One reading of a story by one child: what was heard, word by word, and what to practise. */
 export function AttemptDetails() {

@@ -13,6 +13,17 @@ class Settings:
     db_path: Path = ROOT / "results" / "akshara.sqlite"
     max_upload_bytes: int = 3_000_000  # 90 s of 16 kHz 16-bit mono
     max_audio_seconds: float = 90.0  # a slow reader needs a minute for 20 words
+    # Recordings kept for the teacher's review; None keeps them next to the database
+    # (`recordings/`), and an in-memory database keeps none.
+    recordings_dir: Path | None = None
+
+    @property
+    def recordings(self) -> Path | None:
+        if self.recordings_dir is not None:
+            return self.recordings_dir
+        if str(self.db_path) == ":memory:":
+            return None
+        return Path(self.db_path).parent / "recordings"
 
     @classmethod
     def from_env(cls) -> "Settings":
@@ -22,4 +33,7 @@ class Settings:
             db_path=Path(env.get("AKSHARA_DB", cls.db_path)),
             max_upload_bytes=int(env.get("AKSHARA_MAX_UPLOAD", cls.max_upload_bytes)),
             max_audio_seconds=float(env.get("AKSHARA_MAX_AUDIO_S", cls.max_audio_seconds)),
+            recordings_dir=Path(env["AKSHARA_RECORDINGS"])
+            if env.get("AKSHARA_RECORDINGS")
+            else None,
         )

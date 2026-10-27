@@ -22,6 +22,7 @@ const TITLES: Record<string, string> = {
   "/practice": "Practice",
   "/teacher": "Class",
   "/teacher/story": "Story",
+  "/teacher/review": "Review",
   "/teacher/add": "Add child",
 };
 

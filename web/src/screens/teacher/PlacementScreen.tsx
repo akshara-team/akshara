@@ -14,12 +14,9 @@ import {
 } from "../../components";
 import { useLoad } from "../../state/useLoad";
 import { scriptClass, type Lang } from "../../theme/script";
+import { TEACHER_NAV } from "./nav";
 
-const NAV = [
-  { label: "Class", to: "/teacher" },
-  { label: "Story", to: "/teacher/story" },
-  { label: "Add child", to: "/teacher/add" },
-];
+const NAV = TEACHER_NAV;
 
 const TASK = {
   letters: { name: "Letters", ask: "Point to each letter. The child says its sound.", pass: "4 of 5" },
