@@ -35,7 +35,7 @@ export function ResultsScreen() {
     const reading = buildReading({
       id: sessionId,
       passageId: passage.id,
-      storyTitle: copy.storyTitle,
+      storyTitle: passage.title ?? copy.storyTitle,
       language: lang,
       parts,
     });

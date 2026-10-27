@@ -1,7 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { isMock } from "../../api";
-import { MOCK_DURATIONS, createRecorder, type Recorder } from "../../api/mock";
+import {
+  MAX_RECORDING_S,
+  MOCK_DURATIONS,
+  RecordingError,
+  createRecorder,
+  type Recorder,
+} from "../../api/mock";
 import {
   Button,
   LanguageBadge,
@@ -15,7 +21,13 @@ import { useSession } from "../../state/session";
 import { scriptClass } from "../../theme/script";
 import { flowCopy } from "./copy";
 
-type Phase = "idle" | "recording";
+/** requesting: waiting for mic permission; processing: turning the clip into a WAV. */
+type Phase = "idle" | "requesting" | "recording" | "processing";
+
+const PROBLEM_TEXT: Record<RecordingError["problem"], string> = {
+  silent: "We could not hear you. Check the microphone is on, then read again.",
+  short: "That was very short. Tap the mic, read the whole part, then tap again.",
+};
 
 export function ReadingScreen() {
   const { lang, passage, parts, currentPart, setPending } = useSession();
@@ -27,15 +39,22 @@ export function ReadingScreen() {
   const [elapsed, setElapsed] = useState(0);
   const recorder = useRef<Recorder | null>(null);
   const startedAt = useRef(0);
+  const finishRef = useRef<() => void>(() => {});
 
-  // Elapsed seconds while recording: the only live feedback the child gets.
+  // Elapsed seconds while recording: the only live feedback the child gets. The backend takes
+  // at most MAX_RECORDING_S, so the recording stops itself there and is sent as it is.
   useEffect(() => {
     if (phase !== "recording") return;
     const timer = setInterval(() => {
-      setElapsed(Math.floor((Date.now() - startedAt.current) / 1000));
+      const s = (Date.now() - startedAt.current) / 1000;
+      setElapsed(Math.floor(s));
+      if (s >= MAX_RECORDING_S) finishRef.current();
     }, 250);
     return () => clearInterval(timer);
   }, [phase]);
+
+  // Leaving the screen mid-reading must not leave the microphone on.
+  useEffect(() => () => recorder.current?.cancel(), []);
 
   const total = Math.max(parts.length, 1);
   const text = parts[currentPart - 1]?.text ?? passage?.text ?? "No passage loaded.";
@@ -45,19 +64,29 @@ export function ReadingScreen() {
     navigate("/checking");
   }
 
-  async function onMic() {
-    if (phase === "recording") {
-      const seconds = (Date.now() - startedAt.current) / 1000;
-      try {
-        const audio = await recorder.current?.stop();
-        recorder.current = null;
-        handOver(seconds, audio ?? null);
-      } catch {
-        setError("Could not read the recording. Try again.");
-        setPhase("idle");
-      }
-      return;
+  async function finish() {
+    const rec = recorder.current;
+    if (!rec) return;
+    recorder.current = null;
+    const seconds = Math.min((Date.now() - startedAt.current) / 1000, MAX_RECORDING_S);
+    setPhase("processing");
+    try {
+      handOver(seconds, await rec.stop());
+    } catch (e) {
+      setError(
+        e instanceof RecordingError
+          ? PROBLEM_TEXT[e.problem]
+          : "Could not read the recording. Try again.",
+      );
+      setPhase("idle");
     }
+  }
+  finishRef.current = () => void finish();
+
+  async function onMic() {
+    if (phase === "recording") return finish();
+    if (phase !== "idle") return; // a second tap while the permission prompt is up
+    setPhase("requesting");
     try {
       const rec = createRecorder();
       await rec.start();
@@ -67,12 +96,16 @@ export function ReadingScreen() {
       setError(null);
       setPhase("recording");
     } catch {
+      setPhase("idle");
       navigate("/recovery/microphone");
     }
   }
 
-  const label = phase === "idle" ? copy.tapToStart : copy.recording;
-  const desc = phase === "idle" ? copy.readAloud : copy.readPace;
+  const idle = phase === "idle" || phase === "requesting";
+  const label = idle ? copy.tapToStart : phase === "recording" ? copy.recording : copy.listening;
+  const desc = idle ? copy.readAloud : copy.readPace;
+  const title = passage?.title ?? copy.storyTitle;
+  const micState = phase === "recording" ? "recording" : phase === "idle" ? "idle" : "processing";
 
   return (
     <>
@@ -84,9 +117,13 @@ export function ReadingScreen() {
             <div className="metarow">
               <LanguageBadge lang={lang} />
               <div className="metarow__text">
-                <span className="eyebrow">Child reading · Demo story</span>
+                <span className="eyebrow">
+                  {passage?.level
+                    ? `Child reading · Level ${passage.level}`
+                    : "Child reading · Demo story"}
+                </span>
                 <span className={`metarow__title ${scriptClass(lang)}`} lang={lang}>
-                  {copy.storyTitle}
+                  {title}
                 </span>
               </div>
             </div>
@@ -110,9 +147,26 @@ export function ReadingScreen() {
                 {text}
               </p>
             </div>
+            {passage?.credit?.publisher && (
+              <p className="note">
+                Story from{" "}
+                {passage.credit.url ? (
+                  <a href={passage.credit.url} target="_blank" rel="noreferrer">
+                    {passage.credit.publisher}
+                  </a>
+                ) : (
+                  passage.credit.publisher
+                )}
+                {passage.credit.licence ? ` · ${passage.credit.licence.split(" (")[0]}` : ""}
+              </p>
+            )}
 
             <div className="controls">
-              <MicButton state={phase} onClick={onMic} label={label} />
+              <MicButton
+                state={micState}
+                onClick={onMic}
+                label={label}
+              />
               <p className="controls__label">{label}</p>
               {phase === "recording" && (
                 // role="timer" is not announced every tick, unlike aria-live.

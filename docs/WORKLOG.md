@@ -67,3 +67,14 @@ The Hindi rise in Phase 3 is not threshold drift: fused beat Prisma on `calibrat
 ## 2026-10-26: finish plan
 Researched the challenge rules again (verified engagement on the demo post decides the shortlist; skills and interview decide the offer; awards judged separately) and shipped reading products: Google Read Along, Wadhwani AI Vaachan Samiksha, Microsoft Reading Progress and Reading Coach, Amira, Ello, SwiftChat, plus DPDP rules on children's data. All share six parts (two loops, teacher override with audio, placement, targeted practice, real conditions, trust); Akshara had strong measurement and parts of three. Wrote [FINISH_PLAN.md](FINISH_PLAN.md): Step 0 plus WP0–WP10, Oct 26 to Nov 1, with checkpoints and a cut order. Found: Prisma gives no word timings (clips need alignment), the evidence model is too heavy for the hosted demo, and the Pages demo is mock mode, so every feature needs fixtures.
 Sources: gnani.ai/internship; support.google.com/readalong; wadhwaniai.org/impact/education-solutions/oral-reading-fluency; support.microsoft.com (Reading Progress); amiralearning.com/research; edtechhub.org (2026-03-04); air.org FLS 2022 report; medianama.com (DPDP children's data, 2025-11).
+
+## 2026-10-27: step 0 and WP0, microphone live
+Step 0: merged PR #15 and `feat/learner` (#16) into `main` with merge commits, so the prediction commits keep their timestamps. Study caches, logs and session dumps are gitignored. WP0: tested the browser microphone path in `live` mode against real Prisma, in Chrome, with the mic fed Timbre clips. Kannada, Tamil and Hindi each record, convert to 16 kHz WAV, upload, transcribe and show scored words. Fixed along the way:
+- the 30 s cap rejected slow readers; the cap is now 90 s, and readings over 25 s go to Prisma in windows cut in pauses (`pauses.windows`, `service.transcribe_reading`), since Prisma rejects clips over about 30 s. A 31 s reading went as 20 s + 11 s.
+- a silent or very short recording is caught in the browser and never uploaded;
+- the recorder keeps the browser's own format (Safari records MP4), ignores a second tap during the permission prompt, stops itself at 90 s and releases the mic when the child leaves the screen;
+- "Read this part again" and "Try microphone again" went to a missing page (`/read`);
+- the checking screen never recognised a speech-service failure (it read the status from the message text);
+- the paid-call cap raised a 500; it is now a 503;
+- live mode showed the demo story title; passages now carry title, level and the StoryWeaver CC BY credit, shown under the story.
+5 Prisma calls. Still to do: Achindra reads one sentence into a real microphone.

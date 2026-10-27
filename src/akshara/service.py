@@ -1,5 +1,6 @@
 """One reading attempt: transcribe, score, persist. Providers and storage are injected."""
 
+import tempfile
 import time
 import uuid
 import wave
@@ -7,6 +8,8 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from akshara.core.align import score
+from akshara.core.pauses import cut, segments, windows
+from akshara.core.wavio import read_wav, write_wav
 from akshara.providers.base import SpeechToText
 from akshara.store import Store
 
@@ -33,6 +36,29 @@ def audio_seconds(path: Path) -> float | None:
         return None
 
 
+# Prisma rejects clips over about 30 s (docs/GNANI_API.md), so longer readings go in windows.
+MAX_CLIP_S = 25.0
+
+
+def transcribe_reading(
+    stt: SpeechToText, audio: Path, language: str, max_s: float = MAX_CLIP_S
+) -> str:
+    """Transcribe a reading of any length. A short clip is one call. A long one is cut at pauses
+    into windows under `max_s`, each transcribed, and the texts joined in order."""
+    duration = audio_seconds(audio)
+    if duration is None or duration <= max_s:
+        return stt.transcribe(audio, language)
+    samples, rate = read_wav(audio)
+    spans = windows(segments(samples, rate), duration, max_s)
+    texts = []
+    with tempfile.TemporaryDirectory() as tmp:
+        for k, piece in enumerate(cut(samples, rate, spans, pad_s=0.0)):
+            path = Path(tmp) / f"{audio.stem}-w{k}.wav"
+            write_wav(path, piece, rate)
+            texts.append(stt.transcribe(path, language).strip())
+    return " ".join(t for t in texts if t)
+
+
 def assess(
     *,
     stt: SpeechToText,
@@ -54,7 +80,7 @@ def assess(
             done["accuracy"], done["wcpm"], done["trace"], done["part_index"],
         )  # fmt: skip
     t0 = time.perf_counter()
-    transcript = stt.transcribe(audio, language)
+    transcript = transcribe_reading(stt, audio, language)
     latency_ms = int((time.perf_counter() - t0) * 1000)
     duration = audio_seconds(audio)
     s = score(reference, transcript, duration, loose=language != "kn-IN")

@@ -2,24 +2,26 @@ import { isLang, type Lang } from "../theme/script";
 import { DEMO_SUMMARY } from "./teacherData";
 import type { Attempt, LearnerSummary, Passage, WordOut } from "./types";
 
-/**
- * Turns one recorded clip into a WAV blob the backend accepts: mono, 16 kHz,
- * 16-bit PCM. Same approach as the original screen in
- * `src/akshara/api/static/index.html`, which is the proven path.
- */
-export async function toWav16k(blob: Blob): Promise<Blob> {
+/** Decodes a recorded clip (any format the browser recorded) to mono 16 kHz samples. */
+export async function decode16k(blob: Blob): Promise<Float32Array> {
   const ctx = new AudioContext();
-  const decoded = await ctx.decodeAudioData(await blob.arrayBuffer());
-  await ctx.close();
+  try {
+    const decoded = await ctx.decodeAudioData(await blob.arrayBuffer());
+    const frames = Math.ceil(decoded.duration * 16000);
+    if (frames === 0) return new Float32Array(0);
+    const off = new OfflineAudioContext(1, frames, 16000);
+    const src = off.createBufferSource();
+    src.buffer = decoded;
+    src.connect(off.destination);
+    src.start();
+    return (await off.startRendering()).getChannelData(0);
+  } finally {
+    await ctx.close();
+  }
+}
 
-  const frames = Math.ceil(decoded.duration * 16000);
-  const off = new OfflineAudioContext(1, frames, 16000);
-  const src = off.createBufferSource();
-  src.buffer = decoded;
-  src.connect(off.destination);
-  src.start();
-  const pcm = (await off.startRendering()).getChannelData(0);
-
+/** 16 kHz mono samples as a 16-bit PCM WAV, the format the backend accepts. */
+export function encodeWav(pcm: Float32Array): Blob {
   const view = new DataView(new ArrayBuffer(44 + pcm.length * 2));
   const str = (offset: number, s: string) =>
     [...s].forEach((c, i) => view.setUint8(offset + i, c.charCodeAt(0)));
@@ -41,14 +43,45 @@ export async function toWav16k(blob: Blob): Promise<Blob> {
   return new Blob([view], { type: "audio/wav" });
 }
 
+/** Same approach as the original screen in `src/akshara/api/static/index.html`. */
+export async function toWav16k(blob: Blob): Promise<Blob> {
+  return encodeWav(await decode16k(blob));
+}
+
+/** Longest reading the backend takes (settings.max_audio_seconds). */
+export const MAX_RECORDING_S = 90;
+/** Shorter than this is a slip of the finger, not a reading. */
+export const MIN_RECORDING_S = 0.7;
+/** Peak level below which nothing was heard (muted mic, wrong input device). */
+export const SILENCE_PEAK = 0.02;
+
+export type RecordingProblem = "silent" | "short";
+
+export class RecordingError extends Error {
+  constructor(public problem: RecordingProblem) {
+    super(problem);
+    this.name = "RecordingError";
+  }
+}
+
+/** Why a clip should not be sent, or null when it is fine. Pure, so it is tested directly. */
+export function checkClip(pcm: Float32Array, rate = 16000): RecordingProblem | null {
+  if (pcm.length < rate * MIN_RECORDING_S) return "short";
+  let peak = 0;
+  for (let i = 0; i < pcm.length; i++) peak = Math.max(peak, Math.abs(pcm[i]));
+  return peak < SILENCE_PEAK ? "silent" : null;
+}
+
 export type RecorderState = "idle" | "requesting" | "recording" | "error";
 
 export type Recorder = {
   state: RecorderState;
   error: string | null;
   start: () => Promise<void>;
-  /** Stops and resolves the recorded clip as 16 kHz WAV. */
+  /** Stops and resolves the recorded clip as 16 kHz WAV; throws RecordingError if unusable. */
   stop: () => Promise<Blob>;
+  /** Stops and throws the clip away. */
+  cancel: () => void;
 };
 
 /** Thin wrapper over MediaRecorder that hands back a backend-ready WAV. */
@@ -58,12 +91,20 @@ export function createRecorder(): Recorder {
   let chunks: BlobPart[] = [];
   let stopped: Promise<void> = Promise.resolve();
 
+  function release() {
+    stream?.getTracks().forEach((t) => t.stop());
+    stream = null;
+    recorder = null;
+  }
+
   return {
     state: "idle",
     error: null,
 
     async start() {
-      const media = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const media = await navigator.mediaDevices.getUserMedia({
+        audio: { channelCount: 1, echoCancellation: true, autoGainControl: true },
+      });
       stream = media;
       chunks = [];
       recorder = new MediaRecorder(media);
@@ -78,12 +119,20 @@ export function createRecorder(): Recorder {
 
     async stop() {
       if (!recorder) throw new Error("not recording");
+      // Safari records audio/mp4, Chrome and Firefox audio/webm: keep what was recorded.
+      const type = recorder.mimeType || "audio/webm";
       recorder.stop();
       await stopped;
-      stream?.getTracks().forEach((t) => t.stop());
-      stream = null;
-      recorder = null;
-      return toWav16k(new Blob(chunks, { type: "audio/webm" }));
+      release();
+      const pcm = await decode16k(new Blob(chunks, { type }));
+      const problem = checkClip(pcm);
+      if (problem) throw new RecordingError(problem);
+      return encodeWav(pcm);
+    },
+
+    cancel() {
+      if (recorder && recorder.state !== "inactive") recorder.stop();
+      release();
     },
   };
 }
