@@ -6,7 +6,7 @@ import { App } from "./App";
 import { setReaderAndLang } from "./state/storage";
 
 const reader: Reader = {
-  id: "aarav",
+  id: "1",
   alias: "Aarav Gowda",
   initials: "AG",
   level: "Class 3",

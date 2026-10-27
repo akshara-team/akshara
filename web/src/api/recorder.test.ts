@@ -1,4 +1,4 @@
-import { MIN_RECORDING_S, SILENCE_PEAK, checkClip, encodeWav } from "./mock";
+import { MIN_RECORDING_S, SILENCE_PEAK, checkClip, encodeWav, wavSeconds } from "./mock";
 
 const RATE = 16000;
 
@@ -44,5 +44,11 @@ describe("encodeWav", () => {
     expect(view.getUint16(34, true)).toBe(16);
     expect(view.getUint32(40, true)).toBe(RATE * 2);
     expect(wav.type).toBe("audio/wav");
+  });
+});
+
+describe("wavSeconds", () => {
+  it("reads the length back from the encoded size", () => {
+    expect(wavSeconds(encodeWav(clip(7.5, 0.3)))).toBeCloseTo(7.5, 3);
   });
 });

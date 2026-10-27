@@ -115,13 +115,15 @@ src/
 - **Listen** asks the API for Timbre audio (`GET /v1/feedback/audio`, cached on the server by
   content) and falls back to the device voice if the request fails or playback is blocked; it
   says so when neither is available.
-- **Teacher data.** The dashboard reads `GET /v1/class/summary` when the API answers and falls
-  back to the demo class otherwise; the other teacher screens are invented demo data, as the
-  handoff specifies (the API has no children, roster or history endpoints yet).
+- **Teacher data.** The class, child profiles, readings and the add/edit form use
+  `/v1/children` (live) or `api/mockClass.ts` (mock: an invented class kept in
+  `localStorage`, so the public demo can add a child, read as them and see the reading). The
+  child's name picker lists the children the teacher added for that language; each reading
+  posts `child_id` and a `session`, so a story's parts are one reading for the teacher.
 - **Parts.** Live mode reads the passage in the parts the API sends (`passage.parts`, from
   `core/parts.py`) and posts `part_index`, so each part is scored on its own. An older
   backend with no `parts` falls back to one part.
-- **Not built yet:** teacher screens do not persist; no Lighthouse gate (manual step).
+- **Not built yet:** no Lighthouse gate (manual step).
 
 ## Roadmap
 

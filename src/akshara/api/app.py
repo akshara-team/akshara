@@ -11,7 +11,14 @@ from fastapi import FastAPI, File, Form, Header, HTTPException, Request, UploadF
 from fastapi.responses import FileResponse, Response
 
 from akshara import passages as passage_bank
-from akshara.api.schemas import AttemptOut, LearnerSummary
+from akshara.api.schemas import (
+    AttemptOut,
+    ChildIn,
+    ChildOut,
+    ChildPatch,
+    LearnerSummary,
+    ReadingOut,
+)
 from akshara.core.parts import split_parts
 from akshara.providers.audio_cache import CachedTTS
 from akshara.providers.base import ProviderError, SpeechToText, TextToSpeech
@@ -19,7 +26,7 @@ from akshara.providers.fixture import FixtureSTT
 from akshara.providers.ledger import CapExceeded
 from akshara.service import assess, audio_seconds
 from akshara.settings import ROOT, Settings
-from akshara.store import Store
+from akshara.store import DuplicateAlias, Store
 
 log = logging.getLogger("akshara")
 RATE_LIMIT, RATE_WINDOW_S = 30, 60.0
@@ -121,8 +128,10 @@ def create_app(
     def create_attempt(
         request: Request,
         audio: UploadFile = File(...),
-        learner: str = Form(..., min_length=1, max_length=40),
         passage_id: str = Form(...),
+        learner: str | None = Form(default=None, min_length=1, max_length=40),
+        child_id: int | None = Form(default=None),
+        session: str | None = Form(default=None, min_length=1, max_length=64),
         part_index: int | None = Form(default=None),
         x_request_id: str | None = Header(default=None),
     ) -> AttemptOut:
@@ -130,6 +139,13 @@ def create_app(
         passage = bank.get(passage_id)
         if not passage:
             raise HTTPException(404, "unknown passage")
+        if child_id is not None:  # a child the teacher added
+            child = store.child(child_id)
+            if not child:
+                raise HTTPException(404, "unknown child")
+            learner = child["alias"]
+        elif not learner:
+            raise HTTPException(422, "learner or child_id is required")
         reference = passage["reference"]
         if part_index is not None:  # score against just the part that was read
             parts = split_parts(reference)
@@ -152,7 +168,8 @@ def create_app(
                     a = assess(
                         stt=stt, store=store, audio=path, learner=learner, passage_id=passage_id,
                         reference=reference, language=passage["lang"],
-                        request_id=x_request_id, part_index=part_index,
+                        request_id=x_request_id, part_index=part_index, learner_id=child_id,
+                        session_id=session,
                     )  # fmt: skip
             except CapExceeded as e:
                 log.error("paid-call cap reached: %s", e)
@@ -177,6 +194,55 @@ def create_app(
             accuracy=row["accuracy"], wcpm=row["wcpm"], words=row["trace"],
             part_index=row["part_index"],
         )  # fmt: skip
+
+    def child_out(c: dict) -> dict:
+        rs = store.readings(c["id"])
+        brief = lambda r: {"at": r["at"], "accuracy": r["accuracy"], "wcpm": r["wcpm"]}  # noqa: E731
+        return {
+            **{k: c[k] for k in ("id", "alias", "language", "grade", "avatar", "created_at")},
+            "readings": len(rs),
+            "latest": brief(rs[0]) if rs else None,
+            "previous": brief(rs[1]) if len(rs) > 1 else None,
+        }
+
+    def child_or_404(child_id: int) -> dict:
+        c = store.child(child_id)
+        if not c:
+            raise HTTPException(404, "unknown child")
+        return c
+
+    @app.get("/v1/children", response_model=list[ChildOut])
+    def list_children(lang: str | None = None) -> list[dict]:
+        return [child_out(c) for c in store.children(lang)]
+
+    @app.post("/v1/children", response_model=ChildOut, status_code=201)
+    def add_child(body: ChildIn) -> dict:
+        try:
+            child_id = store.create_child(body.alias, body.language, body.grade, body.avatar)
+        except DuplicateAlias as e:
+            raise HTTPException(409, "a child with this name already exists") from e
+        return child_out(child_or_404(child_id))
+
+    @app.get("/v1/children/{child_id}", response_model=ChildOut)
+    def get_child(child_id: int) -> dict:
+        return child_out(child_or_404(child_id))
+
+    @app.patch("/v1/children/{child_id}", response_model=ChildOut)
+    def edit_child(child_id: int, body: ChildPatch) -> dict:
+        child_or_404(child_id)
+        try:
+            store.update_child(child_id, **body.model_dump(exclude_unset=True))
+        except DuplicateAlias as e:
+            raise HTTPException(409, "a child with this name already exists") from e
+        return child_out(child_or_404(child_id))
+
+    @app.get("/v1/children/{child_id}/readings", response_model=list[ReadingOut])
+    def child_readings(child_id: int) -> list[dict]:
+        child_or_404(child_id)
+        return [
+            {**r, "title": bank.get(r["passage_id"], {}).get("title")}
+            for r in store.readings(child_id)
+        ]
 
     @app.get("/v1/class/summary", response_model=list[LearnerSummary])
     def class_summary() -> list[dict]:

@@ -1,4 +1,6 @@
-export function Table<T extends Record<string, string>>({
+import type { ReactNode } from "react";
+
+export function Table<T extends Record<string, ReactNode>>({
   columns,
   rows,
 }: {

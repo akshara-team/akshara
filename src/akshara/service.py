@@ -70,6 +70,8 @@ def assess(
     language: str,
     request_id: str | None = None,
     part_index: int | None = None,
+    learner_id: int | None = None,
+    session_id: str | None = None,
 ) -> Attempt:
     """Score one reading of `reference`, which is the whole passage or the part being read."""
     request_id = request_id or uuid.uuid4().hex
@@ -94,7 +96,7 @@ def assess(
     ]  # fmt: skip
     store.save_attempt(
         request_id=request_id,
-        learner_id=store.learner(learner, language),
+        learner_id=learner_id if learner_id is not None else store.learner(learner, language),
         passage_id=passage_id,
         language=language,
         provider=stt.name,
@@ -105,6 +107,7 @@ def assess(
         trace=trace,
         latency_ms=latency_ms,
         part_index=part_index,
+        session_id=session_id,
     )
     return Attempt(
         request_id, learner, passage_id, language, stt.name, transcript, s.accuracy, s.wcpm,

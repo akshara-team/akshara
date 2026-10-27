@@ -6,7 +6,7 @@ import { App } from "./App";
 import { addReading, setReaderAndLang, type StoredReading } from "./state/storage";
 
 const reader: Reader = {
-  id: "aarav",
+  id: "1",
   alias: "Aarav Gowda",
   initials: "AG",
   level: "Class 3",
@@ -46,6 +46,18 @@ describe("child home", () => {
     setReaderAndLang(reader, "kn-IN");
     at("/");
     expect(screen.getByText(/welcome back, aarav/i)).toBeTruthy();
+  });
+
+  it("asks again for a name the class no longer has", async () => {
+    setReaderAndLang({ ...reader, id: "aarav" }, "kn-IN"); // an old demo reader
+    at("/home");
+    expect(await screen.findByText(/let’s find your name/i)).toBeTruthy();
+  });
+
+  it("asks again when the child was removed from the class", async () => {
+    setReaderAndLang({ ...reader, id: "999" }, "kn-IN");
+    at("/home");
+    expect(await screen.findByText(/let’s find your name/i)).toBeTruthy();
   });
 
   it("shows role selection when no child is saved", () => {

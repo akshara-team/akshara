@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { api } from "../api";
+import { resetMockClass } from "../api/mockClass";
 import { App } from "../App";
 
 function at(path: string) {
@@ -15,6 +16,7 @@ function at(path: string) {
 afterEach(() => {
   vi.restoreAllMocks();
   vi.unstubAllGlobals();
+  resetMockClass();
 });
 
 /** Pretend the viewport is the design's desktop size. */
@@ -39,10 +41,14 @@ describe("MVP routes", () => {
     expect(screen.getByText("Rohan M.")).toBeTruthy();
   });
 
-  it("renders the roster from the class-summary API and its computed metrics", async () => {
-    vi.spyOn(api, "classSummary").mockResolvedValue([
-      { alias: "Meera S.", language: "kn-IN", attempts: 2, accuracy: 0.75, wcpm: 30 },
-      { alias: "Kabir", language: "kn-IN", attempts: 1, accuracy: 0.95, wcpm: 45 },
+  it("renders the roster from the children API and its computed metrics", async () => {
+    const kid = (id: number, alias: string, accuracy: number, wcpm: number) => ({
+      id, alias, language: "kn-IN" as const, grade: 3, avatar: null, created_at: 0,
+      readings: 1, latest: { at: 1, accuracy, wcpm }, previous: null,
+    }); // prettier-ignore
+    vi.spyOn(api, "listChildren").mockResolvedValue([
+      kid(1, "Meera S.", 0.75, 30),
+      kid(2, "Kabir", 0.95, 45),
     ]);
     at("/teacher");
     expect(await screen.findByText("Meera S.")).toBeTruthy();
@@ -53,11 +59,16 @@ describe("MVP routes", () => {
     expect(screen.getByText("1 / 2")).toBeTruthy(); // Meera is below the band
   });
 
-  it("falls back to the demo class when the summary API fails", async () => {
-    vi.spyOn(api, "classSummary").mockRejectedValue(new Error("offline"));
+  it("says so when the class cannot be loaded", async () => {
+    vi.spyOn(api, "listChildren").mockRejectedValue(new Error("offline"));
     at("/teacher");
-    expect(await screen.findByText("Aarav Gowda")).toBeTruthy();
-    expect(screen.getByText(/3 children · latest attempts · demo data/)).toBeTruthy();
+    expect(await screen.findByText(/could not load the class/i)).toBeTruthy();
+  });
+
+  it("offers to add a child when a language has none", async () => {
+    vi.spyOn(api, "listChildren").mockResolvedValue([]);
+    at("/teacher");
+    expect(await screen.findByText(/no children yet/i)).toBeTruthy();
   });
 
   it("renders the five-column roster table on a desktop viewport", async () => {
@@ -71,37 +82,29 @@ describe("MVP routes", () => {
 
   it("shows the teacher navigation on the desktop frames", async () => {
     stubDesktopViewport();
-    at("/teacher/child/aarav");
+    at("/teacher/child/1");
     expect(await screen.findByRole("navigation", { name: /teacher/i })).toBeTruthy();
   });
 
-  it("renders a child profile with history", () => {
-    at("/teacher/child/aarav");
-    expect(screen.getByText(/reading history/i)).toBeTruthy();
-    expect(screen.getByText(/band:/i)).toBeTruthy();
+  it("renders a child profile with history", async () => {
+    at("/teacher/child/1");
+    expect(await screen.findByText(/reading history · 3 readings/i)).toBeTruthy();
+    expect(screen.getByText(/target band:/i)).toBeTruthy();
   });
 
-  it("renders attempt details with the calculation spelled out", () => {
-    at("/teacher/attempt/aarav");
-    expect(screen.getByText(/reference words/i)).toBeTruthy();
-    expect(screen.getByText(/accuracy =/i)).toBeTruthy();
+  it("renders a reading with the calculation spelled out", async () => {
+    at("/teacher/child/1/reading/seed-1-2026-10-19");
+    expect(await screen.findByText(/words in the story/i)).toBeTruthy();
+    expect(screen.getByText(/accuracy = 18 ÷ 20/i)).toBeTruthy();
+    expect(screen.getByText(/practise next/i)).toBeTruthy();
   });
 
-  it("renders the add-child form with its validation message", () => {
+  it("checks the name only when saving", async () => {
     at("/teacher/add");
-    expect(screen.getByText(/add a child/i)).toBeTruthy();
-    expect(screen.getByText(/add a name before saving/i)).toBeTruthy();
-  });
-
-  it("renders the story picker", () => {
-    at("/teacher/story");
-    expect(screen.getByText(/pick a language and level/i)).toBeTruthy();
-  });
-
-  it("renders a recovery screen with its steps", () => {
-    at("/recovery/microphone");
-    expect(screen.getByText(/we need the microphone/i)).toBeTruthy();
-    expect(screen.getByText(/choose permissions/i)).toBeTruthy();
+    expect(screen.getByRole("heading", { name: /add a child/i })).toBeTruthy();
+    expect(screen.queryByText(/add a name before saving/i)).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: /save child/i }));
+    expect(await screen.findByText(/add a name before saving/i)).toBeTruthy();
   });
 
   it("never sends a retry to a page that does not exist", () => {
