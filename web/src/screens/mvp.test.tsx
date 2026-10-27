@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { api } from "../api";
@@ -102,6 +102,12 @@ describe("MVP routes", () => {
     at("/recovery/microphone");
     expect(screen.getByText(/we need the microphone/i)).toBeTruthy();
     expect(screen.getByText(/choose permissions/i)).toBeTruthy();
+  });
+
+  it("never sends a retry to a page that does not exist", () => {
+    at("/recovery/microphone");
+    fireEvent.click(screen.getByRole("button", { name: /try microphone again/i }));
+    expect(screen.queryByText(/nothing here/i)).toBeNull();
   });
 
   it("falls back to the service-error recovery for an unknown kind", () => {

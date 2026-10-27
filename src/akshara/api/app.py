@@ -16,6 +16,7 @@ from akshara.core.parts import split_parts
 from akshara.providers.audio_cache import CachedTTS
 from akshara.providers.base import ProviderError, SpeechToText, TextToSpeech
 from akshara.providers.fixture import FixtureSTT
+from akshara.providers.ledger import CapExceeded
 from akshara.service import assess, audio_seconds
 from akshara.settings import ROOT, Settings
 from akshara.store import Store
@@ -23,6 +24,7 @@ from akshara.store import Store
 log = logging.getLogger("akshara")
 RATE_LIMIT, RATE_WINDOW_S = 30, 60.0
 PASSAGES = ROOT / "data" / "open_passages" / "passages.jsonl"
+SOURCES = ROOT / "data" / "open_passages" / "sources.jsonl"
 INDEX = Path(__file__).parent / "static" / "index.html"
 AUDIO_CACHE = ROOT / "results" / "audio"
 SUPPORTED_LANGUAGES = frozenset({"hi-IN", "kn-IN", "ta-IN"})
@@ -55,13 +57,16 @@ def create_app(
     stt = stt or build_stt(settings)
     tts = build_tts(tts)
     store = Store(settings.db_path)
-    bank = bank if bank is not None else passage_bank.load(PASSAGES)
+    bank = bank if bank is not None else passage_bank.load(PASSAGES, SOURCES)
     stt_lock = threading.Lock()  # Prisma allows one active request at a time
 
     def passage_out(p: dict) -> dict:
         return {
             "id": p["id"], "language": p["lang"], "text": p["reference"],
             "parts": split_parts(p["reference"]),
+            "title": p.get("title"), "level": p.get("level"),
+            # StoryWeaver texts are CC BY: the credit travels with the passage
+            "credit": {k: p[k] for k in ("publisher", "url", "licence") if p.get(k)} or None,
         }  # fmt: skip
 
     hits: dict[str, deque[float]] = defaultdict(deque)
@@ -104,6 +109,9 @@ def create_app(
             raise HTTPException(400, f"word must be 1-{MAX_WORD_CHARS} characters")
         try:
             audio = tts.synthesize(text, lang, None)
+        except CapExceeded as e:
+            log.error("paid-call cap reached: %s", e)
+            raise HTTPException(503, "paid-call cap reached") from e
         except ProviderError as e:
             log.warning("tts failed: %s", e)
             raise HTTPException(502, "speech provider failed") from e
@@ -146,6 +154,9 @@ def create_app(
                         reference=reference, language=passage["lang"],
                         request_id=x_request_id, part_index=part_index,
                     )  # fmt: skip
+            except CapExceeded as e:
+                log.error("paid-call cap reached: %s", e)
+                raise HTTPException(503, "paid-call cap reached") from e
             except ProviderError as e:
                 log.warning("provider failed: %s", e)
                 raise HTTPException(502, "speech provider failed") from e

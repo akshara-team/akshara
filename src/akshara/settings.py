@@ -11,8 +11,8 @@ ROOT = Path(__file__).resolve().parents[2]
 class Settings:
     provider: str = "fixture"  # "prisma" or "fixture"
     db_path: Path = ROOT / "results" / "akshara.sqlite"
-    max_upload_bytes: int = 2_000_000
-    max_audio_seconds: float = 30.0
+    max_upload_bytes: int = 3_000_000  # 90 s of 16 kHz 16-bit mono
+    max_audio_seconds: float = 90.0  # a slow reader needs a minute for 20 words
 
     @classmethod
     def from_env(cls) -> "Settings":

@@ -5,6 +5,8 @@ Energy based and deterministic: frames quieter than a fraction of the loud-speec
 silence, and a silence at least `min_pause_s` long separates two segments.
 """
 
+import itertools
+
 import numpy as np
 
 
@@ -55,3 +57,30 @@ def cut(
     """Slice the signal at the segments, with a little padding so word edges are not clipped."""
     pad = int(rate * pad_s)
     return [samples[max(0, int(s * rate) - pad) : int(e * rate) + pad] for s, e in segs]
+
+
+def windows(
+    segs: list[tuple[float, float]], total_s: float, max_s: float
+) -> list[tuple[float, float]]:
+    """Group a clip into windows of at most `max_s` seconds, cutting in the middle of pauses so
+    no word is split. A single stretch of speech longer than `max_s` is cut evenly. Windows with
+    no speech in them are dropped. A clip that already fits comes back whole."""
+    if total_s <= max_s:
+        return [(0.0, total_s)]
+    cuts = [(a[1] + b[0]) / 2 for a, b in itertools.pairwise(segs)]
+    out: list[tuple[float, float]] = []
+    start, prev = 0.0, None
+    for p in [*cuts, total_s]:
+        if p - start <= max_s:
+            prev = p
+            continue
+        if prev is not None and prev > start:
+            out.append((start, prev))
+            start = prev
+        while p - start > max_s:
+            out.append((start, start + max_s))
+            start += max_s
+        prev = p
+    if total_s > start:
+        out.append((start, total_s))
+    return [w for w in out if any(s < w[1] and e > w[0] for s, e in segs)]

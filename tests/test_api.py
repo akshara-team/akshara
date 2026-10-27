@@ -158,3 +158,29 @@ def test_whole_passage_attempt_has_no_part_index():
 def test_part_index_out_of_range_is_rejected(bad):
     r = post_part(client(FixtureSTT({"clip": "x"})), bad)
     assert r.status_code in (400, 422)
+
+
+def test_real_bank_carries_title_level_and_credit():
+    from akshara import passages as passage_bank
+    from akshara.api.app import PASSAGES, SOURCES
+
+    bank = passage_bank.load(PASSAGES, SOURCES)
+    assert bank, "passage bank missing"
+    assert all(p.get("title") and p.get("level") and p.get("publisher") for p in bank.values())
+    settings = Settings(provider="fixture", db_path=":memory:")  # type: ignore[arg-type]
+    c = TestClient(create_app(settings, FixtureSTT({}), bank))
+    p = c.get("/v1/passages?lang=kn-IN").json()[0]
+    assert p["title"] and p["level"] and p["credit"]["licence"].startswith("CC BY")
+
+
+def test_paid_call_cap_is_a_clean_503():
+    from akshara.providers.ledger import CapExceeded
+
+    class Capped:
+        name = "capped"
+
+        def transcribe(self, audio, language):
+            raise CapExceeded("cap")
+
+    r = post(client(Capped()), wav(1))
+    assert r.status_code == 503 and r.json()["detail"] == "paid-call cap reached"
