@@ -1,4 +1,4 @@
-import type { Attempt, LearnerSummary, Passage } from "./types";
+import type { Attempt, Child, ChildInput, Passage, Reading } from "./types";
 
 const BASE = import.meta.env.VITE_API_BASE ?? "";
 
@@ -27,6 +27,16 @@ async function getJson<T>(path: string): Promise<T> {
   return (await res.json()) as T;
 }
 
+async function sendJson<T>(method: "POST" | "PATCH", path: string, body: unknown): Promise<T> {
+  const res = await fetch(`${BASE}${path}`, {
+    method,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) throw new ApiError(res.status, await detail(res));
+  return (await res.json()) as T;
+}
+
 /** Live adapter — talks to FastAPI through the dev proxy (or VITE_API_BASE). */
 export const liveApi = {
   /** The backend's parts; an older backend sends none, so the passage is read whole. */
@@ -41,6 +51,10 @@ export const liveApi = {
   async submitAttempt(args: {
     audio: Blob;
     learner: string;
+    /** A child the teacher added; preferred over the bare `learner` alias. */
+    childId?: number;
+    /** Groups the parts of one story into one reading. */
+    session?: string;
     passageId: string;
     /** Which part was read; scored against that part only. Omit for the whole passage. */
     partIndex?: number;
@@ -48,7 +62,9 @@ export const liveApi = {
   }): Promise<Attempt> {
     const form = new FormData();
     form.append("audio", args.audio, `${args.passageId}.wav`);
-    form.append("learner", args.learner);
+    if (args.childId !== undefined) form.append("child_id", String(args.childId));
+    else form.append("learner", args.learner);
+    if (args.session) form.append("session", args.session);
     form.append("passage_id", args.passageId);
     if (args.partIndex !== undefined) form.append("part_index", String(args.partIndex));
     const res = await fetch(`${BASE}/v1/attempts`, {
@@ -61,8 +77,24 @@ export const liveApi = {
     return (await res.json()) as Attempt;
   },
 
-  classSummary(): Promise<LearnerSummary[]> {
-    return getJson<LearnerSummary[]>("/v1/class/summary");
+  listChildren(lang?: string): Promise<Child[]> {
+    return getJson<Child[]>(lang ? `/v1/children?lang=${encodeURIComponent(lang)}` : "/v1/children");
+  },
+
+  getChild(id: number): Promise<Child> {
+    return getJson<Child>(`/v1/children/${id}`);
+  },
+
+  addChild(input: ChildInput): Promise<Child> {
+    return sendJson<Child>("POST", "/v1/children", input);
+  },
+
+  editChild(id: number, patch: Partial<ChildInput>): Promise<Child> {
+    return sendJson<Child>("PATCH", `/v1/children/${id}`, patch);
+  },
+
+  childReadings(id: number): Promise<Reading[]> {
+    return getJson<Reading[]>(`/v1/children/${id}/readings`);
   },
 
   /** Timbre pronunciation of one word; null when the endpoint says no. */

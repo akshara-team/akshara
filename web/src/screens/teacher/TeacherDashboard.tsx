@@ -2,55 +2,67 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api, isMock } from "../../api";
 import { toRoster } from "../../api/classSummary";
-import { CHILDREN, CLASSROOM, CLASS_METRICS, DEMO_SUMMARY } from "../../api/teacherData";
-import { Avatar, Card, Select, StatusBadge, PageHeader } from "../../components";
+import type { Child } from "../../api/types";
+import { Avatar, Button, Card, EmptyState, Select, StatusBadge, PageHeader } from "../../components";
 import { useIsDesktop } from "../../state/useMediaQuery";
 import { scriptName, type Lang } from "../../theme/script";
+
+const STATUS_TEXT = {
+  "in-target": "On target",
+  practise: "Practise together",
+  new: "No reading yet",
+} as const;
+
+const STATUS_TONE = { "in-target": "success", practise: "warning", new: "neutral" } as const;
 
 export function TeacherDashboard() {
   const navigate = useNavigate();
   const isDesktop = useIsDesktop();
-  const [className, setClassName] = useState("class-3");
-  const [language, setLanguage] = useState("kn-IN");
-
-  // Demo class shown until the API answers (and if it never does).
-  const demo = useMemo(() => toRoster(DEMO_SUMMARY, CHILDREN), []);
-  const [data, setData] = useState(demo);
-  const [usingDemo, setUsingDemo] = useState(true);
+  const [grade, setGrade] = useState("all");
+  const [language, setLanguage] = useState<Lang>("kn-IN");
+  const [children, setChildren] = useState<Child[] | null>(null);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     let alive = true;
+    setChildren(null);
+    setFailed(false);
     api
-      .classSummary()
-      .then((rows) => {
-        if (!alive) return;
-        const next = toRoster(rows, CHILDREN);
-        if (next.roster.length === 0) return; // keep the demo class
-        setData(next);
-        setUsingDemo(isMock);
-      })
-      .catch(() => {
-        /* offline or the endpoint is missing: keep the demo class */
-      });
+      .listChildren(language)
+      .then((rows) => alive && setChildren(rows))
+      .catch(() => alive && setFailed(true));
     return () => {
       alive = false;
     };
-  }, []);
+  }, [language]);
+
+  const data = useMemo(
+    () =>
+      toRoster(
+        (children ?? []).filter((c) => grade === "all" || String(c.grade) === grade),
+      ),
+    [children, grade],
+  );
 
   const metrics = [
     { value: data.metrics.avgWcpm == null ? "—" : String(data.metrics.avgWcpm), label: "Avg WCPM" },
-    { value: `${Math.round(data.metrics.accuracy * 100)}%`, label: "Accuracy" },
+    {
+      value: data.metrics.accuracy == null ? "—" : `${Math.round(data.metrics.accuracy * 100)}%`,
+      label: "Accuracy",
+    },
     { value: `${data.metrics.needHelp} / ${data.metrics.total}`, label: "Need help" },
   ];
+  const source = isMock ? "demo data" : "live";
+  const gradeLabel = grade === "all" ? "All classes" : `Class ${grade}`;
 
-  const openChild = (id: string) => navigate(`/teacher/child/${id}`);
+  const openChild = (id: number) => navigate(`/teacher/child/${id}`);
 
   return (
     <>
       <PageHeader
         back
         backTo="/"
-        badge={CLASSROOM.className}
+        badge={gradeLabel}
         nav={[
           { label: "Class", to: "/teacher" },
           { label: "Story", to: "/teacher/story" },
@@ -58,33 +70,35 @@ export function TeacherDashboard() {
         ]}
       />
       <div className="screen-body">
-        <p className="eyebrow">{CLASSROOM.eyebrow}</p>
+        <p className="eyebrow">
+          Teacher · {data.metrics.total} {data.metrics.total === 1 ? "child" : "children"} · {source}
+        </p>
         <h1 className="card__title">Your reading class</h1>
 
         <Card>
           <p className="reader-name">
-            {CLASSROOM.className} · {scriptName(language as Lang)}
+            {gradeLabel} · {scriptName(language)}
           </p>
           <p className="reader-meta">
-            {data.metrics.total} children · latest attempts ·{" "}
-            {usingDemo ? "demo data" : "live from the API"}
+            {data.metrics.total} {data.metrics.total === 1 ? "child" : "children"} · latest
+            readings · {source}
           </p>
         </Card>
 
         <div className="filters">
           <Select
             label="Class"
-            value={className}
-            onChange={setClassName}
+            value={grade}
+            onChange={setGrade}
             options={[
-              { value: "class-2", label: "Class 2" },
-              { value: "class-3", label: "Class 3" },
+              { value: "all", label: "All classes" },
+              ...[1, 2, 3, 4, 5].map((g) => ({ value: String(g), label: `Class ${g}` })),
             ]}
           />
           <Select
             label="Language"
             value={language}
-            onChange={setLanguage}
+            onChange={(v) => setLanguage(v as Lang)}
             options={[
               { value: "kn-IN", label: "ಕನ್ನಡ · Kannada" },
               { value: "ta-IN", label: "தமிழ் · Tamil" },
@@ -94,18 +108,32 @@ export function TeacherDashboard() {
         </div>
 
         <div className="metrics">
-          {metrics.map((m, i) => (
+          {metrics.map((m) => (
             <div className="metric" key={m.label}>
               <span className="metric__value">{m.value}</span>
               <span className="metric__label">{m.label}</span>
-              {usingDemo && <span className="metric__delta">{CLASS_METRICS[i]?.delta}</span>}
             </div>
           ))}
         </div>
 
-        <p className="step__label">{data.metrics.total} children · latest attempts</p>
+        <p className="step__label">
+          {data.metrics.total} {data.metrics.total === 1 ? "child" : "children"} · latest readings
+        </p>
 
-        {isDesktop ? (
+        {failed ? (
+          <EmptyState title="Could not load the class">
+            <p className="note">Check the connection, then open this page again.</p>
+          </EmptyState>
+        ) : children === null ? (
+          <p className="note" role="status">
+            Loading the class…
+          </p>
+        ) : data.roster.length === 0 ? (
+          <EmptyState title="No children yet">
+            <p className="note">Add a child who reads in {scriptName(language)} to start.</p>
+            <Button onClick={() => navigate("/teacher/add")}>Add a child</Button>
+          </EmptyState>
+        ) : isDesktop ? (
           /* Desktop frame: a five-column roster table. */
           <table className="roster-table">
             <thead>
@@ -131,12 +159,10 @@ export function TeacherDashboard() {
                     </span>
                   </td>
                   <td>{c.wcpm ?? "—"}</td>
-                  <td>{Math.round(c.accuracy * 100)}%</td>
-                  <td className="reader-meta">—</td>
+                  <td>{c.accuracy == null ? "—" : `${Math.round(c.accuracy * 100)}%`}</td>
+                  <td className="reader-meta">{c.previousWcpm ?? "—"}</td>
                   <td>
-                    <StatusBadge tone={c.status === "in-target" ? "success" : "warning"}>
-                      {c.status === "in-target" ? "In target band" : "Practise together"}
-                    </StatusBadge>
+                    <StatusBadge tone={STATUS_TONE[c.status]}>{STATUS_TEXT[c.status]}</StatusBadge>
                   </td>
                 </tr>
               ))}
@@ -156,12 +182,12 @@ export function TeacherDashboard() {
                 <span className="reader-info">
                   <span className="reader-name">{c.name}</span>
                   <span className="reader-meta">
-                    {c.wcpm ?? "—"} WCPM · {Math.round(c.accuracy * 100)}% accuracy
+                    {c.status === "new"
+                      ? `${c.level} · no reading yet`
+                      : `${c.wcpm ?? "—"} WCPM · ${Math.round((c.accuracy ?? 0) * 100)}% accuracy`}
                   </span>
                 </span>
-                <StatusBadge tone={c.status === "in-target" ? "success" : "warning"}>
-                  {c.status === "in-target" ? "In target band" : "Practise together"}
-                </StatusBadge>
+                <StatusBadge tone={STATUS_TONE[c.status]}>{STATUS_TEXT[c.status]}</StatusBadge>
               </button>
             ))}
           </div>

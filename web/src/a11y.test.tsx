@@ -15,8 +15,9 @@ const ROUTES = [
   "/recovery/offline",
   "/teacher",
   "/teacher/story",
-  "/teacher/child/c1",
-  "/teacher/attempt/c1",
+  "/teacher/child/1",
+  "/teacher/child/1/reading/seed-1-2026-10-19",
+  "/teacher/edit/1",
   "/teacher/add",
   "/no-such-page",
 ];
@@ -36,6 +37,11 @@ describe("axe", () => {
   for (const path of ROUTES) {
     it(`finds no violations on ${path}`, async () => {
       const { container, unmount } = at(path);
+      // Let the mock API answer, so the loaded page is checked, not the loading state.
+      await act(async () => {
+        await new Promise((r) => setTimeout(r, 0));
+      });
+      expect(container.textContent).not.toMatch(/Loading/);
       const result = await axe.run(container, options);
       const summary = result.violations.map((v) => `${v.id}: ${v.nodes.length} node(s)`);
       expect(summary).toEqual([]);

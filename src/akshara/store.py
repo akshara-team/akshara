@@ -30,7 +30,48 @@ MIGRATIONS = [
     """,
     # 2: which part of the passage was read; NULL means the whole passage
     "ALTER TABLE attempts ADD COLUMN part_index INTEGER;",
+    # 3: children the teacher manages; a reading session groups the parts of one story
+    """
+    ALTER TABLE learners ADD COLUMN grade INTEGER;
+    ALTER TABLE learners ADD COLUMN avatar TEXT;
+    ALTER TABLE learners ADD COLUMN created_at REAL;
+    ALTER TABLE attempts ADD COLUMN session_id TEXT;
+    CREATE INDEX attempts_by_learner ON attempts(learner_id, created_at);
+    """,
 ]
+
+CHILD_FIELDS = ("alias", "language", "grade", "avatar")
+
+
+class DuplicateAlias(ValueError):
+    """Another child already has this alias."""
+
+
+def summarise(group: list[dict]) -> dict:
+    """One reading of a story from its part attempts. A part read twice counts its last try."""
+    latest: dict = {}
+    for a in sorted(group, key=lambda a: a["created_at"]):
+        latest[a["part_index"]] = a
+    parts = [latest[k] for k in sorted(latest, key=lambda k: -1 if k is None else k)]
+    words = [w for a in parts for w in a["trace"]]
+    total = sum(1 for w in words if w["op"] != "inserted")
+    correct = sum(1 for w in words if w["op"] == "correct")
+    durations = [a["duration_s"] for a in parts]
+    seconds = sum(durations) if all(d for d in durations) else None
+    return {
+        "session": group[0]["session_id"] or group[0]["request_id"],
+        "passage_id": group[0]["passage_id"],
+        "language": group[0]["language"],
+        "at": min(a["created_at"] for a in group),
+        "parts": [a["part_index"] for a in parts if a["part_index"] is not None],
+        "correct": correct,
+        "total": total,
+        "accuracy": correct / total if total else 0.0,
+        "wcpm": correct / (seconds / 60) if seconds else None,
+        "seconds": seconds,
+        "transcript": " ".join(a["transcript"] for a in parts if a["transcript"]),
+        "words": words,
+    }
 
 
 class Store:
@@ -53,20 +94,72 @@ class Store:
         if row:
             return row["id"]
         cur = self.db.execute(
-            "INSERT INTO learners (alias, language) VALUES (?, ?)", (alias, language)
+            "INSERT INTO learners (alias, language, created_at) VALUES (?, ?, ?)",
+            (alias, language, time.time()),
         )
         self.db.commit()
         return cur.lastrowid  # type: ignore[return-value]
 
+    def create_child(
+        self, alias: str, language: str, grade: int | None = None, avatar: str | None = None
+    ) -> int:
+        try:
+            cur = self.db.execute(
+                "INSERT INTO learners (alias, language, grade, avatar, created_at)"
+                " VALUES (?, ?, ?, ?, ?)",
+                (alias, language, grade, avatar, time.time()),
+            )
+        except sqlite3.IntegrityError as e:
+            raise DuplicateAlias(alias) from e
+        self.db.commit()
+        return cur.lastrowid  # type: ignore[return-value]
+
+    def update_child(self, child_id: int, **fields) -> None:
+        fields = {k: v for k, v in fields.items() if k in CHILD_FIELDS}
+        if not fields:
+            return
+        sets = ", ".join(f"{k} = :{k}" for k in fields)
+        try:
+            self.db.execute(
+                f"UPDATE learners SET {sets} WHERE id = :id", {**fields, "id": child_id}
+            )
+        except sqlite3.IntegrityError as e:
+            raise DuplicateAlias(fields.get("alias", "")) from e
+        self.db.commit()
+
+    def child(self, child_id: int) -> dict | None:
+        row = self.db.execute("SELECT * FROM learners WHERE id = ?", (child_id,)).fetchone()
+        return dict(row) if row else None
+
+    def children(self, language: str | None = None) -> list[dict]:
+        rows = self.db.execute(
+            "SELECT * FROM learners WHERE ? IS NULL OR language = ? ORDER BY alias COLLATE NOCASE",
+            (language, language),
+        ).fetchall()
+        return [dict(r) for r in rows]
+
+    def readings(self, child_id: int) -> list[dict]:
+        """The child's readings, newest first, each grouping the parts of one story session."""
+        rows = self.db.execute(
+            "SELECT * FROM attempts WHERE learner_id = ? ORDER BY created_at", (child_id,)
+        ).fetchall()
+        groups: dict[str, list[dict]] = {}
+        for r in rows:
+            a = dict(r) | {"trace": json.loads(r["trace"])}
+            groups.setdefault(a["session_id"] or a["request_id"], []).append(a)
+        return sorted((summarise(g) for g in groups.values()), key=lambda s: -s["at"])
+
     def save_attempt(self, **a) -> None:
         """Idempotent on request_id: a retried upload does not create a second attempt."""
         a.setdefault("part_index", None)
+        a.setdefault("session_id", None)
         self.db.execute(
             "INSERT OR IGNORE INTO attempts (request_id, learner_id, passage_id, language,"
             " provider, transcript, duration_s, accuracy, wcpm, trace, latency_ms, created_at,"
-            " part_index)"
+            " part_index, session_id)"
             " VALUES (:request_id, :learner_id, :passage_id, :language, :provider, :transcript,"
-            " :duration_s, :accuracy, :wcpm, :trace, :latency_ms, :created_at, :part_index)",
+            " :duration_s, :accuracy, :wcpm, :trace, :latency_ms, :created_at, :part_index,"
+            " :session_id)",
             {**a, "trace": json.dumps(a["trace"], ensure_ascii=False), "created_at": time.time()},
         )
         self.db.commit()

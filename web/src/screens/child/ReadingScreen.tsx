@@ -6,6 +6,7 @@ import {
   MOCK_DURATIONS,
   RecordingError,
   createRecorder,
+  wavSeconds,
   type Recorder,
 } from "../../api/mock";
 import {
@@ -68,10 +69,11 @@ export function ReadingScreen() {
     const rec = recorder.current;
     if (!rec) return;
     recorder.current = null;
-    const seconds = Math.min((Date.now() - startedAt.current) / 1000, MAX_RECORDING_S);
     setPhase("processing");
     try {
-      handOver(seconds, await rec.stop());
+      const audio = await rec.stop();
+      // The clip's own length, as the server measures it, so child and teacher see one WCPM.
+      handOver(wavSeconds(audio), audio);
     } catch (e) {
       setError(
         e instanceof RecordingError
