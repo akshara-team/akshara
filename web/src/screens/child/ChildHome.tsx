@@ -13,7 +13,8 @@ import {
 } from "../../components";
 import { useSession } from "../../state/session";
 import { useChildProgress } from "../../state/useChildProgress";
-import { scriptName } from "../../theme/script";
+import { useCopy } from "../../i18n";
+import { scriptClass, scriptName } from "../../theme/script";
 
 /**
  * The child's home. One big action, their own progress, and no tables — the
@@ -24,6 +25,7 @@ export function ChildHome() {
   const { setReader, setLang, beginPassage } = useSession();
   const { store, synced, gone } = useChildProgress();
   const [busy, setBusy] = useState(false);
+  const { t, Tx } = useCopy(store.lang);
 
   const reader = gone ? null : store.reader;
   const first = reader?.alias.split(" ")[0] ?? "";
@@ -58,14 +60,18 @@ export function ChildHome() {
       <PageHeader />
       <div className="home">
         <div className="home__hero">
-          <p className="eyebrow">My reading</p>
+          <p className="eyebrow">
+            <Tx k="home.eyebrow" />
+          </p>
           <h1 className="card__title">
-            {reader ? `Welcome back, ${first}` : "Hello there"}
+            {reader ? <Tx k="home.welcomeBack" vars={{ name: first }} /> : <Tx k="home.hello" />}
           </h1>
           <div className="home__meta">
             <LanguageBadge lang={store.lang} />
             <span className="reader-meta">
-              {scriptName(store.lang)}
+              <span className={scriptClass(store.lang)} lang={store.lang}>
+                {scriptName(store.lang)}
+              </span>
               {reader ? ` · ${reader.level}` : ""}
             </span>
           </div>
@@ -73,11 +79,15 @@ export function ChildHome() {
 
         {!reader ? (
           <Card>
-            <p className="reader-name">Let’s find your name</p>
-            <p className="note">Choose who is reading to see your progress.</p>
+            <p className="reader-name">
+              <Tx k="home.findName" />
+            </p>
+            <p className="note">
+              <Tx k="home.findNameHelp" />
+            </p>
             <div className="actions">
               <Button block onClick={() => navigate("/switch")}>
-                Choose my name
+                <Tx k="home.chooseName" />
               </Button>
             </div>
           </Card>
@@ -85,53 +95,69 @@ export function ChildHome() {
           <>
             <div className="home__actions">
               <Button block disabled={busy} onClick={() => start()}>
-                {busy ? "Opening…" : "Read a story"}
+                <Tx k={busy ? "home.opening" : "home.readStory"} />
               </Button>
               {last && (
                 <Button variant="outline" block disabled={busy} onClick={() => start(true)}>
-                  Read again: {last.storyTitle}
+                  <Tx k="home.readAgain" vars={{ title: last.storyTitle }} />
                 </Button>
               )}
             </div>
 
             {recent.length === 0 ? (
               <Card>
-                <p className="reader-name">Your first story is waiting</p>
-                <p className="note">Tap “Read a story” to begin.</p>
+                <p className="reader-name">
+                  <Tx k="home.firstStory" />
+                </p>
+                <p className="note">
+                  <Tx k="home.firstStoryHelp" />
+                </p>
               </Card>
             ) : (
               <>
                 <section className="stack">
-                  <p className="step__label">My progress</p>
+                  <p className="step__label">
+                    <Tx k="home.progress" />
+                  </p>
                   {bars.map((r) => (
                     <div className="home__progress" key={r.id}>
-                      <span className="reader-meta">{r.storyTitle}</span>
+                      <span className={`reader-meta ${scriptClass(r.language)}`} lang={r.language}>
+                        {r.storyTitle}
+                      </span>
                       <ProgressBar
                         value={r.wcpm ? (r.wcpm / NIPUN_BAND.max) * 100 : 0}
-                        label={`${r.storyTitle}: reading speed against the class target`}
+                        label={t("home.target", { title: r.storyTitle })}
                       />
                       <span className="reader-meta">
-                        {r.wcpm ?? "—"} WCPM · {Math.round(r.accuracy * 100)}%
+                        <Tx
+                          k="home.speed"
+                          vars={{ wcpm: r.wcpm ?? "—", accuracy: Math.round(r.accuracy * 100) }}
+                        />
                       </span>
                     </div>
                   ))}
-                  {best > 0 && <p className="note">Best so far: {best} WCPM</p>}
+                  {best > 0 && (
+                    <p className="note">
+                      <Tx k="home.best" vars={{ wcpm: best }} />
+                    </p>
+                  )}
                   {synced?.latest && (
                     <p className="note">
-                      Your teacher sees {synced.readings}{" "}
-                      {synced.readings === 1 ? "reading" : "readings"} · latest{" "}
-                      {Math.round(synced.latest.accuracy * 100)}% ·{" "}
-                      {synced.latest.wcpm == null ? "—" : Math.round(synced.latest.wcpm)} WCPM
+                      <Tx k="home.teacherSees" vars={{ count: synced.readings }} />
                     </p>
                   )}
                 </section>
 
                 <section className="stack">
-                  <p className="step__label">My reading</p>
+                  <p className="step__label">
+                    <Tx k="home.myReading" />
+                  </p>
                   {recent.map((r) => (
                     <div className="reading-row" key={r.id}>
                       <div className="reading-row__head">
-                        <span className="reader-name">{r.storyTitle}</span>
+                        <span className={`reader-name ${scriptClass(r.language)}`} lang={r.language}>
+                          {r.storyTitle}
+                        </span>
                         <span className="reader-meta">
                           {new Date(r.at).toLocaleDateString(undefined, {
                             day: "numeric",
@@ -144,7 +170,7 @@ export function ChildHome() {
                           .filter((w) => w.op !== "inserted")
                           .slice(0, 6)
                           .map((w, i) => (
-                            <WordChip
+                            <WordChip uiLang={store.lang}
                               key={`${r.id}-${i}`}
                               status={wordStatus(w)}
                               word={w.word ?? ""}
@@ -153,33 +179,23 @@ export function ChildHome() {
                           ))}
                       </div>
                       <span className="reader-meta">
-                        {r.wcpm ?? "—"} WCPM · {Math.round(r.accuracy * 100)}% accurate
+                        <Tx
+                          k="home.speed"
+                          vars={{ wcpm: r.wcpm ?? "—", accuracy: Math.round(r.accuracy * 100) }}
+                        />
                       </span>
                     </div>
                   ))}
                 </section>
-
-                <p className="note">
-                  Saved on this device. Signing in on another device would show the same
-                  reading history once the API stores it.
-                </p>
               </>
             )}
 
             <div className="home__links">
-              <button
-                type="button"
-                className="screen__link"
-                onClick={() => navigate("/switch")}
-              >
-                Not me · switch reader
+              <button type="button" className="screen__link" onClick={() => navigate("/switch")}>
+                <Tx k="home.notMe" />
               </button>
-              <button
-                type="button"
-                className="screen__link"
-                onClick={() => navigate("/switch")}
-              >
-                Change language
+              <button type="button" className="screen__link" onClick={() => navigate("/switch")}>
+                <Tx k="home.changeLanguage" />
               </button>
             </div>
           </>

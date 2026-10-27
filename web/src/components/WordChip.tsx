@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { t, type CopyKey } from "../i18n";
 import { scriptClass, type Lang } from "../theme/script";
 import { CheckIcon, MinusIcon, QuestionIcon, SwapIcon } from "./icons";
 
@@ -26,6 +27,13 @@ const TITLE: Record<WordStatus, string> = {
   uncertain: "heard with a different spelling — check this word",
 };
 
+const KEY: Record<WordStatus, CopyKey> = {
+  correct: "chip.correct",
+  substituted: "chip.substituted",
+  skipped: "chip.skipped",
+  uncertain: "chip.check",
+};
+
 /**
  * One aligned word from an attempt.
  *
@@ -37,13 +45,17 @@ export function WordChip({
   status,
   word,
   lang,
+  uiLang,
 }: {
   status: WordStatus;
   word: string;
   lang: Lang;
+  /** Language of the screen around the chip; teacher screens leave it out (English). */
+  uiLang?: Lang;
 }) {
+  const said = uiLang ? t(uiLang, KEY[status]) : TITLE[status];
   return (
-    <span className={`wordchip wordchip--${status}`} title={TITLE[status]}>
+    <span className={`wordchip wordchip--${status}`} title={said}>
       <span className="wordchip__icon" aria-hidden="true">
         {ICON[status]}
       </span>
@@ -51,7 +63,9 @@ export function WordChip({
         {word}
       </span>
       {/* The icon and colour are visual only; this says the same thing aloud. */}
-      <span className="sr-only">, {TITLE[status]}</span>
+      <span className="sr-only" lang={uiLang && said !== TITLE[status] ? uiLang : "en"}>
+        , {said}
+      </span>
     </span>
   );
 }

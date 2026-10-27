@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it, vi } from "vitest";
 import { App } from "./App";
+import { t } from "./i18n";
 import { play } from "./audio/playback";
 
 function at(path: string) {
@@ -37,7 +38,7 @@ describe("shell", () => {
   it("routes to the offline recovery screen when the browser goes offline", async () => {
     at("/read/kn-101");
     window.dispatchEvent(new Event("offline"));
-    expect(await screen.findByText(/you look offline/i)).toBeTruthy();
+    expect(await screen.findByText(t("kn-IN", "recovery.offline.title"))).toBeTruthy();
   });
 });
 

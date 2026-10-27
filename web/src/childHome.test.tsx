@@ -5,6 +5,10 @@ import type { Reader } from "./api/types";
 import { App } from "./App";
 import { addReading, setReaderAndLang, type StoredReading } from "./state/storage";
 
+import { t } from "./i18n";
+
+const kn = (k: Parameters<typeof t>[1], v?: Parameters<typeof t>[2]) => t("kn-IN", k, v);
+
 const reader: Reader = {
   id: "1",
   alias: "Aarav Gowda",
@@ -45,19 +49,19 @@ describe("child home", () => {
   it("sends a returning child straight home from /", () => {
     setReaderAndLang(reader, "kn-IN");
     at("/");
-    expect(screen.getByText(/welcome back, aarav/i)).toBeTruthy();
+    expect(screen.getByText(kn("home.welcomeBack", { name: "Aarav" }))).toBeTruthy();
   });
 
   it("asks again for a name the class no longer has", async () => {
     setReaderAndLang({ ...reader, id: "aarav" }, "kn-IN"); // an old demo reader
     at("/home");
-    expect(await screen.findByText(/let’s find your name/i)).toBeTruthy();
+    expect(await screen.findByText(kn("home.findName"))).toBeTruthy();
   });
 
   it("asks again when the child was removed from the class", async () => {
     setReaderAndLang({ ...reader, id: "999" }, "kn-IN");
     at("/home");
-    expect(await screen.findByText(/let’s find your name/i)).toBeTruthy();
+    expect(await screen.findByText(kn("home.findName"))).toBeTruthy();
   });
 
   it("shows role selection when no child is saved", () => {
@@ -72,9 +76,9 @@ describe("child home", () => {
     addReading(reading("c", 42));
     at("/home");
 
-    expect(screen.getByText(/welcome back, aarav/i)).toBeTruthy();
-    expect(screen.getByText(/best so far: 42 wcpm/i)).toBeTruthy();
-    expect(screen.getByText(/read again/i)).toBeTruthy();
+    expect(screen.getByText(kn("home.welcomeBack", { name: "Aarav" }))).toBeTruthy();
+    expect(screen.getByText(kn("home.best", { wcpm: 42 }))).toBeTruthy();
+    expect(screen.getByText(kn("home.readAgain", { title: "ಬಣ್ಣದ ಚಿಟ್ಟೆ" }))).toBeTruthy();
     // three readings -> three rows with the story title
     expect(screen.getAllByText("ಬಣ್ಣದ ಚಿಟ್ಟೆ").length).toBeGreaterThanOrEqual(3);
   });
@@ -82,13 +86,13 @@ describe("child home", () => {
   it("shows an empty state for a new reader", () => {
     setReaderAndLang(reader, "kn-IN");
     at("/home");
-    expect(screen.getByText(/your first story is waiting/i)).toBeTruthy();
+    expect(screen.getByText(kn("home.firstStory"))).toBeTruthy();
   });
 
   it("finishes to the home screen, not role selection", async () => {
     setReaderAndLang(reader, "kn-IN");
     at("/results");
-    fireEvent.click(screen.getByRole("button", { name: /finish reading/i }));
-    expect(await screen.findByText(/welcome back, aarav/i)).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: kn("results.finish") }));
+    expect(await screen.findByText(kn("home.welcomeBack", { name: "Aarav" }))).toBeTruthy();
   });
 });
