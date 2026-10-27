@@ -2128,3 +2128,9 @@
 {"t": 1793081518.272545, "kind": "stt", "file": "sw-13324.wav", "bytes": 224684}
 {"t": 1793081680.2302322, "kind": "stt", "file": "sw-15066-w0.wav", "bytes": 652204}
 {"t": 1793081681.2713292, "kind": "stt", "file": "sw-15066-w1.wav", "bytes": 348204}
+{"t": 1793122785.8423455, "kind": "tts", "chars": 2, "voice": "Shivani", "language": "kn-IN"}
+{"t": 1793122787.0418015, "kind": "tts", "chars": 2, "voice": "Shivani", "language": "kn-IN"}
+{"t": 1793122787.954437, "kind": "tts", "chars": 4, "voice": "Shivani", "language": "kn-IN"}
+{"t": 1793122788.5890968, "kind": "tts", "chars": 4, "voice": "Shivani", "language": "kn-IN"}
+{"t": 1793122789.477514, "kind": "tts", "chars": 12, "voice": "Shivani", "language": "kn-IN"}
+{"t": 1793122992.192691, "kind": "stt", "file": "practice.wav", "bytes": 84524}

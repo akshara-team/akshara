@@ -16,7 +16,7 @@ Two data modes, chosen by `VITE_API_MODE` in `.env` (see `.env.example`):
 
 - **`mock`** (default) — the app runs with no backend at all, on fixtures that reproduce the
   Figma handoff's demo attempt (Aarav, 20 words, 18 correct, 42 WCPM, 90%).
-- **`live`** — talks to the real API. For the backend: `uv run uvicorn akshara.api.app:create_app --factory`
+- **`live`** — talks to the real API. For the backend: `uv run uvicorn akshara.api.app:create_app --factory` (if port 8000 is taken, run it on another port and start Vite with `AKSHARA_API=http://localhost:8010`)
   (dev proxy handles CORS).
 
 ## Screens

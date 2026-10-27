@@ -167,3 +167,16 @@ class NextOut(BaseModel):
     passage_id: str
     reason: str
     level: str | None
+
+
+class AksharasOut(BaseModel):
+    word: str
+    aksharas: list[str]  # reading units of the script, in order (core/aksharas.py)
+
+
+class PracticeOut(BaseModel):
+    """One re-read of one word."""
+
+    word: str
+    said: str | None
+    state: State  # correct | error | unsure

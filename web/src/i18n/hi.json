@@ -122,5 +122,17 @@
   "check.soon": "तुम्हारा नतीजा अभी आएगा।",
   "home.notMe": "मैं नहीं · दूसरा नाम चुनो",
   "home.changeLanguage": "भाषा बदलो",
-  "home.target": "{title}: कक्षा के लक्ष्य के मुकाबले पढ़ने की रफ़्तार"
+  "home.target": "{title}: कक्षा के लक्ष्य के मुकाबले पढ़ने की रफ़्तार",
+  "practice.start": "इन शब्दों का अभ्यास करो",
+  "practice.title": "चलो अभ्यास करें",
+  "practice.wordOf": "शब्द {n} / {total}",
+  "practice.listen": "हर हिस्सा सुनो",
+  "practice.yourTurn": "अब तुम पूरा शब्द पढ़ो",
+  "practice.great": "बहुत अच्छा पढ़ा!",
+  "practice.again": "चलो फिर सुनें और एक बार और कोशिश करें",
+  "practice.moveOn": "अच्छी कोशिश! यह शब्द हम किसी और दिन फिर पढ़ेंगे।",
+  "practice.next": "अगला शब्द",
+  "practice.done": "हो गया! तुमने {count} शब्दों का अभ्यास किया।",
+  "practice.checking": "सुन रहे हैं…",
+  "practice.failed": "जाँच नहीं हो पाई। फिर से कोशिश करो।"
 }
