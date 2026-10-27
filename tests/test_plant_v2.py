@@ -110,7 +110,12 @@ def test_bench_reproduces_the_committed_base_report():
     transcripts = {p["id"]: p["transcript"] for p in report["passages"]}
     clips = [c for c in load(ROOT / "data" / "bench" / "manifest-v1.jsonl")]
     clips = [
-        c for c in clips if c.set == "open" and not c.conditions and c.passage_id in transcripts
+        c
+        for c in clips
+        if c.set == "open"
+        and not c.conditions
+        and c.split != "holdout"
+        and c.passage_id in transcripts
     ]
     summary = summarise([evaluate(c, transcripts[c.passage_id]) for c in clips], by=("lang",))
     for lang, want in report["summary"]["loose"].items():

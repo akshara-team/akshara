@@ -13,3 +13,159 @@ If 1 fails, we report that chunking does not help and why. If 3 fails, the mitig
 
 ### Addendum, written Oct 20 before the halting run
 The isolated-word control (`scripts/isolated_control.py`) found that Prisma returns the original word for 18 of 39 near-sound non-words even with no sentence around them, and the read non-word for only 4. So sentence context is not the only cause, and prediction 1 may fall short. We cannot tell whether the voice or the transcriber is responsible. Predictions 1 to 4 stand as written and will be judged as written.
+
+## Phase 2: checking each word against the audio (written Oct 24, before any model is run)
+
+Setup, fixed before the run:
+- **Model:** `facebook/mms-1b-all` with the Hindi, Kannada and Tamil adapters. It is a CTC model that writes each language's own script letter by letter, with no language model, so it has no built-in pull towards real words.
+- **Alignment:** CTC forced alignment of the story text to the audio gives each word a start and end.
+- **Per-word check:** for each word's segment (its aligned span plus 2 frames each side), score log P(story word) against (a) the best alternative from the script tables (close sounds, look-alikes, vowel length, vowel signs, conjunct read apart) and (b) the model's own best free reading of the segment. The score is the smaller of the two margins, per frame.
+- **Threshold:** per language, the strictest threshold that keeps false flags on correctly read words at or under 5% on the `tune` split. Results are reported on `calibrate` + `test` pooled (the per-condition test split alone is too small), with intervals. Phase 3 will refit on `calibrate` and report on `test` only.
+- **Audio:** clean open set and second set first; then the phone, noise and child-pitch conditions.
+
+Predictions:
+1. **Audibility.** Where Prisma wrote the story word for a planted near-sound change, the acoustic model's free reading shows the changed letter in at least 30% of those words. If it is under 10%, the synthetic voice probably did not pronounce the change, and near-sound misses say little about Prisma.
+2. **Near-sound catch** by the per-word check alone, at 5% false flags: at least 50% on clean audio (Prisma alone: 8 of 39, 21%).
+3. **Look-alike letter, vowel sign and conjunct** mistakes: at least 60% each. **Vowel length:** at most 40%, the weakest type.
+4. **Gross mistakes** (skip, distant, half, first-akshara guess, reversal): at least 85% by the check alone. Prisma already catches most of these, so this mainly tests that the check is sane.
+5. **Either flags** (Prisma or the check): near-sound at least 55%, with false flags at most 8%.
+6. **Phone audio (8 kHz):** near-sound catch drops by at least 15 points from clean, since aspiration cues sit in the frequencies a phone line cuts.
+7. **Alignment.** In at least 13 of the 15 clips with a planted long pause, the longest gap between aligned words sits right before the paused word.
+8. **Tamil** is the weakest language for the check.
+
+If 2 fails, the per-word check does not rescue near-sound detection on this audio; we will report that and look at prediction 1 to see whether the voice is the cause. If 5's false-flag bound fails, the check costs too much accuracy to combine naively, and Phase 3 has to earn it.
+
+### Verdict, written Oct 24 after the run
+
+Two runs, both on all 480 clips (`results/evidence_report_run1.json`, `results/evidence_report.json`). Run 1 had an alignment bug: the model writes its word separator over the silence at the end of a clip, and the aligner did not accept a separator there, so the last word of every passage was stretched over that silence and scored as misread. Those last words were 31 of the 32 worst-scoring correct words in the Hindi `tune` split, and they set the Hindi threshold at −1.25 instead of −0.16. The fix (separators count as silence, `evidence/words.py`) was found from the `tune` split. Both runs are reported. Run 1's results on `calibrate` + `test` had already been seen when the fix went in, so run 2's numbers there are not blind. Phase 3 reports on `test` only.
+
+| # | Prediction | Run 1 | Run 2 (fixed) | Verdict |
+|---|---|---|---|---|
+| 1 | Model hears ≥ 30% of near-sound swaps that Prisma hid | 10/31, 32% | same (no threshold involved) | **Holds**, barely (interval 19–50%) |
+| 2 | Near-sound catch ≥ 50% on clean audio | 2/17, 12% | 4/17, 24% (10–47%) | **Fails** |
+| 3 | Look-alike, vowel sign, conjunct ≥ 60% each; vowel length ≤ 40% | 67%, 20%, 0%; 0% | 6/9 67%, 2/5 40%, 1/6 17%; 1/12 8% | **Fails** for vowel sign and conjunct; holds for look-alikes and vowel length |
+| 4 | Gross mistakes ≥ 85% | 65/70, 93% | 67/70, 96% | **Holds** |
+| 5 | Either source: near-sound ≥ 55%, false flags ≤ 8% | 18%, 11% | 4/17 24%, 146/1307 11% | **Fails** on both |
+| 6 | Phone audio drops near-sound catch by ≥ 15 points | 12% → 6% | 24% → 18%, 6 points | **Fails**, but the clean rate is too low to drop 15 points |
+| 7 | Longest gap before the paused word in ≥ 13 of 15 clips | 15/15 | 14/15 | **Holds** |
+| 8 | Tamil is the weakest language | yes | Tamil 57%, Kannada 65%, Hindi 87% | **Holds** |
+
+Prediction 2 failed, so, as written above, we looked at prediction 1. It held, but only just: of 123 subtle planted mistakes in clean audio (all splits), the model's own free reading shows the change for 62 and shows the original word for 61. **About half of the subtle mistakes are probably not in the audio at all**, and no detector can catch those. On the 62 that are audible, the check catches 35 and Prisma 30. In Hindi the check catches 20 of 22, against 11 for Prisma. In Kannada (9 of 21) and Tamil (6 of 19) it does worse than Prisma (11 and 8), because long, correctly read words also score low there, which pushes the threshold down. This breakdown was made after the run and is not a test of any prediction. "Audible" is judged by the same model the check uses, so the check's rate on audible words is flattering. Prisma's rate on the same words is the fair comparison.
+
+## Phase 3: fusion into three states (written Oct 25, before the `test` split is scored)
+
+Setup, fixed before the run (`scripts/fusion_report.py`, `src/akshara/fusion.py`):
+- **Inputs per word:** Prisma's mark (loose and strict spelling) and the per-word check's margins against the listed misreadings and against the free reading. Ten named features, listed in `fusion.FEATURES`, including two agreement terms (Prisma flag × check margin).
+- **Model:** L2-regularised logistic regression (penalty 1.0, standardised features), one per language, fitted on `tune` across all audio conditions. Isotonic calibration and both thresholds fitted per language on `calibrate`. `error` is set so that at most 5% of correct words are marked `error`. `correct` is then set as low as possible while at most 10% of words are `unsure`.
+- **Baseline rules:** the agreement table (both doubt: `error`, one: `unsure`, neither: `correct`), with the Phase 2 check threshold.
+- **Passages:** reading-accuracy bands (Betts: below 90% frustration, 90–95% instructional, 95% and up independent). An `unsure` word is counted both ways. If the interval crosses a band line, the attempt is "needs a listen".
+- **Reported:** `test` only, all four audio conditions pooled unless stated, with 95% intervals. Everything frozen. One run.
+- **What we already saw:** Prisma alone and the check alone on `test` (Phase 2 pooled `calibrate` + `test`), and all four systems on `calibrate` while building this. Those `calibrate` numbers set the expectations below, so the predictions are informed, not guesses. `calibrate` itself is not reported as a result.
+- **No held-out engine exists.** All clips are Timbre v3.0, so the plan's exit check ("met on the held-out engine") cannot be run yet. These predictions are for `test`, which is the same engine with unseen passages.
+
+Predictions on `test`:
+1. **False flags:** fused ≤ 5% pooled, and lower than Prisma alone by at least 3 points.
+2. **No loss of catch:** fused `error` catch within 3 points of Prisma alone or better. Gross mistakes ≥ 90%.
+3. **Not sure:** ≤ 10% of words are `unsure`.
+4. **Mistakes passed as correct:** fused `error` + `unsure` covers ≥ 78% of planted mistakes.
+5. **Near-sound catch ≥ 60%** (plan target): **fails**. We expect ≤ 30% as `error`.
+6. **Calibration:** ECE ≤ 0.05 for the fused probability.
+7. **Agreement rule vs fused:** the rule table gives fewer false flags (≤ 3%) but more `unsure` than fused, and its `unsure` exceeds 8%.
+8. **Bands:** misplaced (among attempts not sent for a listen) ≤ 5%: **fails**. We expect 15–35%, because most passages hold about two mistakes in 15–20 words, which sits near the 90% line, and about half the subtle mistakes are probably not in the audio. "Needs a listen" goes to 25–50% of attempts.
+9. **Latency** ≤ 4 s for a 20 s part on CPU: **fails**. The Phase 2 run measured 0.69 × real time on this laptop (about 14 s per 20 s), including model loading.
+
+If 1 or 2 fails, fusion does not earn its place over Prisma alone and the product keeps the two-state Prisma marks. If 6 fails, the probabilities are not shown to teachers as numbers.
+
+### Verdict, written Oct 25 after the one `test` run
+
+`results/fusion_report.json`. Test split, all four audio conditions pooled: 139 planted mistakes, 1,351 correct words.
+
+| # | Prediction | Result | Verdict |
+|---|---|---|---|
+| 1 | Fused false flags ≤ 5%, and ≥ 3 points below Prisma | 40/1351 (3.0%) vs Prisma 66/1351 (4.9%): 1.9 points lower | **Fails** on the margin |
+| 2 | Fused catch within 3 points of Prisma; gross ≥ 90% | 100/139 (72%) vs 105/139 (76%): 3.6 points lower; gross 90/98 (92%) | **Fails** on catch, narrowly; gross holds |
+| 3 | `unsure` ≤ 10% of words | 107/1490 (7.2%) | **Holds** |
+| 4 | `error` + `unsure` ≥ 78% of mistakes | 118/139 (85%) | **Holds** |
+| 5 | Near-sound ≥ 60% fails; ≤ 30% as `error` | 5/24 (21%) as `error`, 14/24 not passed as correct | **Holds** (the target fails, as predicted) |
+| 6 | ECE ≤ 0.05 | 0.009 | **Holds** |
+| 7 | Rule table: false flags ≤ 3%, more `unsure` than fused, above 8% | 19/1351 (1.4%); 129/1490 (8.7%) vs 7.2% | **Holds** |
+| 8 | Band misplacement ≤ 5% fails; 15–35% misplaced, 25–50% need a listen | 11/60 (18%) misplaced, 40/100 need a listen | **Holds** (the target fails, as predicted) |
+| 9 | Latency ≤ 4 s per 20 s part on CPU fails | about 14 s | **Holds** (the target fails, as predicted) |
+
+Predictions 1 and 2 failed, so, as written, **the fused decider does not replace Prisma's marks in the product yet.** Fusion did what it was meant to do in direction: fewer false flags (3.0% vs 4.9%), and fewer mistakes passed as correct (21 vs 34 of 139, because doubtful words go to `unsure`). But it did not meet the margins we set. Prisma's false-flag rate on `test` (4.9%) was lower than on `tune` and `calibrate` (9%), which left less room to improve.
+
+Seen after the run, not tests of any prediction:
+- **Hindi went the wrong way.** Fused false flags were 25/323 (7.7%) against Prisma's 9/323 (2.8%). The `calibrate` threshold did not carry over to `test` in Hindi. In Kannada (7/636 vs 25/636) and Tamil (8/392 vs 32/392), fusion cut false flags by two thirds or more.
+- **The agreement rule table** had false flags 19/1351 (1.4%, 3.5 points below Prisma) and catch 101/139 (73%, 2.9 points below), so it would have passed both margins. We chose the logistic model as the primary decider before the run, so this does not count. A held-out set should test the rule table as a pre-registered system.
+- Plan change 2 (margins per changed letter) did not help. On `tune`, the summed margins separated subtle mistakes from correct words no better than per-frame margins (AUC 0.91 vs 0.94 Hindi, 0.91 vs 0.91 Kannada, 0.77 vs 0.78 Tamil), so the fused model uses per-frame margins.
+- Plan change 1 (count only audible mistakes) cannot be done with Prisma as the "second model". Prisma wrote the planted non-word for only 6 of 41 subtle mistakes on `test`, so it confirms almost nothing. An independent second acoustic model is needed.
+
+## Held-out engine (written Oct 25, before any held-out clip is rendered)
+
+Setup, fixed before the run:
+- **Audio:** the 47 `test` passages read again by AI4Bharat's Indic Parler-TTS (`scripts/render_holdout.py`), in the same four conditions (clean, phone 8 kHz, noise 5 dB, child pitch): 188 clips, split `holdout`. Voices: Rohit and Divya (Hindi), Suresh and Anu (Kannada), Jaya (Tamil).
+- **Systems:** exactly as frozen for Phase 3: same fitted models, calibration and thresholds, all from Timbre clips. Nothing is refitted. Both the fused model and the agreement rule table are primary systems this time.
+- **Exclusions, fixed now:** a clip is dropped only if MMS cannot align it, or if Prisma returns no transcript for it. Clips flagged "unusual length" by the render script are kept. Every exclusion is counted in the report.
+- **Reported:** `results/fusion_report_holdout.json`, all four conditions pooled, with 95% intervals. One run.
+
+Predictions on the held-out engine:
+1. **Prisma is worse on a voice that is not Gnani's own:** its false-flag rate is at least 2 points higher than on `test` (4.9%).
+2. **The thresholds partly carry over:** fused false flags ≤ 7%, and agreement-rule false flags ≤ 4%.
+3. **Mistakes passed as correct:** fused `error` + `unsure` ≥ 75% of planted mistakes.
+4. **Calibration loosens:** fused ECE ≤ 0.08.
+5. **Agreement rule against Prisma:** false flags at least 3 points lower and catch within 3 points. This is the Phase 3 margin.
+6. **Fused against Prisma:** the same margin, and we expect it to **fail** again, as on `test`.
+
+Decision rule, fixed now: if the agreement rule meets prediction 5, the product uses its three states (`unsure` goes to the teacher's listen queue). If neither system meets the margin, the product keeps Prisma's marks and the per-word check stays a research result.
+
+### Addendum, written Oct 25 before any held-out clip is rendered: the guarded system
+
+After the Phase 3 test run, a third fused system was added: `guarded`, the fused model, but a word that neither Prisma nor the sound check doubts is `unsure` at most, never `error` (RESULTS.md, "Follow-up: why Hindi false flags rose"). It was designed after seeing `test`, so only the held-out engine can judge it. Fixed now:
+7. **Guarded against fused:** guarded false flags ≤ fused false flags in every language, and catch (`error` only) at most 2 points lower, pooled.
+8. **Hindi:** guarded false flags at least 1 point lower than fused.
+9. **Guarded against Prisma:** the Phase 3 margin (false flags 3 points lower, catch within 3). We expect it to **fail**, as fused does.
+
+The decision rule above does not change. If prediction 9 holds against expectation, guarded counts like the agreement rule: its three states go to the product.
+
+## Phase 4: learner model on simulated children (written Oct 25, before the study runs)
+
+Setup, fixed before the run (`scripts/learner_study.py`, seed 20261025):
+- **Bank:** the 413 StoryWeaver passages in `data/open_passages/candidates.jsonl` (level 1 or 2 per book). The skill order and the passage difficulty are built from this bank (`learner/skills.py`, `core/difficulty.py`).
+- **Difficulty:** mean z-score of six text features, equal weights, nothing fitted. It is compared with StoryWeaver's level tag. That tag describes the book, and our text is the book's short description, so it is a weak label.
+- **Simulated children:** they know the first K skills in teaching order (K uniform), with 10% gaps and 5% skills known early. A word is read right with chance 0.95 when every skill is known, and 0.2 per unknown skill otherwise. During practice, an unknown skill is learned with chance 0.03 each time it is used.
+- **Scorers:** perfect; Prisma alone; fused. The last two use the measured `test` error rates per language from Phase 3.
+- **Placement:** the ASER tree (`learner/placement.py`). "True level" is what a perfect scorer would give with unlimited items. 2,000 children per language.
+- **Tracking:** BKT with default parameters (deliberately not the simulator's numbers), 150 practice words per child drawn by bank frequency, 400 children per language. Skills seen at least 3 times are scored as known/unknown at the end.
+
+Predictions:
+1. **Difficulty:** the score ranks level-2 passages above level-1 with AUC ≥ 0.60 in each language.
+2. **Placement, perfect scorer:** exact level ≥ 80%, within one level ≥ 95%, in each language.
+3. **Placement, fused scorer:** exact ≥ 75% and within one ≥ 95%, in each language, and exact no lower than Prisma alone by more than 2 points.
+4. **Placement length:** mean items per child ≤ 3.2 with the fused scorer (ASER's own test is 2–3 tasks).
+5. **Tracking:** with the fused scorer, the final estimates separate known from unknown skills with AUC ≥ 0.80 in each language. A perfect scorer does better.
+6. **Using `unsure` as weak evidence** gives an AUC at least as high as each of the three alternatives (count it as right, count it as wrong, ignore it), within 0.01, in each language.
+
+What this can and cannot show: the simulated children follow the same skill model that BKT and placement assume, so passing shows the machinery works and how much scoring noise costs. It does not show that real children learn or read this way.
+
+### Verdict, written Oct 25 after the study
+
+Three runs (`results/learner_study_run1.json`, `_run2.json`, `results/learner_study.json`). **Only run 1 is a blind test of the predictions.** Runs 2 and 3 fix design bugs found by looking at run 1 and run 2:
+- **Run 1 → 2 (simulator):** gaps were placed anywhere in a child's known skills at 10% each. A word uses about six skills, so even a child who knew the whole curriculum read only about 60% of words right, and 99% of children came out "beginner" or "letter". Now gaps and early skills sit only within 10 skills of the child's edge.
+- **Run 2 → 3 (skill order):** word length came last in the teaching order, but every word needs one length skill, so no simulated child could read a single word until it knew everything, conjuncts included. Short words now come right after the first letters and vowel signs, as the plan's order says. This also changes the skill order sent for native review.
+
+| # | Prediction | Run 1 (blind) | Run 3 (kept, not blind) | Verdict on run 1 |
+|---|---|---|---|---|
+| 1 | Difficulty AUC ≥ 0.60 per language | 0.705, 0.654, 0.600 | same (difficulty does not depend on either fix) | **Holds** (Tamil just: 0.6005) |
+| 2 | Perfect scorer: exact ≥ 80%, within one ≥ 95% | exact 78.3%, 77.7%, 77.4% | 80.3%, 83.8%, 84.0%; within one 95.9–98.5% | **Fails** on exact |
+| 3 | Fused: exact ≥ 75%, within one ≥ 95%, ≤ 2 points under Prisma | 71.7%, 71.2%, 71.7% | Hindi 67.0% (Prisma 76.8%), within one 87.5%; Kannada 79.7% (Prisma 70.9%); Tamil 78.5% (Prisma 76.3%) | **Fails** |
+| 4 | Fused mean items ≤ 3.2 | 3.00, 3.31, 3.09 | 2.45, 2.73, 2.67 | **Fails** in Kannada |
+| 5 | Tracking AUC ≥ 0.80, perfect scorer better | 0.893, 0.806, 0.884; perfect higher | 0.921, 0.850, 0.910; perfect higher | **Holds** |
+| 6 | `unsure` as weak evidence within 0.01 of every alternative | yes, all three | yes, all three | **Holds** |
+
+(Languages in the order Hindi, Kannada, Tamil.)
+
+What the kept run says, with its limits:
+- **Hindi placement is hurt by the fused scorer**: 67.0% exact, against 76.8% with Prisma alone. That is the Phase 3 Hindi false-flag rise (7.7% vs 2.8%) showing up one level higher. Fluent readers get enough correct words flagged to fail the 85% passage rule. In Kannada the fused scorer places better than Prisma alone. *(Corrected later the same day: the Tamil gap of 2.2 points is within simulation noise of about 3 points, so it is not a finding. The Hindi follow-up found the cause is not the thresholds; see RESULTS.md, "Follow-up: why Hindi false flags rose". The guard it added raises Hindi placement only to 68.0%.)*
+- **How `unsure` is used barely matters for tracking**: the four ways are within 0.016 AUC of each other in every language. Weak evidence is never worse by more than 0.003. It costs nothing and keeps the teacher queue honest, so it stays.
+- **The simulated population is lumpy:** in run 3, very few children land at "letter" or "paragraph" level (13–41 and 0–15 of 2,000). Placement accuracy mostly measures the beginner / word / story calls.
+- Everything here tests the machinery against its own assumptions, as stated before the run.

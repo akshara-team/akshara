@@ -20,7 +20,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from akshara.core.align import insertion_near, score
-from akshara.core.plant import DISFLUENCY
+from akshara.core.plant import DISFLUENCY_V2 as DISFLUENCY  # every fluency kind, old and new
+from akshara.core.plant import TYPES_V2
 from akshara.core.text import words
 from akshara.providers.prisma import STTError, transcribe
 
@@ -30,7 +31,7 @@ RESULTS = ROOT / "results"
 CACHE = RESULTS / "transcripts"
 MAX_CLIP_S = 30.0
 CATCH_PASS, FALSE_FLAG_PASS = 0.70, 0.10
-ERROR_TYPES = ("skip", "substitution", "near", "distant", "half", *DISFLUENCY)
+ERROR_TYPES = ("substitution", *TYPES_V2, *DISFLUENCY)
 
 
 def load_passages(path: Path) -> list[dict]:
