@@ -15,6 +15,9 @@ export function RecoveryScreen() {
   const { lang, passage, currentPart, parts } = useSession();
   const v = recoveryVariant(kind);
   const total = Math.max(parts.length, 1);
+  // "/read" in the config means "this story again"; the route needs the passage id.
+  const go = (to: string) =>
+    navigate(to === "/read" ? (passage ? `/read/${passage.id}` : "/home") : to);
 
   return (
     <>
@@ -59,11 +62,11 @@ export function RecoveryScreen() {
             {v.note && <p className="note">{v.note}</p>}
 
             <div className="actions">
-              <Button block onClick={() => navigate(v.primary.to)}>
+              <Button block onClick={() => go(v.primary.to)}>
                 {v.primary.label}
               </Button>
               {v.secondary && (
-                <Button variant="ghost" block onClick={() => navigate(v.secondary!.to)}>
+                <Button variant="ghost" block onClick={() => go(v.secondary!.to)}>
                   {v.secondary.label}
                 </Button>
               )}

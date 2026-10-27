@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api, isMock } from "../../api";
+import { ApiError } from "../../api/live";
 import { Button, LanguageBadge, ProgressDots, Spinner, PageHeader } from "../../components";
 import { useSession } from "../../state/session";
 import { scriptClass } from "../../theme/script";
@@ -9,8 +10,11 @@ type Failure = "offline" | "speech" | "service";
 
 function classify(error: unknown): Failure {
   if (typeof navigator !== "undefined" && navigator.onLine === false) return "offline";
-  const message = error instanceof Error ? error.message.toLowerCase() : "";
-  if (message.includes("502") || message.includes("503")) return "speech";
+  // The backend answers 502 when Prisma fails (src/akshara/api/app.py); 503 from a proxy.
+  if (error instanceof ApiError) {
+    return error.status === 502 || error.status === 503 ? "speech" : "service";
+  }
+  if (error instanceof TypeError) return "offline"; // fetch could not reach the server
   return "service";
 }
 
@@ -32,7 +36,7 @@ export function CheckingScreen() {
     started.current = true;
 
     if (!pending) {
-      navigate("/read", { replace: true });
+      navigate(passage ? `/read/${passage.id}` : "/home", { replace: true });
       return;
     }
 
@@ -71,7 +75,7 @@ export function CheckingScreen() {
             <Button block onClick={() => navigate(`/recovery/${failed}`, { replace: true })}>
               Show me what to do
             </Button>
-            <Button variant="ghost" block onClick={() => navigate("/read", { replace: true })}>
+            <Button variant="ghost" block onClick={() => navigate(passage ? `/read/${passage.id}` : "/home", { replace: true })}>
               Read this part again
             </Button>
           </div>
