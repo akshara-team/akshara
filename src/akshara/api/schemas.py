@@ -89,6 +89,8 @@ class ChildOut(BaseModel):
     readings: int
     latest: ReadingBrief | None
     previous: ReadingBrief | None
+    level: str | None = None  # from the last finished placement
+    level_uncertain: bool = False  # a teacher should listen before trusting it
 
 
 class ReadingOut(BaseModel):
@@ -107,3 +109,61 @@ class ReadingOut(BaseModel):
     seconds: float | None
     transcript: str
     words: list[WordOut]
+
+
+State = Literal["correct", "error", "unsure"]
+
+
+class PlacementItem(BaseModel):
+    task: str  # letters | words | paragraph | story
+    text: str
+    words: list[str]
+    passage_id: str | None
+
+
+class PlacementStep(PlacementItem):
+    states: list[State]
+    outcome: str | None  # pass, fail, pass (half), fail (half), or open (one more item)
+
+
+class PlacementOut(BaseModel):
+    """An ASER-style placement. `item` is what to show next; null once `level` is known."""
+
+    id: int
+    child_id: int
+    level: str | None
+    uncertain: bool
+    item: PlacementItem | None
+    done: list[PlacementStep]
+
+
+class PlacementAnswer(BaseModel):
+    """The confirmed state of each word of the current item (the teacher may change marks)."""
+
+    states: list[State]
+
+
+class PlacementRead(BaseModel):
+    """What the scorer heard for the current item. Nothing is recorded until it is confirmed."""
+
+    transcript: str
+    words: list[WordOut]
+    states: list[State]
+
+
+class SkillOut(BaseModel):
+    id: str
+    kind: str  # letter | vowel | sign | mark | conjunct | length
+    text: str
+    p: float
+
+
+class SkillsOut(BaseModel):
+    working_on: list[SkillOut]
+    learned: list[SkillOut]
+
+
+class NextOut(BaseModel):
+    passage_id: str
+    reason: str
+    level: str | None

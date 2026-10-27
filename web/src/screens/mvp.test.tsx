@@ -72,7 +72,7 @@ describe("MVP routes", () => {
     expect(await screen.findByText(/no children yet/i)).toBeTruthy();
   });
 
-  it("renders the five-column roster table on a desktop viewport", async () => {
+  it("renders the roster table on a desktop viewport", async () => {
     stubDesktopViewport();
     at("/teacher");
     expect(await screen.findByRole("columnheader", { name: /latest wcpm/i })).toBeTruthy();

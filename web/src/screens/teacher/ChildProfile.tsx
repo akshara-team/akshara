@@ -2,9 +2,19 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { api, isMock } from "../../api";
 import { initialsOf, levelOf } from "../../api/classSummary";
 import { NIPUN_BAND } from "../../api/teacherData";
-import { Avatar, Button, Card, EmptyState, StatCard, Table, PageHeader } from "../../components";
+import {
+  Avatar,
+  Button,
+  Card,
+  EmptyState,
+  StatCard,
+  StatusBadge,
+  Table,
+  PageHeader,
+} from "../../components";
+import { LEVEL_TEXT } from "./PlacementScreen";
 import { useLoad } from "../../state/useLoad";
-import { scriptEnglish, scriptName } from "../../theme/script";
+import { scriptClass, scriptEnglish, scriptName } from "../../theme/script";
 
 const NAV = [
   { label: "Class", to: "/teacher" },
@@ -30,7 +40,12 @@ export function ChildProfile() {
   const navigate = useNavigate();
   const id = Number(childId);
   const { data, error } = useLoad(
-    async () => Promise.all([api.getChild(id), api.childReadings(id)]),
+    async () =>
+      Promise.all([
+        api.getChild(id),
+        api.childReadings(id),
+        api.childSkills(id).catch(() => ({ working_on: [], learned: [] })),
+      ]),
     [id],
   );
 
@@ -62,7 +77,8 @@ export function ChildProfile() {
     );
   }
 
-  const [child, readings] = data;
+  const [child, readings, skills] = data;
+  const level = child.level ? LEVEL_TEXT[child.level] : null;
   const first = child.alias.split(" ")[0];
   const latest = readings[0];
   const previous = readings[1];
@@ -86,6 +102,50 @@ export function ChildProfile() {
             </span>
           </div>
         </div>
+
+        <Card>
+          <div className="metarow">
+            <div className="metarow__text">
+              <span className="eyebrow">Reading level (ASER)</span>
+              <span className="reader-name">
+                {level ? `${level.name} · ${level.means}` : "Not placed yet"}{" "}
+                {child.level_uncertain && <StatusBadge tone="warning">Listen again</StatusBadge>}
+              </span>
+            </div>
+          </div>
+          {(skills.working_on.length > 0 || skills.learned.length > 0) && (
+            <div className="stack--tight stack">
+              {skills.working_on.length > 0 && (
+                <p className="note">
+                  Working on:{" "}
+                  <span className={scriptClass(child.language)} lang={child.language}>
+                    {skills.working_on.map((s) => s.text).join("  ")}
+                  </span>
+                </p>
+              )}
+              {skills.learned.length > 0 && (
+                <p className="note">
+                  Learned:{" "}
+                  <span className={scriptClass(child.language)} lang={child.language}>
+                    {skills.learned
+                      .slice(0, 12)
+                      .map((s) => s.text)
+                      .join("  ")}
+                  </span>
+                  {skills.learned.length > 12 ? ` and ${skills.learned.length - 12} more` : ""}
+                </p>
+              )}
+            </div>
+          )}
+          <div className="actions">
+            <Button
+              variant={level ? "ghost" : "primary"}
+              onClick={() => navigate(`/teacher/child/${child.id}/placement`)}
+            >
+              {level ? "Check the level again" : "Find reading level"}
+            </Button>
+          </div>
+        </Card>
 
         {!latest ? (
           <EmptyState title={`${first} has not read yet`}>

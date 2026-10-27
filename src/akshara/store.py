@@ -38,6 +38,28 @@ MIGRATIONS = [
     ALTER TABLE attempts ADD COLUMN session_id TEXT;
     CREATE INDEX attempts_by_learner ON attempts(learner_id, created_at);
     """,
+    # 4: placement tests and what the learner model believes about each skill
+    """
+    CREATE TABLE placements (
+        id INTEGER PRIMARY KEY,
+        child_id INTEGER NOT NULL REFERENCES learners(id),
+        seed INTEGER NOT NULL,
+        items TEXT NOT NULL DEFAULT '[]',
+        level TEXT,
+        uncertain INTEGER NOT NULL DEFAULT 0,
+        created_at REAL NOT NULL,
+        finished_at REAL
+    );
+    CREATE INDEX placements_by_child ON placements(child_id, created_at);
+    CREATE TABLE skill_state (
+        child_id INTEGER NOT NULL REFERENCES learners(id),
+        skill TEXT NOT NULL,
+        p REAL NOT NULL,
+        seen INTEGER NOT NULL,
+        updated_at REAL NOT NULL,
+        PRIMARY KEY (child_id, skill)
+    );
+    """,
 ]
 
 CHILD_FIELDS = ("alias", "language", "grade", "avatar")
@@ -148,6 +170,60 @@ class Store:
             a = dict(r) | {"trace": json.loads(r["trace"])}
             groups.setdefault(a["session_id"] or a["request_id"], []).append(a)
         return sorted((summarise(g) for g in groups.values()), key=lambda s: -s["at"])
+
+    def create_placement(self, child_id: int, seed: int) -> int:
+        cur = self.db.execute(
+            "INSERT INTO placements (child_id, seed, created_at) VALUES (?, ?, ?)",
+            (child_id, seed, time.time()),
+        )
+        self.db.commit()
+        return cur.lastrowid  # type: ignore[return-value]
+
+    def placement(self, placement_id: int) -> dict | None:
+        row = self.db.execute("SELECT * FROM placements WHERE id = ?", (placement_id,)).fetchone()
+        return dict(row) | {"items": json.loads(row["items"])} if row else None
+
+    def save_placement(
+        self, placement_id: int, items: list, level: str | None, uncertain: bool
+    ) -> None:
+        self.db.execute(
+            "UPDATE placements SET items = ?, level = ?, uncertain = ?,"
+            " finished_at = CASE WHEN ? IS NULL THEN NULL ELSE ? END WHERE id = ?",
+            (
+                json.dumps(items, ensure_ascii=False),
+                level,
+                int(uncertain),
+                level,
+                time.time(),
+                placement_id,
+            ),
+        )
+        self.db.commit()
+
+    def latest_level(self, child_id: int) -> dict | None:
+        """The child's last finished placement: level, uncertain, when."""
+        row = self.db.execute(
+            "SELECT id, level, uncertain, finished_at FROM placements"
+            " WHERE child_id = ? AND level IS NOT NULL ORDER BY finished_at DESC LIMIT 1",
+            (child_id,),
+        ).fetchone()
+        return dict(row) if row else None
+
+    def skills(self, child_id: int) -> list[dict]:
+        rows = self.db.execute(
+            "SELECT skill, p, seen FROM skill_state WHERE child_id = ?", (child_id,)
+        ).fetchall()
+        return [dict(r) for r in rows]
+
+    def save_skills(self, child_id: int, mastery: dict[str, float], seen: dict[str, int]) -> None:
+        now = time.time()
+        self.db.executemany(
+            "INSERT INTO skill_state (child_id, skill, p, seen, updated_at) VALUES (?, ?, ?, ?, ?)"
+            " ON CONFLICT(child_id, skill) DO UPDATE SET p = excluded.p, seen = excluded.seen,"
+            " updated_at = excluded.updated_at",
+            [(child_id, s, p, seen.get(s, 0), now) for s, p in mastery.items()],
+        )
+        self.db.commit()
 
     def save_attempt(self, **a) -> None:
         """Idempotent on request_id: a retried upload does not create a second attempt."""

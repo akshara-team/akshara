@@ -17,14 +17,21 @@ from akshara.api.schemas import (
     ChildOut,
     ChildPatch,
     LearnerSummary,
+    NextOut,
+    PlacementAnswer,
+    PlacementOut,
+    PlacementRead,
     ReadingOut,
+    SkillsOut,
 )
+from akshara.core.align import score
 from akshara.core.parts import split_parts
+from akshara.learner import tutor
 from akshara.providers.audio_cache import CachedTTS
 from akshara.providers.base import ProviderError, SpeechToText, TextToSpeech
 from akshara.providers.fixture import FixtureSTT
 from akshara.providers.ledger import CapExceeded
-from akshara.service import assess, audio_seconds
+from akshara.service import assess, audio_seconds, transcribe_reading
 from akshara.settings import ROOT, Settings
 from akshara.store import DuplicateAlias, Store
 
@@ -36,6 +43,11 @@ INDEX = Path(__file__).parent / "static" / "index.html"
 AUDIO_CACHE = ROOT / "results" / "audio"
 SUPPORTED_LANGUAGES = frozenset({"hi-IN", "kn-IN", "ta-IN"})
 MAX_WORD_CHARS = 60
+
+
+def scored(trace: list[dict]) -> list[dict]:
+    """The trace entries that are reference words (insertions dropped), as `tutor.states`."""
+    return [w for w in trace if w["op"] != "inserted"]
 
 
 def build_stt(settings: Settings) -> SpeechToText:
@@ -66,6 +78,24 @@ def create_app(
     store = Store(settings.db_path)
     bank = bank if bank is not None else passage_bank.load(PASSAGES, SOURCES)
     stt_lock = threading.Lock()  # Prisma allows one active request at a time
+    libraries: dict[str, tutor.Library | None] = {}
+
+    def library(lang: str) -> tutor.Library:
+        if lang not in libraries:
+            libraries[lang] = tutor.library(bank, lang)
+        lib = libraries[lang]
+        if lib is None:
+            raise HTTPException(409, f"no passages for {lang}")
+        return lib
+
+    def learn(child_id: int, lang: str, results: list[tuple[str, str]]) -> None:
+        """Feed word results to the child's learner model and save it."""
+        if not results:
+            return
+        lib = library(lang)
+        learner = tutor.learner_from(store.skills(child_id))
+        tutor.observe_words(learner, lib.curriculum, results)
+        store.save_skills(child_id, learner.mastery, learner.seen)
 
     def passage_out(p: dict) -> dict:
         return {
@@ -163,6 +193,8 @@ def create_app(
                 raise HTTPException(415, "audio must be a WAV file")
             if seconds > settings.max_audio_seconds:
                 raise HTTPException(413, f"audio longer than {settings.max_audio_seconds:.0f} s")
+            # a resent upload returns the stored result and must not teach the model twice
+            retry = bool(x_request_id) and store.attempt(x_request_id) is not None
             try:
                 with stt_lock:
                     a = assess(
@@ -177,6 +209,15 @@ def create_app(
             except ProviderError as e:
                 log.warning("provider failed: %s", e)
                 raise HTTPException(502, "speech provider failed") from e
+        if child_id is not None and not retry:
+            learn(
+                child_id,
+                passage["lang"],
+                [
+                    (w["word"], s)
+                    for w, s in zip(scored(a.words), tutor.states(a.words), strict=True)
+                ],
+            )
         log.info("attempt %s %s acc=%.2f", a.request_id, passage_id, a.accuracy)
         return AttemptOut(**{**a.__dict__, "words": a.words})
 
@@ -198,11 +239,14 @@ def create_app(
     def child_out(c: dict) -> dict:
         rs = store.readings(c["id"])
         brief = lambda r: {"at": r["at"], "accuracy": r["accuracy"], "wcpm": r["wcpm"]}  # noqa: E731
+        level = store.latest_level(c["id"])
         return {
             **{k: c[k] for k in ("id", "alias", "language", "grade", "avatar", "created_at")},
             "readings": len(rs),
             "latest": brief(rs[0]) if rs else None,
             "previous": brief(rs[1]) if len(rs) > 1 else None,
+            "level": level["level"] if level else None,
+            "level_uncertain": bool(level["uncertain"]) if level else False,
         }
 
     def child_or_404(child_id: int) -> dict:
@@ -243,6 +287,128 @@ def create_app(
             {**r, "title": bank.get(r["passage_id"], {}).get("title")}
             for r in store.readings(child_id)
         ]
+
+    # ---- placement: ASER-style, teacher-run, one item at a time
+
+    def placement_or_404(placement_id: int) -> dict:
+        pl = store.placement(placement_id)
+        if not pl:
+            raise HTTPException(404, "unknown placement")
+        return pl
+
+    def placement_out(pl: dict) -> dict:
+        child = child_or_404(pl["child_id"])
+        items = pl["items"]
+        state = tutor.replay([i["states"] for i in items])
+        outcomes = [entry[2] for entry in state.log]
+        item = None
+        if not state.done:
+            item = tutor.placement_item(
+                library(child["language"]), state.task or "paragraph", pl["seed"] * 100 + len(items)
+            )
+        return {
+            "id": pl["id"],
+            "child_id": pl["child_id"],
+            "level": state.level,
+            "uncertain": state.uncertain,
+            "item": item,
+            "done": [{**i, "outcome": outcomes[k] if k < len(outcomes) else None}
+                     for k, i in enumerate(items)],
+        }  # fmt: skip
+
+    @app.post("/v1/children/{child_id}/placements", response_model=PlacementOut, status_code=201)
+    def start_placement(child_id: int) -> dict:
+        child = child_or_404(child_id)
+        library(child["language"])
+        seed = int(time.time() * 1000) % 1_000_000
+        return placement_out(placement_or_404(store.create_placement(child_id, seed)))
+
+    @app.get("/v1/placements/{placement_id}", response_model=PlacementOut)
+    def get_placement(placement_id: int) -> dict:
+        return placement_out(placement_or_404(placement_id))
+
+    @app.post("/v1/placements/{placement_id}/read", response_model=PlacementRead)
+    def read_placement_item(
+        placement_id: int, request: Request, audio: UploadFile = File(...)
+    ) -> dict:
+        """Score a recording of the current item. Costs a Prisma call; records nothing."""
+        limit(request)
+        out = placement_out(placement_or_404(placement_id))
+        item = out["item"]
+        if item is None:
+            raise HTTPException(409, "placement is finished")
+        lang = child_or_404(out["child_id"])["language"]
+        data = audio.file.read(settings.max_upload_bytes + 1)
+        if len(data) > settings.max_upload_bytes:
+            raise HTTPException(413, "audio too large")
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "placement.wav"
+            path.write_bytes(data)
+            seconds = audio_seconds(path)
+            if seconds is None:
+                raise HTTPException(415, "audio must be a WAV file")
+            if seconds > settings.max_audio_seconds:
+                raise HTTPException(413, f"audio longer than {settings.max_audio_seconds:.0f} s")
+            try:
+                with stt_lock:
+                    transcript = transcribe_reading(stt, path, lang)
+            except CapExceeded as e:
+                raise HTTPException(503, "paid-call cap reached") from e
+            except ProviderError as e:
+                log.warning("provider failed: %s", e)
+                raise HTTPException(502, "speech provider failed") from e
+        s = score(" ".join(item["words"]), transcript, seconds, loose=lang != "kn-IN")
+        trace = [
+            {"op": m.op, "word": m.ref_word, "said": m.said, "index": m.ref_index,
+             "check": m.op == "correct" and m.said != m.ref_word}
+            for m in s.marks
+        ]  # fmt: skip
+        return {"transcript": transcript, "words": trace, "states": tutor.states(trace)}
+
+    @app.post("/v1/placements/{placement_id}/answer", response_model=PlacementOut)
+    def answer_placement_item(placement_id: int, body: PlacementAnswer) -> dict:
+        """Record the confirmed marks of the current item and move on."""
+        pl = placement_or_404(placement_id)
+        out = placement_out(pl)
+        item = out["item"]
+        if item is None:
+            raise HTTPException(409, "placement is finished")
+        if len(body.states) != len(item["words"]):
+            raise HTTPException(422, f"expected {len(item['words'])} states")
+        items = [*pl["items"], {**item, "states": list(body.states)}]
+        state = tutor.replay([i["states"] for i in items])
+        store.save_placement(placement_id, items, state.level, state.uncertain)
+        lang = child_or_404(pl["child_id"])["language"]
+        learn(pl["child_id"], lang, list(zip(item["words"], body.states, strict=True)))
+        return placement_out(placement_or_404(placement_id))
+
+    # ---- learner model
+
+    @app.get("/v1/children/{child_id}/skills", response_model=SkillsOut)
+    def child_skills(child_id: int) -> dict:
+        child = child_or_404(child_id)
+        lib = library(child["language"])
+        learner = tutor.learner_from(store.skills(child_id))
+        return tutor.skill_summary(learner, lib.curriculum)
+
+    @app.get("/v1/children/{child_id}/next", response_model=NextOut)
+    def next_passage(child_id: int) -> dict:
+        child = child_or_404(child_id)
+        lib = library(child["language"])
+        rs = store.readings(child_id)
+        level = store.latest_level(child_id)
+        pick = tutor.next_passage(
+            lib,
+            tutor.learner_from(store.skills(child_id)),
+            level["level"] if level else None,
+            [r["passage_id"] for r in rs],
+            [r["accuracy"] for r in rs],
+        )
+        return {
+            "passage_id": pick["passage_id"],
+            "reason": pick["reason"],
+            "level": level["level"] if level else None,
+        }
 
     @app.get("/v1/class/summary", response_model=list[LearnerSummary])
     def class_summary() -> list[dict]:

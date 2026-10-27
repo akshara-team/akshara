@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api, isMock } from "../../api";
 import { toRoster } from "../../api/classSummary";
+import { LEVEL_TEXT } from "./PlacementScreen";
 import type { Child } from "../../api/types";
 import { Avatar, Button, Card, EmptyState, Select, StatusBadge, PageHeader } from "../../components";
 import { useIsDesktop } from "../../state/useMediaQuery";
@@ -139,6 +140,7 @@ export function TeacherDashboard() {
             <thead>
               <tr>
                 <th scope="col">Child</th>
+                <th scope="col">Level</th>
                 <th scope="col">Latest WCPM</th>
                 <th scope="col">Accuracy</th>
                 <th scope="col">Previous</th>
@@ -157,6 +159,10 @@ export function TeacherDashboard() {
                         <span className="reader-meta">{c.level}</span>
                       </span>
                     </span>
+                  </td>
+                  <td>
+                    {c.readingLevel ? LEVEL_TEXT[c.readingLevel].name : "—"}
+                    {c.levelUncertain ? " ?" : ""}
                   </td>
                   <td>{c.wcpm ?? "—"}</td>
                   <td>{c.accuracy == null ? "—" : `${Math.round(c.accuracy * 100)}%`}</td>
@@ -182,6 +188,7 @@ export function TeacherDashboard() {
                 <span className="reader-info">
                   <span className="reader-name">{c.name}</span>
                   <span className="reader-meta">
+                    {c.readingLevel ? `${LEVEL_TEXT[c.readingLevel].name} level · ` : ""}
                     {c.status === "new"
                       ? `${c.level} · no reading yet`
                       : `${c.wcpm ?? "—"} WCPM · ${Math.round((c.accuracy ?? 0) * 100)}% accuracy`}
