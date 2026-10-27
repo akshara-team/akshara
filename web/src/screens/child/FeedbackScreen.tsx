@@ -16,12 +16,12 @@ import {
 } from "../../components";
 import { useSession } from "../../state/session";
 import { scriptClass } from "../../theme/script";
-import { flowCopy } from "./copy";
+import { useCopy } from "../../i18n";
 
 export function FeedbackScreen() {
   const { lang, passage, parts, currentPart, goToNextPart } = useSession();
   const navigate = useNavigate();
-  const copy = flowCopy(lang);
+  const { t, Tx } = useCopy(lang);
 
   const total = Math.max(parts.length, 1);
   const part = parts[currentPart - 1];
@@ -43,10 +43,12 @@ export function FeedbackScreen() {
       <>
         <PageHeader back backTo="/home" />
         <div className="screen-body">
-          <p className="note">Nothing to show yet — read a part first.</p>
+          <p className="note">
+            <Tx k="feedback.nothing" />
+          </p>
           <div className="actions">
             <Button block onClick={() => navigate(`/read/${passage?.id ?? ""}`)}>
-              Back to reading
+              <Tx k="feedback.backToReading" />
             </Button>
           </div>
         </div>
@@ -58,10 +60,13 @@ export function FeedbackScreen() {
     <>
       <PageHeader back backTo="/home" />
       <div className="feedback-hero">
-        <h1 className={`feedback-hero__title ${scriptClass(lang)}`} lang={lang}>
-          {copy.wellRead} <StarIcon className="inline-icon" />
+        <h1 className="feedback-hero__title">
+          <Tx k={part.attempt.accuracy >= 0.8 ? "feedback.wellRead" : "feedback.keepGoing"} />{" "}
+          <StarIcon className="inline-icon" />
         </h1>
-        <p className="feedback-hero__sub">Child · Evaluated demo · Part {currentPart}</p>
+        <p className="feedback-hero__sub">
+          <Tx k="common.part" vars={{ n: currentPart, total }} />
+        </p>
       </div>
 
       <div className="screen-body">
@@ -70,29 +75,35 @@ export function FeedbackScreen() {
           <div className="stack">
             <div className="context">
               <div className="context__row">
-                <span>
-                  {currentPart} of {total}
-                </span>
-                <span>{Math.round(part.attempt.accuracy * 100)}% correct</span>
+                <Tx k="common.part" vars={{ n: currentPart, total }} />
+                <Tx
+                  k="feedback.percent"
+                  vars={{ percent: Math.round(part.attempt.accuracy * 100) }}
+                />
               </div>
-              <ProgressBar value={(currentPart / total) * 100} label="Reading progress" />
+              <ProgressBar
+                value={(currentPart / total) * 100}
+                label={t("common.part", { n: currentPart, total })}
+              />
             </div>
 
             <div className="metarow">
               <LanguageBadge lang={lang} />
               <span className="reader-meta">
-                Your reading · Part {currentPart} of {total}
+                <Tx k="common.part" vars={{ n: currentPart, total }} />
               </span>
             </div>
 
-            <p className="banner">{part.attempt.notice}</p>
+            <p className="banner">
+              <Tx k="feedback.notice" />
+            </p>
           </div>
 
           {/* Right: the words and what to practise. */}
           <div className="stack">
             <div className="chips">
               {words.map((w, i) => (
-                <WordChip
+                <WordChip uiLang={lang}
                   key={`${w.index ?? i}-${w.word ?? ""}`}
                   status={wordStatus(w)}
                   word={w.word ?? ""}
@@ -103,28 +114,28 @@ export function FeedbackScreen() {
 
             <div className="legend">
               <span>
-                <CheckIcon className="inline-icon" /> read correctly
+                <CheckIcon className="inline-icon" /> <Tx k="feedback.legendCorrect" />
               </span>
               <span>
-                <SwapIcon className="inline-icon" /> read as a different word
+                <SwapIcon className="inline-icon" /> <Tx k="feedback.legendDifferent" />
               </span>
               <span>
-                <MinusIcon className="inline-icon" /> skipped
+                <MinusIcon className="inline-icon" /> <Tx k="feedback.legendSkipped" />
               </span>
               <span>
-                <QuestionIcon className="inline-icon" /> check this word
+                <QuestionIcon className="inline-icon" /> <Tx k="feedback.legendCheck" />
               </span>
             </div>
 
             {missed.length > 0 && (
               <div className="practice">
                 <p className="practice__eyebrow">
-                  <EarIcon className="inline-icon" /> Listen and say · Timbre
+                  <EarIcon className="inline-icon" /> <Tx k="feedback.listenAndSay" />
                 </p>
                 {missed.map((w, i) => (
                   <div className="practice__row" key={`${w.word}-${i}`}>
                     <span className={`reading-text ${scriptClass(lang)}`} lang={lang}>{w.word}</span>
-                    <ListenButton text={w.word ?? ""} lang={lang} label={copy.listen} />
+                    <ListenButton uiLang={lang} text={w.word ?? ""} lang={lang} label={t("common.listen")} />
                   </div>
                 ))}
               </div>
@@ -132,7 +143,10 @@ export function FeedbackScreen() {
 
             <div className="actions">
               <Button block onClick={next}>
-                {isLast ? "See results" : copy.continueToPart(currentPart + 1)}
+                <Tx
+                  k={isLast ? "feedback.seeResults" : "feedback.next"}
+                  vars={{ n: currentPart + 1 }}
+                />
               </Button>
             </div>
           </div>

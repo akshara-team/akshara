@@ -7,6 +7,7 @@ import { Avatar, Button, Card, CheckIcon, EmptyState, PageHeader } from "../../c
 import { useSession } from "../../state/session";
 import { setReaderAndLang } from "../../state/storage";
 import { useLoad } from "../../state/useLoad";
+import { useCopy, type CopyKey } from "../../i18n";
 import { scriptClass, scriptName } from "../../theme/script";
 
 /** The children the teacher added for this language; the child taps their own name. */
@@ -18,7 +19,9 @@ export function ChooseReader() {
   const [picked, setPicked] = useState<string | null>(null);
   const selected = readers.find((r) => r.id === picked) ?? readers[0] ?? null;
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<CopyKey | null>(null);
+  const { Tx } = useCopy(lang);
+  const language = scriptName(lang);
 
   async function start() {
     if (!selected) return;
@@ -29,11 +32,15 @@ export function ChooseReader() {
     try {
       const passages = await api.listPassages(lang);
       const passage = passages[0];
-      if (!passage) throw new Error("No passages for this language yet.");
+      if (!passage) {
+        setError("reader.noStories");
+        setBusy(false);
+        return;
+      }
       beginPassage(passage, api.partsOf(passage));
       navigate(`/read/${passage.id}`);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Could not load a story.");
+    } catch {
+      setError("reader.loadFailedHelp");
       setBusy(false);
     }
   }
@@ -42,8 +49,12 @@ export function ChooseReader() {
     <>
       <PageHeader back backTo="/switch" />
       <div className="hero">
-        <h1 className="hero__title">Who is reading?</h1>
-        <p className="hero__sub">Choose your name to begin.</p>
+        <h1 className="hero__title">
+          <Tx k="reader.title" />
+        </h1>
+        <p className="hero__sub">
+          <Tx k="reader.sub" />
+        </p>
       </div>
 
       <div className="screen-body">
@@ -51,35 +62,41 @@ export function ChooseReader() {
           {/* Left: context. */}
           <div className="stack">
             <Card>
-              <p className="eyebrow">Welcome</p>
-              <p className={`reader-name ${scriptClass(lang)}`} lang={lang}>
-                Reading in {scriptName(lang)}
+              <p className="eyebrow">
+                <Tx k="reader.welcome" />
               </p>
-              <p className="reader-meta">Pick the name the child recognises.</p>
+              <p className="reader-name">
+                <Tx k="reader.readingIn" vars={{ language }} />
+              </p>
+              <p className="reader-meta">
+                <Tx k="reader.pick" />
+              </p>
             </Card>
 
             <Button variant="ghost" block onClick={() => navigate("/")}>
-              Choose another language
+              <Tx k="reader.otherLanguage" />
             </Button>
           </div>
 
           {/* Right: readers and continue. */}
           <div className="stack">
             {loadError ? (
-              <EmptyState title="Could not load the names">
-                <p className="note">Check the connection, then try again.</p>
+              <EmptyState title={<Tx k="reader.loadFailed" />}>
+                <p className="note">
+                  <Tx k="reader.loadFailedHelp" />
+                </p>
               </EmptyState>
             ) : children === null ? (
               <p className="note" role="status">
-                Loading names…
+                <Tx k="reader.loading" />
               </p>
             ) : readers.length === 0 ? (
-              <EmptyState title="No names yet">
+              <EmptyState title={<Tx k="reader.none" />}>
                 <p className="note">
-                  Ask your teacher to add you for {scriptName(lang)} reading.
+                  <Tx k="reader.noneHelp" vars={{ language }} />
                 </p>
                 <Button variant="outline" onClick={() => navigate("/teacher/add")}>
-                  I am the teacher: add a child
+                  <Tx k="reader.addChild" />
                 </Button>
               </EmptyState>
             ) : (
@@ -112,14 +129,18 @@ export function ChooseReader() {
 
             {error && (
               <p className="field__error" role="alert">
-                {error}
+                <Tx k={error} />
               </p>
             )}
 
             <div className="actions">
               {selected && (
                 <Button block disabled={busy} onClick={start}>
-                  {busy ? "Loading…" : `Continue as ${selected.alias}`}
+                  {busy ? (
+                    <Tx k="reader.opening" />
+                  ) : (
+                    <Tx k="reader.continueAs" vars={{ name: selected.alias }} />
+                  )}
                 </Button>
               )}
             </div>

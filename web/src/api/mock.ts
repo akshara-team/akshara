@@ -197,6 +197,8 @@ const KN_PARTS: { text: string; words: WordOut[]; seconds: number }[] = [
 export const MOCK_PASSAGE: Passage = {
   id: "kn-101",
   language: "kn-IN",
+  title: "ಬಣ್ಣದ ಚಿಟ್ಟೆ",
+  level: "2",
   text: KN_PARTS.map((p) => p.text).join(". ") + ".",
 };
 

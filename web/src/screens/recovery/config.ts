@@ -1,84 +1,51 @@
+import type { CopyKey } from "../../i18n";
+
 /**
- * Recovery screens (Figma section 04). Copy is taken from the design frames;
- * steps are the design's "3 easy steps" lists.
+ * Recovery screens (Figma section 04). The text lives in `src/i18n/*.json` under
+ * `recovery.<key>.*`, so it follows the child's language; this file says what each screen has
+ * and where its buttons go.
  */
 export type RecoveryVariant = {
   key: string;
-  eyebrow?: string;
-  title: string;
-  subtitle?: string;
-  steps?: string[];
-  primary: { label: string; to: string };
-  secondary?: { label: string; to: string };
+  title: CopyKey;
+  subtitle?: CopyKey;
+  steps?: CopyKey[];
   /** Shown in place of steps when the screen is just a waiting state. */
-  note?: string;
+  note?: CopyKey;
+  primary: { label: CopyKey; to: string };
+  secondary?: { label: CopyKey; to: string };
 };
 
-export const RECOVERY: Record<string, RecoveryVariant> = {
-  microphone: {
-    key: "microphone",
-    title: "We need the microphone",
-    subtitle: "No recording started yet.",
-    steps: [
-      "Open the site controls next to the browser address.",
-      "Choose Permissions → Microphone → Allow.",
-      "Come back here and tap the microphone to try again.",
-    ],
-    primary: { label: "Try microphone again", to: "/read" },
-    secondary: { label: "Back to story", to: "/reader" },
-  },
-  loading: {
-    key: "loading",
-    title: "Getting your story ready",
-    subtitle: "Your story is coming!",
-    note: "The story and its audio open together.",
-    primary: { label: "Wait a moment", to: "/reader" },
-  },
-  connection: {
-    key: "connection",
-    title: "Almost there…",
-    subtitle: "Still checking your reading…",
-    note: "A little longer. Your story is still here.",
-    primary: { label: "Ask a teacher for help", to: "/" },
-  },
-  offline: {
-    key: "offline",
-    title: "You look offline",
-    subtitle: "Part 1 of 2 — your reading is safe on this page.",
-    steps: [
-      "Keep this page open.",
-      "Retry with this recording, if it is still available.",
-      "If it is no longer available, read this part again.",
-    ],
-    primary: { label: "Retry sending reading", to: "/checking" },
-    secondary: { label: "Read this part again", to: "/read" },
-  },
-  speech: {
-    key: "speech",
-    title: "We could not hear that clearly",
-    subtitle: "No score was calculated.",
-    steps: [
-      "Listen to the model reading once more.",
-      "Retry recognition if the recording is available.",
-      "Ask your teacher if you need help setting up.",
-    ],
-    primary: { label: "Retry recognition", to: "/checking" },
-    secondary: { label: "Back to story", to: "/reader" },
-  },
-  service: {
-    key: "service",
-    title: "Oops! Something got mixed up",
-    subtitle: "Reading not evaluated.",
-    steps: [
-      "This is on our side, not yours.",
-      "Try again if the audio is still available.",
-      "If it keeps happening, ask your teacher.",
-    ],
-    primary: { label: "Try again", to: "/checking" },
-    secondary: { label: "Return to story", to: "/reader" },
-  },
+type Kind = "microphone" | "loading" | "connection" | "offline" | "speech" | "service";
+
+function variant(
+  key: Kind,
+  parts: { steps?: boolean; note?: boolean },
+  primary: string,
+  secondary?: string,
+): RecoveryVariant {
+  const k = (s: string) => `recovery.${key}.${s}` as CopyKey;
+  return {
+    key,
+    title: k("title"),
+    subtitle: k("subtitle"),
+    steps: parts.steps ? [k("step1"), k("step2"), k("step3")] : undefined,
+    note: parts.note ? k("note") : undefined,
+    primary: { label: k("primary"), to: primary },
+    secondary: secondary ? { label: k("secondary"), to: secondary } : undefined,
+  };
+}
+
+/** "/read" means "this story again"; the screen adds the passage id. */
+export const RECOVERY: Record<Kind, RecoveryVariant> = {
+  microphone: variant("microphone", { steps: true }, "/read", "/reader"),
+  loading: variant("loading", { note: true }, "/reader"),
+  connection: variant("connection", { note: true }, "/"),
+  offline: variant("offline", { steps: true }, "/checking", "/read"),
+  speech: variant("speech", { steps: true }, "/checking", "/reader"),
+  service: variant("service", { steps: true }, "/checking", "/reader"),
 };
 
 export function recoveryVariant(kind: string | undefined): RecoveryVariant {
-  return (kind && RECOVERY[kind]) || RECOVERY.service;
+  return (kind && RECOVERY[kind as Kind]) || RECOVERY.service;
 }
