@@ -177,6 +177,21 @@ plays each through `/v1/feedback/audio` (cached), then the whole word. `practice
 `audio`, `word`, `lang`, optional `child_id`) scores one re-read of one word and returns
 `{word, said, state}`; with `child_id` it teaches the learner model. Costs one Prisma call.
 
+### `GET /v1/review?lang=kn-IN` · `POST /v1/review` · `GET /v1/attempts/{request_id}/words/{index}/clip`
+
+The teacher's review queue (`review.py`). Queued: words the scorer accepted only as a spelling
+variant, slips (misread or skipped) in readings at 80% or better, and placements marked
+uncertain. Each word item carries `request_id`, `index`, `word`, `said`, `op`, `reason`, the
+child and story, and `has_audio`. `POST` (`{"request_id", "index", "result": "correct" |
+"misread" | "skipped"}`) stores the teacher's mark, which replaces the scorer's in readings, the
+class view and the queue, and teaches the learner model at teacher weight. Unknown attempt or
+word → `404`.
+
+Recordings are kept next to the database (`recordings/`, or `AKSHARA_RECORDINGS`; none for an
+in-memory database). `clip` returns the stretch where the word probably is: Prisma gives no
+word timings, so `core/wordspans.py` estimates it from pauses and akshara counts and pads it
+by 0.5 s. The response carries `X-Clip-Approximate: true`. No recording → `404`.
+
 ## Not built (deferred)
 
 - Evon story generation.

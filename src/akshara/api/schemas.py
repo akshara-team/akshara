@@ -180,3 +180,27 @@ class PracticeOut(BaseModel):
     word: str
     said: str | None
     state: State  # correct | error | unsure
+
+
+class ReviewItem(BaseModel):
+    """Something a teacher should hear: one word of a reading, or a whole placement."""
+
+    kind: Literal["word", "placement"]
+    child_id: int
+    child: str
+    at: float
+    reason: str
+    request_id: str | None = None
+    index: int | None = None  # the word's position in the passage or part
+    word: str | None = None
+    said: str | None = None
+    op: str | None = None
+    passage_id: str | None = None
+    title: str | None = None
+    has_audio: bool = False
+
+
+class ReviewIn(BaseModel):
+    request_id: str = Field(min_length=1, max_length=128)
+    index: int = Field(ge=0)
+    result: Literal["correct", "misread", "skipped"]
