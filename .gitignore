@@ -34,3 +34,5 @@ Thumbs.db
 .vscode/
 .idea/
 results/*.sqlite
+data/fonts/
+results/bench/
