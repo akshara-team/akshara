@@ -645,3 +645,52 @@ button.screen__link {
   outline: var(--focus-ring);
   outline-offset: var(--focus-ring-offset);
 }
+
+/* Akshara practice: the missed word as tiles, one per akshara. */
+.practice-word {
+  align-items: center;
+  text-align: center;
+}
+.practice-tiles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-8);
+}
+.practice-tile {
+  min-width: var(--space-56);
+  padding: var(--space-12) var(--space-16);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-16);
+  background: var(--color-surface);
+  font-size: var(--text-reading);
+  transition:
+    background var(--duration-base),
+    border-color var(--duration-base),
+    transform var(--duration-fast);
+}
+.practice-tile--lit {
+  background: var(--color-surface-selected);
+  border-color: var(--color-brand-primary);
+  transform: scale(1.08);
+}
+.practice-tile--ok {
+  background: var(--chip-correct-bg);
+  border-color: var(--chip-correct-border);
+}
+.practice-tile--miss {
+  background: var(--chip-substituted-bg);
+  border-color: var(--chip-substituted-border);
+}
+.practice-message {
+  font-size: var(--text-heading-3);
+  font-weight: var(--font-weight-medium);
+}
+@media (prefers-reduced-motion: reduce) {
+  .practice-tile {
+    transition: none;
+  }
+  .practice-tile--lit {
+    transform: none;
+  }
+}

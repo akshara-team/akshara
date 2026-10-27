@@ -38,3 +38,42 @@ export async function play(text: string, lang: Lang): Promise<PlaySource> {
 
   return speak(text, lang) ? "device" : "none";
 }
+
+/**
+ * Like `play`, but resolves when the sound has finished, so clips can play one after another
+ * (each akshara, then the whole word). Gives up after `maxMs` so a stuck clip never blocks.
+ */
+export async function playToEnd(text: string, lang: Lang, maxMs = 4000): Promise<PlaySource> {
+  const blob = await api.feedbackAudio(text, lang).catch(() => null);
+  const timeout = new Promise<void>((r) => setTimeout(r, maxMs));
+
+  if (blob) {
+    const url = URL.createObjectURL(blob);
+    const audio = new Audio(url);
+    try {
+      const ended = new Promise<void>((r) => {
+        audio.onended = () => r();
+        audio.onerror = () => r();
+      });
+      await audio.play();
+      await Promise.race([ended, timeout]);
+      return "model";
+    } catch {
+      // fall through to the device voice
+    } finally {
+      URL.revokeObjectURL(url);
+    }
+  }
+
+  if (typeof window === "undefined" || !("speechSynthesis" in window)) return "none";
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = lang;
+  const done = new Promise<void>((r) => {
+    utterance.onend = () => r();
+    utterance.onerror = () => r();
+  });
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utterance);
+  await Promise.race([done, timeout]);
+  return "device";
+}

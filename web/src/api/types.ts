@@ -138,4 +138,6 @@ export type PlacementRead = { transcript: string; words: WordOut[]; states: Mark
 export type SkillOut = { id: string; kind: string; text: string; p: number };
 export type Skills = { working_on: SkillOut[]; learned: SkillOut[] };
 
+export type Practice = { word: string; said: string | null; state: MarkState };
+
 export type Next = { passage_id: string; reason: string; level: Level | null };

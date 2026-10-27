@@ -196,3 +196,61 @@ def test_placement_read_scores_the_current_item():
     got = r.json()["states"]
     assert got[0] == "error" and set(got[1:]) <= {"correct", "unsure"}
     assert c.get(f"/v1/placements/{pl['id']}").json()["done"] == []  # nothing recorded yet
+
+
+# ---- akshara practice
+
+
+class Says:
+    name = "says"
+
+    def __init__(self, text: str):
+        self.text = text
+
+    def transcribe(self, audio, language):
+        return self.text
+
+
+def practice_client(text: str, db=":memory:") -> TestClient:
+    settings = Settings(provider="fixture", db_path=db)  # type: ignore[arg-type]
+    return TestClient(create_app(settings, Says(text), BANK))
+
+
+def test_aksharas_endpoint_splits_a_word():
+    c = practice_client("")
+    r = c.get("/v1/aksharas", params={"lang": "kn-IN", "word": " ಹಾರುತ್ತಿತ್ತು "})
+    assert r.json() == {"word": "ಹಾರುತ್ತಿತ್ತು", "aksharas": ["ಹಾ", "ರು", "ತ್ತಿ", "ತ್ತು"]}
+    assert c.get("/v1/aksharas", params={"lang": "en-US", "word": "a"}).status_code == 400
+    assert c.get("/v1/aksharas", params={"lang": "kn-IN", "word": " "}).status_code == 400
+
+
+@pytest.mark.parametrize(
+    ("heard", "state"), [("ಹಾರುತ್ತಿತ್ತು", "correct"), ("ಓಡುತ್ತಿತ್ತು", "error"), ("", "error")]
+)
+def test_practice_scores_one_word(heard, state, tmp_path):
+    db = tmp_path / "p.sqlite"
+    c = practice_client(heard, db)
+    kid = c.post("/v1/children", json={"alias": "Ravi", "language": "kn-IN"}).json()["id"]
+    r = c.post(
+        "/v1/practice",
+        files={"audio": ("w.wav", wav(1), "audio/wav")},
+        data={"word": "ಹಾರುತ್ತಿತ್ತು", "lang": "kn-IN", "child_id": str(kid)},
+    )
+    assert r.status_code == 200 and r.json()["state"] == state
+    assert Store(db).skills(kid), "the practice should teach the learner model"
+
+
+def test_practice_without_a_child_teaches_nothing_and_checks_inputs():
+    c = practice_client("ಹಾರುತ್ತಿತ್ತು")
+    ok = c.post(
+        "/v1/practice",
+        files={"audio": ("w.wav", wav(1), "audio/wav")},
+        data={"word": "ಹಾರುತ್ತಿತ್ತು", "lang": "kn-IN"},
+    )
+    assert ok.json()["state"] == "correct"
+    bad = c.post(
+        "/v1/practice",
+        files={"audio": ("w.wav", wav(1), "audio/wav")},
+        data={"word": "x", "lang": "kn-IN", "child_id": "999"},
+    )
+    assert bad.status_code == 404
