@@ -142,6 +142,33 @@ unknown). `words` and `transcript` join the parts in order.
   "wcpm": 76.0, "seconds": 7.9, "transcript": "…", "words": [{"op": "correct", "…": "…"}]}]
 ```
 
+### Placement: `POST /v1/children/{id}/placements` · `GET /v1/placements/{id}` · `POST /v1/placements/{id}/read` · `POST /v1/placements/{id}/answer`
+
+ASER-style, teacher-run (`learner/placement.py`, items from `learner/tutor.py`). Start on a
+paragraph; passed → story, failed → words → letters. `item` is what to show next
+(`task`, `text`, `words`, `passage_id`), null once `level` is known
+(`beginner | letter | word | paragraph | story`). `read` (multipart `audio`) scores a recording
+of the current item and returns `transcript`, `words` and `states`, recording nothing; it costs
+a Prisma call. `answer` (`{"states": ["correct" | "error" | "unsure", …]}`, one per word of the
+item, `422` otherwise) records the item, which the teacher may have marked by ear or corrected,
+updates the learner model, and returns the placement. `409` once finished. When `unsure` marks
+decide the call, one more item of the same task follows; if still open, `uncertain: true`.
+`GET /v1/children/{id}` then carries `level` and `level_uncertain`.
+
+### `GET /v1/children/{id}/skills`
+
+The learner model (`learner/bkt.py`), updated by every reading with `child_id` (a resent upload
+counts once) and every placement answer. `working_on`: up to 3 weakest skills seen at least
+twice, below 0.6. `learned`: mastery 0.95 or more, seen at least 4 times. Each skill is
+`{id, kind, text, p}`, e.g. `{"id": "letter:ಳ", "kind": "letter", "text": "ಳ", "p": 0.31}`.
+
+### `GET /v1/children/{id}/next`
+
+The next passage for the child: `{passage_id, reason, level}`. A difficulty band from the
+placement level (middle band before any), moved up after two readings at 90% or more and down
+after two under 70%; inside it, the passage with the most words that practise a weak skill,
+skipping the last three read.
+
 ## Not built (deferred)
 
 - Evon story generation.

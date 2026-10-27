@@ -1,4 +1,15 @@
-import type { Attempt, Child, ChildInput, Passage, Reading } from "./types";
+import type {
+  Attempt,
+  Child,
+  ChildInput,
+  MarkState,
+  Next,
+  Passage,
+  Placement,
+  PlacementRead,
+  Reading,
+  Skills,
+} from "./types";
 
 const BASE = import.meta.env.VITE_API_BASE ?? "";
 
@@ -95,6 +106,38 @@ export const liveApi = {
 
   childReadings(id: number): Promise<Reading[]> {
     return getJson<Reading[]>(`/v1/children/${id}/readings`);
+  },
+
+  getPassage(id: string): Promise<Passage> {
+    return getJson<Passage>(`/v1/passages/${encodeURIComponent(id)}`);
+  },
+
+  nextFor(childId: number): Promise<Next> {
+    return getJson<Next>(`/v1/children/${childId}/next`);
+  },
+
+  childSkills(id: number): Promise<Skills> {
+    return getJson<Skills>(`/v1/children/${id}/skills`);
+  },
+
+  startPlacement(childId: number): Promise<Placement> {
+    return sendJson<Placement>("POST", `/v1/children/${childId}/placements`, {});
+  },
+
+  getPlacement(id: number): Promise<Placement> {
+    return getJson<Placement>(`/v1/placements/${id}`);
+  },
+
+  async readPlacement(id: number, audio: Blob): Promise<PlacementRead> {
+    const form = new FormData();
+    form.append("audio", audio, "placement.wav");
+    const res = await fetch(`${BASE}/v1/placements/${id}/read`, { method: "POST", body: form });
+    if (!res.ok) throw new ApiError(res.status, await detail(res));
+    return (await res.json()) as PlacementRead;
+  },
+
+  answerPlacement(id: number, states: MarkState[]): Promise<Placement> {
+    return sendJson<Placement>("POST", `/v1/placements/${id}/answer`, { states });
   },
 
   /** Timbre pronunciation of one word; null when the endpoint says no. */

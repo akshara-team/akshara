@@ -11,6 +11,7 @@ import { RoleSelection } from "./screens/child/RoleSelection";
 import { NotFound } from "./screens/NotFound";
 import { RecoveryScreen } from "./screens/recovery/RecoveryScreen";
 import { AttemptDetails } from "./screens/teacher/AttemptDetails";
+import { PlacementScreen } from "./screens/teacher/PlacementScreen";
 import { ChildForm } from "./screens/teacher/ChildForm";
 import { ChildProfile } from "./screens/teacher/ChildProfile";
 import { SelectStory } from "./screens/teacher/SelectStory";
@@ -113,6 +114,10 @@ export function App() {
           <Route
             path="/teacher/child/:childId/reading/:session"
             element={<Screen><AttemptDetails /></Screen>}
+          />
+          <Route
+            path="/teacher/child/:childId/placement"
+            element={<Screen><PlacementScreen /></Screen>}
           />
           <Route
             path="/teacher/edit/:childId"
