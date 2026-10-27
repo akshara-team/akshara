@@ -26,8 +26,8 @@ const TITLES: Record<string, string> = {
 
 function titleFor(pathname: string): string {
   if (pathname.startsWith("/read/")) return "Reading";
+  if (pathname.startsWith("/teacher/child/") && pathname.includes("/reading/")) return "Reading";
   if (pathname.startsWith("/teacher/child/")) return "Child";
-  if (pathname.startsWith("/teacher/attempt/")) return "Attempt";
   if (pathname.startsWith("/teacher/edit/")) return "Edit child";
   if (pathname.startsWith("/recovery/")) return "Recovery";
   return TITLES[pathname] ?? "Akshara";

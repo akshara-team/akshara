@@ -1,6 +1,5 @@
 import { isLang, type Lang } from "../theme/script";
-import { DEMO_SUMMARY } from "./teacherData";
-import type { Attempt, LearnerSummary, Passage, WordOut } from "./types";
+import type { Attempt, Passage, WordOut } from "./types";
 
 /** Decodes a recorded clip (any format the browser recorded) to mono 16 kHz samples. */
 export async function decode16k(blob: Blob): Promise<Float32Array> {
@@ -41,6 +40,11 @@ export function encodeWav(pcm: Float32Array): Blob {
     view.setInt16(44 + i * 2, Math.max(-1, Math.min(1, v)) * 32767, true),
   );
   return new Blob([view], { type: "audio/wav" });
+}
+
+/** Length of a WAV from `encodeWav`: 16 kHz, 16-bit mono after a 44-byte header. */
+export function wavSeconds(wav: Blob): number {
+  return Math.max(0, wav.size - 44) / 32000;
 }
 
 /** Same approach as the original screen in `src/akshara/api/static/index.html`. */
@@ -198,6 +202,13 @@ export const MOCK_PASSAGE: Passage = {
 
 export const MOCK_PARTS: { text: string }[] = KN_PARTS.map((p) => ({ text: p.text }));
 
+/** The demo story's reference words, in reading order. */
+export function mockReferenceWords(): string[] {
+  return KN_PARTS.flatMap((p) => p.words.map((w) => w.word).filter((w): w is string => !!w));
+}
+
+export const MOCK_TITLE = "ಬಣ್ಣದ ಚಿಟ್ಟೆ";
+
 export function mockAttempt(passageId: string, language: string, partIndex: number): Attempt {
   const part = KN_PARTS[Math.min(partIndex, KN_PARTS.length - 1)];
   const correct = part.words.filter((w) => w.op === "correct").length;
@@ -212,6 +223,7 @@ export function mockAttempt(passageId: string, language: string, partIndex: numb
     accuracy: correct / part.words.length,
     wcpm: Math.round((correct / part.seconds) * 60),
     words: part.words,
+    part_index: partIndex,
   };
 }
 
@@ -225,10 +237,6 @@ export function mockNoticeLines(): string[] {
   return [NOTICE];
 }
 
-/** The same demo class, shaped exactly like the API's /v1/class/summary. */
-export function mockClassSummary(): LearnerSummary[] {
-  return DEMO_SUMMARY;
-}
 
 export function mockLanguageOf(id: string): Lang {
   const prefix = id.split("-")[0];

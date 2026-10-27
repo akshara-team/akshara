@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { api, isMock } from "../../api";
+import { api, childIdOf, isMock } from "../../api";
 import { ApiError } from "../../api/live";
 import { Button, LanguageBadge, ProgressDots, Spinner, PageHeader } from "../../components";
 import { useSession } from "../../state/session";
@@ -23,8 +23,17 @@ function classify(error: unknown): Failure {
  * recording, then routes to feedback or the matching recovery screen.
  */
 export function CheckingScreen() {
-  const { lang, reader, passage, parts, currentPart, pending, recordAttempt, setPending } =
-    useSession();
+  const {
+    lang,
+    reader,
+    passage,
+    parts,
+    currentPart,
+    pending,
+    sessionId,
+    recordAttempt,
+    setPending,
+  } = useSession();
   const navigate = useNavigate();
   const started = useRef(false);
   const [failed, setFailed] = useState<Failure | null>(null);
@@ -45,7 +54,10 @@ export function CheckingScreen() {
         const attempt = await api.submitAttempt({
           audio: pending.audio ?? new Blob([], { type: "audio/wav" }),
           learner: reader?.alias ?? "learner-1",
+          childId: childIdOf(reader?.id),
+          session: sessionId ?? undefined,
           passageId: passage?.id ?? "unknown",
+          title: passage?.title ?? null,
           lang,
           partIndex: currentPart - 1,
         });
@@ -56,7 +68,7 @@ export function CheckingScreen() {
         setFailed(classify(error));
       }
     })();
-  }, [pending, reader, passage, lang, currentPart, recordAttempt, setPending, navigate]);
+  }, [pending, reader, passage, lang, currentPart, sessionId, recordAttempt, setPending, navigate]);
 
   if (failed) {
     return (

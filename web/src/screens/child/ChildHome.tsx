@@ -22,10 +22,10 @@ import { scriptName } from "../../theme/script";
 export function ChildHome() {
   const navigate = useNavigate();
   const { setReader, setLang, beginPassage } = useSession();
-  const { store, synced } = useChildProgress();
+  const { store, synced, gone } = useChildProgress();
   const [busy, setBusy] = useState(false);
 
-  const reader = store.reader;
+  const reader = gone ? null : store.reader;
   const first = reader?.alias.split(" ")[0] ?? "";
   const last = store.readings[0];
   const recent = store.readings.slice(0, 3);
@@ -116,11 +116,12 @@ export function ChildHome() {
                     </div>
                   ))}
                   {best > 0 && <p className="note">Best so far: {best} WCPM</p>}
-                  {synced && (
+                  {synced?.latest && (
                     <p className="note">
-                      Synced from the class: {synced.attempts} attempts ·{" "}
-                      {Math.round(synced.accuracy * 100)}% ·{" "}
-                      {synced.wcpm == null ? "—" : Math.round(synced.wcpm)} WCPM
+                      Your teacher sees {synced.readings}{" "}
+                      {synced.readings === 1 ? "reading" : "readings"} · latest{" "}
+                      {Math.round(synced.latest.accuracy * 100)}% ·{" "}
+                      {synced.latest.wcpm == null ? "—" : Math.round(synced.latest.wcpm)} WCPM
                     </p>
                   )}
                 </section>

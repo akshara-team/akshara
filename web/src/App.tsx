@@ -111,7 +111,7 @@ export function App() {
             element={<Screen><ChildProfile /></Screen>}
           />
           <Route
-            path="/teacher/attempt/:childId"
+            path="/teacher/child/:childId/reading/:session"
             element={<Screen><AttemptDetails /></Screen>}
           />
           <Route

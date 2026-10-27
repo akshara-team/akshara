@@ -65,3 +65,44 @@ export type Reader = {
   level: string;
   lang: Lang;
 };
+
+/** Mirrors `ReadingBrief` in the backend schemas. */
+export type ReadingBrief = { at: number; accuracy: number; wcpm: number | null };
+
+/** A child the teacher manages (`ChildOut`). `alias` is a nickname, not a full name. */
+export type Child = {
+  id: number;
+  alias: string;
+  language: Lang;
+  grade: number | null;
+  avatar: string | null;
+  created_at: number | null;
+  readings: number;
+  latest: ReadingBrief | null;
+  previous: ReadingBrief | null;
+};
+
+export type ChildInput = {
+  alias: string;
+  language: Lang;
+  grade: number | null;
+  avatar?: string | null;
+};
+
+/** One reading of a story: its parts joined, the newest try of each part (`ReadingOut`). */
+export type Reading = {
+  session: string;
+  passage_id: string;
+  title: string | null;
+  language: string;
+  /** Unix seconds. */
+  at: number;
+  parts: number[];
+  correct: number;
+  total: number;
+  accuracy: number;
+  wcpm: number | null;
+  seconds: number | null;
+  transcript: string;
+  words: WordOut[];
+};
