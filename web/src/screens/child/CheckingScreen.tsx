@@ -4,7 +4,9 @@ import { api, childIdOf, isMock } from "../../api";
 import { ApiError } from "../../api/live";
 import { Button, LanguageBadge, ProgressDots, Spinner, PageHeader } from "../../components";
 import { useSession } from "../../state/session";
+import { useCopy } from "../../i18n";
 import { scriptClass } from "../../theme/script";
+import { storyTitle } from "./title";
 
 type Failure = "offline" | "speech" | "service";
 
@@ -39,6 +41,7 @@ export function CheckingScreen() {
   const [failed, setFailed] = useState<Failure | null>(null);
 
   const total = Math.max(parts.length, 1);
+  const { t, Tx } = useCopy(lang);
 
   useEffect(() => {
     if (started.current) return;
@@ -75,20 +78,22 @@ export function CheckingScreen() {
       <>
         <PageHeader back backTo="/home" />
         <div className="screen-body">
-          <h1 className="recovery-hero__title">We could not finish checking</h1>
+          <h1 className="recovery-hero__title">
+            <Tx k="check.failed" />
+          </h1>
           <p className="note">
-            {failed === "offline"
-              ? "You appear to be offline."
-              : failed === "speech"
-                ? "The speech service did not answer."
-                : "Something went wrong on our side."}
+            <Tx k={`check.${failed}`} />
           </p>
           <div className="actions">
             <Button block onClick={() => navigate(`/recovery/${failed}`, { replace: true })}>
-              Show me what to do
+              <Tx k="check.whatToDo" />
             </Button>
-            <Button variant="ghost" block onClick={() => navigate(passage ? `/read/${passage.id}` : "/home", { replace: true })}>
-              Read this part again
+            <Button
+              variant="ghost"
+              block
+              onClick={() => navigate(passage ? `/read/${passage.id}` : "/home", { replace: true })}
+            >
+              <Tx k="check.readAgain" />
             </Button>
           </div>
         </div>
@@ -106,18 +111,18 @@ export function CheckingScreen() {
             <div className="metarow">
               <LanguageBadge lang={lang} />
               <div className="metarow__text">
-                <span className="eyebrow">Child reading · Checking</span>
+                <span className="eyebrow">
+                  <Tx k="check.title" />
+                </span>
                 <span className={`metarow__title ${scriptClass(lang)}`} lang={lang}>
-                  {passage ? passage.text.split(/\s+/).slice(0, 3).join(" ") : "Your story"}
+                  {storyTitle(passage)}
                 </span>
               </div>
             </div>
 
             <div className="context">
               <div className="context__row">
-                <span>
-                  Part {currentPart} of {total} · Just finished
-                </span>
+                <Tx k="common.part" vars={{ n: currentPart, total }} />
                 <ProgressDots total={total} current={currentPart} />
               </div>
             </div>
@@ -126,18 +131,22 @@ export function CheckingScreen() {
           {/* Right: the wait itself. */}
           <div className="stack">
             <div className="checking">
-              <Spinner label="Checking your reading now…" />
-              <h1 className="recovery-hero__title">Great job!</h1>
-              <p className="note">We heard you. Checking your reading now…</p>
+              <Spinner label={t("check.heard")} />
+              <h1 className="recovery-hero__title">
+                <Tx k="check.greatJob" />
+              </h1>
               <p className="note">
-                You read aloud — well done! Your result will appear in a moment.
+                <Tx k="check.heard" />
+              </p>
+              <p className="note">
+                <Tx k="check.soon" />
               </p>
             </div>
 
             <div className="passage-card">
               <div className="passage-card__accent" aria-hidden="true" />
               <p className={`reading-text ${scriptClass(lang)}`} lang={lang}>
-                {parts[currentPart - 1]?.text ?? "Your story"}
+                {parts[currentPart - 1]?.text ?? ""}
               </p>
             </div>
 

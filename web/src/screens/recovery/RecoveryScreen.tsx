@@ -1,7 +1,9 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, LanguageBadge, PageHeader } from "../../components";
 import { useSession } from "../../state/session";
+import { useCopy } from "../../i18n";
 import { scriptClass } from "../../theme/script";
+import { storyTitle } from "../child/title";
 import { recoveryVariant } from "./config";
 
 /**
@@ -15,6 +17,7 @@ export function RecoveryScreen() {
   const { lang, passage, currentPart, parts } = useSession();
   const v = recoveryVariant(kind);
   const total = Math.max(parts.length, 1);
+  const { Tx } = useCopy(lang);
   // "/read" in the config means "this story again"; the route needs the passage id.
   const go = (to: string) =>
     navigate(to === "/read" ? (passage ? `/read/${passage.id}` : "/home") : to);
@@ -23,8 +26,14 @@ export function RecoveryScreen() {
     <>
       <PageHeader back backTo="/home" />
       <div className="recovery-hero">
-        <h1 className="recovery-hero__title">{v.title}</h1>
-        {v.subtitle && <p className="recovery-hero__sub">{v.subtitle}</p>}
+        <h1 className="recovery-hero__title">
+          <Tx k={v.title} />
+        </h1>
+        {v.subtitle && (
+          <p className="recovery-hero__sub">
+            <Tx k={v.subtitle} />
+          </p>
+        )}
       </div>
 
       <div className="screen-body">
@@ -34,16 +43,23 @@ export function RecoveryScreen() {
             <div className="metarow">
               <LanguageBadge lang={lang} />
               <div className="metarow__text">
-                <span className="eyebrow">Recovery · Demo state</span>
-                <span className={`metarow__title ${scriptClass(lang)}`} lang={lang}>
-                  {passage ? passage.text.split(/\s+/).slice(0, 3).join(" ") : "No story loaded"}
-                </span>
+                {passage ? (
+                  <span className={`metarow__title ${scriptClass(lang)}`} lang={lang}>
+                    {storyTitle(passage)}
+                  </span>
+                ) : (
+                  <span className="metarow__title">
+                    <Tx k="recovery.noStory" />
+                  </span>
+                )}
               </div>
             </div>
 
-            <p className="note">
-              Part {currentPart} of {total}
-            </p>
+            {passage && (
+              <p className="note">
+                <Tx k="recovery.part" vars={{ n: currentPart, total }} />
+              </p>
+            )}
           </div>
 
           {/* Right: what to do next. */}
@@ -53,21 +69,25 @@ export function RecoveryScreen() {
                 {v.steps.map((step, i) => (
                   <li className="steps__item" key={step}>
                     <span className="steps__num">{i + 1}</span>
-                    <span>{step}</span>
+                    <Tx k={step} />
                   </li>
                 ))}
               </ol>
             )}
 
-            {v.note && <p className="note">{v.note}</p>}
+            {v.note && (
+              <p className="note">
+                <Tx k={v.note} />
+              </p>
+            )}
 
             <div className="actions">
               <Button block onClick={() => go(v.primary.to)}>
-                {v.primary.label}
+                <Tx k={v.primary.label} />
               </Button>
               {v.secondary && (
                 <Button variant="ghost" block onClick={() => go(v.secondary!.to)}>
-                  {v.secondary.label}
+                  <Tx k={v.secondary.label} />
                 </Button>
               )}
             </div>

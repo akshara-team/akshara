@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Button,
@@ -12,13 +12,23 @@ import {
 import { useSession } from "../../state/session";
 import { addReading, buildReading } from "../../state/storage";
 import { scriptClass } from "../../theme/script";
-import { flowCopy } from "./copy";
+import { NIPUN_BAND } from "../../api/teacherData";
+import { useCopy } from "../../i18n";
+import { load } from "../../state/storage";
+import { storyTitle } from "./title";
 
 export function ResultsScreen() {
   const { lang, passage, parts, sessionId, reset } = useSession();
   const navigate = useNavigate();
-  const copy = flowCopy(lang);
+  const { t, Tx } = useCopy(lang);
   const saved = useRef(false);
+  // Earlier readings on this device, before this one is saved: the child's own journey.
+  const [earlier] = useState(() =>
+    load()
+      .readings.filter((r) => r.id !== sessionId && r.wcpm != null)
+      .slice(0, 2)
+      .reverse(),
+  );
 
   const read = parts.filter((p) => p.attempt);
   const words = read.flatMap((p) => p.attempt?.words ?? []);
@@ -35,14 +45,14 @@ export function ResultsScreen() {
     const reading = buildReading({
       id: sessionId,
       passageId: passage.id,
-      storyTitle: passage.title ?? copy.storyTitle,
+      storyTitle: storyTitle(passage),
       language: lang,
       parts,
     });
     if (!reading) return;
     saved.current = true;
     addReading(reading);
-  }, [sessionId, passage, parts, lang, copy.storyTitle]);
+  }, [sessionId, passage, parts, lang]);
 
   function finish() {
     reset();
@@ -56,18 +66,22 @@ export function ResultsScreen() {
         <div className="workspace workspace--w360">
           {/* Left: celebration and the two headline numbers. */}
           <div className="stack">
-            <p className="eyebrow">Child · Demo attempt · 19 Oct 2026</p>
+            <p className={`eyebrow ${scriptClass(lang)}`} lang={lang}>
+              {storyTitle(passage)}
+            </p>
 
             <div className="stack--tight stack">
               <h1 className="card__title">
-                You read the whole story! <SparklesIcon className="inline-icon" />
+                <Tx k="results.title" /> <SparklesIcon className="inline-icon" />
               </h1>
-              <p className="reader-meta">{copy.wellRead}</p>
+              <p className="reader-meta">
+                <Tx k={accuracy >= 0.8 ? "feedback.wellRead" : "feedback.keepGoing"} />
+              </p>
             </div>
 
             <div className="stats-grid">
-              <StatCard label="Correct words/min" value={wcpm == null ? "—" : String(wcpm)} />
-              <StatCard label="Word accuracy" value={`${Math.round(accuracy * 100)}%`} />
+              <StatCard label={t("results.speed")} value={wcpm == null ? "—" : String(wcpm)} />
+              <StatCard label={t("results.accuracy")} value={`${Math.round(accuracy * 100)}%`} />
             </div>
           </div>
 
@@ -75,35 +89,45 @@ export function ResultsScreen() {
           <div className="stack">
             <div className="progress-note">
               <p className="eyebrow">
-                Your progress <TrendingUpIcon className="inline-icon" />
+                <Tx k="results.progress" /> <TrendingUpIcon className="inline-icon" />
               </p>
-              <span className="progress-note__journey">30 → 36 → {wcpm ?? "—"} WCPM</span>
-              <span className="note">5 Oct → 12 Oct → Today · Demo practice history</span>
+              {earlier.length ? (
+                <span className="progress-note__journey">
+                  {[...earlier.map((r) => Math.round(r.wcpm ?? 0)), wcpm ?? "—"].join(" → ")}
+                </span>
+              ) : (
+                <span className="note">
+                  <Tx k="results.firstTime" />
+                </span>
+              )}
               <div className="nipun">
-                <span className="nipun__pill">NIPUN target: 35–54 CWPM</span>
-                <span>Classes 2–3</span>
+                <span className="nipun__pill">
+                  <Tx k="results.target" vars={{ min: NIPUN_BAND.min, max: NIPUN_BAND.max }} />
+                </span>
               </div>
             </div>
 
             {missed.length > 0 && (
               <div className="practice">
                 <p className="practice__eyebrow">
-                  Practise these words again <RepeatIcon className="inline-icon" />
+                  <Tx k="results.practise" /> <RepeatIcon className="inline-icon" />
                 </p>
                 {missed.map((w, i) => (
                   <div className="practice__row" key={`${w.word}-${i}`}>
                     <span className={`reading-text ${scriptClass(lang)}`} lang={lang}>{w.word}</span>
-                    <ListenButton text={w.word ?? ""} lang={lang} label={copy.listen} />
+                    <ListenButton uiLang={lang} text={w.word ?? ""} lang={lang} label={t("common.listen")} />
                   </div>
                 ))}
               </div>
             )}
 
-            <p className="note">For adults: WCPM means correct words per minute.</p>
+            <p className="note">
+              <Tx k="results.adults" />
+            </p>
 
             <div className="actions">
               <Button block onClick={finish}>
-                Finish reading
+                <Tx k="results.finish" />
               </Button>
             </div>
           </div>
