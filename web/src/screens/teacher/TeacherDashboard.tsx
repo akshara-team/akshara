@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api, isMock } from "../../api";
 import { toRoster } from "../../api/classSummary";
+import { TEACHER_NAV } from "./nav";
 import { LEVEL_TEXT } from "./PlacementScreen";
 import type { Child } from "../../api/types";
 import { Avatar, Button, Card, EmptyState, Select, StatusBadge, PageHeader } from "../../components";
@@ -37,6 +38,19 @@ export function TeacherDashboard() {
     };
   }, [language]);
 
+  const [toHear, setToHear] = useState<number | null>(null);
+  useEffect(() => {
+    let alive = true;
+    setToHear(null);
+    api
+      .reviewQueue(language)
+      .then((q) => alive && setToHear(q.length))
+      .catch(() => alive && setToHear(null));
+    return () => {
+      alive = false;
+    };
+  }, [language]);
+
   const data = useMemo(
     () =>
       toRoster(
@@ -64,11 +78,7 @@ export function TeacherDashboard() {
         back
         backTo="/"
         badge={gradeLabel}
-        nav={[
-          { label: "Class", to: "/teacher" },
-          { label: "Story", to: "/teacher/story" },
-          { label: "Add child", to: "/teacher/add" },
-        ]}
+        nav={TEACHER_NAV}
       />
       <div className="screen-body">
         <p className="eyebrow">
@@ -116,6 +126,22 @@ export function TeacherDashboard() {
             </div>
           ))}
         </div>
+
+        {toHear != null && toHear > 0 && (
+          <Card>
+            <p className="reader-name">
+              {toHear} {toHear === 1 ? "mark" : "marks"} to check by ear
+            </p>
+            <p className="note">
+              Words the speech service may have misheard. Listening takes a few seconds each.
+            </p>
+            <div className="actions">
+              <Button variant="outline" onClick={() => navigate("/teacher/review")}>
+                Listen and check
+              </Button>
+            </div>
+          </Card>
+        )}
 
         <p className="step__label">
           {data.metrics.total} {data.metrics.total === 1 ? "child" : "children"} · latest readings

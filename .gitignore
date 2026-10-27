@@ -45,3 +45,5 @@ results/changed_ids.json
 baton-*.txt
 dump.txt
 2026-*.txt
+
+results/recordings/

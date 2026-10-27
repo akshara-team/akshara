@@ -15,12 +15,9 @@ import {
 import { LEVEL_TEXT } from "./PlacementScreen";
 import { useLoad } from "../../state/useLoad";
 import { scriptClass, scriptEnglish, scriptName } from "../../theme/script";
+import { TEACHER_NAV } from "./nav";
 
-const NAV = [
-  { label: "Class", to: "/teacher" },
-  { label: "Story", to: "/teacher/story" },
-  { label: "Add child", to: "/teacher/add" },
-];
+const NAV = TEACHER_NAV;
 
 /** "19 Oct" from unix seconds. */
 export function shortDate(at: number): string {

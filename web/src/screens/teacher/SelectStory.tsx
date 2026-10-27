@@ -7,12 +7,9 @@ import { useSession } from "../../state/session";
 import { useLoad } from "../../state/useLoad";
 import { scriptClass, type Lang } from "../../theme/script";
 import { storyTitle } from "../child/title";
+import { TEACHER_NAV } from "./nav";
 
-const NAV = [
-  { label: "Class", to: "/teacher" },
-  { label: "Story", to: "/teacher/story" },
-  { label: "Add child", to: "/teacher/add" },
-];
+const NAV = TEACHER_NAV;
 
 const wordCount = (p: Passage) => p.text.split(/\s+/).filter(Boolean).length;
 

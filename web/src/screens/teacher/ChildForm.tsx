@@ -6,12 +6,9 @@ import type { Child } from "../../api/types";
 import { Avatar, Button, Card, Input, Radio, Select, PageHeader } from "../../components";
 import { useLoad } from "../../state/useLoad";
 import type { Lang } from "../../theme/script";
+import { TEACHER_NAV } from "./nav";
 
-const NAV = [
-  { label: "Class", to: "/teacher" },
-  { label: "Story", to: "/teacher/story" },
-  { label: "Add child", to: "/teacher/add" },
-];
+const NAV = TEACHER_NAV;
 
 const GRADES = [1, 2, 3, 4, 5];
 

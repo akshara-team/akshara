@@ -5,6 +5,8 @@ import sqlite3
 import time
 from pathlib import Path
 
+from akshara import review
+
 MIGRATIONS = [
     """
     CREATE TABLE learners (
@@ -58,6 +60,17 @@ MIGRATIONS = [
         seen INTEGER NOT NULL,
         updated_at REAL NOT NULL,
         PRIMARY KEY (child_id, skill)
+    );
+    """,
+    # 5: the recording behind each attempt, and teachers' marks on single words
+    """
+    ALTER TABLE attempts ADD COLUMN audio_path TEXT;
+    CREATE TABLE reviews (
+        request_id TEXT NOT NULL,
+        word_index INTEGER NOT NULL,
+        result TEXT NOT NULL,
+        created_at REAL NOT NULL,
+        PRIMARY KEY (request_id, word_index)
     );
     """,
 ]
@@ -160,14 +173,54 @@ class Store:
         ).fetchall()
         return [dict(r) for r in rows]
 
+    def marks(self, request_ids: list[str]) -> dict[str, dict[int, str]]:
+        """Teachers' marks per attempt: request_id → {word index: result}."""
+        out: dict[str, dict[int, str]] = {}
+        for i in range(0, len(request_ids), 500):
+            chunk = request_ids[i : i + 500]
+            rows = self.db.execute(
+                "SELECT request_id, word_index, result FROM reviews WHERE request_id IN"
+                f" ({','.join('?' * len(chunk))})",
+                chunk,
+            ).fetchall()
+            for r in rows:
+                out.setdefault(r["request_id"], {})[r["word_index"]] = r["result"]
+        return out
+
+    def save_mark(self, request_id: str, word_index: int, result: str) -> None:
+        self.db.execute(
+            "INSERT INTO reviews (request_id, word_index, result, created_at) VALUES (?, ?, ?, ?)"
+            " ON CONFLICT(request_id, word_index) DO UPDATE SET result = excluded.result,"
+            " created_at = excluded.created_at",
+            (request_id, word_index, result, time.time()),
+        )
+        self.db.commit()
+
+    def set_audio(self, request_id: str, path: str) -> None:
+        self.db.execute(
+            "UPDATE attempts SET audio_path = ? WHERE request_id = ?", (path, request_id)
+        )
+        self.db.commit()
+
+    def child_attempts(self, child_id: int) -> list[dict]:
+        """The child's attempts, oldest first, with teachers' marks applied to the trace."""
+        rows = [
+            dict(r) | {"trace": json.loads(r["trace"])}
+            for r in self.db.execute(
+                "SELECT * FROM attempts WHERE learner_id = ? ORDER BY created_at", (child_id,)
+            ).fetchall()
+        ]
+        marks = self.marks([a["request_id"] for a in rows])
+        for a in rows:
+            if a["request_id"] in marks:
+                a["scorer_trace"] = a["trace"]
+                a["trace"] = review.apply(a["trace"], marks[a["request_id"]])
+        return rows
+
     def readings(self, child_id: int) -> list[dict]:
         """The child's readings, newest first, each grouping the parts of one story session."""
-        rows = self.db.execute(
-            "SELECT * FROM attempts WHERE learner_id = ? ORDER BY created_at", (child_id,)
-        ).fetchall()
         groups: dict[str, list[dict]] = {}
-        for r in rows:
-            a = dict(r) | {"trace": json.loads(r["trace"])}
+        for a in self.child_attempts(child_id):
             groups.setdefault(a["session_id"] or a["request_id"], []).append(a)
         return sorted((summarise(g) for g in groups.values()), key=lambda s: -s["at"])
 

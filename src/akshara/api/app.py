@@ -1,6 +1,10 @@
 """HTTP API. Run with: uv run uvicorn akshara.api.app:create_app --factory"""
 
+import hashlib
+import io
 import logging
+import re
+import shutil
 import tempfile
 import threading
 import time
@@ -11,6 +15,7 @@ from fastapi import FastAPI, File, Form, Header, HTTPException, Request, UploadF
 from fastapi.responses import FileResponse, Response
 
 from akshara import passages as passage_bank
+from akshara import review
 from akshara.api.schemas import (
     AksharasOut,
     AttemptOut,
@@ -24,11 +29,15 @@ from akshara.api.schemas import (
     PlacementRead,
     PracticeOut,
     ReadingOut,
+    ReviewIn,
+    ReviewItem,
     SkillsOut,
 )
 from akshara.core.aksharas import split as split_aksharas
 from akshara.core.align import score
 from akshara.core.parts import split_parts
+from akshara.core.wavio import read_wav, write_wav
+from akshara.core.wordspans import spans as word_spans
 from akshara.learner import tutor
 from akshara.providers.audio_cache import CachedTTS
 from akshara.providers.base import ProviderError, SpeechToText, TextToSpeech
@@ -91,13 +100,15 @@ def create_app(
             raise HTTPException(409, f"no passages for {lang}")
         return lib
 
-    def learn(child_id: int, lang: str, results: list[tuple[str, str]]) -> None:
+    def learn(
+        child_id: int, lang: str, results: list[tuple[str, str]], teacher: bool = False
+    ) -> None:
         """Feed word results to the child's learner model and save it."""
         if not results:
             return
         lib = library(lang)
         learner = tutor.learner_from(store.skills(child_id))
-        tutor.observe_words(learner, lib.curriculum, results)
+        tutor.observe_words(learner, lib.curriculum, results, teacher=teacher)
         store.save_skills(child_id, learner.mastery, learner.seen)
 
     def passage_out(p: dict) -> dict:
@@ -212,6 +223,8 @@ def create_app(
             except ProviderError as e:
                 log.warning("provider failed: %s", e)
                 raise HTTPException(502, "speech provider failed") from e
+            if not retry:  # kept for the teacher's review (deleted by retention, WP7)
+                keep_recording(path, a.request_id)
         if child_id is not None and not retry:
             learn(
                 child_id,
@@ -384,6 +397,97 @@ def create_app(
         lang = child_or_404(pl["child_id"])["language"]
         learn(pl["child_id"], lang, list(zip(item["words"], body.states, strict=True)))
         return placement_out(placement_or_404(placement_id))
+
+    # ---- recordings and the teacher's review queue
+
+    def recording_name(request_id: str) -> str:
+        if re.fullmatch(r"[A-Za-z0-9_-]{1,80}", request_id):
+            return f"{request_id}.wav"
+        return hashlib.sha256(request_id.encode()).hexdigest()[:32] + ".wav"
+
+    def keep_recording(src: Path, request_id: str) -> None:
+        folder = settings.recordings
+        if folder is None or not src.exists():
+            return
+        folder.mkdir(parents=True, exist_ok=True)
+        dest = folder / recording_name(request_id)
+        shutil.copyfile(src, dest)
+        store.set_audio(request_id, dest.name)
+
+    def attempt_or_404(request_id: str) -> dict:
+        row = store.attempt(request_id)
+        if not row:
+            raise HTTPException(404, "unknown attempt")
+        return row
+
+    @app.get("/v1/attempts/{request_id}/words/{index}/clip")
+    def word_clip(request_id: str, index: int) -> Response:
+        """The stretch of the recording where this word probably is (approximate, padded)."""
+        row = attempt_or_404(request_id)
+        folder = settings.recordings
+        path = folder / row["audio_path"] if folder and row.get("audio_path") else None
+        if path is None or not path.exists():
+            raise HTTPException(404, "no recording kept for this attempt")
+        ref = sorted(
+            (w for w in row["trace"] if w.get("index") is not None), key=lambda w: w["index"]
+        )
+        pos = next((k for k, w in enumerate(ref) if w["index"] == index), None)
+        if pos is None:
+            raise HTTPException(404, "no such word in this attempt")
+        samples, rate = read_wav(path)
+        start, end = word_spans(samples, rate, [w["word"] for w in ref], row["language"])[pos]
+        buf = io.BytesIO()
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "clip.wav"
+            write_wav(out, samples[int(start * rate) : int(end * rate)], rate)
+            buf.write(out.read_bytes())
+        return Response(
+            buf.getvalue(),
+            media_type="audio/wav",
+            headers={"X-Clip-Approximate": "true", "Cache-Control": "private, max-age=3600"},
+        )
+
+    @app.get("/v1/review", response_model=list[ReviewItem])
+    def review_queue(lang: str | None = None) -> list[dict]:
+        """Words and placements a teacher should hear, newest first."""
+        items: list[dict] = []
+        for c in store.children(lang):
+            for a in store.child_attempts(c["id"]):
+                done = store.marks([a["request_id"]]).get(a["request_id"], {})
+                scorer = a.get("scorer_trace", a["trace"])
+                for i, why in review.reasons(scorer, a["accuracy"]).items():
+                    if i in done:
+                        continue
+                    w = next(x for x in scorer if x.get("index") == i)
+                    items.append({
+                        "kind": "word", "child_id": c["id"], "child": c["alias"],
+                        "at": a["created_at"], "reason": why, "request_id": a["request_id"],
+                        "index": i, "word": w["word"], "said": w.get("said"), "op": w["op"],
+                        "passage_id": a["passage_id"],
+                        "title": bank.get(a["passage_id"], {}).get("title"),
+                        "has_audio": bool(a.get("audio_path")),
+                    })  # fmt: skip
+            level = store.latest_level(c["id"])
+            if level and level["uncertain"]:
+                items.append({
+                    "kind": "placement", "child_id": c["id"], "child": c["alias"],
+                    "at": level["finished_at"],
+                    "reason": f"placed at {level['level']} on marks the scorer was unsure of",
+                })  # fmt: skip
+        return sorted(items, key=lambda x: -x["at"])[:100]
+
+    @app.post("/v1/review", response_model=ReviewItem | None)
+    def mark_word(body: ReviewIn) -> None:
+        """A teacher's mark on one word: replaces the scorer's and teaches the learner model."""
+        row = attempt_or_404(body.request_id)
+        w = next((x for x in row["trace"] if x.get("index") == body.index), None)
+        if w is None:
+            raise HTTPException(404, "no such word in this attempt")
+        store.save_mark(body.request_id, body.index, body.result)
+        child = store.child(row["learner_id"])
+        if child is not None:
+            learn(child["id"], row["language"], [(w["word"], review.state_of(body.result))], True)
+        return None
 
     # ---- akshara practice: a missed word, broken into its aksharas, then read again
 

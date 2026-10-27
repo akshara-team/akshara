@@ -13,6 +13,8 @@ import type {
   PlacementRead,
   Practice,
   Reading,
+  ReviewItem,
+  ReviewResult,
   Skills,
 } from "./types";
 
@@ -51,6 +53,12 @@ export type Api = {
   /** Score a recording of the current item; records nothing until answered. */
   readPlacement: (id: number, audio: Blob) => Promise<PlacementRead>;
   answerPlacement: (id: number, states: MarkState[]) => Promise<Placement>;
+  /** Words and placements a teacher should hear, newest first. */
+  reviewQueue: (lang?: Lang) => Promise<ReviewItem[]>;
+  /** A teacher's mark on one word; replaces the scorer's. */
+  markWord: (requestId: string, index: number, result: ReviewResult) => Promise<void>;
+  /** Where to play one word of a kept recording; null when there is none (mock mode). */
+  clipUrl: (requestId: string, index: number) => string | null;
   /** A word split into its aksharas, the units the script is read in. */
   aksharas: (word: string, lang: Lang) => Promise<string[]>;
   /** Score one re-read of one word; teaches the child's model when `childId` is given. */
@@ -82,6 +90,9 @@ const mock: Api = {
   readPlacement: (id) => mockClass.readPlacement(id),
   answerPlacement: (id, states) => mockClass.answerPlacement(id, states),
   aksharas: async (word, lang) => graphemes(word, lang),
+  reviewQueue: (lang) => mockClass.reviewQueue(lang),
+  markWord: (rid, index, result) => mockClass.markWord(rid, index, result),
+  clipUrl: () => null,
   // The demo has no scorer: a re-read always counts.
   practise: async (_audio, word) => ({ word, said: word, state: "correct" }),
   feedbackAudio: async () => null, // mock uses the device voice
@@ -105,6 +116,9 @@ const live: Api = {
   readPlacement: (id, audio) => liveApi.readPlacement(id, audio),
   answerPlacement: (id, states) => liveApi.answerPlacement(id, states),
   aksharas: (word, lang) => liveApi.aksharas(word, lang),
+  reviewQueue: (lang) => liveApi.reviewQueue(lang),
+  markWord: (rid, index, result) => liveApi.markWord(rid, index, result),
+  clipUrl: (rid, index) => liveApi.clipUrl(rid, index),
   practise: (audio, word, lang, childId) =>
     liveApi.practise(audio ?? new Blob([], { type: "audio/wav" }), word, lang, childId),
   feedbackAudio: (word, lang) => liveApi.feedbackAudio(word, lang),
