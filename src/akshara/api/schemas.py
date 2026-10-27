@@ -1,4 +1,6 @@
-from pydantic import BaseModel
+from typing import Literal
+
+from pydantic import BaseModel, Field, field_validator
 
 
 class WordOut(BaseModel):
@@ -37,3 +39,71 @@ class LearnerSummary(BaseModel):
     attempts: int
     accuracy: float
     wcpm: float | None
+
+
+Language = Literal["hi-IN", "kn-IN", "ta-IN"]
+
+
+def _alias(v: str | None) -> str | None:
+    if v is None:
+        return v
+    v = " ".join(v.split())
+    if not v:
+        raise ValueError("alias must not be empty")
+    return v
+
+
+class ChildIn(BaseModel):
+    """A child as the teacher adds them. `alias` is a nickname, never the full legal name."""
+
+    alias: str = Field(min_length=1, max_length=40)
+    language: Language
+    grade: int | None = Field(default=None, ge=1, le=8)
+    avatar: str | None = Field(default=None, max_length=4)
+
+    _clean = field_validator("alias")(_alias)
+
+
+class ChildPatch(BaseModel):
+    alias: str | None = Field(default=None, min_length=1, max_length=40)
+    language: Language | None = None
+    grade: int | None = Field(default=None, ge=1, le=8)
+    avatar: str | None = Field(default=None, max_length=4)
+
+    _clean = field_validator("alias")(_alias)
+
+
+class ReadingBrief(BaseModel):
+    at: float
+    accuracy: float
+    wcpm: float | None
+
+
+class ChildOut(BaseModel):
+    id: int
+    alias: str
+    language: str
+    grade: int | None
+    avatar: str | None
+    created_at: float | None
+    readings: int
+    latest: ReadingBrief | None
+    previous: ReadingBrief | None
+
+
+class ReadingOut(BaseModel):
+    """One reading of a story: its parts' attempts joined, the newest try of each part."""
+
+    session: str
+    passage_id: str
+    title: str | None
+    language: str
+    at: float
+    parts: list[int]
+    correct: int
+    total: int
+    accuracy: float
+    wcpm: float | None
+    seconds: float | None
+    transcript: str
+    words: list[WordOut]

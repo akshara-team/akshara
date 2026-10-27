@@ -43,6 +43,10 @@ joined to its neighbour. Joining `parts` with spaces gives back the words of `te
 ]
 ```
 
+Each passage also carries its catalogue entry when there is one: `title`, `level` (ASER-style
+level of the source book) and `credit` (`publisher`, `url`, `licence`). StoryWeaver texts are
+CC BY, so the app shows the credit with the story.
+
 ### `GET /v1/passages/{passage_id}`
 
 Same shape as one item above, `parts` included.
@@ -57,8 +61,12 @@ failure is `502`. Costs one Timbre call on a cache miss.
 
 ### `POST /v1/attempts` (multipart)
 
-Fields: `audio` (WAV file), `learner` (alias, 1–40 chars), `passage_id`, and optional
-`part_index` (0-based index into the passage's `parts`). With `part_index` the reading is
+Fields: `audio` (WAV file, at most 90 s), `passage_id`, and either `child_id` (a child added
+with `/v1/children`; unknown → `404`) or `learner` (a bare alias, 1–40 chars, created on first
+use; neither → `422`). Optional: `part_index` (0-based index into the passage's `parts`) and
+`session` (1–64 chars, the same for every part of one run of a story, so the parts become one
+reading). Readings over 25 s are sent to Prisma in windows cut in pauses, since Prisma rejects
+clips over about 30 s. With `part_index` the reading is
 scored against that part only, so the rest of the passage is not counted as skipped; an index
 out of range is `400`. Without it the whole passage is the reference.
 Optional header `X-Request-ID` makes the call idempotent (resending returns the stored
@@ -106,12 +114,36 @@ One row per learner (class-level, not per child).
 ]
 ```
 
+### `GET /v1/children?lang=kn-IN` · `POST /v1/children` · `GET|PATCH /v1/children/{id}`
+
+The children a teacher manages. `alias` is a nickname, never the full name (1–40 characters,
+spaces collapsed, unique: a clash is `409`). `language` is `hi-IN | kn-IN | ta-IN`, `grade`
+1–8 or null, `avatar` up to 4 characters. `POST` returns `201`; `PATCH` changes only the fields
+sent. Unknown id → `404`.
+
+```json
+{"id": 1, "alias": "Meena K", "language": "kn-IN", "grade": 2, "avatar": "MK",
+ "created_at": 1793081453.4, "readings": 2,
+ "latest": {"at": 1793081500.0, "accuracy": 0.83, "wcpm": 76.0},
+ "previous": {"at": 1792990000.0, "accuracy": 0.75, "wcpm": 61.2}}
+```
+
+### `GET /v1/children/{id}/readings`
+
+The child's readings, newest first. A reading groups the attempts of one `session` (an
+attempt with no session stands alone); if a part was read twice, its last try counts.
+`accuracy = correct / total` over the story's words (insertions not counted),
+`wcpm = correct / seconds × 60` with `seconds` the summed clip lengths (`null` if any is
+unknown). `words` and `transcript` join the parts in order.
+
+```json
+[{"session": "4c1d…", "passage_id": "sw-36", "title": "ಈಗಲ್ಲ, ಈಗಲ್ಲ!", "language": "kn-IN",
+  "at": 1793081500.0, "parts": [0], "correct": 10, "total": 12, "accuracy": 0.83,
+  "wcpm": 76.0, "seconds": 7.9, "transcript": "…", "words": [{"op": "correct", "…": "…"}]}]
+```
+
 ## Not built (deferred)
 
-Things the earlier draft wanted, not implemented and not needed for the demo:
-
-- Per-child progress (`/children/{id}/progress`) and an attempt-history list — the class
-  summary covers the demo.
 - Evon story generation.
 
 ## Still open

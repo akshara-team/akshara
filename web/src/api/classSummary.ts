@@ -1,81 +1,88 @@
 import type { Lang } from "../theme/script";
-import { NIPUN_BAND, type Child } from "./teacherData";
-import type { LearnerSummary } from "./types";
+import { NIPUN_BAND } from "./teacherData";
+import type { Child, Reader } from "./types";
+
+export type RosterStatus = "in-target" | "practise" | "new";
 
 export type RosterEntry = {
-  id: string;
+  id: number;
   name: string;
   initials: string;
   level: string;
   lang: Lang;
-  status: "in-target" | "practise";
+  status: RosterStatus;
+  readings: number;
   wcpm: number | null;
-  accuracy: number;
+  previousWcpm: number | null;
+  accuracy: number | null;
 };
 
 export type ClassMetrics = {
   avgWcpm: number | null;
-  accuracy: number;
+  accuracy: number | null;
   needHelp: number;
   total: number;
 };
 
-function initialsOf(name: string): string {
+export function initialsOf(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
   if (parts.length === 0) return "?";
-  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
-  return (parts[0][0] + parts[1][0]).toUpperCase();
+  if (parts.length === 1) return [...parts[0]].slice(0, 2).join("").toUpperCase();
+  return ([...parts[0]][0] + [...parts[1]][0]).toUpperCase();
 }
 
-function slug(name: string): string {
-  return (
-    name
-      .trim()
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-|-$/g, "") || "child"
-  );
+export function levelOf(grade: number | null): string {
+  return grade ? `Class ${grade}` : "—";
 }
+
+/** What the child flow needs to know about a child. */
+export function toReader(c: Child): Reader {
+  return {
+    id: String(c.id),
+    alias: c.alias,
+    initials: c.avatar || initialsOf(c.alias),
+    level: levelOf(c.grade),
+    lang: c.language,
+  };
+}
+
+const round = (v: number | null | undefined) => (v == null ? null : Math.round(v));
 
 /**
- * Turns the API's class summary into what the dashboard renders.
- *
- * The API returns one row per learner (`alias, language, attempts, accuracy,
- * wcpm`) and nothing else — no class name, no level, no history — so those come
- * from `known` (the demo roster) when a name matches, and are left blank
- * otherwise. Status is derived from the NIPUN band.
+ * The dashboard's rows and class figures from `/v1/children`. Status: the latest reading at or
+ * above the band's lower edge is on target; a child with no reading yet is "new", not "needs help".
  */
-export function toRoster(
-  rows: LearnerSummary[],
-  known: Child[] = [],
-): { roster: RosterEntry[]; metrics: ClassMetrics } {
-  const roster: RosterEntry[] = rows.map((row) => {
-    const match = known.find((c) => c.name === row.alias);
-    const wcpm = row.wcpm == null ? null : Math.round(row.wcpm);
-    const inBand = wcpm != null && wcpm >= NIPUN_BAND.min && wcpm <= NIPUN_BAND.max;
+export function toRoster(children: Child[]): { roster: RosterEntry[]; metrics: ClassMetrics } {
+  const roster: RosterEntry[] = children.map((c) => {
+    const wcpm = round(c.latest?.wcpm);
+    const status: RosterStatus = !c.latest
+      ? "new"
+      : wcpm != null && wcpm >= NIPUN_BAND.min // faster than the band is not a problem
+        ? "in-target"
+        : "practise";
     return {
-      id: match?.id ?? slug(row.alias),
-      name: row.alias,
-      initials: match?.initials ?? initialsOf(row.alias),
-      level: match?.level ?? "—",
-      lang: (match?.lang ?? row.language) as Lang,
-      status: inBand ? "in-target" : "practise",
+      id: c.id,
+      name: c.alias,
+      initials: c.avatar || initialsOf(c.alias),
+      level: levelOf(c.grade),
+      lang: c.language,
+      status,
+      readings: c.readings,
       wcpm,
-      accuracy: row.accuracy,
+      previousWcpm: round(c.previous?.wcpm),
+      accuracy: c.latest?.accuracy ?? null,
     };
   });
 
-  const wcpms = roster.map((r) => r.wcpm).filter((v): v is number => v != null);
+  const read = roster.filter((r) => r.status !== "new");
+  const wcpms = read.map((r) => r.wcpm).filter((v): v is number => v != null);
+  const mean = (xs: number[]) => (xs.length ? xs.reduce((s, v) => s + v, 0) / xs.length : null);
+  const avg = mean(wcpms);
   const metrics: ClassMetrics = {
-    avgWcpm: wcpms.length
-      ? Math.round(wcpms.reduce((sum, v) => sum + v, 0) / wcpms.length)
-      : null,
-    accuracy: roster.length
-      ? roster.reduce((sum, r) => sum + r.accuracy, 0) / roster.length
-      : 0,
+    avgWcpm: avg == null ? null : Math.round(avg),
+    accuracy: mean(read.map((r) => r.accuracy ?? 0)),
     needHelp: roster.filter((r) => r.status === "practise").length,
     total: roster.length,
   };
-
   return { roster, metrics };
 }
