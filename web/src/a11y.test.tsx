@@ -18,6 +18,8 @@ const ROUTES = [
   "/teacher/child/1",
   "/teacher/child/1/reading/seed-1-2026-10-19",
   "/teacher/edit/1",
+  "/teacher/child/1/placement",
+
   "/teacher/add",
   "/no-such-page",
 ];

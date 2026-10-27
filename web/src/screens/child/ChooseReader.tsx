@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { api } from "../../api";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { api, childIdOf, storyFor } from "../../api";
 import { toReader } from "../../api/classSummary";
 import type { Reader } from "../../api/types";
 import { Avatar, Button, Card, CheckIcon, EmptyState, PageHeader } from "../../components";
@@ -14,6 +14,7 @@ import { scriptClass, scriptName } from "../../theme/script";
 export function ChooseReader() {
   const { lang, setReader, beginPassage } = useSession();
   const navigate = useNavigate();
+  const [params] = useSearchParams();
   const { data: children, error: loadError } = useLoad(() => api.listChildren(lang), [lang]);
   const readers: Reader[] = (children ?? []).map(toReader);
   const [picked, setPicked] = useState<string | null>(null);
@@ -30,8 +31,8 @@ export function ChooseReader() {
     setReader(selected);
     setReaderAndLang(selected, lang);
     try {
-      const passages = await api.listPassages(lang);
-      const passage = passages[0];
+      // A story the teacher chose (`?story=`), else the learner model's pick.
+      const passage = await storyFor(lang, childIdOf(selected.id), params.get("story"));
       if (!passage) {
         setError("reader.noStories");
         setBusy(false);

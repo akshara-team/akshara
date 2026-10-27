@@ -1,8 +1,19 @@
 import type { Lang } from "../theme/script";
 import { liveApi } from "./live";
-import { MOCK_PARTS, MOCK_TITLE, mockAttempt, mockPassages } from "./mock";
+import { MOCK_PARTS, MOCK_PASSAGE, MOCK_TITLE, mockAttempt, mockPassages } from "./mock";
 import { mockClass } from "./mockClass";
-import type { Attempt, Child, ChildInput, Passage, Reading } from "./types";
+import type {
+  Attempt,
+  Child,
+  ChildInput,
+  MarkState,
+  Next,
+  Passage,
+  Placement,
+  PlacementRead,
+  Reading,
+  Skills,
+} from "./types";
 
 /**
  * The one seam between the screens and the backend. `mock` runs the whole app
@@ -30,6 +41,15 @@ export type Api = {
   addChild: (input: ChildInput) => Promise<Child>;
   editChild: (id: number, patch: Partial<ChildInput>) => Promise<Child>;
   childReadings: (id: number) => Promise<Reading[]>;
+  getPassage: (id: string) => Promise<Passage>;
+  /** The learner model's pick for this child's next story. */
+  nextFor: (childId: number) => Promise<Next>;
+  childSkills: (id: number) => Promise<Skills>;
+  startPlacement: (childId: number) => Promise<Placement>;
+  getPlacement: (id: number) => Promise<Placement>;
+  /** Score a recording of the current item; records nothing until answered. */
+  readPlacement: (id: number, audio: Blob) => Promise<PlacementRead>;
+  answerPlacement: (id: number, states: MarkState[]) => Promise<Placement>;
   /** Model audio for one word; null means "no model audio, fall back". */
   feedbackAudio: (word: string, lang: Lang) => Promise<Blob | null>;
 };
@@ -49,6 +69,13 @@ const mock: Api = {
   addChild: (input) => mockClass.addChild(input),
   editChild: (id, patch) => mockClass.editChild(id, patch),
   childReadings: (id) => mockClass.childReadings(id),
+  getPassage: async (id) => ({ ...MOCK_PASSAGE, id }),
+  nextFor: (id) => mockClass.nextFor(id),
+  childSkills: (id) => mockClass.childSkills(id),
+  startPlacement: (id) => mockClass.startPlacement(id),
+  getPlacement: (id) => mockClass.getPlacement(id),
+  readPlacement: (id) => mockClass.readPlacement(id),
+  answerPlacement: (id, states) => mockClass.answerPlacement(id, states),
   feedbackAudio: async () => null, // mock uses the device voice
 };
 
@@ -62,6 +89,13 @@ const live: Api = {
   addChild: (input) => liveApi.addChild(input),
   editChild: (id, patch) => liveApi.editChild(id, patch),
   childReadings: (id) => liveApi.childReadings(id),
+  getPassage: (id) => liveApi.getPassage(id),
+  nextFor: (id) => liveApi.nextFor(id),
+  childSkills: (id) => liveApi.childSkills(id),
+  startPlacement: (id) => liveApi.startPlacement(id),
+  getPlacement: (id) => liveApi.getPlacement(id),
+  readPlacement: (id, audio) => liveApi.readPlacement(id, audio),
+  answerPlacement: (id, states) => liveApi.answerPlacement(id, states),
   feedbackAudio: (word, lang) => liveApi.feedbackAudio(word, lang),
 };
 
@@ -78,4 +112,26 @@ export function childIdOf(readerId: string | undefined): number | undefined {
 export function statusOf(error: unknown): number | null {
   const s = (error as { status?: unknown } | null)?.status;
   return typeof s === "number" ? s : null;
+}
+
+/**
+ * The story a child reads next: one the teacher chose, else the learner model's pick for a
+ * child the teacher added, else the first story in the language. Null when there is none.
+ */
+export async function storyFor(
+  lang: Lang,
+  childId: number | undefined,
+  chosen?: string | null,
+): Promise<Passage | null> {
+  if (chosen) return api.getPassage(chosen);
+  if (childId !== undefined) {
+    try {
+      const next = await api.nextFor(childId);
+      return await api.getPassage(next.passage_id);
+    } catch {
+      /* fall through to the first story */
+    }
+  }
+  const passages = await api.listPassages(lang);
+  return passages[0] ?? null;
 }

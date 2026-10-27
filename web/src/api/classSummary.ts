@@ -1,6 +1,6 @@
 import type { Lang } from "../theme/script";
 import { NIPUN_BAND } from "./teacherData";
-import type { Child, Reader } from "./types";
+import type { Child, Level, Reader } from "./types";
 
 export type RosterStatus = "in-target" | "practise" | "new";
 
@@ -15,6 +15,9 @@ export type RosterEntry = {
   wcpm: number | null;
   previousWcpm: number | null;
   accuracy: number | null;
+  /** ASER level from the last placement, and whether a teacher should listen again. */
+  readingLevel: Level | null;
+  levelUncertain: boolean;
 };
 
 export type ClassMetrics = {
@@ -71,6 +74,8 @@ export function toRoster(children: Child[]): { roster: RosterEntry[]; metrics: C
       wcpm,
       previousWcpm: round(c.previous?.wcpm),
       accuracy: c.latest?.accuracy ?? null,
+      readingLevel: c.level ?? null,
+      levelUncertain: c.level_uncertain ?? false,
     };
   });
 

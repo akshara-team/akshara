@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { api } from "../../api";
+import { api, childIdOf, storyFor } from "../../api";
 import { NIPUN_BAND } from "../../api/teacherData";
 import {
   Button,
@@ -41,10 +41,11 @@ export function ChildHome() {
     }
     setBusy(true);
     try {
-      const passages = await api.listPassages(store.lang);
-      const repeat =
-        reuseLast && last ? passages.find((p) => p.id === last.passageId) : undefined;
-      const passage = repeat ?? passages[0];
+      const passage = await storyFor(
+        store.lang,
+        childIdOf(reader.id),
+        reuseLast && last ? last.passageId : null,
+      );
       if (!passage) return;
       setReader(reader);
       setLang(store.lang);

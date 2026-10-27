@@ -80,6 +80,10 @@ export type Child = {
   readings: number;
   latest: ReadingBrief | null;
   previous: ReadingBrief | null;
+  /** ASER level from the last finished placement; null before any. */
+  level?: Level | null;
+  /** The placement leaned on marks the scorer was unsure of: a teacher should listen. */
+  level_uncertain?: boolean;
 };
 
 export type ChildInput = {
@@ -106,3 +110,32 @@ export type Reading = {
   transcript: string;
   words: WordOut[];
 };
+
+/** ASER reading levels, lowest first. */
+export type Level = "beginner" | "letter" | "word" | "paragraph" | "story";
+
+export type MarkState = "correct" | "error" | "unsure";
+
+export type PlacementItem = {
+  task: "letters" | "words" | "paragraph" | "story";
+  text: string;
+  words: string[];
+  passage_id: string | null;
+};
+
+export type Placement = {
+  id: number;
+  child_id: number;
+  level: Level | null;
+  uncertain: boolean;
+  /** What to show next; null once the level is known. */
+  item: PlacementItem | null;
+  done: (PlacementItem & { states: MarkState[]; outcome: string | null })[];
+};
+
+export type PlacementRead = { transcript: string; words: WordOut[]; states: MarkState[] };
+
+export type SkillOut = { id: string; kind: string; text: string; p: number };
+export type Skills = { working_on: SkillOut[]; learned: SkillOut[] };
+
+export type Next = { passage_id: string; reason: string; level: Level | null };

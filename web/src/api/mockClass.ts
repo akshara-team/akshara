@@ -1,6 +1,21 @@
 import type { Lang } from "../theme/script";
-import { MOCK_TITLE, mockReferenceWords } from "./mock";
-import type { Attempt, Child, ChildInput, Reading, ReadingBrief, WordOut } from "./types";
+import { MOCK_PARTS, MOCK_PASSAGE, MOCK_TITLE, mockReferenceWords } from "./mock";
+import { replay, type Task } from "./placement";
+import type {
+  Attempt,
+  Level,
+  Child,
+  ChildInput,
+  MarkState,
+  Next,
+  Placement,
+  PlacementItem,
+  PlacementRead,
+  Reading,
+  ReadingBrief,
+  Skills,
+  WordOut,
+} from "./types";
 
 /**
  * Mock mode's class: the same shapes as `/v1/children`, kept in the browser so the public
@@ -24,7 +39,18 @@ export type PartAttempt = {
   words: WordOut[];
 };
 
-type MockClass = { nextId: number; children: ChildRow[]; attempts: PartAttempt[] };
+type PlacementRow = {
+  id: number;
+  childId: number;
+  items: (PlacementItem & { states: MarkState[] })[];
+};
+
+type MockClass = {
+  nextId: number;
+  children: ChildRow[];
+  attempts: PartAttempt[];
+  placements: PlacementRow[];
+};
 
 const KEY = "akshara.mockclass.v1";
 
@@ -101,6 +127,7 @@ function seed(): MockClass {
     ],
   ];
   return {
+    placements: [],
     nextId: 6,
     children: [
       child(1, "Aarav Gowda", "kn-IN", 3),
@@ -130,6 +157,7 @@ function state(): MockClass {
   try {
     const raw = storage()?.getItem(KEY);
     memory = raw ? (JSON.parse(raw) as MockClass) : seed();
+    memory.placements ??= []; // saved before placements existed
   } catch {
     memory = seed();
   }
@@ -198,10 +226,86 @@ function readingsOf(childId: number): Reading[] {
 const brief = (r: Reading | undefined): ReadingBrief | null =>
   r ? { at: r.at, accuracy: r.accuracy, wcpm: r.wcpm } : null;
 
+function levelOf(childId: number): { level: Level | null; uncertain: boolean } {
+  const done = state()
+    .placements.filter((p) => p.childId === childId)
+    .map((p) => replay(p.items.map((i) => i.states)))
+    .filter((s) => s.level);
+  const last = done[done.length - 1];
+  return { level: last?.level ?? null, uncertain: last?.uncertain ?? false };
+}
+
 function out(row: ChildRow): Child {
   const rs = readingsOf(row.id);
-  return { ...row, readings: rs.length, latest: brief(rs[0]), previous: brief(rs[1]) };
+  const { level, uncertain } = levelOf(row.id);
+  return {
+    ...row,
+    readings: rs.length,
+    latest: brief(rs[0]),
+    previous: brief(rs[1]),
+    level,
+    level_uncertain: uncertain,
+  };
 }
+
+/** Demo placement items, in Kannada like the demo story. */
+const ITEMS: Record<Task, () => PlacementItem> = {
+  letters: () => ({ task: "letters", text: "ಕ  ರ  ನ  ಮ  ಲ", words: ["ಕ", "ರ", "ನ", "ಮ", "ಲ"], passage_id: null }),
+  words: () => ({
+    task: "words",
+    text: "ಮಳೆ  ಮಾತು  ಸರಿ  ಕೊಡೆ  ನೀವು",
+    words: ["ಮಳೆ", "ಮಾತು", "ಸರಿ", "ಕೊಡೆ", "ನೀವು"],
+    passage_id: null,
+  }),
+  paragraph: () => {
+    const text = MOCK_PARTS[0].text;
+    return { task: "paragraph", text, words: text.split(/\s+/), passage_id: MOCK_PASSAGE.id };
+  },
+  story: () => ({
+    task: "story",
+    text: MOCK_PASSAGE.text,
+    words: mockReferenceWords(),
+    passage_id: MOCK_PASSAGE.id,
+  }),
+};
+
+/** What the demo "hears": a Class 2 reader who reads words but stumbles on a paragraph. */
+function demoStates(item: PlacementItem): MarkState[] {
+  const n = item.words.length;
+  const right = { letters: n, words: n - 1, paragraph: Math.floor(n * 0.6), story: Math.floor(n * 0.6) };
+  return item.words.map((_, i) => (i < right[item.task] ? "correct" : "error"));
+}
+
+function placementOut(row: PlacementRow): Placement {
+  const s = replay(row.items.map((i) => i.states));
+  return {
+    id: row.id,
+    child_id: row.childId,
+    level: s.level,
+    uncertain: s.uncertain,
+    item: s.task ? ITEMS[s.task]() : null,
+    done: row.items.map((i, k) => ({ ...i, outcome: s.outcomes[k] ?? null })),
+  };
+}
+
+function findPlacement(id: number): PlacementRow {
+  const row = state().placements.find((p) => p.id === id);
+  if (!row) throw new MockApiError(404, "unknown placement");
+  return row;
+}
+
+const DEMO_SKILLS: Skills = {
+  working_on: [
+    { id: "letter:ಳ", kind: "letter", text: "ಳ", p: 0.31 },
+    { id: "letter:ಷ", kind: "letter", text: "ಷ", p: 0.38 },
+    { id: "sign:ೃ", kind: "sign", text: "ೃ", p: 0.45 },
+  ],
+  learned: [
+    { id: "letter:ಕ", kind: "letter", text: "ಕ", p: 0.97 },
+    { id: "letter:ರ", kind: "letter", text: "ರ", p: 0.96 },
+    { id: "sign:ಾ", kind: "sign", text: "ಾ", p: 0.96 },
+  ],
+};
 
 /** Same status codes as the API, so the screens handle both modes the same way. */
 export class MockApiError extends Error {
@@ -271,6 +375,54 @@ export const mockClass = {
   async childReadings(id: number): Promise<Reading[]> {
     find(id);
     return readingsOf(id);
+  },
+
+  async startPlacement(childId: number): Promise<Placement> {
+    find(childId);
+    const s = state();
+    const id = Math.max(0, ...s.placements.map((p) => p.id)) + 1;
+    const row: PlacementRow = { id, childId, items: [] };
+    s.placements.push(row);
+    persist();
+    return placementOut(row);
+  },
+
+  async getPlacement(id: number): Promise<Placement> {
+    return placementOut(findPlacement(id));
+  },
+
+  async readPlacement(id: number): Promise<PlacementRead> {
+    const item = placementOut(findPlacement(id)).item;
+    if (!item) throw new MockApiError(409, "placement is finished");
+    const states = demoStates(item);
+    const words: WordOut[] = item.words.map((word, index) =>
+      states[index] === "correct"
+        ? { op: "correct", word, said: word, index, check: false }
+        : { op: "skipped", word, said: null, index, check: false },
+    );
+    return { transcript: words.map((w) => w.said ?? "").join(" ").trim(), words, states };
+  },
+
+  async answerPlacement(id: number, states: MarkState[]): Promise<Placement> {
+    const row = findPlacement(id);
+    const item = placementOut(row).item;
+    if (!item) throw new MockApiError(409, "placement is finished");
+    if (states.length !== item.words.length) {
+      throw new MockApiError(422, `expected ${item.words.length} states`);
+    }
+    row.items.push({ ...item, states });
+    persist();
+    return placementOut(row);
+  },
+
+  async childSkills(id: number): Promise<Skills> {
+    find(id);
+    return readingsOf(id).length ? DEMO_SKILLS : { working_on: [], learned: [] };
+  },
+
+  async nextFor(childId: number): Promise<Next> {
+    find(childId);
+    return { passage_id: MOCK_PASSAGE.id, reason: "at the child's level", level: levelOf(childId).level };
   },
 
   /** Files a scored part under the child, as the API does for `child_id` + `session`. */
