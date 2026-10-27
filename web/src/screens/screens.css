@@ -694,3 +694,15 @@ button.screen__link {
     transform: none;
   }
 }
+
+/* Review queue: the word to hear, large, and the marks in a row. */
+.review-word {
+  font-size: var(--text-reading);
+  margin: var(--space-8) 0;
+}
+.review-marks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  margin-top: var(--space-16);
+}

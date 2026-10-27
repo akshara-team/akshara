@@ -20,6 +20,7 @@ const ROUTES = [
   "/teacher/edit/1",
   "/teacher/child/1/placement",
   "/practice",
+  "/teacher/review",
 
   "/teacher/add",
   "/no-such-page",

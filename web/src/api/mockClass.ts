@@ -13,6 +13,8 @@ import type {
   PlacementRead,
   Reading,
   ReadingBrief,
+  ReviewItem,
+  ReviewResult,
   Skills,
   WordOut,
 } from "./types";
@@ -50,6 +52,8 @@ type MockClass = {
   children: ChildRow[];
   attempts: PartAttempt[];
   placements: PlacementRow[];
+  /** Teachers' marks: `${session}/${part}/${word index}` → result. */
+  marks: Record<string, ReviewResult>;
 };
 
 const KEY = "akshara.mockclass.v1";
@@ -127,6 +131,7 @@ function seed(): MockClass {
     ],
   ];
   return {
+    marks: {},
     placements: [],
     nextId: 6,
     children: [
@@ -158,6 +163,7 @@ function state(): MockClass {
     const raw = storage()?.getItem(KEY);
     memory = raw ? (JSON.parse(raw) as MockClass) : seed();
     memory.placements ??= []; // saved before placements existed
+    memory.marks ??= {};
   } catch {
     memory = seed();
   }
@@ -215,9 +221,26 @@ export function summariseReading(group: PartAttempt[]): Reading {
   };
 }
 
+const markKey = (a: PartAttempt, index: number) => `${a.session}/${a.part_index ?? "-"}/${index}`;
+const MARK_OP = { correct: "correct", misread: "substituted", skipped: "skipped" } as const;
+
+/** The part attempt with teachers' marks in place of the scorer's (as `review.apply`). */
+function marked(a: PartAttempt): PartAttempt {
+  const marks = state().marks;
+  return {
+    ...a,
+    words: a.words.map((w) => {
+      const m = w.index == null ? undefined : marks[markKey(a, w.index)];
+      if (!m) return w;
+      const op = MARK_OP[m];
+      return { ...w, op, check: false, said: op === "correct" ? w.word : op === "skipped" ? null : w.said };
+    }),
+  };
+}
+
 function readingsOf(childId: number): Reading[] {
   const groups = new Map<string, PartAttempt[]>();
-  for (const a of state().attempts.filter((x) => x.childId === childId)) {
+  for (const a of state().attempts.filter((x) => x.childId === childId).map(marked)) {
     groups.set(a.session, [...(groups.get(a.session) ?? []), a]);
   }
   return [...groups.values()].map(summariseReading).sort((a, b) => b.at - a.at);
@@ -423,6 +446,63 @@ export const mockClass = {
   async nextFor(childId: number): Promise<Next> {
     find(childId);
     return { passage_id: MOCK_PASSAGE.id, reason: "at the child's level", level: levelOf(childId).level };
+  },
+
+  /** Same rules as `src/akshara/review.py`. */
+  async reviewQueue(lang?: string): Promise<ReviewItem[]> {
+    const s = state();
+    const items: ReviewItem[] = [];
+    for (const c of s.children.filter((x) => !lang || x.language === lang)) {
+      for (const a of s.attempts.filter((x) => x.childId === c.id)) {
+        const total = a.words.filter((w) => w.op !== "inserted").length;
+        const right = a.words.filter((w) => w.op === "correct").length;
+        const slips = a.words.filter((w) => w.op === "substituted" || w.op === "skipped").length;
+        const strong = total > 0 && right / total >= 0.8;
+        for (const w of a.words) {
+          if (w.index == null || s.marks[markKey(a, w.index)]) continue;
+          const reason =
+            w.op === "correct" && w.check
+              ? "accepted as a spelling variant"
+              : (w.op === "substituted" || w.op === "skipped") && strong
+                ? slips === 1
+                  ? "the only slip in a strong reading"
+                  : "a slip in a strong reading"
+                : null;
+          if (!reason) continue;
+          items.push({
+            kind: "word",
+            child_id: c.id,
+            child: c.alias,
+            at: a.at,
+            reason,
+            request_id: `${a.session}/${a.part_index ?? "-"}`,
+            index: w.index,
+            word: w.word,
+            said: w.said,
+            op: w.op,
+            passage_id: a.passage_id,
+            title: a.title,
+            has_audio: false,
+          });
+        }
+      }
+      const { level, uncertain } = levelOf(c.id);
+      if (level && uncertain) {
+        items.push({
+          kind: "placement",
+          child_id: c.id,
+          child: c.alias,
+          at: Date.now() / 1000,
+          reason: `placed at ${level} on marks the scorer was unsure of`,
+        });
+      }
+    }
+    return items.sort((x, y) => y.at - x.at).slice(0, 100);
+  },
+
+  async markWord(requestId: string, index: number, result: ReviewResult): Promise<void> {
+    state().marks[`${requestId}/${index}`] = result;
+    persist();
   },
 
   /** Files a scored part under the child, as the API does for `child_id` + `session`. */

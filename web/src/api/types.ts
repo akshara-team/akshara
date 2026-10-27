@@ -140,4 +140,23 @@ export type Skills = { working_on: SkillOut[]; learned: SkillOut[] };
 
 export type Practice = { word: string; said: string | null; state: MarkState };
 
+export type ReviewResult = "correct" | "misread" | "skipped";
+
+/** Something a teacher should hear: one word of a reading, or a whole placement. */
+export type ReviewItem = {
+  kind: "word" | "placement";
+  child_id: number;
+  child: string;
+  at: number;
+  reason: string;
+  request_id?: string | null;
+  index?: number | null;
+  word?: string | null;
+  said?: string | null;
+  op?: string | null;
+  passage_id?: string | null;
+  title?: string | null;
+  has_audio?: boolean;
+};
+
 export type Next = { passage_id: string; reason: string; level: Level | null };
