@@ -122,5 +122,17 @@
   "check.soon": "Your result will appear in a moment.",
   "home.notMe": "Not me · switch reader",
   "home.changeLanguage": "Change language",
-  "home.target": "{title}: reading speed against the class target"
+  "home.target": "{title}: reading speed against the class target",
+  "practice.start": "Practise these words",
+  "practice.title": "Let’s practise",
+  "practice.wordOf": "Word {n} of {total}",
+  "practice.listen": "Listen to each part",
+  "practice.yourTurn": "Now you read the whole word",
+  "practice.great": "Well read!",
+  "practice.again": "Let’s listen and try once more",
+  "practice.moveOn": "Good try! We will practise this word again another day.",
+  "practice.next": "Next word",
+  "practice.done": "All done! You practised {count} words.",
+  "practice.checking": "Listening…",
+  "practice.failed": "Could not check that. Try again."
 }

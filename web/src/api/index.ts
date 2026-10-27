@@ -11,6 +11,7 @@ import type {
   Passage,
   Placement,
   PlacementRead,
+  Practice,
   Reading,
   Skills,
 } from "./types";
@@ -50,6 +51,10 @@ export type Api = {
   /** Score a recording of the current item; records nothing until answered. */
   readPlacement: (id: number, audio: Blob) => Promise<PlacementRead>;
   answerPlacement: (id: number, states: MarkState[]) => Promise<Placement>;
+  /** A word split into its aksharas, the units the script is read in. */
+  aksharas: (word: string, lang: Lang) => Promise<string[]>;
+  /** Score one re-read of one word; teaches the child's model when `childId` is given. */
+  practise: (audio: Blob | null, word: string, lang: Lang, childId?: number) => Promise<Practice>;
   /** Model audio for one word; null means "no model audio, fall back". */
   feedbackAudio: (word: string, lang: Lang) => Promise<Blob | null>;
 };
@@ -76,6 +81,9 @@ const mock: Api = {
   getPlacement: (id) => mockClass.getPlacement(id),
   readPlacement: (id) => mockClass.readPlacement(id),
   answerPlacement: (id, states) => mockClass.answerPlacement(id, states),
+  aksharas: async (word, lang) => graphemes(word, lang),
+  // The demo has no scorer: a re-read always counts.
+  practise: async (_audio, word) => ({ word, said: word, state: "correct" }),
   feedbackAudio: async () => null, // mock uses the device voice
 };
 
@@ -96,8 +104,18 @@ const live: Api = {
   getPlacement: (id) => liveApi.getPlacement(id),
   readPlacement: (id, audio) => liveApi.readPlacement(id, audio),
   answerPlacement: (id, states) => liveApi.answerPlacement(id, states),
+  aksharas: (word, lang) => liveApi.aksharas(word, lang),
+  practise: (audio, word, lang, childId) =>
+    liveApi.practise(audio ?? new Blob([], { type: "audio/wav" }), word, lang, childId),
   feedbackAudio: (word, lang) => liveApi.feedbackAudio(word, lang),
 };
+
+/** Mock mode's akshara split: the browser's grapheme clusters, close to aksharas. */
+function graphemes(word: string, lang: Lang): string[] {
+  const Seg = (Intl as unknown as { Segmenter?: typeof Intl.Segmenter }).Segmenter;
+  if (!Seg) return [...word];
+  return [...new Seg(lang, { granularity: "grapheme" }).segment(word)].map((s) => s.segment);
+}
 
 export const isMock = import.meta.env.VITE_API_MODE !== "live";
 

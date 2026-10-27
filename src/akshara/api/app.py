@@ -12,6 +12,7 @@ from fastapi.responses import FileResponse, Response
 
 from akshara import passages as passage_bank
 from akshara.api.schemas import (
+    AksharasOut,
     AttemptOut,
     ChildIn,
     ChildOut,
@@ -21,9 +22,11 @@ from akshara.api.schemas import (
     PlacementAnswer,
     PlacementOut,
     PlacementRead,
+    PracticeOut,
     ReadingOut,
     SkillsOut,
 )
+from akshara.core.aksharas import split as split_aksharas
 from akshara.core.align import score
 from akshara.core.parts import split_parts
 from akshara.learner import tutor
@@ -381,6 +384,58 @@ def create_app(
         lang = child_or_404(pl["child_id"])["language"]
         learn(pl["child_id"], lang, list(zip(item["words"], body.states, strict=True)))
         return placement_out(placement_or_404(placement_id))
+
+    # ---- akshara practice: a missed word, broken into its aksharas, then read again
+
+    @app.get("/v1/aksharas", response_model=AksharasOut)
+    def aksharas(lang: str, word: str) -> dict:
+        if lang not in SUPPORTED_LANGUAGES:
+            raise HTTPException(400, f"unsupported language {lang!r}")
+        text = word.strip()
+        if not 1 <= len(text) <= MAX_WORD_CHARS:
+            raise HTTPException(400, f"word must be 1-{MAX_WORD_CHARS} characters")
+        return {"word": text, "aksharas": split_aksharas(text, lang)}
+
+    @app.post("/v1/practice", response_model=PracticeOut)
+    def practice(
+        request: Request,
+        audio: UploadFile = File(...),
+        word: str = Form(..., min_length=1, max_length=MAX_WORD_CHARS),
+        lang: str = Form(...),
+        child_id: int | None = Form(default=None),
+    ) -> dict:
+        """Score a re-read of one word. Costs a Prisma call; teaches the child's model."""
+        limit(request)
+        if lang not in SUPPORTED_LANGUAGES:
+            raise HTTPException(400, f"unsupported language {lang!r}")
+        if child_id is not None:
+            child_or_404(child_id)
+        data = audio.file.read(settings.max_upload_bytes + 1)
+        if len(data) > settings.max_upload_bytes:
+            raise HTTPException(413, "audio too large")
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "practice.wav"
+            path.write_bytes(data)
+            seconds = audio_seconds(path)
+            if seconds is None:
+                raise HTTPException(415, "audio must be a WAV file")
+            if seconds > settings.max_audio_seconds:
+                raise HTTPException(413, f"audio longer than {settings.max_audio_seconds:.0f} s")
+            try:
+                with stt_lock:
+                    transcript = transcribe_reading(stt, path, lang)
+            except CapExceeded as e:
+                raise HTTPException(503, "paid-call cap reached") from e
+            except ProviderError as e:
+                log.warning("provider failed: %s", e)
+                raise HTTPException(502, "speech provider failed") from e
+        s = score(word.strip(), transcript, seconds, loose=lang != "kn-IN")
+        mark = next(m for m in s.marks if m.op != "inserted")
+        trace = [{"op": mark.op, "check": mark.op == "correct" and mark.said != mark.ref_word}]
+        state = tutor.states(trace)[0]
+        if child_id is not None:
+            learn(child_id, lang, [(word.strip(), state)])
+        return {"word": word.strip(), "said": mark.said or transcript or None, "state": state}
 
     # ---- learner model
 
