@@ -1,0 +1,508 @@
+{
+ "seed": 20261025,
+ "children_placed": 2000,
+ "children_tracked": 400,
+ "hi-IN": {
+  "skills": 77,
+  "passages": 97,
+  "difficulty": {
+   "auc_level2_harder": 0.7049180327868853,
+   "n_l1": 61,
+   "n_l2": 36,
+   "auc_by_feature": {
+    "aksharas_per_word": 0.5514571948998178,
+    "conjunct_share": 0.5346083788706739,
+    "sign_share": 0.5006830601092896,
+    "rarity": 0.6211293260473588,
+    "words_per_sentence": 0.6111111111111112,
+    "aksharas": 0.6757741347905283
+   }
+  },
+  "true_levels": {
+   "beginner": 830,
+   "letter": 1157,
+   "word": 8,
+   "paragraph": 0,
+   "story": 5
+  },
+  "placement": {
+   "perfect": {
+    "exact": {
+     "k": 1566,
+     "n": 2000,
+     "rate": 0.783,
+     "lo": 0.7644010517881072,
+     "hi": 0.8005138596500025
+    },
+    "within_one": {
+     "k": 1985,
+     "n": 2000,
+     "rate": 0.9925,
+     "lo": 0.9876619756196671,
+     "hi": 0.9954496635438278
+    },
+    "mean_items": 2.97,
+    "uncertain": {
+     "k": 0,
+     "n": 2000,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.0019171176005129348
+    },
+    "confusion": {
+     "beginner->beginner": 563,
+     "beginner->letter": 262,
+     "beginner->word": 5,
+     "letter->beginner": 116,
+     "letter->letter": 997,
+     "letter->paragraph": 5,
+     "letter->word": 39,
+     "story->letter": 1,
+     "story->paragraph": 1,
+     "story->story": 1,
+     "story->word": 2,
+     "word->beginner": 1,
+     "word->paragraph": 1,
+     "word->story": 1,
+     "word->word": 5
+    }
+   },
+   "prisma": {
+    "exact": {
+     "k": 1495,
+     "n": 2000,
+     "rate": 0.7475,
+     "lo": 0.7279973999127314,
+     "hi": 0.7660536268750149
+    },
+    "within_one": {
+     "k": 1989,
+     "n": 2000,
+     "rate": 0.9945,
+     "lo": 0.9901778357087017,
+     "hi": 0.9969261349843912
+    },
+    "mean_items": 2.9645,
+    "uncertain": {
+     "k": 0,
+     "n": 2000,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.0019171176005129348
+    },
+    "confusion": {
+     "beginner->beginner": 539,
+     "beginner->letter": 283,
+     "beginner->word": 8,
+     "letter->beginner": 157,
+     "letter->letter": 949,
+     "letter->paragraph": 1,
+     "letter->word": 50,
+     "story->paragraph": 2,
+     "story->story": 1,
+     "story->word": 2,
+     "word->letter": 1,
+     "word->paragraph": 1,
+     "word->word": 6
+    }
+   },
+   "fused": {
+    "exact": {
+     "k": 1433,
+     "n": 2000,
+     "rate": 0.7165,
+     "lo": 0.6963468576041745,
+     "hi": 0.7358230304748035
+    },
+    "within_one": {
+     "k": 1987,
+     "n": 2000,
+     "rate": 0.9935,
+     "lo": 0.9889103647969806,
+     "hi": 0.9961974401313133
+    },
+    "mean_items": 3.003,
+    "uncertain": {
+     "k": 31,
+     "n": 2000,
+     "rate": 0.0155,
+     "lo": 0.010940903471396528,
+     "hi": 0.02191678348350051
+    },
+    "confusion": {
+     "beginner->beginner": 595,
+     "beginner->letter": 229,
+     "beginner->paragraph": 1,
+     "beginner->word": 5,
+     "letter->beginner": 285,
+     "letter->letter": 836,
+     "letter->paragraph": 1,
+     "letter->word": 35,
+     "story->word": 5,
+     "word->beginner": 1,
+     "word->letter": 3,
+     "word->paragraph": 2,
+     "word->word": 2
+    }
+   }
+  },
+  "tracking": {
+   "weak": {
+    "auc": 0.8926547210977034,
+    "known": 11639,
+    "unknown": 4109
+   },
+   "as_correct": {
+    "auc": 0.893917511285132,
+    "known": 11639,
+    "unknown": 4109
+   },
+   "as_error": {
+    "auc": 0.8903765758792469,
+    "known": 11639,
+    "unknown": 4109
+   },
+   "ignore": {
+    "auc": 0.8919576519591879,
+    "known": 11621,
+    "unknown": 4108
+   },
+   "perfect": {
+    "auc": 0.909925584192972,
+    "known": 11639,
+    "unknown": 4109
+   }
+  }
+ },
+ "kn-IN": {
+  "skills": 71,
+  "passages": 154,
+  "difficulty": {
+   "auc_level2_harder": 0.6540148448043185,
+   "n_l1": 78,
+   "n_l2": 76,
+   "auc_by_feature": {
+    "aksharas_per_word": 0.5547402159244265,
+    "conjunct_share": 0.4943488529014845,
+    "sign_share": 0.44795883940620784,
+    "rarity": 0.6845479082321188,
+    "words_per_sentence": 0.5486673414304993,
+    "aksharas": 0.6574730094466936
+   }
+  },
+  "true_levels": {
+   "beginner": 969,
+   "letter": 1013,
+   "word": 17,
+   "paragraph": 1,
+   "story": 0
+  },
+  "placement": {
+   "perfect": {
+    "exact": {
+     "k": 1554,
+     "n": 2000,
+     "rate": 0.777,
+     "lo": 0.7582353935260098,
+     "hi": 0.7947025233233062
+    },
+    "within_one": {
+     "k": 1992,
+     "n": 2000,
+     "rate": 0.996,
+     "lo": 0.9921264415501132,
+     "hi": 0.9979717777901781
+    },
+    "mean_items": 2.9745,
+    "uncertain": {
+     "k": 0,
+     "n": 2000,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.0019171176005129348
+    },
+    "confusion": {
+     "beginner->beginner": 661,
+     "beginner->letter": 303,
+     "beginner->word": 5,
+     "letter->beginner": 103,
+     "letter->letter": 882,
+     "letter->paragraph": 3,
+     "letter->word": 25,
+     "paragraph->word": 1,
+     "word->paragraph": 6,
+     "word->word": 11
+    }
+   },
+   "prisma": {
+    "exact": {
+     "k": 1210,
+     "n": 2000,
+     "rate": 0.605,
+     "lo": 0.583393476673113,
+     "hi": 0.6262039286307792
+    },
+    "within_one": {
+     "k": 1900,
+     "n": 2000,
+     "rate": 0.95,
+     "lo": 0.9395556822705139,
+     "hi": 0.9587189118890245
+    },
+    "mean_items": 2.8635,
+    "uncertain": {
+     "k": 0,
+     "n": 2000,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.0019171176005129348
+    },
+    "confusion": {
+     "beginner->beginner": 428,
+     "beginner->letter": 451,
+     "beginner->paragraph": 1,
+     "beginner->word": 89,
+     "letter->beginner": 78,
+     "letter->letter": 770,
+     "letter->paragraph": 8,
+     "letter->story": 1,
+     "letter->word": 156,
+     "paragraph->paragraph": 1,
+     "word->paragraph": 5,
+     "word->story": 1,
+     "word->word": 11
+    }
+   },
+   "fused": {
+    "exact": {
+     "k": 1423,
+     "n": 2000,
+     "rate": 0.7115,
+     "lo": 0.6912529867800798,
+     "hi": 0.7309360724749032
+    },
+    "within_one": {
+     "k": 1963,
+     "n": 2000,
+     "rate": 0.9815,
+     "lo": 0.9746050872834985,
+     "hi": 0.9865487284672076
+    },
+    "mean_items": 3.308,
+    "uncertain": {
+     "k": 335,
+     "n": 2000,
+     "rate": 0.1675,
+     "lo": 0.15177478902984284,
+     "hi": 0.1845000941744983
+    },
+    "confusion": {
+     "beginner->beginner": 573,
+     "beginner->letter": 363,
+     "beginner->word": 33,
+     "letter->beginner": 114,
+     "letter->letter": 836,
+     "letter->paragraph": 3,
+     "letter->word": 60,
+     "paragraph->paragraph": 1,
+     "word->letter": 1,
+     "word->paragraph": 2,
+     "word->story": 1,
+     "word->word": 13
+    }
+   }
+  },
+  "tracking": {
+   "weak": {
+    "auc": 0.8055966381882453,
+    "known": 13685,
+    "unknown": 6256
+   },
+   "as_correct": {
+    "auc": 0.7922574350545288,
+    "known": 13685,
+    "unknown": 6256
+   },
+   "as_error": {
+    "auc": 0.7934487678091363,
+    "known": 13685,
+    "unknown": 6256
+   },
+   "ignore": {
+    "auc": 0.807603140858545,
+    "known": 13215,
+    "unknown": 5430
+   },
+   "perfect": {
+    "auc": 0.83532263539242,
+    "known": 13685,
+    "unknown": 6256
+   }
+  }
+ },
+ "ta-IN": {
+  "skills": 51,
+  "passages": 162,
+  "difficulty": {
+   "auc_level2_harder": 0.6004573170731707,
+   "n_l1": 80,
+   "n_l2": 82,
+   "auc_by_feature": {
+    "aksharas_per_word": 0.5798780487804878,
+    "conjunct_share": 0.5,
+    "sign_share": 0.4868140243902439,
+    "rarity": 0.5248475609756098,
+    "words_per_sentence": 0.5723323170731708,
+    "aksharas": 0.6629573170731707
+   }
+  },
+  "true_levels": {
+   "beginner": 1246,
+   "letter": 737,
+   "word": 13,
+   "paragraph": 0,
+   "story": 4
+  },
+  "placement": {
+   "perfect": {
+    "exact": {
+     "k": 1548,
+     "n": 2000,
+     "rate": 0.774,
+     "lo": 0.755154616738121,
+     "hi": 0.791794802816798
+    },
+    "within_one": {
+     "k": 1993,
+     "n": 2000,
+     "rate": 0.9965,
+     "lo": 0.9927927122682532,
+     "hi": 0.9983035899544378
+    },
+    "mean_items": 2.977,
+    "uncertain": {
+     "k": 0,
+     "n": 2000,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.0019171176005129348
+    },
+    "confusion": {
+     "beginner->beginner": 903,
+     "beginner->letter": 340,
+     "beginner->word": 3,
+     "letter->beginner": 76,
+     "letter->letter": 632,
+     "letter->paragraph": 3,
+     "letter->word": 26,
+     "story->story": 3,
+     "story->word": 1,
+     "word->letter": 3,
+     "word->word": 10
+    }
+   },
+   "prisma": {
+    "exact": {
+     "k": 1373,
+     "n": 2000,
+     "rate": 0.6865,
+     "lo": 0.6658268090900664,
+     "hi": 0.7064581060449423
+    },
+    "within_one": {
+     "k": 1963,
+     "n": 2000,
+     "rate": 0.9815,
+     "lo": 0.9746050872834985,
+     "hi": 0.9865487284672076
+    },
+    "mean_items": 2.9485,
+    "uncertain": {
+     "k": 0,
+     "n": 2000,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.0019171176005129348
+    },
+    "confusion": {
+     "beginner->beginner": 812,
+     "beginner->letter": 405,
+     "beginner->word": 29,
+     "letter->beginner": 125,
+     "letter->letter": 551,
+     "letter->paragraph": 4,
+     "letter->word": 57,
+     "story->paragraph": 1,
+     "story->story": 1,
+     "story->word": 2,
+     "word->beginner": 2,
+     "word->letter": 2,
+     "word->word": 9
+    }
+   },
+   "fused": {
+    "exact": {
+     "k": 1434,
+     "n": 2000,
+     "rate": 0.717,
+     "lo": 0.6968564078919943,
+     "hi": 0.7363115630693831
+    },
+    "within_one": {
+     "k": 1975,
+     "n": 2000,
+     "rate": 0.9875,
+     "lo": 0.9816118319263164,
+     "hi": 0.9915189784131836
+    },
+    "mean_items": 3.0905,
+    "uncertain": {
+     "k": 108,
+     "n": 2000,
+     "rate": 0.054,
+     "lo": 0.044922002716516085,
+     "hi": 0.06478806618314145
+    },
+    "confusion": {
+     "beginner->beginner": 832,
+     "beginner->letter": 389,
+     "beginner->word": 25,
+     "letter->beginner": 107,
+     "letter->letter": 591,
+     "letter->word": 39,
+     "story->paragraph": 1,
+     "story->story": 3,
+     "word->letter": 5,
+     "word->word": 8
+    }
+   }
+  },
+  "tracking": {
+   "weak": {
+    "auc": 0.8839683116153252,
+    "known": 11333,
+    "unknown": 3262
+   },
+   "as_correct": {
+    "auc": 0.8806606350758432,
+    "known": 11333,
+    "unknown": 3262
+   },
+   "as_error": {
+    "auc": 0.8792975463320603,
+    "known": 11333,
+    "unknown": 3262
+   },
+   "ignore": {
+    "auc": 0.8850347319427594,
+    "known": 11298,
+    "unknown": 3223
+   },
+   "perfect": {
+    "auc": 0.9117162469650305,
+    "known": 11333,
+    "unknown": 3262
+   }
+  }
+ }
+}

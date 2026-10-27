@@ -36,3 +36,12 @@ Thumbs.db
 results/*.sqlite
 data/fonts/
 results/bench/
+results/emissions/
+results/transcripts_*/
+results/*.log
+results/changed_ids.json
+
+# Session dumps and exports
+baton-*.txt
+dump.txt
+2026-*.txt
