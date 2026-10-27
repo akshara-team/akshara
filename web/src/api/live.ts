@@ -7,6 +7,7 @@ import type {
   Passage,
   Placement,
   PlacementRead,
+  Practice,
   Reading,
   Skills,
 } from "./types";
@@ -134,6 +135,22 @@ export const liveApi = {
     const res = await fetch(`${BASE}/v1/placements/${id}/read`, { method: "POST", body: form });
     if (!res.ok) throw new ApiError(res.status, await detail(res));
     return (await res.json()) as PlacementRead;
+  },
+
+  async aksharas(word: string, lang: string): Promise<string[]> {
+    const q = `lang=${encodeURIComponent(lang)}&word=${encodeURIComponent(word)}`;
+    return (await getJson<{ aksharas: string[] }>(`/v1/aksharas?${q}`)).aksharas;
+  },
+
+  async practise(audio: Blob, word: string, lang: string, childId?: number): Promise<Practice> {
+    const form = new FormData();
+    form.append("audio", audio, "practice.wav");
+    form.append("word", word);
+    form.append("lang", lang);
+    if (childId !== undefined) form.append("child_id", String(childId));
+    const res = await fetch(`${BASE}/v1/practice`, { method: "POST", body: form });
+    if (!res.ok) throw new ApiError(res.status, await detail(res));
+    return (await res.json()) as Practice;
   },
 
   answerPlacement(id: number, states: MarkState[]): Promise<Placement> {

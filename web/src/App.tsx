@@ -6,6 +6,7 @@ import { ChildHome } from "./screens/child/ChildHome";
 import { ChooseReader } from "./screens/child/ChooseReader";
 import { FeedbackScreen } from "./screens/child/FeedbackScreen";
 import { ReadingScreen } from "./screens/child/ReadingScreen";
+import { PracticeScreen } from "./screens/child/PracticeScreen";
 import { ResultsScreen } from "./screens/child/ResultsScreen";
 import { RoleSelection } from "./screens/child/RoleSelection";
 import { NotFound } from "./screens/NotFound";
@@ -100,6 +101,7 @@ export function App() {
           <Route path="/checking" element={<Screen><CheckingScreen /></Screen>} />
           <Route path="/feedback" element={<Screen><FeedbackScreen /></Screen>} />
           <Route path="/results" element={<Screen><ResultsScreen /></Screen>} />
+          <Route path="/practice" element={<Screen><PracticeScreen /></Screen>} />
 
           {/* Recovery */}
           <Route path="/recovery/:kind" element={<Screen><RecoveryScreen /></Screen>} />

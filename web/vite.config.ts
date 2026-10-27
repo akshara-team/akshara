@@ -2,6 +2,9 @@ import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 
+// Node globals without pulling in @types/node for one variable.
+declare const process: { env: Record<string, string | undefined> };
+
 export default defineConfig({
   test: {
     environment: "jsdom",
@@ -38,7 +41,8 @@ export default defineConfig({
   server: {
     proxy: {
       // Dev: avoid CORS by proxying the API. No backend change needed.
-      "/v1": { target: "http://localhost:8000", changeOrigin: true },
+      // AKSHARA_API points the proxy elsewhere when port 8000 is taken.
+      "/v1": { target: process.env.AKSHARA_API ?? "http://localhost:8000", changeOrigin: true },
     },
   },
 });

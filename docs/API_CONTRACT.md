@@ -169,6 +169,14 @@ placement level (middle band before any), moved up after two readings at 90% or 
 after two under 70%; inside it, the passage with the most words that practise a weak skill,
 skipping the last three read.
 
+### `GET /v1/aksharas?lang=kn-IN&word=ಹಾರುತ್ತಿತ್ತು` · `POST /v1/practice`
+
+Akshara practice. `aksharas` splits a word into the units the script is read in
+(`core/aksharas.py`): `{"word": "ಹಾರುತ್ತಿತ್ತು", "aksharas": ["ಹಾ", "ರು", "ತ್ತಿ", "ತ್ತು"]}`. The app
+plays each through `/v1/feedback/audio` (cached), then the whole word. `practice` (multipart:
+`audio`, `word`, `lang`, optional `child_id`) scores one re-read of one word and returns
+`{word, said, state}`; with `child_id` it teaches the learner model. Costs one Prisma call.
+
 ## Not built (deferred)
 
 - Evon story generation.

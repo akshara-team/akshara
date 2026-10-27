@@ -122,5 +122,17 @@
   "check.soon": "ನಿನ್ನ ಫಲಿತಾಂಶ ಸ್ವಲ್ಪ ಹೊತ್ತಿನಲ್ಲಿ ಬರುತ್ತದೆ.",
   "home.notMe": "ನಾನಲ್ಲ · ಬೇರೆ ಹೆಸರು ಆರಿಸು",
   "home.changeLanguage": "ಭಾಷೆ ಬದಲಿಸು",
-  "home.target": "{title}: ತರಗತಿಯ ಗುರಿಗೆ ಹೋಲಿಸಿ ಓದುವ ವೇಗ"
+  "home.target": "{title}: ತರಗತಿಯ ಗುರಿಗೆ ಹೋಲಿಸಿ ಓದುವ ವೇಗ",
+  "practice.start": "ಈ ಪದಗಳನ್ನು ಅಭ್ಯಾಸ ಮಾಡು",
+  "practice.title": "ಅಭ್ಯಾಸ ಮಾಡೋಣ",
+  "practice.wordOf": "ಪದ {n} / {total}",
+  "practice.listen": "ಪ್ರತಿ ಭಾಗವನ್ನು ಕೇಳು",
+  "practice.yourTurn": "ಈಗ ನೀನು ಇಡೀ ಪದ ಓದು",
+  "practice.great": "ಚೆನ್ನಾಗಿ ಓದಿದೆ!",
+  "practice.again": "ಮತ್ತೆ ಕೇಳಿ ಇನ್ನೊಮ್ಮೆ ಪ್ರಯತ್ನಿಸೋಣ",
+  "practice.moveOn": "ಒಳ್ಳೆಯ ಪ್ರಯತ್ನ! ಈ ಪದವನ್ನು ಇನ್ನೊಂದು ದಿನ ಮತ್ತೆ ಅಭ್ಯಾಸ ಮಾಡೋಣ.",
+  "practice.next": "ಮುಂದಿನ ಪದ",
+  "practice.done": "ಮುಗಿಯಿತು! ನೀನು {count} ಪದಗಳನ್ನು ಅಭ್ಯಾಸ ಮಾಡಿದೆ.",
+  "practice.checking": "ಕೇಳುತ್ತಿದ್ದೇವೆ…",
+  "practice.failed": "ಪರಿಶೀಲಿಸಲು ಆಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸು."
 }

@@ -15,6 +15,7 @@ import { scriptClass } from "../../theme/script";
 import { NIPUN_BAND } from "../../api/teacherData";
 import { useCopy } from "../../i18n";
 import { load } from "../../state/storage";
+import { PRACTICE_WORDS } from "./PracticeScreen";
 import { storyTitle } from "./title";
 
 export function ResultsScreen() {
@@ -38,6 +39,11 @@ export function ResultsScreen() {
   const accuracy = totalWords ? correct / totalWords : 0;
   const wcpm = seconds > 0 ? Math.round((correct / seconds) * 60) : null;
   const missed = words.filter((w) => w.op === "substituted" || w.op === "skipped");
+  // The first few different words the child missed, in reading order.
+  const practise = [...new Set(missed.map((w) => w.word).filter((w): w is string => !!w))].slice(
+    0,
+    PRACTICE_WORDS,
+  );
 
   // Record the reading once, so the child's home can show it later.
   useEffect(() => {
@@ -126,7 +132,12 @@ export function ResultsScreen() {
             </p>
 
             <div className="actions">
-              <Button block onClick={finish}>
+              {practise.length > 0 && (
+                <Button block onClick={() => navigate("/practice", { state: { words: practise } })}>
+                  <Tx k="practice.start" />
+                </Button>
+              )}
+              <Button variant={practise.length ? "ghost" : "primary"} block onClick={finish}>
                 <Tx k="results.finish" />
               </Button>
             </div>
