@@ -20,23 +20,24 @@ import {
 } from "../../components";
 import { useSession } from "../../state/session";
 import { scriptClass } from "../../theme/script";
-import { flowCopy } from "./copy";
+import { useCopy, type CopyKey } from "../../i18n";
+import { storyTitle } from "./title";
 
 /** requesting: waiting for mic permission; processing: turning the clip into a WAV. */
 type Phase = "idle" | "requesting" | "recording" | "processing";
 
-const PROBLEM_TEXT: Record<RecordingError["problem"], string> = {
-  silent: "We could not hear you. Check the microphone is on, then read again.",
-  short: "That was very short. Tap the mic, read the whole part, then tap again.",
+const PROBLEM_TEXT: Record<RecordingError["problem"], CopyKey> = {
+  silent: "read.silent",
+  short: "read.short",
 };
 
 export function ReadingScreen() {
   const { lang, passage, parts, currentPart, setPending } = useSession();
   const navigate = useNavigate();
-  const copy = flowCopy(lang);
+  const { t, Tx } = useCopy(lang);
 
   const [phase, setPhase] = useState<Phase>("idle");
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<CopyKey | null>(null);
   const [elapsed, setElapsed] = useState(0);
   const recorder = useRef<Recorder | null>(null);
   const startedAt = useRef(0);
@@ -75,11 +76,7 @@ export function ReadingScreen() {
       // The clip's own length, as the server measures it, so child and teacher see one WCPM.
       handOver(wavSeconds(audio), audio);
     } catch (e) {
-      setError(
-        e instanceof RecordingError
-          ? PROBLEM_TEXT[e.problem]
-          : "Could not read the recording. Try again.",
-      );
+      setError(e instanceof RecordingError ? PROBLEM_TEXT[e.problem] : "read.failed");
       setPhase("idle");
     }
   }
@@ -104,9 +101,12 @@ export function ReadingScreen() {
   }
 
   const idle = phase === "idle" || phase === "requesting";
-  const label = idle ? copy.tapToStart : phase === "recording" ? copy.recording : copy.listening;
-  const desc = idle ? copy.readAloud : copy.readPace;
-  const title = passage?.title ?? copy.storyTitle;
+  const labelKey: CopyKey = idle
+    ? "read.tapToStart"
+    : phase === "recording"
+      ? "read.recording"
+      : "read.checking";
+  const title = storyTitle(passage);
   const micState = phase === "recording" ? "recording" : phase === "idle" ? "idle" : "processing";
 
   return (
@@ -120,9 +120,7 @@ export function ReadingScreen() {
               <LanguageBadge lang={lang} />
               <div className="metarow__text">
                 <span className="eyebrow">
-                  {passage?.level
-                    ? `Child reading · Level ${passage.level}`
-                    : "Child reading · Demo story"}
+                  <Tx k="read.eyebrow" />
                 </span>
                 <span className={`metarow__title ${scriptClass(lang)}`} lang={lang}>
                   {title}
@@ -132,13 +130,16 @@ export function ReadingScreen() {
 
             <div className="context">
               <div className="context__row">
-                <span>{copy.partOf(currentPart, total)}</span>
+                <Tx k="common.part" vars={{ n: currentPart, total }} />
                 <ProgressDots total={total} current={currentPart} />
               </div>
-              <ProgressBar value={(currentPart / total) * 100} label="Reading progress" />
+              <ProgressBar
+                value={(currentPart / total) * 100}
+                label={t("common.part", { n: currentPart, total })}
+              />
             </div>
 
-            <ListenButton text={text} lang={lang} label={copy.listen} block />
+            <ListenButton uiLang={lang} text={text} lang={lang} label={t("common.listen")} block />
           </div>
 
           {/* Right: the passage and the mic. */}
@@ -151,13 +152,12 @@ export function ReadingScreen() {
             </div>
             {passage?.credit?.publisher && (
               <p className="note">
-                Story from{" "}
                 {passage.credit.url ? (
                   <a href={passage.credit.url} target="_blank" rel="noreferrer">
-                    {passage.credit.publisher}
+                    <Tx k="read.storyFrom" vars={{ publisher: passage.credit.publisher }} />
                   </a>
                 ) : (
-                  passage.credit.publisher
+                  <Tx k="read.storyFrom" vars={{ publisher: passage.credit.publisher }} />
                 )}
                 {passage.credit.licence ? ` · ${passage.credit.licence.split(" (")[0]}` : ""}
               </p>
@@ -167,20 +167,24 @@ export function ReadingScreen() {
               <MicButton
                 state={micState}
                 onClick={onMic}
-                label={label}
+                label={t(labelKey)}
               />
-              <p className="controls__label">{label}</p>
+              <p className="controls__label">
+                <Tx k={labelKey} />
+              </p>
               {phase === "recording" && (
                 // role="timer" is not announced every tick, unlike aria-live.
                 <p className="controls__timer" role="timer" aria-label={`Recording, ${elapsed} s`}>
                   {elapsed}s
                 </p>
               )}
-              <p className="controls__desc">{desc}</p>
+              <p className="controls__desc">
+                <Tx k={idle ? "read.readAloud" : "read.readPace"} />
+              </p>
 
               {error && (
                 <p className="field__error" role="alert">
-                  {error}
+                  <Tx k={error} />
                 </p>
               )}
 
@@ -189,7 +193,7 @@ export function ReadingScreen() {
                   variant="ghost"
                   onClick={() => handOver(MOCK_DURATIONS[currentPart - 1] ?? 12, null)}
                 >
-                  Use demo reading
+                  <Tx k="read.demoReading" />
                 </Button>
               )}
             </div>

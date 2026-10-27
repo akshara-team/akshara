@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { api } from "../api";
 import { resetMockClass } from "../api/mockClass";
 import { App } from "../App";
+import { t } from "../i18n";
 
 function at(path: string) {
   return render(
@@ -109,12 +110,12 @@ describe("MVP routes", () => {
 
   it("never sends a retry to a page that does not exist", () => {
     at("/recovery/microphone");
-    fireEvent.click(screen.getByRole("button", { name: /try microphone again/i }));
+    fireEvent.click(screen.getByRole("button", { name: t("kn-IN", "recovery.microphone.primary") }));
     expect(screen.queryByText(/nothing here/i)).toBeNull();
   });
 
   it("falls back to the service-error recovery for an unknown kind", () => {
     at("/recovery/nonsense");
-    expect(screen.getByText(/something got mixed up/i)).toBeTruthy();
+    expect(screen.getByText(t("kn-IN", "recovery.service.title"))).toBeTruthy();
   });
 });

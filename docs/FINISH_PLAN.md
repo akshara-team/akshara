@@ -164,7 +164,7 @@ conflict with ours. Claude wires his pieces into the screens.
 
 | # | Daniel's task | Size | When | Needs from us |
 |---|---|---|---|---|
-| D1 | Kannada and Tamil child-screen text: fill `web/src/i18n/kn.json` and `ta.json` from `en.json` | 1–2 h | Oct 28–30 | `en.json` and the loader merged by Oct 28 noon |
+| D1 | Review the Kannada and Tamil child-screen text Claude drafted (`web/src/i18n/kn.json`, `ta.json`), fix what sounds wrong | 1 h | Oct 28–30 | done: drafts and loader merged Oct 27 |
 | D2 | NIPUN bands: `web/src/lib/nipun.ts` + `web/src/components/BenchmarkBand.tsx`, with tests | 1–2 h | Oct 28–30 | nothing |
 | D3 | Rewards: `web/src/state/rewards.ts` + `web/src/components/RewardsStrip.tsx`, with tests | 1–2 h | Oct 30–31 | nothing |
 | D4 | Native test pass on his phone in Kannada and Tamil, issues filed on GitHub | 1 h | Nov 1 | the finished build |
@@ -178,9 +178,10 @@ conflict with ours. Claude wires his pieces into the screens.
 > No emoji (icons are SVG in `components/icons.tsx`); colours and sizes only from
 > `src/theme/theme.css`; native text gets `lang` via `scriptClass()`.
 >
-> **D1 `feat/i18n-kn-ta`.** Copy every key of `web/src/i18n/en.json` into `kn.json` and
-> `ta.json` with natural text for a 7-year-old (short, warm, no English words). Keep `{name}`
-> style placeholders. The key-parity test must pass.
+> **D1 `feat/i18n-kn-ta`.** `web/src/i18n/kn.json` and `ta.json` are complete first drafts.
+> Review them as a native speaker following `web/src/i18n/REVIEW.md`: read every child screen
+> in mock mode, fix wording that a 7-year-old would not say or hear in class, keep every
+> `{placeholder}`. `npm test -- i18n` must pass. Mark the files reviewed in `REVIEW.md`.
 >
 > **D2 `feat/nipun-bands`.** `src/lib/nipun.ts` exports
 > `nipunBand(lang: "kn-IN" | "ta-IN" | "hi-IN", grade: number, wcpm: number): { band: "below" | "at" | "above"; low: number; high: number } | null`
