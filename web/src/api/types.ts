@@ -33,6 +33,12 @@ export type Passage = {
   text: string;
   /** The parts the child reads one at a time, from the backend's split_parts(). */
   parts?: string[];
+  /** From the passage catalogue; absent in older backends and the mock fixtures. */
+  title?: string | null;
+  /** ASER-style level of the source book ("1"-"4"). */
+  level?: string | null;
+  /** StoryWeaver texts are CC BY, so the credit is shown with the story. */
+  credit?: { publisher?: string; url?: string; licence?: string } | null;
 };
 
 export type LearnerSummary = {
