@@ -21,10 +21,17 @@ Two data modes, chosen by `VITE_API_MODE` in `.env` (see `.env.example`):
 
 ## Screens
 
-Child flow: role selection → choose reader → reading → **checking** → after-part feedback →
-final results. Recovery: microphone permission, story loading, connection delay, offline,
-speech-recognition failure, service error (`/recovery/:kind`). Teacher: dashboard, story
-picker, child profile and history, attempt details, add/edit child.
+Child flow: role selection → choose reader → reading (with "Is it quiet here?") → **checking**
+→ after-part feedback → final results → **practice** (missed words, akshara by akshara). Child
+screens are in the child's language (`src/i18n/`). Recovery: microphone permission, story
+loading, connection delay, offline, speech-recognition failure, service error
+(`/recovery/:kind`). Teacher: class, child profile and history, reading details, placement,
+**review queue**, story picker, add/edit child (with a parent's consent, and "delete this
+child's data"), and **How reliable is this?** (`/teacher/reliability`).
+
+**Offline:** a reading that cannot be sent is kept in IndexedDB (`src/state/outbox.ts`) and
+sent when the connection is back, with the request id it was recorded with, so the server
+scores it once.
 
 The child lands on **`/home`** once a name is saved — not back at role selection. It shows
 their name and language, one big **Read a story**, **Read again**, the last three readings
@@ -35,10 +42,10 @@ with word chips, and three progress bars. A returning child goes straight there 
 
 The reader, language and reading history live in `localStorage` under `akshara.v1`
 (`src/state/storage.ts`): newest first, deduped by session id, capped at 50 readings, and
-defensive against a missing or blocked store. When the API answers, the learner's row from
-`/v1/class/summary` is shown as a synced total beside the local history — local readings stay
-the history because the API has no per-attempt endpoint. It is not synced across devices,
-and the home screen says so.
+defensive against a missing or blocked store. For a child the teacher added, the home screen
+also shows how many readings the teacher sees (`GET /v1/children/{id}`); the full history is on
+the teacher's side (`/v1/children/{id}/readings`). Readings waiting to be sent from the offline
+queue are counted on the home screen too.
 
 ## Desktop layouts
 
@@ -123,7 +130,7 @@ src/
 - **Parts.** Live mode reads the passage in the parts the API sends (`passage.parts`, from
   `core/parts.py`) and posts `part_index`, so each part is scored on its own. An older
   backend with no `parts` falls back to one part.
-- **Not built yet:** no Lighthouse gate (manual step).
+- **Not built yet:** no Lighthouse gate (a manual step at Checkpoint A).
 
 ## Roadmap
 
@@ -133,7 +140,9 @@ Each phase is its own branch → PR → CI green on the branch → merge.
 - [x] Phase 2 — real missed-word audio (`/v1/feedback/audio`, cached Timbre)
 - [x] Phase 3 — story chunking (real parts from the API, scored per part)
 - [x] Phase 4 — bundle-size budget in CI
-- [ ] Phase 5 — deploy the demo (GitHub Pages, mock mode): workflow ready, live once the repo is public
+- [ ] Phase 5 — deploy the demo (GitHub Pages, mock mode): workflow ready and dry-run built under `/akshara/`, live once the repo is public
+
+The product work after this (WP0–WP10) is in [../docs/FINISH_PLAN.md](../docs/FINISH_PLAN.md).
 - [x] Phase 6 — accessibility pass (see Accessibility below)
 
 ## Accessibility
@@ -147,9 +156,10 @@ Each phase is its own branch → PR → CI green on the branch → merge.
   a different word", ...), since colour and icon alone are not enough.
 - **Recording timer** uses `role="timer"`, which is not announced every second.
 - **Names** on every progress bar and on the avatar picker buttons (found by axe).
-- **Tests** (`src/a11y.test.tsx`): axe-core on 12 routes (colour contrast is off there, as
+- **Tests** (`src/a11y.test.tsx`): axe-core on 20 routes (colour contrast is off there, as
   jsdom has no layout), the skip link, focus after navigation, and a WCAG AA check of the
-  theme's text colour pairs (4.5:1) and the stop icon on the red mic (3:1). The disabled
+  theme's text colour pairs (4.5:1, including error text and the delete button) and the stop
+  icon on the red mic (3:1). The disabled
   "processing" mic is below 3:1 but WCAG exempts disabled controls.
 - **Not done:** a pass with a real screen reader (NVDA/TalkBack) on a device.
 

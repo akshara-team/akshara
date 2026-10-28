@@ -9,6 +9,7 @@ import theme from "./theme/theme.css?raw";
 const ROUTES = [
   "/",
   "/switch",
+  "/home",
   "/reader",
   "/read/kn-101",
   "/recovery/microphone",
@@ -20,6 +21,8 @@ const ROUTES = [
   "/teacher/edit/1",
   "/teacher/child/1/placement",
   "/practice",
+  "/feedback",
+  "/results",
   "/teacher/review",
   "/teacher/reliability",
 

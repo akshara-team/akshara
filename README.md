@@ -1,6 +1,6 @@
 # Akshara
 
-A reading screener for early-grade children in Kannada, Tamil and Hindi, built on Gnani AI's speech models, with a measured reliability report.
+A reading tutor for early-grade children in Kannada, Tamil and Hindi, built on Gnani AI's speech models, with a measured reliability report. It listens to a child read, helps straight away, and tells the teacher who needs help with what.
 
 Entry for the [Great Indian AI Internship Challenge](https://www.gnani.ai/internship) (deadline Nov 10, 2026).
 
@@ -12,27 +12,38 @@ Entry for the [Great Indian AI Internship Challenge](https://www.gnani.ai/intern
 
 ## How it works
 
-1. A short passage is read aloud by the child.
-2. **Prisma v2.5** transcribes it word for word.
-3. Akshara aligns the transcript to the passage, counts correct words per minute, and flags skipped or misread words.
-4. **Timbre v3.0** reads passages aloud and says missed words correctly.
+1. **The teacher adds a child**: a nickname, the class, the language, and the date a parent
+   agreed. A short ASER-style placement (paragraph, story or words, letters) finds their level.
+2. **The child reads a story** picked for that level, one part at a time. **Prisma v2.5**
+   transcribes it word for word, and Akshara aligns the transcript to the text and marks each
+   word right, different or skipped.
+3. **Help right away.** Missed words are split into aksharas; **Timbre v3.0** says each one,
+   then the whole word, and the child reads it again.
+4. **A learner model** tracks which letters, vowel signs and conjuncts each child knows, and
+   picks the next story.
+5. **The teacher** sees the class, listens to the marks worth checking (a clip of just that
+   word) and corrects them; a teacher's mark replaces the computer's.
 
-Speech-to-text tends to correct a misread word into the expected one, which hides the mistake. We measured how often: skipped and unrelated words are caught almost always, but a single wrong consonant only 8 times in 39. A pause-based re-check did not help, so the app says so on every result. Read [docs/WRITEUP.md](docs/WRITEUP.md) (one page) or [docs/RESULTS.md](docs/RESULTS.md) (all numbers).
+The child screens are in the child's language. Readings made with no connection are kept and
+sent later. Recordings are deleted after 30 days, and a teacher can delete a child's data at
+once.
+
+Speech-to-text tends to correct a misread word into the expected one, which hides the mistake. We measured how often: skipped and unrelated words are caught almost always, but a single wrong consonant only 8 times in 39. A pause-based re-check and a second acoustic check did not fix it, so the app says so: on every result, and on a "How reliable is this?" page built from the saved results. Read [docs/WRITEUP.md](docs/WRITEUP.md) (one page) or [docs/RESULTS.md](docs/RESULTS.md) (all numbers).
 
 ## Status
 
-| Stage | State |
+| Part | State |
 |---|---|
-| Word alignment and scoring | Done, with tests |
-| Prisma and Timbre clients | Done, tested live |
-| Reliability study (synthetic audio, 3 languages, 90 passages, 4 audio conditions) | Done, in [docs/RESULTS.md](docs/RESULTS.md) |
-| Mitigation for autocorrected mistakes | Tried, does not help (result recorded) |
-| HTTP API, storage, offline fixture provider, CI gate | Done |
-| Reading screen, trace view, class summary, limits notice | Done (v0.1); microphone path untested live |
-| **Web app** (`web/`, Vite + React + TS PWA) | Child flow, child home with saved progress, teacher screens and recovery states; mock + live modes, passages read in parts; accessibility checks; 80 tests, own CI job. See [web/README.md](web/README.md) |
-| Missed-word audio | Done: `GET /v1/feedback/audio`, Timbre behind a content cache |
-| Performance gate | Done: bundle budget in CI (73 kB JS / 78 kB total gzip) |
-| Demo video | [docs/demo/akshara_demo.mp4](docs/demo/akshara_demo.mp4) |
+| Scorer, Prisma and Timbre clients, caches, credit cap | Done, tested |
+| Reliability studies (synthetic audio, 3 languages, 90 passages, 4 audio conditions) | Done, in [docs/RESULTS.md](docs/RESULTS.md) |
+| Mitigations (chunked re-check, per-word acoustic check, fusion) | Tried and measured; not in the app, as they did not beat Prisma alone |
+| Learner model: skill graph, mastery tracking, placement, next story | Done, in the app; measured on simulated children |
+| Web app (`web/`, React PWA): child flow, practice, teacher class, profiles, placement, review queue, reliability page | Done, mock and live modes; 147 tests including axe on 20 routes |
+| Consent, 30-day recording deletion, delete a child's data | Done |
+| Offline readings, noise check | Done |
+| End-to-end tests, one child from consent to deletion | Done (API and screens) |
+| NIPUN speed bands, stars and streak | In progress (Daniel) |
+| Demo video | [docs/demo/akshara_demo.mp4](docs/demo/akshara_demo.mp4) (an earlier version) |
 
 **Where things stand, and what is next:** [docs/STATUS.md](docs/STATUS.md).
 
@@ -84,6 +95,8 @@ set `VITE_API_MODE=live` to talk to the API. Screens, data modes and known gaps:
 | [docs/MILESTONES.md](docs/MILESTONES.md) | Checklist of what is done and what is next |
 | [docs/RESULTS.md](docs/RESULTS.md) | Measured results and limits |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Components and data flow |
+| [docs/API_CONTRACT.md](docs/API_CONTRACT.md) | Every endpoint |
+| [docs/FINISH_PLAN.md](docs/FINISH_PLAN.md) | The plan to Nov 10 |
 | [docs/GNANI_API.md](docs/GNANI_API.md) | Gnani API notes and quirks |
 | [docs/WORKLOG.md](docs/WORKLOG.md) | Work log |
 | [web/README.md](web/README.md) | Frontend: run modes, screens, known gaps |
@@ -96,7 +109,7 @@ set `VITE_API_MODE=live` to talk to the API. Screens, data modes and known gaps:
 
 ## Data
 
-Synthetic audio only. No real children's voices. See [CONTRIBUTING.md](CONTRIBUTING.md#data-rules).
+Synthetic audio only. No real children's voices, names or ID numbers. In the app, children are nicknames, kept only with a parent's consent. See [CONTRIBUTING.md](CONTRIBUTING.md#data-rules).
 
 ## Team
 

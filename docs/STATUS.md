@@ -1,38 +1,59 @@
-# Status — what is done and what is next
+# Status: what is done and what is next
 
-*Last updated 2026-10-21. Keep this file current when work lands; it is the fastest way for
-either of us to see where the project stands.*
+*Last updated 2026-10-28. Keep this file current when work lands; it is the fastest way for
+either of us to see where the project stands. The day-by-day plan is
+[FINISH_PLAN.md](FINISH_PLAN.md); the log is [WORKLOG.md](WORKLOG.md).*
+
+## What Akshara is now
+
+A reading tutor, not only a screener. A teacher adds a child (a nickname, with a parent's
+consent) and places them with a short ASER-style test. The child reads a story picked for their
+level, part by part, and sees which words were right. Missed words are practised straight away:
+split into aksharas, said by Timbre, read again. A learner model tracks which letters and sounds
+each child knows and picks the next story. The teacher sees the class, listens to the marks
+worth checking and corrects them, and can read how reliable the marks are.
 
 ## Where things stand
 
 | Area | State |
 |---|---|
-| Scorer with spelling-variant rules | Done, tested |
-| Prisma / Timbre clients, call ledger and cap | Done |
-| Reliability study (90 passages, 4 audio conditions) | Done — [RESULTS.md](RESULTS.md) |
-| Chunked re-check mitigation | Tried; does not help; documented in [RESULTS.md](RESULTS.md) |
-| FastAPI service, SQLite store, fixture provider, Docker, CI | Done |
-| Web app (`web/`, Vite + React + TS PWA) | MVP: child flow, teacher screens, six recovery states, child home, saved progress |
-| Missed-word audio (`GET /v1/feedback/audio`) | Done: Timbre behind a content cache |
-| Bundle-size budget in CI | Done: 120 kB JS / 160 kB total gzip |
-| **Deploy the demo** | **Ready, waits on public repo** — `pages.yml` skips while the repo is private |
-| Story chunking (real parts) | Done: `parts` on passages, `part_index` scored per part |
-| Accessibility pass | Done: skip link, focus on route change, `lang` on scripts, axe in tests |
+| Scorer (alignment, spelling-variant rules) | Done, tested |
+| Prisma / Timbre clients, transcript and audio caches, call ledger and cap | Done |
+| Reliability studies (90 passages, 4 audio conditions, chunked re-check) | Done: [RESULTS.md](RESULTS.md) |
+| Script tables, per-word audio check (MMS), fusion scorer (Phases 1–3) | Built and measured; not in the app (fusion missed its pre-registered margins, so the app keeps Prisma's marks) |
+| Learner model: skill graph, BKT mastery, ASER placement, next story (Phase 4) | Done, in the app; measured on simulated children |
+| Microphone, live (WP0) | Done in Chrome with synthetic clips; one reading into a real mic still to do |
+| Teacher data: children, profiles, readings (WP1) | Done |
+| Child screens in the child's language (WP6) | Text files done; kn/ta/hi are Claude's drafts, not yet reviewed; spoken prompts not done |
+| Placement and learner model in the app (WP2, WP3) | Done |
+| Akshara practice with Timbre (WP4) | Done, checked live |
+| Teacher review queue with word clips (WP5) | Done; not yet checked in a browser with a real recording |
+| Trust: reliability page, consent, 30-day deletion, delete a child (WP7) | Done |
+| NIPUN benchmark bands (WP8) | Waits on Daniel's D2 |
+| Offline readings, noise check (WP9) | Done; rewards (stars, streak) wait on Daniel's D3 |
+| End-to-end tests, Pages dry run, docs (WP10) | Done; the hands-on browser pass and Lighthouse are Checkpoint A |
+| Public demo (GitHub Pages, mock mode) | Builds and serves under `/akshara/`; goes live when the repo is public |
 
 ## Who owns what
 
-- **Achindra** — scorer, providers, service/store/API, the studies, demo video, docs backbone.
-- **Daniel** — the web app, the API contract, the frontend stack decision, and the Kannada +
-  Tamil go/no-go passages.
+- **Achindra**: scorer, providers, service, store and API, the studies, demo video, docs.
+- **Daniel**: the original web app, the API contract, the frontend stack, the Kannada and Tamil
+  passages; now D1 (review the Kannada and Tamil text), D2 (NIPUN bands), D3 (rewards), D4
+  (a test pass on his phone).
+- Claude writes most of the remaining code; see [FINISH_PLAN.md](FINISH_PLAN.md).
 
 Both are interviewed separately, so each should be able to explain their own part.
 
 ## What is next, in order
 
-1. **Deploy** — the Pages workflow is in place, but the free plan serves Pages only from public
-   repos. When the repo goes public: Settings → Pages → Source: GitHub Actions, then re-run the
-   "Pages" workflow. The demo will be at `https://achindra2003.github.io/akshara/`.
-2. **Submission track** — post the demo, make the repo public, fill in the form (both of us).
+1. **Checkpoint A** (Achindra, about 30 minutes): use the app as a teacher and as a child in
+   live mode. Check that the right word plays in Review, switch the network off mid-story, try
+   "Is it quiet here?", read one sentence into a real microphone, run Lighthouse.
+2. **Daniel**: send him his brief (in FINISH_PLAN.md). D1 review, D2 bands, D3 rewards.
+3. **Hindi text review** (Achindra): `web/src/i18n/hi.json`.
+4. **Decisions**: where Evon runs (or leave it out), and entering as a pair or solo.
+5. **Go public, post** (Nov 2–3): make the repo public, turn on Pages, post the demo, share it
+   for a week before the Nov 10 cutoff. **Submit by Nov 9.**
 
 ## How to run it
 
@@ -45,14 +66,19 @@ Both are interviewed separately, so each should be able to explain their own par
 
 ## Current numbers
 
-- **114 Python tests**, **80 web tests**; CI runs both jobs on every PR.
-- Production web bundle: **73 kB JS / 78 kB total gzip**.
-- Ledger: **1,930** paid calls logged in `results/ledger.jsonl` (both machines merged). The
-  `AKSHARA_MAX_CALLS` cap counts this file, so with a cap of 2,500 about 570 calls are left
-  before it needs raising. Credits themselves are not the limit (about 0.05-0.1 per call).
+- **259 Python tests**, **147 web tests** (axe on 20 routes); CI runs both on every PR.
+- End-to-end, one child from consent to deletion: `tests/test_end_to_end.py` (API) and
+  `web/src/endToEnd.test.tsx` (screens, mock mode).
+- Production web bundle: **99.6 kB JS / 112 kB total gzip** (budget 120 / 160).
+- Ledger: **2,136** paid calls logged in `results/ledger.jsonl`. The `AKSHARA_MAX_CALLS` cap
+  counts this file. Credits are not the limit (5,000 programme credits, about 0.05–0.1 a call).
 
-## Known limits (already stated in the docs)
+## Known limits (stated in the app and the docs)
 
-Synthetic audio only, adults' voices not children's; near-sound misreads are often hidden by
-the transcriber (measured: 8 of 39 caught); the teacher screens use invented demo data; the
-child's progress is saved on this device only.
+- Synthetic voices only: no child has used it, and no teacher has marked the same readings to
+  measure agreement.
+- A change in one sound is mostly not caught (8 of 39); the reliability page says so.
+- Word clips in Review are estimated from pauses, since Prisma gives no word timings.
+- Placement passages are short book blurbs, weaker evidence than the paper ASER test.
+- Child text in Kannada, Tamil and Hindi has not been reviewed by a native speaker yet.
+- No logins: one teacher per server. The noise thresholds are uncalibrated guesses.
