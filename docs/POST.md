@@ -24,6 +24,9 @@ recordings after 30 days and adds no child without a parent's consent.
 
 Tested on synthetic voices so far; children are next.
 
+Built by Achindra (the scorer, the Gnani integrations, the reliability study) and Daniel (the
+web app, and the Kannada and Tamil text).
+
 Demo: <link>
 Code: <link>
 
@@ -41,4 +44,4 @@ teacher who needs what. Built on Gnani's Prisma, Timbre and Evon. <link> #GnaniA
 - Lead with the child and the teacher; the reliability work is the proof, not the plot.
 - Keep exact catch rates for the write-up and the app. In a post they read as a complaint.
 - Say "synthetic voices so far". Never imply children have used it.
-- If entering as a pair, name both and what each built.
+- We enter as a pair: name both and what each built. Tag Daniel once he shares his profile.

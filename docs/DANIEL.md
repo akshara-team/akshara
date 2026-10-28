@@ -3,6 +3,10 @@
 *Written 2026-10-28. Everything you need is in this file. The full plan is
 [FINISH_PLAN.md](FINISH_PLAN.md) if you want the context.*
 
+**We're entering as a pair** (the Two-Person Army award included). Interviews are one to one,
+so be ready to explain the parts you built: the web app, the API contract, the frontend stack
+choice, and the Kannada and Tamil text.
+
 ## What Akshara is now
 
 A reading tutor in Kannada, Tamil and Hindi. A teacher adds a child (a nickname, with a parent's
