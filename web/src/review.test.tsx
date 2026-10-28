@@ -32,7 +32,8 @@ describe("review queue (mock mode)", () => {
         fireEvent.keyDown(window, { key: "1" });
       });
     }
-    expect(await screen.findByText(/nothing to hear/i)).toBeTruthy();
+    // generous: under a full parallel run the last re-render can take over a second
+    expect(await screen.findByText(/nothing to hear/i, undefined, { timeout: 4000 })).toBeTruthy();
     expect(await api.reviewQueue("kn-IN")).toEqual([]);
 
     const after = (await api.childReadings(1))[0];
