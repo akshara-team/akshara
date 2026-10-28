@@ -1,9 +1,9 @@
-# Akshara: what a transcript-based reading screener can and cannot see
+# Akshara: a reading tutor that listens, and a measured map of what it can hear
 
-Akshara checks early-grade reading aloud in Kannada, Tamil and Hindi. A child reads a short passage; the app transcribes it with Gnani Prisma v2.5, aligns the transcript to the text, and marks each word green (read correctly) or red (skipped or different). Gnani Timbre v3.0 made every test clip. Numbers below come from [RESULTS.md](RESULTS.md) and regenerate from cached results.
+Akshara is a reading tutor for early-grade children in Kannada, Tamil and Hindi. A child reads a story aloud; Gnani Prisma v2.5 transcribes it word for word, Akshara aligns the transcript to the text and marks each word green (read correctly) or red (skipped or different), and Gnani Timbre v3.0 helps with the missed words. Before trusting those marks with children, we measured them. Timbre made every test clip. Numbers below come from [RESULTS.md](RESULTS.md) and regenerate from cached results.
 
 ## The question
-A reading screener should catch the mistakes teachers care about. A speech-to-text system is trained to write the *intended* word, so it may quietly fix a mispronunciation. How often does that happen?
+A tutor should catch the mistakes teachers care about. A speech recogniser is trained to write the word a speaker *meant*, which is what most products want; a reading tutor needs the word the child actually said. So it may quietly fix a mispronunciation. How often does that happen? We measured it on Prisma in verbatim mode; we expect the same pull in any recogniser trained this way, though we have not tested others.
 
 ## What we measured
 90 passages (StoryWeaver book descriptions, 156 planted reading mistakes), read by Timbre voices, transcribed by Prisma:
@@ -15,7 +15,7 @@ A reading screener should catch the mistakes teachers care about. A speech-to-te
 | Only the first half of a word | 28 of 34 |
 | One consonant changed (a sound-alike) | **8 of 39 (21%)** |
 
-Skips and clear substitutions are reliable. A single wrong consonant mostly is not: Prisma writes the correct word instead.
+Skips and clear substitutions are reliable. A single wrong consonant mostly is not: the transcript shows the correct word instead. That shaped the product more than any other result.
 
 ## What we tried
 - **Is it sentence context?** Each changed word was spoken alone. The result was mixed (4 non-word reads, 18 corrected to the original, 17 other), so we cannot separate the transcriber from the synthetic voice.
@@ -38,4 +38,4 @@ Akshara is built as a tutor around that limit rather than hiding it. It keeps Pr
 - Prisma returns no word timings or confidence, which limits what a second pass can do.
 
 ## Models used
-Gnani Prisma v2.5 (speech to text, `format=verbatim`, no `bias_list`) and Timbre v3.0 (text to speech). Scoring is plain code with no language model.
+Gnani Prisma v2.5 (speech to text, `format=verbatim`, no `bias_list`), Timbre v3.0 (text to speech) and Evon v3.3 (practice sentences, offline, every sentence checked by code and approved by a teacher). Scoring is plain code with no language model.

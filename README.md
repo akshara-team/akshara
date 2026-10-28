@@ -1,6 +1,6 @@
 # Akshara
 
-A reading tutor for early-grade children in Kannada, Tamil and Hindi, built on Gnani AI's speech models, with a measured reliability report. It listens to a child read, helps straight away, and tells the teacher who needs help with what.
+**A reading tutor that listens.** A child reads a story aloud in Kannada, Tamil or Hindi. Akshara hears every word, helps with the ones they missed, akshara by akshara, and tells the teacher who needs help with what. Built on all three of Gnani AI's models: Prisma hears the child, Timbre speaks to them, Evon writes their practice.
 
 Entry for the [Great Indian AI Internship Challenge](https://www.gnani.ai/internship) (deadline Nov 10, 2026).
 
@@ -8,7 +8,8 @@ Entry for the [Great Indian AI Internship Challenge](https://www.gnani.ai/intern
 
 - Only 23.4% of Class 3 children in rural India can read a Class 2 text (ASER 2024).
 - NIPUN Bharat sets oral reading targets of about 35–54 correct words per minute.
-- Measuring this today means a teacher listening to each child with a stopwatch.
+- What works is known: listen to each child read, catch the mistake, practise it, repeat. One
+  teacher with 40 children cannot do that every day.
 
 ## How it works
 
@@ -21,14 +22,17 @@ Entry for the [Great Indian AI Internship Challenge](https://www.gnani.ai/intern
    then the whole word, and the child reads it again.
 4. **A learner model** tracks which letters, vowel signs and conjuncts each child knows, and
    picks the next story.
-5. **The teacher** sees the class, listens to the marks worth checking (a clip of just that
+5. **Practice sentences.** **Evon v3.3** writes short sentences for the sounds a child finds
+   hard; code checks every one, a teacher approves it, and the child reads it.
+6. **The teacher** sees the class, listens to the marks worth checking (a clip of just that
    word) and corrects them; a teacher's mark replaces the computer's.
 
-The child screens are in the child's language. Readings made with no connection are kept and
+The child screens are in the child's language, and a speaker button reads each instruction
+aloud for a child who cannot read it yet. Readings made with no connection are kept and
 sent later. Recordings are deleted after 30 days, and a teacher can delete a child's data at
 once.
 
-Speech-to-text tends to correct a misread word into the expected one, which hides the mistake. We measured how often: skipped and unrelated words are caught almost always, but a single wrong consonant only 8 times in 39. A pause-based re-check and a second acoustic check did not fix it, so the app says so: on every result, and on a "How reliable is this?" page built from the saved results. Read [docs/WRITEUP.md](docs/WRITEUP.md) (one page) or [docs/RESULTS.md](docs/RESULTS.md) (all numbers).
+**Measured, not assumed.** A speech recogniser is built to write the word a speaker meant: right for most products, and the hard part for a reading tutor, which needs to hear what the child actually said. We measured how much this matters with Prisma in verbatim mode, on 90 passages in three languages and four audio conditions, with predictions written down before the key runs. Skipped and wrong words are caught almost every time; a single changed sound is often heard as the right word. So Akshara is designed around it: the teacher hears and corrects the doubtful marks, the app shows its own catch rates on a "How reliable is this?" page, and every result says what green can and cannot prove. Read [docs/WRITEUP.md](docs/WRITEUP.md) (one page) or [docs/RESULTS.md](docs/RESULTS.md) (all numbers).
 
 ## Status
 
@@ -38,9 +42,11 @@ Speech-to-text tends to correct a misread word into the expected one, which hide
 | Reliability studies (synthetic audio, 3 languages, 90 passages, 4 audio conditions) | Done, in [docs/RESULTS.md](docs/RESULTS.md) |
 | Mitigations (chunked re-check, per-word acoustic check, fusion) | Tried and measured; not in the app, as they did not beat Prisma alone |
 | Learner model: skill graph, mastery tracking, placement, next story | Done, in the app; measured on simulated children |
-| Web app (`web/`, React PWA): child flow, practice, teacher class, profiles, placement, review queue, reliability page | Done, mock and live modes; 147 tests including axe on 20 routes |
+| Web app (`web/`, React PWA): child flow, practice, teacher class, profiles, placement, review queue, sentences, reliability page | Done, mock and live modes; 158 tests including axe on 22 routes |
 | Consent, 30-day recording deletion, delete a child's data | Done |
 | Offline readings, noise check | Done |
+| Evon practice sentences (teacher-approved) | Built; Evon's batch not yet run, so story sentences are used until it is ([docs/EVON_HOWTO.md](docs/EVON_HOWTO.md)) |
+| Spoken instructions on every child screen | Done (Timbre, cached) |
 | End-to-end tests, one child from consent to deletion | Done (API and screens) |
 | NIPUN speed bands, stars and streak | In progress (Daniel) |
 | Demo video | [docs/demo/akshara_demo.mp4](docs/demo/akshara_demo.mp4) (an earlier version) |
@@ -104,8 +110,9 @@ set `VITE_API_MODE=live` to talk to the API. Screens, data modes and known gaps:
 
 ## Gnani models used
 
-- Prisma v2.5 (speech-to-text)
-- Timbre v3.0 (text-to-speech)
+- **Prisma v2.5** (speech-to-text, verbatim): hears every reading, placement item and practice word.
+- **Timbre v3.0** (text-to-speech): says each akshara, each missed word, each practice sentence and each instruction.
+- **Evon v3.3** (language model, self-hosted): writes practice sentences for a child's weak sounds, in strict JSON, checked by code and approved by a teacher.
 
 ## Data
 

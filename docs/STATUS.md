@@ -11,7 +11,8 @@ consent) and places them with a short ASER-style test. The child reads a story p
 level, part by part, and sees which words were right. Missed words are practised straight away:
 split into aksharas, said by Timbre, read again. A learner model tracks which letters and sounds
 each child knows and picks the next story. The teacher sees the class, listens to the marks
-worth checking and corrects them, and can read how reliable the marks are.
+worth checking and corrects them, and can read how reliable the marks are. Evon writes
+practice sentences for each child's weak sounds; a teacher approves each one first.
 
 ## Where things stand
 
@@ -24,7 +25,8 @@ worth checking and corrects them, and can read how reliable the marks are.
 | Learner model: skill graph, BKT mastery, ASER placement, next story (Phase 4) | Done, in the app; measured on simulated children |
 | Microphone, live (WP0) | Done in Chrome with synthetic clips; one reading into a real mic still to do |
 | Teacher data: children, profiles, readings (WP1) | Done |
-| Child screens in the child's language (WP6) | Text files done; kn/ta/hi are Claude's drafts, not yet reviewed; spoken prompts not done |
+| Child screens in the child's language (WP6) | Done, with spoken instructions; kn/ta/hi text is Claude's draft, not yet reviewed |
+| Evon practice sentences | Built and tested; the batch has not run yet ([EVON_HOWTO.md](EVON_HOWTO.md)), so children get story sentences until it does |
 | Placement and learner model in the app (WP2, WP3) | Done |
 | Akshara practice with Timbre (WP4) | Done, checked live |
 | Teacher review queue with word clips (WP5) | Done; not yet checked in a browser with a real recording |
@@ -51,9 +53,10 @@ Both are interviewed separately, so each should be able to explain their own par
    "Is it quiet here?", read one sentence into a real microphone, run Lighthouse.
 2. **Daniel**: send him his brief (in FINISH_PLAN.md). D1 review, D2 bands, D3 rewards.
 3. **Hindi text review** (Achindra): `web/src/i18n/hi.json`.
-4. **Decisions**: where Evon runs (or leave it out), and entering as a pair or solo.
-5. **Go public, post** (Nov 2–3): make the repo public, turn on Pages, post the demo, share it
-   for a week before the Nov 10 cutoff. **Submit by Nov 9.**
+4. **Run Evon's batch** (Kaggle's free 2×T4 or a rented GPU, see [EVON_HOWTO.md](EVON_HOWTO.md)), then approve its sentences in the app. **Decide** pair or solo.
+5. **Record the demo video** (Nov 1) in live mode.
+6. **Go public, post** (Nov 2–3): make the repo public, turn on Pages, post the demo (drafts in
+   [POST.md](POST.md)), share it for a week before the Nov 10 cutoff. **Submit by Nov 9.**
 
 ## How to run it
 
@@ -66,10 +69,11 @@ Both are interviewed separately, so each should be able to explain their own par
 
 ## Current numbers
 
-- **259 Python tests**, **147 web tests** (axe on 20 routes); CI runs both on every PR.
+- **277 Python tests**, **158 web tests** (axe on 22 routes); CI runs both on every PR.
 - End-to-end, one child from consent to deletion: `tests/test_end_to_end.py` (API) and
   `web/src/endToEnd.test.tsx` (screens, mock mode).
-- Production web bundle: **99.6 kB JS / 112 kB total gzip** (budget 120 / 160).
+- Production web bundle: **112 kB JS / 125 kB total gzip** (budget 120 / 160), including the
+  practice-sentence data, which loads only when needed.
 - Ledger: **2,136** paid calls logged in `results/ledger.jsonl`. The `AKSHARA_MAX_CALLS` cap
   counts this file. Credits are not the limit (5,000 programme credits, about 0.05–0.1 a call).
 
