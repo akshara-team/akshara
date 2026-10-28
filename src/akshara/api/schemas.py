@@ -219,3 +219,32 @@ class ReviewIn(BaseModel):
     request_id: str = Field(min_length=1, max_length=128)
     index: int = Field(ge=0)
     result: Literal["correct", "misread", "skipped"]
+
+
+class SentenceOut(BaseModel):
+    """A practice sentence. `source` is "evon" (written by Evon, checked by code, shown to a
+    child only once approved) or "story" (cut from a published story). `skill` is what Evon was
+    asked to practise; `skills` is every sound the sentence practises."""
+
+    id: str
+    lang: str
+    text: str
+    source: Literal["evon", "story"]
+    skill: str | None
+    skills: list[str]
+    status: Literal["pending", "approved", "rejected", "story"]
+
+
+class SentenceFor(SentenceOut):
+    practises: str  # the skill this sentence was picked for, for this child
+
+
+class SentenceReview(BaseModel):
+    status: Literal["approved", "rejected"]
+
+
+class SentenceRead(BaseModel):
+    id: str
+    words: list[WordOut]
+    states: list[State]
+    accuracy: float

@@ -10,6 +10,9 @@ import type {
   Practice,
   Reading,
   ReviewItem,
+  Sentence,
+  SentenceFor,
+  SentenceRead,
   ReviewResult,
   Skills,
 } from "./types";
@@ -153,6 +156,31 @@ export const liveApi = {
   async aksharas(word: string, lang: string): Promise<string[]> {
     const q = `lang=${encodeURIComponent(lang)}&word=${encodeURIComponent(word)}`;
     return (await getJson<{ aksharas: string[] }>(`/v1/aksharas?${q}`)).aksharas;
+  },
+
+  listSentences(lang: string, query: { source?: string; status?: string } = {}): Promise<Sentence[]> {
+    const q = new URLSearchParams({ lang, ...query });
+    return getJson(`/v1/sentences?${q}`);
+  },
+
+  reviewSentence(id: string, status: "approved" | "rejected"): Promise<Sentence> {
+    return sendJson("POST", `/v1/sentences/${encodeURIComponent(id)}/review`, { status });
+  },
+
+  sentenceFor(childId: number): Promise<SentenceFor> {
+    return getJson(`/v1/children/${childId}/sentence`);
+  },
+
+  async readSentence(id: string, audio: Blob, childId?: number): Promise<SentenceRead> {
+    const form = new FormData();
+    form.append("audio", audio, "sentence.wav");
+    if (childId !== undefined) form.append("child_id", String(childId));
+    const res = await fetch(`${BASE}/v1/sentences/${encodeURIComponent(id)}/read`, {
+      method: "POST",
+      body: form,
+    });
+    if (!res.ok) throw new ApiError(res.status, await detail(res));
+    return (await res.json()) as SentenceRead;
   },
 
   async practise(audio: Blob, word: string, lang: string, childId?: number): Promise<Practice> {

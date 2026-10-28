@@ -15,6 +15,9 @@ import type {
   Reading,
   ReviewItem,
   ReviewResult,
+  Sentence,
+  SentenceFor,
+  SentenceRead,
   Skills,
 } from "./types";
 
@@ -69,6 +72,13 @@ export type Api = {
   practise: (audio: Blob | null, word: string, lang: Lang, childId?: number) => Promise<Practice>;
   /** Model audio for one word; null means "no model audio, fall back". */
   feedbackAudio: (word: string, lang: Lang) => Promise<Blob | null>;
+  /** Practice sentences; the teacher's approval list is `{source: "evon", status: "pending"}`. */
+  listSentences: (lang: Lang, query?: { source?: string; status?: string }) => Promise<Sentence[]>;
+  /** A teacher approves or rejects one of Evon's sentences. */
+  reviewSentence: (id: string, status: "approved" | "rejected") => Promise<Sentence>;
+  /** One sentence for what this child is working on; rejects with 404 when there is none. */
+  sentenceFor: (childId: number) => Promise<SentenceFor>;
+  readSentence: (id: string, audio: Blob | null, childId?: number) => Promise<SentenceRead>;
 };
 
 const mock: Api = {
@@ -105,6 +115,10 @@ const mock: Api = {
   // The demo has no scorer: a re-read always counts.
   practise: async (_audio, word) => ({ word, said: word, state: "correct" }),
   feedbackAudio: async () => null, // mock uses the device voice
+  listSentences: (lang, query) => mockClass.listSentences(lang, query),
+  reviewSentence: (id, status) => mockClass.reviewSentence(id, status),
+  sentenceFor: (id) => mockClass.sentenceFor(id),
+  readSentence: (id, _audio, childId) => mockClass.readSentence(id, childId),
 };
 
 const live: Api = {
@@ -132,6 +146,11 @@ const live: Api = {
   practise: (audio, word, lang, childId) =>
     liveApi.practise(audio ?? new Blob([], { type: "audio/wav" }), word, lang, childId),
   feedbackAudio: (word, lang) => liveApi.feedbackAudio(word, lang),
+  listSentences: (lang, query) => liveApi.listSentences(lang, query),
+  reviewSentence: (id, status) => liveApi.reviewSentence(id, status),
+  sentenceFor: (id) => liveApi.sentenceFor(id),
+  readSentence: (id, audio, childId) =>
+    liveApi.readSentence(id, audio ?? new Blob([], { type: "audio/wav" }), childId),
 };
 
 /** Mock mode's akshara split: the browser's grapheme clusters, close to aksharas. */

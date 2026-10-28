@@ -90,12 +90,16 @@ def rows_about(db, kid: int, request_ids: list[str]) -> dict[str, int]:
         ),
         "placements": con.execute("SELECT COUNT(*) FROM placements WHERE child_id = ?", (kid,)),
         "skill_state": con.execute("SELECT COUNT(*) FROM skill_state WHERE child_id = ?", (kid,)),
+        "sentence_reads": con.execute(
+            "SELECT COUNT(*) FROM sentence_reads WHERE child_id = ?", (kid,)
+        ),
     }
     out = {k: v.fetchone()[0] for k, v in counts.items()}
     tables = {r[0] for r in con.execute("SELECT name FROM sqlite_master WHERE type = 'table'")}
     con.close()
     # a new table holding child data must be added to Store.delete_child and to this test
-    assert tables == set(counts), f"tables changed: {sorted(tables)}"
+    not_about_a_child = {"sentence_reviews"}  # a teacher's approval of a practice sentence
+    assert tables == set(counts) | not_about_a_child, f"tables changed: {sorted(tables)}"
     return out
 
 
@@ -109,6 +113,7 @@ def test_delete_leaves_no_rows_or_files_behind(tmp_path):
     (item,) = [i for i in c.get("/v1/review").json() if i["request_id"] == "a1"]
     c.post("/v1/review", json={"request_id": "a1", "index": item["index"], "result": "correct"})
     Store(db).create_placement(kid, seed=1)
+    Store(db).record_sentence_read(kid, "s1", 1.0)
     before = rows_about(db, kid, ["a1", "a2"])
     assert all(before.values()), before  # every kind of data exists before the delete
     assert {p.name for p in rec.iterdir()} == {"a1.wav", "a2.wav", "b1.wav"}

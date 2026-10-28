@@ -15,6 +15,8 @@ import { AttemptDetails } from "./screens/teacher/AttemptDetails";
 import { PlacementScreen } from "./screens/teacher/PlacementScreen";
 import { ReviewScreen } from "./screens/teacher/ReviewScreen";
 import { ReliabilityScreen } from "./screens/teacher/ReliabilityScreen";
+import { SentencesScreen } from "./screens/teacher/SentencesScreen";
+import { SentenceScreen } from "./screens/child/SentenceScreen";
 import { ChildForm } from "./screens/teacher/ChildForm";
 import { ChildProfile } from "./screens/teacher/ChildProfile";
 import { SelectStory } from "./screens/teacher/SelectStory";
@@ -111,6 +113,7 @@ export function App() {
           <Route path="/feedback" element={<Screen><FeedbackScreen /></Screen>} />
           <Route path="/results" element={<Screen><ResultsScreen /></Screen>} />
           <Route path="/practice" element={<Screen><PracticeScreen /></Screen>} />
+          <Route path="/practice/sentence" element={<Screen><SentenceScreen /></Screen>} />
 
           {/* Recovery */}
           <Route path="/recovery/:kind" element={<Screen><RecoveryScreen /></Screen>} />
@@ -119,6 +122,7 @@ export function App() {
           <Route path="/teacher" element={<Screen><TeacherDashboard /></Screen>} />
           <Route path="/teacher/story" element={<Screen><SelectStory /></Screen>} />
           <Route path="/teacher/review" element={<Screen><ReviewScreen /></Screen>} />
+          <Route path="/teacher/sentences" element={<Screen><SentencesScreen /></Screen>} />
           <Route
             path="/teacher/reliability"
             element={<Screen><ReliabilityScreen /></Screen>}

@@ -31,8 +31,13 @@ from akshara.api.schemas import (
     ReadingOut,
     ReviewIn,
     ReviewItem,
+    SentenceFor,
+    SentenceOut,
+    SentenceRead,
+    SentenceReview,
     SkillsOut,
 )
+from akshara.content import bank as sentence_bank
 from akshara.core.aksharas import split as split_aksharas
 from akshara.core.align import score
 from akshara.core.parts import split_parts
@@ -83,6 +88,7 @@ def create_app(
     stt: SpeechToText | None = None,
     bank: dict[str, dict] | None = None,
     tts: TextToSpeech | None = None,
+    sentences_path: Path | None = None,
 ) -> FastAPI:
     settings = settings or Settings.from_env()
     stt = stt or build_stt(settings)
@@ -91,6 +97,7 @@ def create_app(
     bank = bank if bank is not None else passage_bank.load(PASSAGES, SOURCES)
     stt_lock = threading.Lock()  # Prisma allows one active request at a time
     libraries: dict[str, tutor.Library | None] = {}
+    sentence_rows: dict[str, list[dict]] = {}
     last_purge = [float("-inf")]
 
     def purge_old_recordings() -> None:
@@ -581,6 +588,119 @@ def create_app(
         return {"word": word.strip(), "said": mark.said or transcript or None, "state": state}
 
     # ---- learner model
+
+    # ---- practice sentences (Evon writes, code checks, a teacher approves)
+
+    def sentences(lang: str) -> list[dict]:
+        if lang not in sentence_rows:
+            sentence_rows[lang] = sentence_bank.load(
+                library(lang), sentences_path or sentence_bank.SENTENCES
+            )
+        return sentence_rows[lang]
+
+    def sentence_out(row: dict, statuses: dict[str, str]) -> dict:
+        status = "story" if row["source"] == "story" else statuses.get(row["id"], "pending")
+        return {k: row[k] for k in ("id", "lang", "text", "source", "skill", "skills")} | {
+            "status": status
+        }
+
+    def sentence_or_404(sentence_id: str) -> dict:
+        for lang in sorted(SUPPORTED_LANGUAGES):
+            if any(p["lang"] == lang for p in bank.values()):
+                for r in sentences(lang):
+                    if r["id"] == sentence_id:
+                        return r
+        raise HTTPException(404, "unknown sentence")
+
+    @app.get("/v1/sentences", response_model=list[SentenceOut])
+    def list_sentences(
+        lang: str, source: str | None = None, status: str | None = None
+    ) -> list[dict]:
+        """Practice sentences for a language; the teacher's approval list is
+        `?source=evon&status=pending`."""
+        if lang not in SUPPORTED_LANGUAGES:
+            raise HTTPException(400, f"unsupported language {lang!r}")
+        statuses = store.sentence_statuses()
+        out = [sentence_out(r, statuses) for r in sentences(lang)]
+        return [
+            r for r in out
+            if (source is None or r["source"] == source)
+            and (status is None or r["status"] == status)
+        ]  # fmt: skip
+
+    @app.post("/v1/sentences/{sentence_id}/review", response_model=SentenceOut)
+    def review_sentence(sentence_id: str, body: SentenceReview) -> dict:
+        """A teacher approves or rejects one of Evon's sentences."""
+        row = sentence_or_404(sentence_id)
+        if row["source"] != "evon":
+            raise HTTPException(409, "only Evon's sentences need approval")
+        store.set_sentence_status(sentence_id, body.status)
+        return sentence_out(row, store.sentence_statuses())
+
+    @app.get("/v1/children/{child_id}/sentence", response_model=SentenceFor)
+    def sentence_for(child_id: int) -> dict:
+        """One sentence that practises what this child is working on."""
+        child = child_or_404(child_id)
+        lib = library(child["language"])
+        learner = tutor.learner_from(store.skills(child_id))
+        statuses = store.sentence_statuses()
+        approved = {i for i, s in statuses.items() if s == "approved"}
+        found = sentence_bank.pick(
+            sentences(child["language"]),
+            lib.curriculum,
+            sentence_bank.targets_for(learner, lib.curriculum),
+            approved,
+            store.sentence_reads(child_id),
+        )
+        if found is None:
+            raise HTTPException(404, "no sentence for this child yet")
+        row, skill = found
+        return sentence_out(row, statuses) | {"practises": skill}
+
+    @app.post("/v1/sentences/{sentence_id}/read", response_model=SentenceRead)
+    def read_sentence(
+        sentence_id: str,
+        request: Request,
+        audio: UploadFile = File(...),
+        child_id: int | None = Form(default=None),
+    ) -> dict:
+        """Score a reading of one sentence. Costs a Prisma call; teaches the child's model."""
+        limit(request)
+        row = sentence_or_404(sentence_id)
+        if child_id is not None:
+            child_or_404(child_id)
+        lang = row["lang"]
+        data = audio.file.read(settings.max_upload_bytes + 1)
+        if len(data) > settings.max_upload_bytes:
+            raise HTTPException(413, "audio too large")
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "sentence.wav"
+            path.write_bytes(data)
+            seconds = audio_seconds(path)
+            if seconds is None:
+                raise HTTPException(415, "audio must be a WAV file")
+            if seconds > settings.max_audio_seconds:
+                raise HTTPException(413, f"audio longer than {settings.max_audio_seconds:.0f} s")
+            try:
+                with stt_lock:
+                    transcript = transcribe_reading(stt, path, lang)
+            except CapExceeded as e:
+                raise HTTPException(503, "paid-call cap reached") from e
+            except ProviderError as e:
+                log.warning("provider failed: %s", e)
+                raise HTTPException(502, "speech provider failed") from e
+        s = score(row["text"], transcript, seconds, loose=lang != "kn-IN")
+        trace = [
+            {"op": m.op, "word": m.ref_word, "said": m.said, "index": m.ref_index,
+             "check": m.op == "correct" and m.said != m.ref_word}
+            for m in s.marks
+        ]  # fmt: skip
+        states = tutor.states(trace)
+        if child_id is not None:
+            read = [w["word"] for w in trace if w["op"] != "inserted"]
+            learn(child_id, lang, list(zip(read, states, strict=True)))
+            store.record_sentence_read(child_id, sentence_id, s.accuracy)
+        return {"id": sentence_id, "words": trace, "states": states, "accuracy": s.accuracy}
 
     @app.get("/v1/children/{child_id}/skills", response_model=SkillsOut)
     def child_skills(child_id: int) -> dict:
