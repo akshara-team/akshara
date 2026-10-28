@@ -70,7 +70,9 @@ clips over about 30 s. With `part_index` the reading is
 scored against that part only, so the rest of the passage is not counted as skipped; an index
 out of range is `400`. Without it the whole passage is the reference.
 Optional header `X-Request-ID` makes the call idempotent (resending returns the stored
-result and makes no second paid call). Runs Prisma (verbatim, **no `bias_list`**) then the
+result, makes no second paid call and does not teach the learner model again; two copies
+arriving at once count once). The web app fixes the id when the clip is recorded, so a retry
+or a reading sent later from the offline queue reuses it. Runs Prisma (verbatim, **no `bias_list`**) then the
 pure scorer.
 
 ```json

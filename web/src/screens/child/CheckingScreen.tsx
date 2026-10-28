@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { api, childIdOf, isMock } from "../../api";
 import { ApiError } from "../../api/live";
 import { Button, LanguageBadge, ProgressDots, Spinner, PageHeader } from "../../components";
+import { enqueue } from "../../state/outbox";
 import { useSession } from "../../state/session";
 import { useCopy } from "../../i18n";
 import { scriptClass } from "../../theme/script";
@@ -35,10 +36,12 @@ export function CheckingScreen() {
     sessionId,
     recordAttempt,
     setPending,
+    goToNextPart,
   } = useSession();
   const navigate = useNavigate();
   const started = useRef(false);
   const [failed, setFailed] = useState<Failure | null>(null);
+  const [saved, setSaved] = useState(false);
 
   const total = Math.max(parts.length, 1);
   const { t, Tx } = useCopy(lang);
@@ -52,26 +55,83 @@ export function CheckingScreen() {
       return;
     }
 
+    const send = {
+      learner: reader?.alias ?? "learner-1",
+      childId: childIdOf(reader?.id),
+      session: sessionId ?? undefined,
+      passageId: passage?.id ?? "unknown",
+      title: passage?.title ?? null,
+      lang,
+      partIndex: currentPart - 1,
+      requestId: pending.requestId,
+    };
+
     (async () => {
       try {
         const attempt = await api.submitAttempt({
+          ...send,
           audio: pending.audio ?? new Blob([], { type: "audio/wav" }),
-          learner: reader?.alias ?? "learner-1",
-          childId: childIdOf(reader?.id),
-          session: sessionId ?? undefined,
-          passageId: passage?.id ?? "unknown",
-          title: passage?.title ?? null,
-          lang,
-          partIndex: currentPart - 1,
         });
         recordAttempt(currentPart - 1, attempt, pending.seconds);
         setPending(null);
-        navigate("/feedback", { replace: true });
+        navigate("/feedback", { replace: true, state: { noisy: Boolean(pending.noisy) } });
       } catch (error) {
-        setFailed(classify(error));
+        const why = classify(error);
+        // No connection: keep the reading and send it later (state/outbox.ts). Live mode
+        // needs the audio to do that; the demo's readings have none.
+        if (why === "offline" && pending.requestId && (pending.audio || isMock)) {
+          try {
+            await enqueue({ ...send, requestId: pending.requestId, audio: pending.audio, at: Date.now() });
+            setPending(null);
+            setSaved(true);
+            return;
+          } catch {
+            /* the browser would not store it: fall back to "read again" */
+          }
+        }
+        setFailed(why);
       }
     })();
   }, [pending, reader, passage, lang, currentPart, sessionId, recordAttempt, setPending, navigate]);
+
+  if (saved) {
+    const isLast = currentPart >= total;
+    const anyChecked = parts.some((p) => p.attempt);
+    return (
+      <>
+        <PageHeader back backTo="/home" />
+        <div className="screen-body">
+          <h1 className="recovery-hero__title">
+            <Tx k="check.savedTitle" />
+          </h1>
+          <p className="note" role="status">
+            <Tx k="check.savedBody" />
+          </p>
+          <div className="actions">
+            {!isLast ? (
+              <Button
+                block
+                onClick={() => {
+                  goToNextPart();
+                  navigate(`/read/${passage?.id ?? ""}`, { replace: true });
+                }}
+              >
+                <Tx k="feedback.next" vars={{ n: currentPart + 1 }} />
+              </Button>
+            ) : anyChecked ? (
+              <Button block onClick={() => navigate("/results", { replace: true })}>
+                <Tx k="feedback.seeResults" />
+              </Button>
+            ) : (
+              <Button block onClick={() => navigate("/home", { replace: true })}>
+                <Tx k="common.home" />
+              </Button>
+            )}
+          </div>
+        </div>
+      </>
+    );
+  }
 
   if (failed) {
     return (

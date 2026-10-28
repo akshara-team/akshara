@@ -38,6 +38,8 @@ export type Api = {
     title?: string | null;
     lang: Lang;
     partIndex: number;
+    /** Fixed when the clip is recorded, so a resend is answered with the stored result. */
+    requestId?: string;
   }) => Promise<Attempt>;
   listChildren: (lang?: Lang) => Promise<Child[]>;
   getChild: (id: number) => Promise<Child>;
@@ -73,6 +75,10 @@ const mock: Api = {
   listPassages: async (lang) => mockPassages(lang),
   partsOf: () => MOCK_PARTS.map((p) => p.text),
   submitAttempt: async ({ childId, session, passageId, title, lang, partIndex }) => {
+    // Like a real upload, the demo cannot send with no connection, so the offline queue shows.
+    if (typeof navigator !== "undefined" && navigator.onLine === false) {
+      throw new TypeError("Failed to fetch");
+    }
     const attempt = mockAttempt(passageId, lang, partIndex);
     if (childId !== undefined && session) {
       mockClass.record(childId, session, attempt, title ?? MOCK_TITLE);
@@ -104,8 +110,8 @@ const mock: Api = {
 const live: Api = {
   listPassages: (lang) => liveApi.listPassages(lang),
   partsOf: (passage) => liveApi.partsOf(passage),
-  submitAttempt: ({ audio, learner, childId, session, passageId, partIndex }) =>
-    liveApi.submitAttempt({ audio, learner, childId, session, passageId, partIndex }),
+  submitAttempt: ({ audio, learner, childId, session, passageId, partIndex, requestId }) =>
+    liveApi.submitAttempt({ audio, learner, childId, session, passageId, partIndex, requestId }),
   listChildren: (lang) => liveApi.listChildren(lang),
   getChild: (id) => liveApi.getChild(id),
   addChild: (input) => liveApi.addChild(input),

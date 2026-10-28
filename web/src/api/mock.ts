@@ -1,5 +1,7 @@
 import { isLang, type Lang } from "../theme/script";
 import type { Attempt, Passage, WordOut } from "./types";
+import { MIC_CONSTRAINTS, openMeter, type Meter } from "../audio/meter";
+import { clipNoise, type Verdict } from "../audio/noise";
 
 /** Decodes a recorded clip (any format the browser recorded) to mono 16 kHz samples. */
 export async function decode16k(blob: Blob): Promise<Float32Array> {
@@ -81,6 +83,10 @@ export type RecorderState = "idle" | "requesting" | "recording" | "error";
 export type Recorder = {
   state: RecorderState;
   error: string | null;
+  /** The microphone level now, in dB below full scale; null before start or without Web Audio. */
+  level: () => number | null;
+  /** Whether the last clip stop() returned sounded noisy; null before then. */
+  noise: Verdict | null;
   start: () => Promise<void>;
   /** Stops and resolves the recorded clip as 16 kHz WAV; throws RecordingError if unusable. */
   stop: () => Promise<Blob>;
@@ -94,22 +100,26 @@ export function createRecorder(): Recorder {
   let stream: MediaStream | null = null;
   let chunks: BlobPart[] = [];
   let stopped: Promise<void> = Promise.resolve();
+  let meter: Meter | null = null;
 
   function release() {
+    meter?.close();
+    meter = null;
     stream?.getTracks().forEach((t) => t.stop());
     stream = null;
     recorder = null;
   }
 
-  return {
+  const rec: Recorder = {
     state: "idle",
     error: null,
+    noise: null,
+    level: () => meter?.level() ?? null,
 
     async start() {
-      const media = await navigator.mediaDevices.getUserMedia({
-        audio: { channelCount: 1, echoCancellation: true, autoGainControl: true },
-      });
+      const media = await navigator.mediaDevices.getUserMedia(MIC_CONSTRAINTS);
       stream = media;
+      meter = openMeter(media);
       chunks = [];
       recorder = new MediaRecorder(media);
       recorder.ondataavailable = (e) => {
@@ -131,6 +141,7 @@ export function createRecorder(): Recorder {
       const pcm = await decode16k(new Blob(chunks, { type }));
       const problem = checkClip(pcm);
       if (problem) throw new RecordingError(problem);
+      rec.noise = clipNoise(pcm).verdict;
       return encodeWav(pcm);
     },
 
@@ -139,6 +150,7 @@ export function createRecorder(): Recorder {
       release();
     },
   };
+  return rec;
 }
 
 /* ---------------- fixtures (mock mode) ---------------- */
