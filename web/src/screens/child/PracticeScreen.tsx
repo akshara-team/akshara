@@ -4,7 +4,7 @@ import { api, childIdOf, isMock } from "../../api";
 import { RecordingError, createRecorder, type Recorder } from "../../api/mock";
 import type { MarkState } from "../../api/types";
 import { playToEnd } from "../../audio/playback";
-import { Button, MicButton, PageHeader } from "../../components";
+import { Button, MicButton, PageHeader, SayButton } from "../../components";
 import { useCopy, type CopyKey } from "../../i18n";
 import { useSession } from "../../state/session";
 import { load as loadChild } from "../../state/storage";
@@ -207,9 +207,12 @@ function Word({
         ))}
       </div>
 
-      <p className="controls__label">
-        <Tx k={phase === "listening" ? "practice.listen" : "practice.yourTurn"} />
-      </p>
+      <div className="say-row say-row--center">
+        <p className="controls__label">
+          <Tx k={phase === "listening" ? "practice.listen" : "practice.yourTurn"} />
+        </p>
+        {phase === "ready" && <SayButton k="say.practice" lang={lang} />}
+      </div>
 
       {phase !== "done" ? (
         <div className="controls">

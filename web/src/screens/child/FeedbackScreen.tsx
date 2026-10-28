@@ -13,6 +13,7 @@ import {
   PageHeader,
   WordChip,
   wordStatus,
+  SayButton,
 } from "../../components";
 import { useSession } from "../../state/session";
 import { scriptClass } from "../../theme/script";
@@ -65,9 +66,12 @@ export function FeedbackScreen() {
           <Tx k={part.attempt.accuracy >= 0.8 ? "feedback.wellRead" : "feedback.keepGoing"} />{" "}
           <StarIcon className="inline-icon" />
         </h1>
-        <p className="feedback-hero__sub">
-          <Tx k="common.part" vars={{ n: currentPart, total }} />
-        </p>
+        <div className="say-row say-row--center">
+          <p className="feedback-hero__sub">
+            <Tx k="common.part" vars={{ n: currentPart, total }} />
+          </p>
+          <SayButton k="say.feedback" lang={lang} />
+        </div>
         {noisy && (
           <p className="feedback-hero__sub feedback-hero__noisy">
             <Tx k="feedback.noisy" />

@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { api, childIdOf, storyFor } from "../../api";
 import { toReader } from "../../api/classSummary";
 import type { Reader } from "../../api/types";
-import { Avatar, Button, Card, CheckIcon, EmptyState, PageHeader } from "../../components";
+import { Avatar, Button, Card, CheckIcon, EmptyState, PageHeader, SayButton } from "../../components";
 import { useSession } from "../../state/session";
 import { setReaderAndLang } from "../../state/storage";
 import { useLoad } from "../../state/useLoad";
@@ -50,9 +50,12 @@ export function ChooseReader() {
     <>
       <PageHeader back backTo="/switch" />
       <div className="hero">
-        <h1 className="hero__title">
-          <Tx k="reader.title" />
-        </h1>
+        <div className="say-row">
+          <h1 className="hero__title">
+            <Tx k="reader.title" />
+          </h1>
+          <SayButton k="say.choose" lang={lang} />
+        </div>
         <p className="hero__sub">
           <Tx k="reader.sub" />
         </p>

@@ -10,6 +10,7 @@ import {
   PageHeader,
   WordChip,
   wordStatus,
+  SayButton,
 } from "../../components";
 import { useQueuedCount } from "../../state/outbox";
 import { useSession } from "../../state/session";
@@ -101,6 +102,12 @@ export function ChildHome() {
           </Card>
         ) : (
           <>
+            <div className="say-row">
+              <SayButton k="say.home" lang={store.lang} />
+              <p className="note">
+                <Tx k="say.home" />
+              </p>
+            </div>
             <div className="home__actions">
               <Button block disabled={busy} onClick={() => start()}>
                 <Tx k={busy ? "home.opening" : "home.readStory"} />
