@@ -16,6 +16,8 @@ class Settings:
     # Recordings kept for the teacher's review; None keeps them next to the database
     # (`recordings/`), and an in-memory database keeps none.
     recordings_dir: Path | None = None
+    # Recordings older than this are deleted; the reading's words and scores stay.
+    retention_days: float = 30.0
 
     @property
     def recordings(self) -> Path | None:
@@ -36,4 +38,5 @@ class Settings:
             recordings_dir=Path(env["AKSHARA_RECORDINGS"])
             if env.get("AKSHARA_RECORDINGS")
             else None,
+            retention_days=float(env.get("AKSHARA_RETENTION_DAYS", cls.retention_days)),
         )

@@ -41,6 +41,11 @@ async function getJson<T>(path: string): Promise<T> {
   return (await res.json()) as T;
 }
 
+async function remove(path: string): Promise<void> {
+  const res = await fetch(`${BASE}${path}`, { method: "DELETE" });
+  if (!res.ok) throw new ApiError(res.status, await detail(res));
+}
+
 async function sendJson<T>(method: "POST" | "PATCH", path: string, body: unknown): Promise<T> {
   const res = await fetch(`${BASE}${path}`, {
     method,
@@ -101,6 +106,10 @@ export const liveApi = {
 
   addChild(input: ChildInput): Promise<Child> {
     return sendJson<Child>("POST", "/v1/children", input);
+  },
+
+  deleteChild(id: number): Promise<void> {
+    return remove(`/v1/children/${id}`);
   },
 
   editChild(id: number, patch: Partial<ChildInput>): Promise<Child> {

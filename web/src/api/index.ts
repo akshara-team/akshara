@@ -43,6 +43,8 @@ export type Api = {
   getChild: (id: number) => Promise<Child>;
   addChild: (input: ChildInput) => Promise<Child>;
   editChild: (id: number, patch: Partial<ChildInput>) => Promise<Child>;
+  /** Remove the child and everything about them: readings, recordings, marks, level. */
+  deleteChild: (id: number) => Promise<void>;
   childReadings: (id: number) => Promise<Reading[]>;
   getPassage: (id: string) => Promise<Passage>;
   /** The learner model's pick for this child's next story. */
@@ -81,6 +83,7 @@ const mock: Api = {
   getChild: (id) => mockClass.getChild(id),
   addChild: (input) => mockClass.addChild(input),
   editChild: (id, patch) => mockClass.editChild(id, patch),
+  deleteChild: (id) => mockClass.deleteChild(id),
   childReadings: (id) => mockClass.childReadings(id),
   getPassage: async (id) => ({ ...MOCK_PASSAGE, id }),
   nextFor: (id) => mockClass.nextFor(id),
@@ -107,6 +110,7 @@ const live: Api = {
   getChild: (id) => liveApi.getChild(id),
   addChild: (input) => liveApi.addChild(input),
   editChild: (id, patch) => liveApi.editChild(id, patch),
+  deleteChild: (id) => liveApi.deleteChild(id),
   childReadings: (id) => liveApi.childReadings(id),
   getPassage: (id) => liveApi.getPassage(id),
   nextFor: (id) => liveApi.nextFor(id),
