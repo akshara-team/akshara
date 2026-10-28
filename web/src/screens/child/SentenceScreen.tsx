@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { api, childIdOf, isMock } from "../../api";
 import { RecordingError, createRecorder, type Recorder } from "../../api/mock";
 import type { SentenceFor, SentenceRead } from "../../api/types";
-import { Button, ListenButton, MicButton, PageHeader, WordChip, wordStatus } from "../../components";
+import { Button, ListenButton, MicButton, PageHeader, WordChip, wordStatus, SayButton } from "../../components";
 import { useCopy, type CopyKey } from "../../i18n";
 import { useSession } from "../../state/session";
 import { load as loadChild } from "../../state/storage";
@@ -116,9 +116,12 @@ export function SentenceScreen() {
     <>
       <PageHeader back backTo="/home" />
       <div className="screen-body">
-        <h1 className="recovery-hero__title">
-          <Tx k="sentence.title" />
-        </h1>
+        <div className="say-row">
+          <h1 className="recovery-hero__title">
+            <Tx k="sentence.title" />
+          </h1>
+          <SayButton k="say.sentence" lang={lang} />
+        </div>
         {phase === "loading" || !sentence ? (
           <p className="note" role="status">
             <Tx k="home.opening" />
