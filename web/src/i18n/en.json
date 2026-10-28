@@ -148,5 +148,13 @@
   "sentence.title": "Read this sentence",
   "sentence.great": "You read every word!",
   "sentence.good": "Good reading! Look at the words in colour.",
-  "sentence.none": "No sentence today. Well done for practising!"
+  "sentence.none": "No sentence today. Well done for practising!",
+  "say.label": "Hear what to do",
+  "say.choose": "Tap your name.",
+  "say.home": "Tap Read a story to begin.",
+  "say.read": "Tap the microphone, then read aloud.",
+  "say.feedback": "Green words are right. Tap Listen to hear the others.",
+  "say.results": "You finished the story! Now practise your words.",
+  "say.practice": "Listen, then read the whole word.",
+  "say.sentence": "Listen, then read the sentence aloud."
 }

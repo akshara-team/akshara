@@ -8,6 +8,7 @@ import {
   StatCard,
   PageHeader,
   TrendingUpIcon,
+  SayButton,
 } from "../../components";
 import { useSession } from "../../state/session";
 import { addReading, buildReading } from "../../state/storage";
@@ -77,9 +78,12 @@ export function ResultsScreen() {
             </p>
 
             <div className="stack--tight stack">
-              <h1 className="card__title">
-                <Tx k="results.title" /> <SparklesIcon className="inline-icon" />
-              </h1>
+              <div className="say-row">
+                <h1 className="card__title">
+                  <Tx k="results.title" /> <SparklesIcon className="inline-icon" />
+                </h1>
+                <SayButton k="say.results" lang={lang} />
+              </div>
               <p className="reader-meta">
                 <Tx k={accuracy >= 0.8 ? "feedback.wellRead" : "feedback.keepGoing"} />
               </p>

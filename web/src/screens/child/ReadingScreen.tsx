@@ -19,6 +19,7 @@ import {
   ProgressBar,
   ProgressDots,
   PageHeader,
+  SayButton,
 } from "../../components";
 import { meterValue } from "../../audio/noise";
 import { newId } from "../../state/ids";
@@ -190,9 +191,12 @@ export function ReadingScreen() {
                   <LevelMeter value={level} label={t("read.level")} />
                 </>
               )}
-              <p className="controls__desc">
-                <Tx k={idle ? "read.readAloud" : "read.readPace"} />
-              </p>
+              <div className="say-row">
+                <p className="controls__desc">
+                  <Tx k={idle ? "read.readAloud" : "read.readPace"} />
+                </p>
+                {idle && <SayButton k="say.read" lang={lang} />}
+              </div>
 
               {error && (
                 <p className="field__error" role="alert">

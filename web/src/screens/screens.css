@@ -808,3 +808,7 @@ button.screen__link {
   flex-wrap: wrap;
   align-items: center;
 }
+
+.say-row--center {
+  justify-content: center;
+}
