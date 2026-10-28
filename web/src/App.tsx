@@ -22,6 +22,8 @@ import { TeacherDashboard } from "./screens/teacher/TeacherDashboard";
 import { SessionProvider } from "./state/session";
 import { load as loadChild } from "./state/storage";
 import { useOfflineRedirect } from "./state/useOffline";
+import { useOutboxSync, type Queued } from "./state/outbox";
+import { api } from "./api";
 import "./components/components.css";
 import "./screens/screens.css";
 import "./app.css";
@@ -56,9 +58,14 @@ function useFocusOnRouteChange(main: RefObject<HTMLElement>) {
   }, [pathname, main]);
 }
 
+/** Sends a reading saved while offline; the same request id makes a resend harmless. */
+const sendQueued = (q: Queued) =>
+  api.submitAttempt({ ...q, audio: q.audio ?? new Blob([], { type: "audio/wav" }) });
+
 /** Owns the shell: one responsive frame for every route, plus offline handling. */
 function Shell({ children }: { children: ReactNode }) {
   useOfflineRedirect();
+  useOutboxSync(sendQueued);
   const main = useRef<HTMLElement>(null);
   useFocusOnRouteChange(main);
 

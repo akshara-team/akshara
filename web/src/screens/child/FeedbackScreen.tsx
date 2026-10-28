@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Button,
   CheckIcon,
@@ -21,6 +21,7 @@ import { useCopy } from "../../i18n";
 export function FeedbackScreen() {
   const { lang, passage, parts, currentPart, goToNextPart } = useSession();
   const navigate = useNavigate();
+  const noisy = Boolean((useLocation().state as { noisy?: boolean } | null)?.noisy);
   const { t, Tx } = useCopy(lang);
 
   const total = Math.max(parts.length, 1);
@@ -67,6 +68,11 @@ export function FeedbackScreen() {
         <p className="feedback-hero__sub">
           <Tx k="common.part" vars={{ n: currentPart, total }} />
         </p>
+        {noisy && (
+          <p className="feedback-hero__sub feedback-hero__noisy">
+            <Tx k="feedback.noisy" />
+          </p>
+        )}
       </div>
 
       <div className="screen-body">
