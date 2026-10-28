@@ -7,6 +7,7 @@ import { playToEnd } from "../../audio/playback";
 import { Button, MicButton, PageHeader } from "../../components";
 import { useCopy, type CopyKey } from "../../i18n";
 import { useSession } from "../../state/session";
+import { load as loadChild } from "../../state/storage";
 import { scriptClass } from "../../theme/script";
 
 /** At most this many words after a reading: enough to help, short enough for a Class 2 child. */
@@ -30,6 +31,8 @@ export function PracticeScreen() {
   );
   const { t, Tx } = useCopy(lang);
   const [index, setIndex] = useState(0);
+  // A child the teacher added can go on to a sentence (the saved reader, after a reload).
+  const sentenceFor = childIdOf((reader ?? loadChild().reader)?.id);
 
   function finish() {
     reset();
@@ -46,7 +49,16 @@ export function PracticeScreen() {
               <Tx k="practice.done" vars={{ count: words.length }} />
             </h1>
             <div className="actions">
-              <Button block onClick={finish}>
+              {sentenceFor !== undefined && (
+                <Button block onClick={() => navigate("/practice/sentence")}>
+                  <Tx k="sentence.start" />
+                </Button>
+              )}
+              <Button
+                block
+                variant={sentenceFor !== undefined ? "ghost" : "primary"}
+                onClick={finish}
+              >
                 <Tx k="results.finish" />
               </Button>
             </div>

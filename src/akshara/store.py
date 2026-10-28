@@ -77,10 +77,24 @@ MIGRATIONS = [
     """,
     # 6: the date a parent or guardian agreed (YYYY-MM-DD), confirmed by the teacher
     "ALTER TABLE learners ADD COLUMN consent_date TEXT;",
+    # 7: practice sentences: a teacher's approval of each Evon sentence, and who read what
+    """
+    CREATE TABLE sentence_reviews (
+        sentence_id TEXT PRIMARY KEY,
+        status TEXT NOT NULL,
+        reviewed_at REAL NOT NULL
+    );
+    CREATE TABLE sentence_reads (
+        child_id INTEGER NOT NULL REFERENCES learners(id),
+        sentence_id TEXT NOT NULL,
+        accuracy REAL NOT NULL,
+        created_at REAL NOT NULL
+    );
+    """,
 ]
 
 CHILD_FIELDS = ("alias", "language", "grade", "avatar", "consent_date")
-CHILD_TABLES = ("placements", "skill_state")  # rows keyed by child_id
+CHILD_TABLES = ("placements", "skill_state", "sentence_reads")  # rows keyed by child_id
 
 
 class DuplicateAlias(ValueError):
@@ -377,6 +391,35 @@ class Store:
             "SELECT * FROM attempts WHERE request_id = ?", (request_id,)
         ).fetchone()
         return dict(row) | {"trace": json.loads(row["trace"])} if row else None
+
+    def sentence_statuses(self) -> dict[str, str]:
+        rows = self.db.execute("SELECT sentence_id, status FROM sentence_reviews")
+        return {r["sentence_id"]: r["status"] for r in rows}
+
+    def set_sentence_status(self, sentence_id: str, status: str) -> None:
+        self.db.execute(
+            "INSERT INTO sentence_reviews (sentence_id, status, reviewed_at) VALUES (?, ?, ?)"
+            " ON CONFLICT(sentence_id) DO UPDATE SET status = excluded.status,"
+            " reviewed_at = excluded.reviewed_at",
+            (sentence_id, status, time.time()),
+        )
+        self.db.commit()
+
+    def record_sentence_read(self, child_id: int, sentence_id: str, accuracy: float) -> None:
+        self.db.execute(
+            "INSERT INTO sentence_reads (child_id, sentence_id, accuracy, created_at)"
+            " VALUES (?, ?, ?, ?)",
+            (child_id, sentence_id, accuracy, time.time()),
+        )
+        self.db.commit()
+
+    def sentence_reads(self, child_id: int) -> dict[str, int]:
+        rows = self.db.execute(
+            "SELECT sentence_id, COUNT(*) AS n FROM sentence_reads WHERE child_id = ?"
+            " GROUP BY sentence_id",
+            (child_id,),
+        )
+        return {r["sentence_id"]: r["n"] for r in rows}
 
     def class_summary(self) -> list[dict]:
         rows = self.db.execute(

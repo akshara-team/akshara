@@ -143,5 +143,10 @@
   "feedback.noisy": "It was noisy while you read, so some words may be marked wrong.",
   "check.savedTitle": "Your reading is saved",
   "check.savedBody": "There is no internet right now. We will check your reading when it comes back.",
-  "home.waiting": "Readings waiting to be checked: {n}"
+  "home.waiting": "Readings waiting to be checked: {n}",
+  "sentence.start": "Read a sentence",
+  "sentence.title": "Read this sentence",
+  "sentence.great": "You read every word!",
+  "sentence.good": "Good reading! Look at the words in colour.",
+  "sentence.none": "No sentence today. Well done for practising!"
 }

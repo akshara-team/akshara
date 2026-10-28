@@ -114,6 +114,17 @@ class Curriculum:
                 found.append(s)
         return sorted(found, key=index.__getitem__)
 
+    def unknown(self, word: str) -> list[str]:
+        """Skills `word` needs that this curriculum does not have (`skills_of` drops them)."""
+        index = self._index()
+        out = []
+        for s in _raw_skills(word, self.lang):
+            if s.startswith("conjunct:") and s not in self.common_conjuncts:
+                s = "conjunct:other"
+            if s not in index and s not in out:
+                out.append(s)
+        return out
+
 
 def build(texts: Iterable[str], lang: str) -> Curriculum:
     """The curriculum for one language, from the passages it will be used on."""

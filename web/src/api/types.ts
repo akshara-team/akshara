@@ -164,3 +164,23 @@ export type ReviewItem = {
 };
 
 export type Next = { passage_id: string; reason: string; level: Level | null };
+
+/**
+ * A practice sentence (`SentenceOut`). `evon`: written by Evon, checked by code, shown to a
+ * child only once a teacher approves it. `story`: cut from a published story.
+ */
+export type Sentence = {
+  id: string;
+  lang: Lang;
+  text: string;
+  source: "evon" | "story";
+  /** What Evon was asked to practise; null for a story sentence. */
+  skill: string | null;
+  skills: string[];
+  status: "pending" | "approved" | "rejected" | "story";
+};
+
+/** The sentence picked for one child, and the skill it was picked for. */
+export type SentenceFor = Sentence & { practises: string };
+
+export type SentenceRead = { id: string; words: WordOut[]; states: MarkState[]; accuracy: number };
