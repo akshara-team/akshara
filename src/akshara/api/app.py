@@ -15,7 +15,7 @@ from fastapi import FastAPI, File, Form, Header, HTTPException, Request, UploadF
 from fastapi.responses import FileResponse, Response
 
 from akshara import passages as passage_bank
-from akshara import review
+from akshara import retention, review
 from akshara.api.schemas import (
     AksharasOut,
     AttemptOut,
@@ -91,6 +91,18 @@ def create_app(
     bank = bank if bank is not None else passage_bank.load(PASSAGES, SOURCES)
     stt_lock = threading.Lock()  # Prisma allows one active request at a time
     libraries: dict[str, tutor.Library | None] = {}
+    last_purge = [float("-inf")]
+
+    def purge_old_recordings() -> None:
+        """Delete recordings past the retention limit; runs at start and then hourly."""
+        if time.monotonic() - last_purge[0] < 3600:
+            return
+        last_purge[0] = time.monotonic()
+        n = retention.purge(store, settings.recordings, settings.retention_days)
+        if n:
+            log.info("retention: deleted %d recordings past %g days", n, settings.retention_days)
+
+    purge_old_recordings()
 
     def library(lang: str) -> tutor.Library:
         if lang not in libraries:
@@ -133,7 +145,10 @@ def create_app(
 
     @app.get("/health")
     def health() -> dict:
-        return {"status": "ok", "provider": stt.name, "passages": len(bank)}
+        return {
+            "status": "ok", "provider": stt.name, "passages": len(bank),
+            "retention_days": settings.retention_days,
+        }  # fmt: skip
 
     @app.get("/")
     def index() -> FileResponse:
@@ -180,9 +195,11 @@ def create_app(
         x_request_id: str | None = Header(default=None),
     ) -> AttemptOut:
         limit(request)
+        purge_old_recordings()
         passage = bank.get(passage_id)
         if not passage:
             raise HTTPException(404, "unknown passage")
+        child = None
         if child_id is not None:  # a child the teacher added
             child = store.child(child_id)
             if not child:
@@ -223,7 +240,8 @@ def create_app(
             except ProviderError as e:
                 log.warning("provider failed: %s", e)
                 raise HTTPException(502, "speech provider failed") from e
-            if not retry:  # kept for the teacher's review (deleted by retention, WP7)
+            # kept for the teacher's review, only with a parent's consent, until retention
+            if not retry and child is not None and child.get("consent_date"):
                 keep_recording(path, a.request_id)
         if child_id is not None and not retry:
             learn(
@@ -258,6 +276,7 @@ def create_app(
         level = store.latest_level(c["id"])
         return {
             **{k: c[k] for k in ("id", "alias", "language", "grade", "avatar", "created_at")},
+            "consent_date": c.get("consent_date"),
             "readings": len(rs),
             "latest": brief(rs[0]) if rs else None,
             "previous": brief(rs[1]) if len(rs) > 1 else None,
@@ -278,7 +297,9 @@ def create_app(
     @app.post("/v1/children", response_model=ChildOut, status_code=201)
     def add_child(body: ChildIn) -> dict:
         try:
-            child_id = store.create_child(body.alias, body.language, body.grade, body.avatar)
+            child_id = store.create_child(
+                body.alias, body.language, body.grade, body.avatar, body.consent_date.isoformat()
+            )
         except DuplicateAlias as e:
             raise HTTPException(409, "a child with this name already exists") from e
         return child_out(child_or_404(child_id))
@@ -290,11 +311,26 @@ def create_app(
     @app.patch("/v1/children/{child_id}", response_model=ChildOut)
     def edit_child(child_id: int, body: ChildPatch) -> dict:
         child_or_404(child_id)
+        fields = body.model_dump(exclude_unset=True)
+        if fields.get("consent_date") is None:
+            fields.pop("consent_date", None)  # consent can be re-dated, not removed
+        else:
+            fields["consent_date"] = fields["consent_date"].isoformat()
         try:
-            store.update_child(child_id, **body.model_dump(exclude_unset=True))
+            store.update_child(child_id, **fields)
         except DuplicateAlias as e:
             raise HTTPException(409, "a child with this name already exists") from e
         return child_out(child_or_404(child_id))
+
+    @app.delete("/v1/children/{child_id}", status_code=204)
+    def delete_child(child_id: int) -> Response:
+        """Remove the child and all their data: readings, recordings, marks, level, skills."""
+        names = store.delete_child(child_id)
+        if names is None:
+            raise HTTPException(404, "unknown child")
+        retention.remove_files(settings.recordings, names)
+        log.info("deleted child %d and %d recordings", child_id, len(names))
+        return Response(status_code=204)
 
     @app.get("/v1/children/{child_id}/readings", response_model=list[ReadingOut])
     def child_readings(child_id: int) -> list[dict]:

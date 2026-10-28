@@ -105,6 +105,7 @@ function seed(): MockClass {
     grade,
     avatar: null,
     created_at: made,
+    consent_date: "2026-09-29",
   });
   const history: [number, [string, number, number][]][] = [
     [
@@ -371,6 +372,7 @@ export const mockClass = {
 
   async addChild(input: ChildInput): Promise<Child> {
     const alias = clean(input.alias);
+    if (!input.consent_date) throw new MockApiError(422, "a parent's consent date is required");
     if (taken(alias)) throw new MockApiError(409, "a child with this name already exists");
     const s = state();
     const row: ChildRow = {
@@ -380,6 +382,7 @@ export const mockClass = {
       grade: input.grade,
       avatar: input.avatar ?? null,
       created_at: Date.now() / 1000,
+      consent_date: input.consent_date,
     };
     s.children.push(row);
     persist();
@@ -390,9 +393,23 @@ export const mockClass = {
     const row = find(id);
     const alias = patch.alias === undefined ? row.alias : clean(patch.alias);
     if (taken(alias, id)) throw new MockApiError(409, "a child with this name already exists");
-    Object.assign(row, { ...patch, alias });
+    const consent = patch.consent_date || row.consent_date; // re-dated, never removed
+    Object.assign(row, { ...patch, alias, consent_date: consent ?? null });
     persist();
     return out(row);
+  },
+
+  async deleteChild(id: number): Promise<void> {
+    find(id);
+    const s = state();
+    const sessions = s.attempts.filter((a) => a.childId === id).map((a) => `${a.session}/`);
+    s.children = s.children.filter((c) => c.id !== id);
+    s.attempts = s.attempts.filter((a) => a.childId !== id);
+    s.placements = s.placements.filter((p) => p.childId !== id);
+    for (const key of Object.keys(s.marks)) {
+      if (sessions.some((p) => key.startsWith(p))) delete s.marks[key];
+    }
+    persist();
   },
 
   async childReadings(id: number): Promise<Reading[]> {

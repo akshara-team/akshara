@@ -86,6 +86,12 @@ export function clearChild(): ChildStore {
   return save({ ...EMPTY_STORE });
 }
 
+/** After a teacher deletes a child: forget them on this device too, if they are the reader. */
+export function forgetReader(childId: number): void {
+  const current = load();
+  if (current.reader?.id === String(childId)) save({ ...EMPTY_STORE, lang: current.lang });
+}
+
 /**
  * Pure aggregation for one finished story. Returns null until every part has an
  * attempt, so a half-read story is never recorded as a reading.

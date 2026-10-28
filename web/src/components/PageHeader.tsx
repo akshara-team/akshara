@@ -5,12 +5,6 @@ import { useIsDesktop } from "../state/useMediaQuery";
 import { Avatar } from "./Avatar";
 import { ArrowLeftIcon } from "./icons";
 
-const TABS = [
-  { key: "class", label: "Class", to: "/teacher", end: true },
-  { key: "story", label: "Story", to: "/teacher/story", end: true },
-  { key: "add", label: "Add child", to: "/teacher/add", end: true },
-] as const;
-
 const TITLES: Record<string, string> = {
   "/": "Welcome",
   "/switch": "Welcome",
@@ -23,6 +17,7 @@ const TITLES: Record<string, string> = {
   "/teacher": "Class",
   "/teacher/story": "Story",
   "/teacher/review": "Review",
+  "/teacher/reliability": "Reliability",
   "/teacher/add": "Add child",
 };
 
@@ -93,11 +88,11 @@ export function PageHeader({
 
         {nav && nav.length > 0 && isDesktop && (
           <nav className="page-header__nav" aria-label="Teacher">
-            {TABS.map((tab) => (
+            {nav.map((tab) => (
               <NavLink
-                key={tab.key}
+                key={tab.to}
                 to={tab.to}
-                end={tab.end}
+                end
                 className={({ isActive }) =>
                   `page-header__link ${isActive ? "page-header__link--active" : ""}`
                 }
@@ -125,11 +120,11 @@ export function PageHeader({
 
       {nav && nav.length > 0 && !isDesktop && (
         <nav className="teacher-tabs" aria-label="Teacher sections">
-          {TABS.map((tab) => (
+          {nav.map((tab) => (
             <NavLink
-              key={tab.key}
+              key={tab.to}
               to={tab.to}
-              end={tab.end}
+              end
               className={({ isActive }) =>
                 `teacher-tabs__tab ${isActive ? "teacher-tabs__tab--active" : ""}`
               }

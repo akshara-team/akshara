@@ -8,6 +8,8 @@ from akshara.providers.fixture import FixtureSTT
 from akshara.settings import Settings
 from akshara.store import Store, summarise
 
+CONSENT = {"consent_date": "2026-10-01"}  # a parent agreed (required since WP7)
+
 
 class Script:
     """Returns the queued transcripts in order, one per call."""
@@ -38,7 +40,9 @@ def read(c, child_id, part, session, seconds=2.0, rid=None):
 
 def test_add_list_get_and_edit_a_child():
     c = client()
-    r = c.post("/v1/children", json={"alias": "  Meena  K ", "language": "kn-IN", "grade": 2})
+    r = c.post(
+        "/v1/children", json={**CONSENT, "alias": "  Meena  K ", "language": "kn-IN", "grade": 2}
+    )
     assert r.status_code == 201
     child = r.json()
     assert child["alias"] == "Meena K" and child["grade"] == 2 and child["readings"] == 0
@@ -51,16 +55,33 @@ def test_add_list_get_and_edit_a_child():
 
 def test_rejects_bad_children():
     c = client()
-    assert c.post("/v1/children", json={"alias": "", "language": "kn-IN"}).status_code == 422
-    assert c.post("/v1/children", json={"alias": "   ", "language": "kn-IN"}).status_code == 422
-    assert c.post("/v1/children", json={"alias": "A", "language": "en-US"}).status_code == 422
     assert (
-        c.post("/v1/children", json={"alias": "A", "language": "kn-IN", "grade": 0}).status_code
+        c.post("/v1/children", json={**CONSENT, "alias": "", "language": "kn-IN"}).status_code
         == 422
     )
-    assert c.post("/v1/children", json={"alias": "Ravi", "language": "kn-IN"}).status_code == 201
-    assert c.post("/v1/children", json={"alias": "Ravi", "language": "ta-IN"}).status_code == 409
-    other = c.post("/v1/children", json={"alias": "Uma", "language": "kn-IN"}).json()
+    assert (
+        c.post("/v1/children", json={**CONSENT, "alias": "   ", "language": "kn-IN"}).status_code
+        == 422
+    )
+    assert (
+        c.post("/v1/children", json={**CONSENT, "alias": "A", "language": "en-US"}).status_code
+        == 422
+    )
+    assert (
+        c.post(
+            "/v1/children", json={**CONSENT, "alias": "A", "language": "kn-IN", "grade": 0}
+        ).status_code
+        == 422
+    )
+    assert (
+        c.post("/v1/children", json={**CONSENT, "alias": "Ravi", "language": "kn-IN"}).status_code
+        == 201
+    )
+    assert (
+        c.post("/v1/children", json={**CONSENT, "alias": "Ravi", "language": "ta-IN"}).status_code
+        == 409
+    )
+    other = c.post("/v1/children", json={**CONSENT, "alias": "Uma", "language": "kn-IN"}).json()
     assert c.patch(f"/v1/children/{other['id']}", json={"alias": "Ravi"}).status_code == 409
     assert c.get("/v1/children/999").status_code == 404
     assert c.patch("/v1/children/999", json={"grade": 2}).status_code == 404
@@ -82,7 +103,9 @@ def test_parts_of_one_session_are_one_reading():
     part0, part1 = "राम रोज़ सुबह जल्दी उठकर स्कूल जाता है", "वहाँ वह अपने दोस्तों के साथ खेलता है"
     # part 1 read twice: the second, better try is the one that counts
     c = client(Script(part0, "वहाँ वह", part1, part0))
-    kid = c.post("/v1/children", json={"alias": "Asha", "language": "hi-IN"}).json()["id"]
+    kid = c.post("/v1/children", json={**CONSENT, "alias": "Asha", "language": "hi-IN"}).json()[
+        "id"
+    ]
     assert read(c, kid, 0, "s1").status_code == 200
     assert read(c, kid, 1, "s1").json()["learner"] == "Asha"
     assert read(c, kid, 1, "s1").status_code == 200
@@ -102,7 +125,9 @@ def test_parts_of_one_session_are_one_reading():
 
 def test_retried_upload_counts_once():
     c = client(Script("राम रोज़ सुबह", "unused"))
-    kid = c.post("/v1/children", json={"alias": "Ravi", "language": "hi-IN"}).json()["id"]
+    kid = c.post("/v1/children", json={**CONSENT, "alias": "Ravi", "language": "hi-IN"}).json()[
+        "id"
+    ]
     read(c, kid, 0, "s1", rid="same")
     read(c, kid, 0, "s1", rid="same")
     (reading,) = c.get(f"/v1/children/{kid}/readings").json()

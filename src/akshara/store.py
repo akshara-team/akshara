@@ -73,9 +73,12 @@ MIGRATIONS = [
         PRIMARY KEY (request_id, word_index)
     );
     """,
+    # 6: the date a parent or guardian agreed (YYYY-MM-DD), confirmed by the teacher
+    "ALTER TABLE learners ADD COLUMN consent_date TEXT;",
 ]
 
-CHILD_FIELDS = ("alias", "language", "grade", "avatar")
+CHILD_FIELDS = ("alias", "language", "grade", "avatar", "consent_date")
+CHILD_TABLES = ("placements", "skill_state")  # rows keyed by child_id
 
 
 class DuplicateAlias(ValueError):
@@ -115,6 +118,8 @@ class Store:
             Path(path).parent.mkdir(parents=True, exist_ok=True)
         self.db = sqlite3.connect(str(path), check_same_thread=False)
         self.db.row_factory = sqlite3.Row
+        # deleted children's data is overwritten on disk, not left in free pages
+        self.db.execute("PRAGMA secure_delete = ON")
         self._migrate()
 
     def _migrate(self) -> None:
@@ -136,13 +141,18 @@ class Store:
         return cur.lastrowid  # type: ignore[return-value]
 
     def create_child(
-        self, alias: str, language: str, grade: int | None = None, avatar: str | None = None
+        self,
+        alias: str,
+        language: str,
+        grade: int | None = None,
+        avatar: str | None = None,
+        consent_date: str | None = None,
     ) -> int:
         try:
             cur = self.db.execute(
-                "INSERT INTO learners (alias, language, grade, avatar, created_at)"
-                " VALUES (?, ?, ?, ?, ?)",
-                (alias, language, grade, avatar, time.time()),
+                "INSERT INTO learners (alias, language, grade, avatar, created_at, consent_date)"
+                " VALUES (?, ?, ?, ?, ?, ?)",
+                (alias, language, grade, avatar, time.time(), consent_date),
             )
         except sqlite3.IntegrityError as e:
             raise DuplicateAlias(alias) from e
@@ -199,6 +209,51 @@ class Store:
     def set_audio(self, request_id: str, path: str) -> None:
         self.db.execute(
             "UPDATE attempts SET audio_path = ? WHERE request_id = ?", (path, request_id)
+        )
+        self.db.commit()
+
+    def delete_child(self, child_id: int) -> list[str] | None:
+        """Remove the child and everything about them: attempts, teachers' marks, placements
+        and skill states, in one transaction. Returns the recording file names to delete, or
+        None when there is no such child."""
+        if self.child(child_id) is None:
+            return None
+        audio = [
+            r["audio_path"]
+            for r in self.db.execute(
+                "SELECT audio_path FROM attempts WHERE learner_id = ? AND audio_path IS NOT NULL",
+                (child_id,),
+            )
+        ]
+        with self.db:
+            self.db.execute(
+                "DELETE FROM reviews WHERE request_id IN"
+                " (SELECT request_id FROM attempts WHERE learner_id = ?)",
+                (child_id,),
+            )
+            self.db.execute("DELETE FROM attempts WHERE learner_id = ?", (child_id,))
+            for table in CHILD_TABLES:
+                self.db.execute(f"DELETE FROM {table} WHERE child_id = ?", (child_id,))
+            self.db.execute("DELETE FROM learners WHERE id = ?", (child_id,))
+        return audio
+
+    def recordings_before(self, cutoff: float) -> list[tuple[str, str]]:
+        """(request_id, file name) of kept recordings made before `cutoff` (unix seconds)."""
+        rows = self.db.execute(
+            "SELECT request_id, audio_path FROM attempts"
+            " WHERE audio_path IS NOT NULL AND created_at < ?",
+            (cutoff,),
+        ).fetchall()
+        return [(r["request_id"], r["audio_path"]) for r in rows]
+
+    def recording_names(self) -> set[str]:
+        rows = self.db.execute("SELECT audio_path FROM attempts WHERE audio_path IS NOT NULL")
+        return {r["audio_path"] for r in rows}
+
+    def forget_audio(self, request_ids: list[str]) -> None:
+        self.db.executemany(
+            "UPDATE attempts SET audio_path = NULL WHERE request_id = ?",
+            [(r,) for r in request_ids],
         )
         self.db.commit()
 

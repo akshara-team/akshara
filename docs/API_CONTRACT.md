@@ -114,16 +114,19 @@ One row per learner (class-level, not per child).
 ]
 ```
 
-### `GET /v1/children?lang=kn-IN` · `POST /v1/children` · `GET|PATCH /v1/children/{id}`
+### `GET /v1/children?lang=kn-IN` · `POST /v1/children` · `GET|PATCH|DELETE /v1/children/{id}`
 
 The children a teacher manages. `alias` is a nickname, never the full name (1–40 characters,
 spaces collapsed, unique: a clash is `409`). `language` is `hi-IN | kn-IN | ta-IN`, `grade`
-1–8 or null, `avatar` up to 4 characters. `POST` returns `201`; `PATCH` changes only the fields
-sent. Unknown id → `404`.
+1–8 or null, `avatar` up to 4 characters. `consent_date` (`YYYY-MM-DD`) is the day a parent or
+guardian agreed, as the teacher confirms it: required on `POST` (missing → `422`), never more
+than a day in the future, and on `PATCH` it can be re-dated but not removed. `POST` returns
+`201`; `PATCH` changes only the fields sent. `DELETE` removes the child with their attempts,
+recordings, teachers' marks, placements and skill states, and returns `204`. Unknown id → `404`.
 
 ```json
 {"id": 1, "alias": "Meena K", "language": "kn-IN", "grade": 2, "avatar": "MK",
- "created_at": 1793081453.4, "readings": 2,
+ "created_at": 1793081453.4, "consent_date": "2026-10-01", "readings": 2,
  "latest": {"at": 1793081500.0, "accuracy": 0.83, "wcpm": 76.0},
  "previous": {"at": 1792990000.0, "accuracy": 0.75, "wcpm": 61.2}}
 ```
@@ -191,6 +194,10 @@ Recordings are kept next to the database (`recordings/`, or `AKSHARA_RECORDINGS`
 in-memory database). `clip` returns the stretch where the word probably is: Prisma gives no
 word timings, so `core/wordspans.py` estimates it from pauses and akshara counts and pads it
 by 0.5 s. The response carries `X-Clip-Approximate: true`. No recording → `404`.
+
+A recording is kept only for a child with a consent date. Recordings older than
+`AKSHARA_RETENTION_DAYS` (default 30) are deleted when the server starts and then at most hourly
+(`retention.py`); the reading's words and scores stay. `GET /health` reports `retention_days`.
 
 ## Not built (deferred)
 
