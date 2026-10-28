@@ -201,9 +201,24 @@ A recording is kept only for a child with a consent date. Recordings older than
 `AKSHARA_RETENTION_DAYS` (default 30) are deleted when the server starts and then at most hourly
 (`retention.py`); the reading's words and scores stay. `GET /health` reports `retention_days`.
 
+### Practice sentences: `GET /v1/sentences?lang=kn-IN` · `POST /v1/sentences/{id}/review` · `GET /v1/children/{id}/sentence` · `POST /v1/sentences/{id}/read`
+
+Short sentences that practise one sound (`content/`). `source` is `evon` (written by Evon in an
+offline batch, `scripts/evon_sentences.py`, and checked by code) or `story` (cut from a
+published story). An Evon sentence starts `pending`; a teacher's `POST .../review`
+(`{"status": "approved" | "rejected"}`) decides whether children see it; a story sentence is
+`story` and needs no approval (`409` if reviewed). Filter the list with `source` and `status`.
+
+`GET /v1/children/{id}/sentence` picks one sentence for what the child is working on (the
+learner model's weak skills, else the next ones): approved Evon sentences first, then story
+sentences that pass the same checks, the least read by this child first. It carries
+`practises` (the skill it was picked for); `404` when nothing fits. `POST .../read` (`audio`,
+optional `child_id`) scores a reading of the sentence (`{id, words, states, accuracy}`),
+teaches the learner model and counts the read. Costs one Prisma call.
+
 ## Not built (deferred)
 
-- Evon story generation.
+- Evon stories longer than one sentence.
 
 ## Still open
 

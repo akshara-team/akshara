@@ -52,6 +52,18 @@ export function TeacherDashboard() {
     };
   }, [language]);
 
+  const [toApprove, setToApprove] = useState(0);
+  useEffect(() => {
+    let alive = true;
+    api
+      .listSentences(language, { source: "evon", status: "pending" })
+      .then((r) => alive && setToApprove(r.length))
+      .catch(() => alive && setToApprove(0));
+    return () => {
+      alive = false;
+    };
+  }, [language]);
+
   const data = useMemo(
     () =>
       toRoster(
@@ -133,6 +145,21 @@ export function TeacherDashboard() {
             </div>
           ))}
         </div>
+
+        {toApprove > 0 && (
+          <Card>
+            <p className="reader-name">
+              {toApprove} {toApprove === 1 ? "practice sentence" : "practice sentences"} from Evon
+              to approve
+            </p>
+            <p className="note">A child sees a sentence only after you approve it.</p>
+            <div className="actions">
+              <Button variant="outline" onClick={() => navigate("/teacher/sentences")}>
+                Read and approve
+              </Button>
+            </div>
+          </Card>
+        )}
 
         {toHear != null && toHear > 0 && (
           <Card>
