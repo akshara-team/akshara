@@ -262,9 +262,10 @@ def create_app(
         row = store.attempt(request_id)
         if not row:
             raise HTTPException(404, "unknown attempt")
-        learner = store.db.execute(
-            "SELECT alias FROM learners WHERE id = ?", (row["learner_id"],)
-        ).fetchone()["alias"]
+        with store.lock:  # the connection is shared between request threads
+            learner = store.db.execute(
+                "SELECT alias FROM learners WHERE id = ?", (row["learner_id"],)
+            ).fetchone()["alias"]
         return AttemptOut(
             request_id=request_id, learner=learner, passage_id=row["passage_id"],
             language=row["language"], provider=row["provider"], transcript=row["transcript"],
