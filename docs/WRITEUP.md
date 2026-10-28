@@ -24,10 +24,13 @@ Skips and clear substitutions are reliable. A single wrong consonant mostly is n
 - **Repeats and self-corrections** are kept in the verbatim transcript (12 of 14 and 14 of 15), so the app can show hesitation.
 
 ## What the product does about it
-It keeps one pass, scores accuracy and words correct per minute, shows a per-word trace, and says on every result that green does not prove a perfect reading. Words accepted only through a spelling-variant rule get a `?` ("check this word").
+Akshara is built as a tutor around that limit rather than hiding it. It keeps Prisma's single pass (a per-word acoustic check and a fused scorer were measured too, and did not beat it by the margins set in advance), scores accuracy and words correct per minute, and shows a per-word trace. Words accepted only through a spelling-variant rule get a `?` ("check this word"). Then:
+- **The teacher has the last word.** Marks most likely to be wrong (spelling-variant matches, a lone slip in a strong reading, unsure placements) go to a review queue with a clip of just that word; a teacher's mark replaces the computer's.
+- **The numbers are in the app.** A "How reliable is this?" page shows the catch rates per language from the saved results, including the weak spot, with the study's limits.
+- **Help aimed at the child's mistakes.** Missed words are practised straight away, akshara by akshara with Timbre, and a learner model picks the next story from what the child knows.
 
 ## Limits
-- All audio is synthetic; no real children (Gnani's rules). Not validated on children's speech.
+- All audio is synthetic; no real children (Gnani's rules). Not validated on children's speech, and no teacher has yet marked the same readings to measure agreement.
 - Passages are book descriptions, not graded reading texts, and were not reviewed by native speakers.
 - Samples are small; intervals are wide (near-sound: about 11–36%).
 - The synthetic voice may not pronounce a planted non-word clearly, so the 21% could understate Prisma.
