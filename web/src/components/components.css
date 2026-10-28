@@ -580,3 +580,27 @@
   color: var(--color-text-primary);
   font-weight: var(--font-weight-semibold);
 }
+
+/* ---------- Spoken instruction (WP6) ---------- */
+.say-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: var(--size-control);
+  height: var(--size-control);
+  border-radius: var(--radius-pill);
+  border: var(--border-width) solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-secondary);
+  cursor: pointer;
+  vertical-align: middle;
+}
+.say-button:disabled {
+  opacity: 0.6;
+}
+.say-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+}
