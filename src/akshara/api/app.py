@@ -224,10 +224,12 @@ def create_app(
                 raise HTTPException(415, "audio must be a WAV file")
             if seconds > settings.max_audio_seconds:
                 raise HTTPException(413, f"audio longer than {settings.max_audio_seconds:.0f} s")
-            # a resent upload returns the stored result and must not teach the model twice
-            retry = bool(x_request_id) and store.attempt(x_request_id) is not None
             try:
                 with stt_lock:
+                    # A resent upload (a retry, or the browser's offline queue) returns the
+                    # stored result and must not teach the model twice. Checked under the lock,
+                    # so two copies arriving together cannot both count as new.
+                    retry = bool(x_request_id) and store.attempt(x_request_id) is not None
                     a = assess(
                         stt=stt, store=store, audio=path, learner=learner, passage_id=passage_id,
                         reference=reference, language=passage["lang"],

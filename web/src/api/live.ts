@@ -14,6 +14,8 @@ import type {
   Skills,
 } from "./types";
 
+import { newId } from "../state/ids";
+
 const BASE = import.meta.env.VITE_API_BASE ?? "";
 
 export class ApiError extends Error {
@@ -90,7 +92,7 @@ export const liveApi = {
       method: "POST",
       body: form,
       // Idempotent: resending the same id returns the stored result.
-      headers: { "X-Request-ID": args.requestId ?? crypto.randomUUID() },
+      headers: { "X-Request-ID": args.requestId ?? newId() },
     });
     if (!res.ok) throw new ApiError(res.status, await detail(res));
     return (await res.json()) as Attempt;

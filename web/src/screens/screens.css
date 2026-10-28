@@ -783,3 +783,7 @@ button.screen__link {
   margin-top: var(--space-16);
   border-color: var(--color-danger-text);
 }
+
+.feedback-hero__noisy {
+  font-weight: var(--font-weight-semibold);
+}

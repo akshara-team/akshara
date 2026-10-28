@@ -12,12 +12,16 @@ import {
 import {
   Button,
   LanguageBadge,
+  LevelMeter,
   ListenButton,
   MicButton,
+  NoiseCheck,
   ProgressBar,
   ProgressDots,
   PageHeader,
 } from "../../components";
+import { meterValue } from "../../audio/noise";
+import { newId } from "../../state/ids";
 import { useSession } from "../../state/session";
 import { scriptClass } from "../../theme/script";
 import { useCopy, type CopyKey } from "../../i18n";
@@ -39,6 +43,7 @@ export function ReadingScreen() {
   const [phase, setPhase] = useState<Phase>("idle");
   const [error, setError] = useState<CopyKey | null>(null);
   const [elapsed, setElapsed] = useState(0);
+  const [level, setLevel] = useState(0);
   const recorder = useRef<Recorder | null>(null);
   const startedAt = useRef(0);
   const finishRef = useRef<() => void>(() => {});
@@ -50,6 +55,8 @@ export function ReadingScreen() {
     const timer = setInterval(() => {
       const s = (Date.now() - startedAt.current) / 1000;
       setElapsed(Math.floor(s));
+      const db = recorder.current?.level();
+      if (db != null) setLevel(meterValue(db));
       if (s >= MAX_RECORDING_S) finishRef.current();
     }, 250);
     return () => clearInterval(timer);
@@ -61,8 +68,10 @@ export function ReadingScreen() {
   const total = Math.max(parts.length, 1);
   const text = parts[currentPart - 1]?.text ?? passage?.text ?? "No passage loaded.";
 
-  function handOver(seconds: number, audio: Blob | null) {
-    setPending({ audio, seconds });
+  function handOver(seconds: number, audio: Blob | null, noisy = false) {
+    // The id is fixed here, so every later send of this clip (a retry, or the offline queue)
+    // is answered with the same stored result.
+    setPending({ audio, seconds, noisy, requestId: newId() });
     navigate("/checking");
   }
 
@@ -74,7 +83,7 @@ export function ReadingScreen() {
     try {
       const audio = await rec.stop();
       // The clip's own length, as the server measures it, so child and teacher see one WCPM.
-      handOver(wavSeconds(audio), audio);
+      handOver(wavSeconds(audio), audio, rec.noise === "noisy");
     } catch (e) {
       setError(e instanceof RecordingError ? PROBLEM_TEXT[e.problem] : "read.failed");
       setPhase("idle");
@@ -173,10 +182,13 @@ export function ReadingScreen() {
                 <Tx k={labelKey} />
               </p>
               {phase === "recording" && (
-                // role="timer" is not announced every tick, unlike aria-live.
-                <p className="controls__timer" role="timer" aria-label={`Recording, ${elapsed} s`}>
-                  {elapsed}s
-                </p>
+                <>
+                  {/* role="timer" is not announced every tick, unlike aria-live. */}
+                  <p className="controls__timer" role="timer" aria-label={`Recording, ${elapsed} s`}>
+                    {elapsed}s
+                  </p>
+                  <LevelMeter value={level} label={t("read.level")} />
+                </>
               )}
               <p className="controls__desc">
                 <Tx k={idle ? "read.readAloud" : "read.readPace"} />
@@ -187,6 +199,8 @@ export function ReadingScreen() {
                   <Tx k={error} />
                 </p>
               )}
+
+              {phase === "idle" && <NoiseCheck lang={lang} />}
 
               {isMock && phase === "idle" && (
                 <Button
