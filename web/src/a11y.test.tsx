@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import axe from "axe-core";
 import { MemoryRouter, useNavigate } from "react-router-dom";
 import { describe, expect, it } from "vitest";
@@ -25,6 +25,8 @@ const ROUTES = [
   "/results",
   "/teacher/review",
   "/teacher/reliability",
+  "/teacher/sentences",
+  "/practice/sentence",
 
   "/teacher/add",
   "/no-such-page",
@@ -49,7 +51,8 @@ describe("axe", () => {
       await act(async () => {
         await new Promise((r) => setTimeout(r, 0));
       });
-      expect(container.textContent).not.toMatch(/Loading/);
+      // some screens load a data file first (practice sentences): wait for it
+      await waitFor(() => expect(container.textContent).not.toMatch(/Loading/));
       const result = await axe.run(container, options);
       const summary = result.violations.map((v) => `${v.id}: ${v.nodes.length} node(s)`);
       expect(summary).toEqual([]);

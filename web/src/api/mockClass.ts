@@ -15,6 +15,9 @@ import type {
   ReadingBrief,
   ReviewItem,
   ReviewResult,
+  Sentence,
+  SentenceFor,
+  SentenceRead,
   Skills,
   WordOut,
 } from "./types";
@@ -54,6 +57,10 @@ type MockClass = {
   placements: PlacementRow[];
   /** Teachers' marks: `${session}/${part}/${word index}` → result. */
   marks: Record<string, ReviewResult>;
+  /** A teacher's approval of each Evon sentence, by id. */
+  sentenceStatus?: Record<string, "approved" | "rejected">;
+  /** How often each child read each sentence: `${childId}/${sentence id}` → count. */
+  sentenceReads?: Record<string, number>;
 };
 
 const KEY = "akshara.mockclass.v1";
@@ -342,6 +349,23 @@ export class MockApiError extends Error {
   }
 }
 
+type BankRow = Omit<Sentence, "lang" | "status">;
+
+/** The same bank as the API (`scripts/build_sentences.py`), loaded only when first needed. */
+let sentenceBank: Promise<Record<string, BankRow[]>> | null = null;
+function bankFor(lang: string): Promise<BankRow[]> {
+  sentenceBank ??= import("../data/sentences.json").then(
+    (m) => (m.default as { languages: Record<string, BankRow[]> }).languages,
+  );
+  return sentenceBank.then((b) => b[lang] ?? []);
+}
+
+function sentenceOut(row: BankRow, lang: string): Sentence {
+  const status =
+    row.source === "story" ? "story" : (state().sentenceStatus?.[row.id] ?? "pending");
+  return { ...row, lang: lang as Lang, status };
+}
+
 function find(id: number): ChildRow {
   const row = state().children.find((c) => c.id === id);
   if (!row) throw new MockApiError(404, "unknown child");
@@ -409,6 +433,9 @@ export const mockClass = {
     for (const key of Object.keys(s.marks)) {
       if (sessions.some((p) => key.startsWith(p))) delete s.marks[key];
     }
+    for (const key of Object.keys(s.sentenceReads ?? {})) {
+      if (key.startsWith(`${id}/`)) delete s.sentenceReads![key];
+    }
     persist();
   },
 
@@ -453,6 +480,73 @@ export const mockClass = {
     row.items.push({ ...item, states });
     persist();
     return placementOut(row);
+  },
+
+  async listSentences(lang: string, query: { source?: string; status?: string } = {}) {
+    return (await bankFor(lang))
+      .map((r) => sentenceOut(r, lang))
+      .filter(
+        (r) =>
+          (!query.source || r.source === query.source) &&
+          (!query.status || r.status === query.status),
+      );
+  },
+
+  async reviewSentence(id: string, status: "approved" | "rejected"): Promise<Sentence> {
+    for (const lang of ["hi-IN", "kn-IN", "ta-IN"]) {
+      const row = (await bankFor(lang)).find((r) => r.id === id);
+      if (!row) continue;
+      if (row.source !== "evon") throw new MockApiError(409, "only Evon's sentences need approval");
+      const s = state();
+      s.sentenceStatus = { ...s.sentenceStatus, [id]: status };
+      persist();
+      return sentenceOut(row, lang);
+    }
+    throw new MockApiError(404, "unknown sentence");
+  },
+
+  /** Like the API: approved Evon sentences first, then stories; the least read wins. */
+  async sentenceFor(childId: number): Promise<SentenceFor> {
+    const child = find(childId);
+    const rows = (await bankFor(child.language)).map((r) => sentenceOut(r, child.language));
+    const usable = rows.filter((r) => r.status === "approved" || r.status === "story");
+    const weak = (await this.childSkills(childId)).working_on.map((w) => w.id);
+    const reads = state().sentenceReads ?? {};
+    const times = (r: Sentence) => reads[`${childId}/${r.id}`] ?? 0;
+    for (const skill of [...weak, null]) {
+      const fits = usable
+        .filter((r) => skill === null || r.skills.includes(skill))
+        .sort(
+          (a, b) =>
+            times(a) - times(b) ||
+            Number(b.source === "evon") - Number(a.source === "evon") ||
+            a.text.length - b.text.length,
+        );
+      if (fits[0]) return { ...fits[0], practises: skill ?? fits[0].skills[0] ?? "" };
+    }
+    throw new MockApiError(404, "no sentence for this child yet");
+  },
+
+  /** The demo has no scorer: a reading of the sentence always counts. */
+  async readSentence(id: string, childId?: number): Promise<SentenceRead> {
+    for (const lang of ["hi-IN", "kn-IN", "ta-IN"]) {
+      const row = (await bankFor(lang)).find((r) => r.id === id);
+      if (!row) continue;
+      if (childId !== undefined) {
+        const s = state();
+        const key = `${childId}/${id}`;
+        s.sentenceReads = { ...s.sentenceReads, [key]: (s.sentenceReads?.[key] ?? 0) + 1 };
+        persist();
+      }
+      const words = row.text.split(/\s+/).filter(Boolean);
+      return {
+        id,
+        accuracy: 1,
+        states: words.map(() => "correct" as const),
+        words: words.map((w, index) => ({ op: "correct", word: w, said: w, index, check: false })),
+      };
+    }
+    throw new MockApiError(404, "unknown sentence");
   },
 
   async childSkills(id: number): Promise<Skills> {
