@@ -170,6 +170,10 @@ conflict with ours. Claude wires his pieces into the screens.
 | D4 | Native test pass on his phone in Kannada and Tamil, issues filed on GitHub | 1 h | Nov 1 | the finished build |
 | D5 | *Optional, after Nov 3:* render the held-out clips (`docs/HOLDOUT_HOWTO.md`) and the pending Kannada/Tamil script and skill-order reviews | — | if time | nothing |
 
+**Daniel's up-to-date brief, with everything he needs: [DANIEL.md](DANIEL.md)** (it replaces
+the table above and adds D6, approving Evon's sentences). The older brief below is kept for
+the record.
+
 ### Brief for Daniel's agent (paste as is)
 
 > Akshara repo, branch from `main`, one PR per task, CI green before merge
