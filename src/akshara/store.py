@@ -1,7 +1,9 @@
 """SQLite storage with ordered migrations. Attempts keep the full trace of what was heard."""
 
+import functools
 import json
 import sqlite3
+import threading
 import time
 from pathlib import Path
 
@@ -112,10 +114,32 @@ def summarise(group: list[dict]) -> dict:
     }
 
 
+def _one_at_a_time(cls):
+    """Run each method of the class under the instance's lock. The API serves requests on
+    several threads that share one connection, and without this one request's commit can cut
+    off another's query (tests/test_store_threads.py)."""
+
+    def locked(fn):
+        @functools.wraps(fn)
+        def run(self, *args, **kwargs):
+            with self.lock:
+                return fn(self, *args, **kwargs)
+
+        return run
+
+    for name, fn in list(vars(cls).items()):
+        if callable(fn) and not name.startswith("__"):
+            setattr(cls, name, locked(fn))
+    return cls
+
+
+@_one_at_a_time
 class Store:
     def __init__(self, path: Path | str):
         if str(path) != ":memory:":
             Path(path).parent.mkdir(parents=True, exist_ok=True)
+        # Reentrant: a method may call another (delete_child calls child).
+        self.lock = threading.RLock()
         self.db = sqlite3.connect(str(path), check_same_thread=False)
         self.db.row_factory = sqlite3.Row
         # deleted children's data is overwritten on disk, not left in free pages
