@@ -1,3 +1,4 @@
+from datetime import date, timedelta
 from typing import Literal
 
 from pydantic import BaseModel, Field, field_validator
@@ -53,6 +54,13 @@ def _alias(v: str | None) -> str | None:
     return v
 
 
+def _consent(v: date | None) -> date | None:
+    # a teacher in India can be a day ahead of the server's UTC date, never more
+    if v is not None and v > date.today() + timedelta(days=1):
+        raise ValueError("consent date cannot be in the future")
+    return v
+
+
 class ChildIn(BaseModel):
     """A child as the teacher adds them. `alias` is a nickname, never the full legal name."""
 
@@ -60,8 +68,12 @@ class ChildIn(BaseModel):
     language: Language
     grade: int | None = Field(default=None, ge=1, le=8)
     avatar: str | None = Field(default=None, max_length=4)
+    # the day a parent or guardian agreed to the child's readings being recorded (DPDP rules
+    # on children's data); the teacher confirms it. Required: no consent, no child.
+    consent_date: date
 
     _clean = field_validator("alias")(_alias)
+    _check_consent = field_validator("consent_date")(_consent)
 
 
 class ChildPatch(BaseModel):
@@ -69,8 +81,10 @@ class ChildPatch(BaseModel):
     language: Language | None = None
     grade: int | None = Field(default=None, ge=1, le=8)
     avatar: str | None = Field(default=None, max_length=4)
+    consent_date: date | None = None
 
     _clean = field_validator("alias")(_alias)
+    _check_consent = field_validator("consent_date")(_consent)
 
 
 class ReadingBrief(BaseModel):
@@ -86,6 +100,7 @@ class ChildOut(BaseModel):
     grade: int | None
     avatar: str | None
     created_at: float | None
+    consent_date: str | None = None  # YYYY-MM-DD; None for a child added before consent
     readings: int
     latest: ReadingBrief | None
     previous: ReadingBrief | None

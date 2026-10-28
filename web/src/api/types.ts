@@ -77,6 +77,8 @@ export type Child = {
   grade: number | null;
   avatar: string | null;
   created_at: number | null;
+  /** YYYY-MM-DD a parent or guardian agreed, as the teacher confirmed; null before WP7. */
+  consent_date?: string | null;
   readings: number;
   latest: ReadingBrief | null;
   previous: ReadingBrief | null;
@@ -91,6 +93,8 @@ export type ChildInput = {
   language: Lang;
   grade: number | null;
   avatar?: string | null;
+  /** YYYY-MM-DD a parent or guardian agreed. Required to add a child; never removed. */
+  consent_date?: string | null;
 };
 
 /** One reading of a story: its parts joined, the newest try of each part (`ReadingOut`). */

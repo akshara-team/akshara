@@ -16,6 +16,8 @@
   --color-feedback-success: #22c55e;
   --color-feedback-warning: #f59e0b;
   --color-feedback-danger: #ef4444;
+  /* Red for text and outlines on white: feedback-danger is too light for text (3.8:1). */
+  --color-danger-text: #b91c1c;
 
   --color-background: #ffffff;
   --color-background-soft: #eff6ff;

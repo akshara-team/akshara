@@ -12,6 +12,8 @@ from akshara.providers.fixture import FixtureSTT
 from akshara.settings import Settings
 from akshara.store import Store
 
+CONSENT = {"consent_date": "2026-10-01"}  # a parent agreed (required since WP7)
+
 BANK = {
     "p1": {"id": "p1", "lang": "hi-IN", "reference": "राम रोज़ सुबह जल्दी उठकर स्कूल जाता है"},
 }
@@ -59,7 +61,9 @@ def setup(tmp_path, heard: str):
     c = TestClient(
         create_app(Settings(provider="fixture", db_path=db), FixtureSTT({"p1": heard}), BANK)
     )
-    kid = c.post("/v1/children", json={"alias": "Asha", "language": "hi-IN"}).json()["id"]
+    kid = c.post("/v1/children", json={**CONSENT, "alias": "Asha", "language": "hi-IN"}).json()[
+        "id"
+    ]
     r = c.post(
         "/v1/attempts",
         files={"audio": ("p1.wav", speech_wav(), "audio/wav")},
@@ -139,7 +143,7 @@ def test_uncertain_placements_are_queued(tmp_path):
             Settings(provider="fixture", db_path=tmp_path / "p.sqlite"), FixtureSTT({}), bank
         )
     )
-    kid = c.post("/v1/children", json={"alias": "Uma", "language": "kn-IN"}).json()["id"]
+    kid = c.post("/v1/children", json={**CONSENT, "alias": "Uma", "language": "kn-IN"}).json()["id"]
     pl = c.post(f"/v1/children/{kid}/placements").json()
     n = len(pl["item"]["words"])
     half = ["correct", "correct", "correct", "unsure", "unsure"]
