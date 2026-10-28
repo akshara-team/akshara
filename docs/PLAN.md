@@ -92,7 +92,7 @@ A voice explainer for official papers: photograph a government letter, electrici
 ## 6. How the challenge picks people (from Gnani's pages)
 
 - **Two gates.** "Verified engagement on your public demo decides the shortlist. Your skills and your interview decide the offer." Engagement means reactions, comments and reshares on the nominated posts, counted at the closing cutoff. No weights or thresholds are published.
-- **Awards are separate** (10 × ₹50,000, judged on category criteria; one award per team). Targets: Main Character (Kannada, Tamil), Real Deal, Demo Day Drop. Small Town Big Build depends on where our colleges are.
+- **Awards are separate** (10 × ₹50,000, judged on category criteria; one award per team). Targets: Main Character (Kannada, Tamil), Real Deal, Demo Day Drop, Two-Person Army (we enter as a pair). Small Town Big Build depends on where our colleges are.
 - **Interviews are one to one and individual.** Each of us needs to be able to explain and defend our own part.
 - **Banned:** bought engagement, bots, engagement swaps, paid promotion, misleading demos. Gnani's own advice: a demo that shows an honest limitation beats one that fakes a result.
 - **What Gnani sells:** voice AI to large enterprises (mostly banking and finance), so telephony audio, Indian languages and measured accuracy are what they care about. Education is adjacent, which is why the reliability study, including 8 kHz audio, is the bridge.

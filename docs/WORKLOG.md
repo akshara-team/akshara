@@ -109,3 +109,6 @@ Evon writes, code checks, a teacher approves, Timbre says it, Prisma listens: al
 
 ## 2026-10-28: WP6, spoken instructions
 Each child screen has a speaker button beside its instruction (choose your name, home, reading, feedback, results, practice, sentence) that says it aloud, for a child who cannot read it yet. Seven short spoken lines per language (`say.*`), each under Timbre's 60-character limit in every language (a test checks it), played through the existing cached Timbre endpoint with the device voice as fallback. Only on a tap: nothing plays by itself. No batch run was needed: a line costs one Timbre call the first time anyone hears it and none after (the server caches by content), so 7 lines × 3 languages is at most 21 calls in all. Text in Kannada, Tamil and Hindi is Claude's draft, for native review with the rest.
+
+## 2026-10-28: Entering as a pair
+Achindra decided to enter with Daniel. Recorded in STATUS, FINISH_PLAN (decision closed), PLAN (Two-Person Army added to award targets), DANIEL.md (interview note) and POST.md (both named with what each built). Also: Windows crashed after PR #29 merged and zeroed `.git/HEAD`, `refs/heads/main` and `refs/remotes/origin/main`; restored from the reflog to `07a1972`, `git fsck` clean, no source files lost.
