@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { api, isMock } from "../../api";
 import { toRoster } from "../../api/classSummary";
 import { TEACHER_NAV } from "./nav";
@@ -19,6 +19,7 @@ const STATUS_TONE = { "in-target": "success", practise: "warning", new: "neutral
 
 export function TeacherDashboard() {
   const navigate = useNavigate();
+  const deleted = (useLocation().state as { deleted?: string } | null)?.deleted;
   const isDesktop = useIsDesktop();
   const [grade, setGrade] = useState("all");
   const [language, setLanguage] = useState<Lang>("kn-IN");
@@ -85,6 +86,12 @@ export function TeacherDashboard() {
           Teacher · {data.metrics.total} {data.metrics.total === 1 ? "child" : "children"} · {source}
         </p>
         <h1 className="card__title">Your reading class</h1>
+
+        {deleted && (
+          <p className="banner" role="status">
+            {deleted} and all their readings, recordings and marks are deleted.
+          </p>
+        )}
 
         <Card>
           <p className="reader-name">

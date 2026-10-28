@@ -17,7 +17,7 @@ afterEach(() => resetMockClass());
 
 describe("teacher and child share one class (mock mode)", () => {
   it("a child the teacher adds can read, and the reading reaches their profile", async () => {
-    const child = await api.addChild({ alias: "Meena K", language: "kn-IN", grade: 2 });
+    const child = await api.addChild({ alias: "Meena K", language: "kn-IN", grade: 2, consent_date: "2026-10-01" });
 
     const picker = at("/reader");
     expect(await screen.findByText("Meena K")).toBeTruthy();
@@ -45,14 +45,14 @@ describe("teacher and child share one class (mock mode)", () => {
   });
 
   it("keeps the class after a reload", async () => {
-    await api.addChild({ alias: "Saved Kid", language: "ta-IN", grade: 1 });
+    await api.addChild({ alias: "Saved Kid", language: "ta-IN", grade: 1, consent_date: "2026-10-01" });
     const raw = localStorage.getItem("akshara.mockclass.v1") ?? "";
     expect(raw).toContain("Saved Kid");
   });
 
   it("refuses a second child with the same name", async () => {
     await expect(
-      api.addChild({ alias: "Aarav Gowda", language: "kn-IN", grade: 3 }),
+      api.addChild({ alias: "Aarav Gowda", language: "kn-IN", grade: 3, consent_date: "2026-10-01" }),
     ).rejects.toMatchObject({ status: 409 });
   });
 });

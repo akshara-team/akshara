@@ -21,6 +21,7 @@ const ROUTES = [
   "/teacher/child/1/placement",
   "/practice",
   "/teacher/review",
+  "/teacher/reliability",
 
   "/teacher/add",
   "/no-such-page",
@@ -122,6 +123,7 @@ describe("theme contrast (WCAG AA)", () => {
     ["color-secondary", "color-background"], // ghost button
     ["color-muted", "color-background"],
     ["color-muted", "color-surface-muted"],
+    ["color-danger-text", "color-surface"], // field errors, delete button
   ];
   for (const [fg, bg] of text) {
     it(`${fg} on ${bg} is at least 4.5:1`, () => {

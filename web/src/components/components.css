@@ -36,6 +36,11 @@
   background: transparent;
   color: var(--color-secondary);
 }
+.btn--danger {
+  background: var(--color-surface);
+  border-color: var(--color-danger-text);
+  color: var(--color-danger-text);
+}
 .btn--block {
   width: 100%;
 }
@@ -231,7 +236,7 @@
 }
 .field__error {
   margin: 0;
-  color: var(--color-feedback-danger);
+  color: var(--color-danger-text);
   font-size: var(--text-meta);
 }
 .field--select {
@@ -272,6 +277,28 @@
 .radio--selected .radio__mark {
   border-color: var(--color-brand-primary);
   background: var(--color-brand-primary);
+}
+
+.checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-12);
+  padding: var(--space-12) var(--space-16);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-12);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+.checkbox--error {
+  border-color: var(--color-feedback-danger);
+}
+.checkbox__control {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  accent-color: var(--color-secondary);
 }
 
 /* ---------- Avatar ---------- */

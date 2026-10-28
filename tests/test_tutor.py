@@ -13,6 +13,8 @@ from akshara.providers.fixture import FixtureSTT
 from akshara.settings import Settings
 from akshara.store import Store
 
+CONSENT = {"consent_date": "2026-10-01"}  # a parent agreed (required since WP7)
+
 BANK = passages.load(PASSAGES, SOURCES)
 
 
@@ -116,7 +118,9 @@ def client(stt=None) -> TestClient:
 
 def test_placement_end_to_end_by_ear():
     c = client()
-    kid = c.post("/v1/children", json={"alias": "Ravi", "language": "kn-IN"}).json()["id"]
+    kid = c.post("/v1/children", json={**CONSENT, "alias": "Ravi", "language": "kn-IN"}).json()[
+        "id"
+    ]
     pl = c.post(f"/v1/children/{kid}/placements").json()
     assert pl["item"]["task"] == "paragraph" and pl["level"] is None
     n = len(pl["item"]["words"])
@@ -138,7 +142,7 @@ def test_placement_end_to_end_by_ear():
 
 def test_unsure_marks_can_leave_placement_uncertain():
     c = client()
-    kid = c.post("/v1/children", json={"alias": "Uma", "language": "kn-IN"}).json()["id"]
+    kid = c.post("/v1/children", json={**CONSENT, "alias": "Uma", "language": "kn-IN"}).json()["id"]
     pl = c.post(f"/v1/children/{kid}/placements").json()
     n = len(pl["item"]["words"])
     pl = c.post(f"/v1/placements/{pl['id']}/answer", json={"states": ["error"] * n}).json()
@@ -156,7 +160,9 @@ def test_reading_updates_mastery_once_per_upload(tmp_path):
     settings = Settings(provider="fixture", db_path=db)
     stt = FixtureSTT({bank_id: BANK[bank_id]["reference"]})
     c = TestClient(create_app(settings, stt, BANK))
-    kid = c.post("/v1/children", json={"alias": "Asha", "language": "kn-IN"}).json()["id"]
+    kid = c.post("/v1/children", json={**CONSENT, "alias": "Asha", "language": "kn-IN"}).json()[
+        "id"
+    ]
 
     def read(rid: str):
         r = c.post(
@@ -188,7 +194,9 @@ def test_placement_read_scores_the_current_item():
 
     settings = Settings(provider="fixture", db_path=":memory:")  # type: ignore[arg-type]
     c = TestClient(create_app(settings, SkipsFirst(), BANK))
-    kid = c.post("/v1/children", json={"alias": "Hari", "language": "kn-IN"}).json()["id"]
+    kid = c.post("/v1/children", json={**CONSENT, "alias": "Hari", "language": "kn-IN"}).json()[
+        "id"
+    ]
     pl = c.post(f"/v1/children/{kid}/placements").json()
     holder["words"] = pl["item"]["words"]
     r = c.post(f"/v1/placements/{pl['id']}/read", files={"audio": ("a.wav", wav(2), "audio/wav")})
@@ -230,7 +238,9 @@ def test_aksharas_endpoint_splits_a_word():
 def test_practice_scores_one_word(heard, state, tmp_path):
     db = tmp_path / "p.sqlite"
     c = practice_client(heard, db)
-    kid = c.post("/v1/children", json={"alias": "Ravi", "language": "kn-IN"}).json()["id"]
+    kid = c.post("/v1/children", json={**CONSENT, "alias": "Ravi", "language": "kn-IN"}).json()[
+        "id"
+    ]
     r = c.post(
         "/v1/practice",
         files={"audio": ("w.wav", wav(1), "audio/wav")},

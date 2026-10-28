@@ -4,4 +4,5 @@ export const TEACHER_NAV = [
   { label: "Review", to: "/teacher/review" },
   { label: "Story", to: "/teacher/story" },
   { label: "Add child", to: "/teacher/add" },
+  { label: "Reliability", to: "/teacher/reliability" },
 ];

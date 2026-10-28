@@ -1,6 +1,7 @@
 export { Avatar } from "./Avatar";
 export { Button } from "./Button";
 export { Card } from "./Card";
+export { Checkbox } from "./Checkbox";
 export { EmptyState } from "./EmptyState";
 export { ErrorBoundary } from "./ErrorBoundary";
 export { Input } from "./Input";
