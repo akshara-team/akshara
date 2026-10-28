@@ -11,6 +11,7 @@ import {
   WordChip,
   wordStatus,
 } from "../../components";
+import { useQueuedCount } from "../../state/outbox";
 import { useSession } from "../../state/session";
 import { useChildProgress } from "../../state/useChildProgress";
 import { useCopy } from "../../i18n";
@@ -26,6 +27,7 @@ export function ChildHome() {
   const { store, synced, gone } = useChildProgress();
   const [busy, setBusy] = useState(false);
   const { t, Tx } = useCopy(store.lang);
+  const waiting = useQueuedCount();
 
   const reader = gone ? null : store.reader;
   const first = reader?.alias.split(" ")[0] ?? "";
@@ -76,6 +78,11 @@ export function ChildHome() {
               {reader ? ` · ${reader.level}` : ""}
             </span>
           </div>
+          {waiting > 0 && (
+            <p className="note" role="status">
+              <Tx k="home.waiting" vars={{ n: waiting }} />
+            </p>
+          )}
         </div>
 
         {!reader ? (

@@ -36,9 +36,16 @@ describe("shell", () => {
   });
 
   it("routes to the offline recovery screen when the browser goes offline", async () => {
-    at("/read/kn-101");
+    at("/home");
     window.dispatchEvent(new Event("offline"));
     expect(await screen.findByText(t("kn-IN", "recovery.offline.title"))).toBeTruthy();
+  });
+
+  it("stays on the reading screen when the connection drops, so a recording is not lost", async () => {
+    at("/read/kn-101");
+    window.dispatchEvent(new Event("offline"));
+    await new Promise((r) => setTimeout(r, 0));
+    expect(screen.queryByText(t("kn-IN", "recovery.offline.title"))).toBeNull();
   });
 });
 

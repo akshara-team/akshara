@@ -134,5 +134,14 @@
   "practice.next": "Next word",
   "practice.done": "All done! You practised {count} words.",
   "practice.checking": "Listening…",
-  "practice.failed": "Could not check that. Try again."
+  "practice.failed": "Could not check that. Try again.",
+  "read.noiseCheck": "Is it quiet here?",
+  "read.noiseListening": "Listening to the room…",
+  "read.noiseQuiet": "It is quiet here. A good place to read!",
+  "read.noiseNoisy": "It is noisy here. Move somewhere quieter, or read a little louder.",
+  "read.level": "How loud I hear you",
+  "feedback.noisy": "It was noisy while you read, so some words may be marked wrong.",
+  "check.savedTitle": "Your reading is saved",
+  "check.savedBody": "There is no internet right now. We will check your reading when it comes back.",
+  "home.waiting": "Readings waiting to be checked: {n}"
 }

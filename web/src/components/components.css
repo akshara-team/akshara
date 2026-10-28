@@ -542,3 +542,41 @@
   height: var(--size-avatar-sm);
   font-size: var(--text-secondary);
 }
+
+/* ---------- Level meter and noise check (WP9) ---------- */
+.level-meter {
+  width: 100%;
+  max-width: 240px;
+  height: 12px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+  border: var(--border-width) solid var(--color-border);
+  overflow: hidden;
+}
+.level-meter__fill {
+  display: block;
+  height: 100%;
+  background: var(--color-feedback-success);
+  transition: width 100ms linear;
+}
+@media (prefers-reduced-motion: reduce) {
+  .level-meter__fill {
+    transition: none;
+  }
+}
+.noise-check {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
+  text-align: center;
+}
+.noise-check__verdict {
+  margin: 0;
+  font-size: var(--text-secondary);
+  color: var(--color-text-secondary);
+}
+.noise-check__verdict--noisy {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+}

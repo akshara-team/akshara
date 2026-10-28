@@ -8,9 +8,17 @@ import {
 } from "react";
 import type { Attempt, Part, Passage, Reader } from "../api/types";
 import type { Lang } from "../theme/script";
+import { newId } from "./ids";
 
 /** A recording waiting to be checked by the API. */
-export type Pending = { audio: Blob | null; seconds: number };
+export type Pending = {
+  audio: Blob | null;
+  seconds: number;
+  /** Given when the clip is recorded; every send of this clip uses it. */
+  requestId?: string;
+  /** The clip sounded noisy (`audio/noise.ts`). */
+  noisy?: boolean;
+};
 
 type SessionValue = {
   lang: Lang;
@@ -47,7 +55,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     setParts(partTexts.map((text, index) => ({ index, text, attempt: null, seconds: null })));
     setCurrentPart(1);
     setPending(null);
-    setSessionId(crypto.randomUUID?.() ?? String(Date.now()));
+    setSessionId(newId());
   }, []);
 
   const recordAttempt = useCallback(
