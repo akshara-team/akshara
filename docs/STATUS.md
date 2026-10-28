@@ -44,16 +44,16 @@ practice sentences for each child's weak sounds; a teacher approves each one fir
   (a test pass on his phone).
 - Claude writes most of the remaining code; see [FINISH_PLAN.md](FINISH_PLAN.md).
 
-Both are interviewed separately, so each should be able to explain their own part.
+We enter as a pair (decided Oct 28). Both are interviewed separately, so each should be able to explain their own part.
 
 ## What is next, in order
 
 1. **Checkpoint A** (Achindra, about 30 minutes): use the app as a teacher and as a child in
    live mode. Check that the right word plays in Review, switch the network off mid-story, try
    "Is it quiet here?", read one sentence into a real microphone, run Lighthouse.
-2. **Daniel**: send him his brief (in FINISH_PLAN.md). D1 review, D2 bands, D3 rewards.
+2. **Daniel**: send him his brief, [DANIEL.md](DANIEL.md). D1 review, D2 bands, D3 rewards.
 3. **Hindi text review** (Achindra): `web/src/i18n/hi.json`.
-4. **Run Evon's batch** (Kaggle's free 2×T4 or a rented GPU, see [EVON_HOWTO.md](EVON_HOWTO.md)), then approve its sentences in the app. **Decide** pair or solo.
+4. **Run Evon's batch** (Kaggle's free 2×T4 or a rented GPU, see [EVON_HOWTO.md](EVON_HOWTO.md)), then approve its sentences in the app.
 5. **Record the demo video** (Nov 1) in live mode.
 6. **Go public, post** (Nov 2–3): make the repo public, turn on Pages, post the demo (drafts in
    [POST.md](POST.md)), share it for a week before the Nov 10 cutoff. **Submit by Nov 9.**

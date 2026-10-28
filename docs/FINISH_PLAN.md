@@ -221,8 +221,8 @@ WP7: they are what makes Akshara trustworthy.
 ## Decisions needed
 
 1. Evon hosting (rented GPU or free notebook GPU), or drop Evon.
-2. Daniel as teammate (Two-Person Army) or solo (Solo Ninja); this also decides who reviews
-   Kannada and Tamil.
+2. ~~Daniel as teammate (Two-Person Army) or solo (Solo Ninja)~~ **Decided Oct 28: we enter as a
+   pair.** Daniel reviews Kannada and Tamil.
 3. OK to merge `feat/learner` and PR #15 into `main` (Step 0).
 
 ## Out of scope before Nov 10
