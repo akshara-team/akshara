@@ -4,7 +4,9 @@ Gnani evaluates and interviews each of us separately, so log what you did. Newes
 
 | Date | Who | What |
 |---|---|---|
-| 2026-10-29 | Daniel | Kannada and Tamil child text (D1): rewrote every child-facing string in `web/src/i18n/kn.json` and `ta.json` — polite, shorter, everyday words — and simplified the heaviest lines further (`prarambhisu`→`shuru maadu`, `sparshisi`→`otti`, `parishilisi`→`nodi`, `thendhedukka`→`therndhedu`, `sariyarkka`→`sari`); fixed the one test with a hard-coded Kannada string (`home.readStory`) |
+| 2026-10-29 | Daniel | Kannada and Tamil child text (D1): rewrote every child-facing string in `web/src/i18n/kn.json` and `ta.json` — the familiar register (ನಿನ್ನ / ಉನ್), short everyday words — and simplified the heaviest lines (`parishilisi`→`nodi`, `sparshisi`→`otti`); fixed the Tamil slips; updated the one test with a hard-coded Kannada string (`home.readStory`) |
+| 2026-10-29 | Daniel | FLS 2022 Grade 3 reading bands (D2): `web/src/lib/nipun.ts` + `components/BenchmarkBand.tsx` (new files) place a reading in the FLS 2022 Grade-3 level for its language (Below / Partially meets / Meets / Exceeds) and show it against the "Meets" goal (Hindi 35–54, Kannada 30–48, Tamil 28–49); registered in the component library for Achindra to wire into the dashboard and profile |
+| 2026-10-21 | Daniel | Docs pass for handover: added [STATUS.md](STATUS.md) (done / next / owners), credited Daniel in the LICENSE and README team, replaced "Partner" with Daniel across the docs |
 | 2026-10-21 | Daniel | Built the web app (`web/`): Vite + React + TS PWA with the child flow, teacher screens and six recovery states from the Figma handoff, on mock + live API adapters with per-screen error boundaries |
 | 2026-10-21 | Daniel | Added the `web` CI job; fixed `check_numbers.py` filename drift so CI is green (92 Python + 27 web tests) |
 | 2026-10-21 | Daniel | Phase 1 of the web MVP: `GET /v1/class/summary` wired into the teacher dashboard via a tested `toRoster` mapper, with the demo class as the fallback |
