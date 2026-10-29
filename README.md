@@ -7,7 +7,8 @@ Entry for the [Great Indian AI Internship Challenge](https://www.gnani.ai/intern
 ## The problem
 
 - Only 23.4% of Class 3 children in rural India can read a Class 2 text (ASER 2024).
-- NIPUN Bharat sets oral reading targets of about 35–54 correct words per minute.
+- The Foundational Learning Study 2022 benchmarks Grade-3 oral reading per language: 35–54 correct
+  words a minute in Hindi, 30–48 in Kannada, 28–49 in Tamil at its "Meets" level.
 - What works is known: listen to each child read, catch the mistake, practise it, repeat. One
   teacher with 40 children cannot do that every day.
 
@@ -48,7 +49,7 @@ once.
 | Evon practice sentences (teacher-approved) | Built; Evon's batch not yet run, so story sentences are used until it is ([docs/EVON_HOWTO.md](docs/EVON_HOWTO.md)) |
 | Spoken instructions on every child screen | Done (Timbre, cached) |
 | End-to-end tests, one child from consent to deletion | Done (API and screens) |
-| NIPUN speed bands, stars and streak | In progress (Daniel) |
+| FLS 2022 Grade 3 reading bands, stars and streak | In progress (Daniel) |
 | Demo video | [docs/demo/akshara_demo.mp4](docs/demo/akshara_demo.mp4) (an earlier version) |
 
 **Where things stand, and what is next:** [docs/STATUS.md](docs/STATUS.md).
