@@ -1,0 +1,269 @@
+{
+  "languages": {
+    "ta-IN": {
+      "id": "ta-101",
+      "source": "sw-591721",
+      "level": "2",
+      "parts": [
+        {
+          "text": "மழையால் துவண்டு போயிருக்கும் நாளை ஒரு குடை ஒளிரச் செய்யும்.",
+          "words": [
+            {
+              "op": "correct",
+              "word": "மழையால்",
+              "said": "மழையால்",
+              "index": 0,
+              "check": false
+            },
+            {
+              "op": "correct",
+              "word": "துவண்டு",
+              "said": "துவண்டு",
+              "index": 1,
+              "check": false
+            },
+            {
+              "op": "correct",
+              "word": "போயிருக்கும்",
+              "said": "போயிருக்கும்",
+              "index": 2,
+              "check": false
+            },
+            {
+              "op": "skipped",
+              "word": "நாளை",
+              "said": null,
+              "index": 3,
+              "check": false
+            },
+            {
+              "op": "correct",
+              "word": "ஒரு",
+              "said": "ஒரு",
+              "index": 4,
+              "check": false
+            },
+            {
+              "op": "correct",
+              "word": "குடை",
+              "said": "குடை",
+              "index": 5,
+              "check": false
+            },
+            {
+              "op": "correct",
+              "word": "ஒளிரச்",
+              "said": "ஒளிரச்",
+              "index": 6,
+              "check": false
+            },
+            {
+              "op": "correct",
+              "word": "செய்யும்.",
+              "said": "செய்யும்.",
+              "index": 7,
+              "check": false
+            }
+          ]
+        },
+        {
+          "text": "குடை வேறு என்னவெல்லாம் செய்யும்? வாருங்கள், பார்க்கலாம்.",
+          "words": [
+            {
+              "op": "correct",
+              "word": "குடை",
+              "said": "குடை",
+              "index": 0,
+              "check": false
+            },
+            {
+              "op": "correct",
+              "word": "வேறு",
+              "said": "வேறு",
+              "index": 1,
+              "check": false
+            },
+            {
+              "op": "correct",
+              "word": "என்னவெல்லாம்",
+              "said": "என்னவெல்லாம்",
+              "index": 2,
+              "check": false
+            },
+            {
+              "op": "correct",
+              "word": "செய்யும்?",
+              "said": "செய்யும்?",
+              "index": 3,
+              "check": false
+            },
+            {
+              "op": "correct",
+              "word": "வாருங்கள்,",
+              "said": "வாருங்கள்,",
+              "index": 4,
+              "check": false
+            },
+            {
+              "op": "substituted",
+              "word": "பார்க்கலாம்.",
+              "said": "பார்க்பலாம்",
+              "index": 5,
+              "check": false
+            }
+          ]
+        }
+      ]
+    },
+    "hi-IN": {
+      "id": "hi-101",
+      "source": "sw-204765",
+      "level": "2",
+      "parts": [
+        {
+          "text": "उदास भिंडी को खुश करने के लिए लौकी, बैंगन और मिर्ची कर रहें हैं कोशिश।",
+          "words": [
+            {
+              "op": "correct",
+              "word": "उदास",
+              "said": "उदास",
+              "index": 0,
+              "check": false
+            },
+            {
+              "op": "correct",
+              "word": "भिंडी",
+              "said": "भिंडी",
+              "index": 1,
+              "check": false
+            },
+            {
+              "op": "correct",
+              "word": "को",
+              "said": "को",
+              "index": 2,
+              "check": false
+            },
+            {
+              "op": "correct",
+              "word": "खुश",
+              "said": "खुश",
+              "index": 3,
+              "check": false
+            },
+            {
+              "op": "correct",
+              "word": "करने",
+              "said": "करने",
+              "index": 4,
+              "check": false
+            },
+            {
+              "op": "correct",
+              "word": "के",
+              "said": "के",
+              "index": 5,
+              "check": false
+            },
+            {
+              "op": "correct",
+              "word": "लिए",
+              "said": "लिए",
+              "index": 6,
+              "check": false
+            },
+            {
+              "op": "substituted",
+              "word": "लौकी,",
+              "said": "लौखी",
+              "index": 7,
+              "check": false
+            },
+            {
+              "op": "correct",
+              "word": "बैंगन",
+              "said": "बैंगन",
+              "index": 8,
+              "check": false
+            },
+            {
+              "op": "correct",
+              "word": "और",
+              "said": "और",
+              "index": 9,
+              "check": false
+            },
+            {
+              "op": "correct",
+              "word": "मिर्ची",
+              "said": "मिर्ची",
+              "index": 10,
+              "check": false
+            },
+            {
+              "op": "correct",
+              "word": "कर",
+              "said": "कर",
+              "index": 11,
+              "check": false
+            },
+            {
+              "op": "correct",
+              "word": "रहें",
+              "said": "रहें",
+              "index": 12,
+              "check": false
+            },
+            {
+              "op": "correct",
+              "word": "हैं",
+              "said": "हैं",
+              "index": 13,
+              "check": false
+            },
+            {
+              "op": "correct",
+              "word": "कोशिश।",
+              "said": "कोशिश।",
+              "index": 14,
+              "check": false
+            }
+          ]
+        },
+        {
+          "text": "क्या भिंडी खुश होगी?",
+          "words": [
+            {
+              "op": "correct",
+              "word": "क्या",
+              "said": "क्या",
+              "index": 0,
+              "check": false
+            },
+            {
+              "op": "correct",
+              "word": "भिंडी",
+              "said": "भिंडी",
+              "index": 1,
+              "check": false
+            },
+            {
+              "op": "correct",
+              "word": "खुश",
+              "said": "खुश",
+              "index": 2,
+              "check": false
+            },
+            {
+              "op": "skipped",
+              "word": "होगी?",
+              "said": null,
+              "index": 3,
+              "check": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

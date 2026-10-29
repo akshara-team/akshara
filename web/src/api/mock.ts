@@ -2,6 +2,7 @@ import { isLang, type Lang } from "../theme/script";
 import type { Attempt, Passage, WordOut } from "./types";
 import { MIC_CONSTRAINTS, openMeter, type Meter } from "../audio/meter";
 import { clipNoise, type Verdict } from "../audio/noise";
+import demoData from "../data/demo.json";
 
 /** Decodes a recorded clip (any format the browser recorded) to mono 16 kHz samples. */
 export async function decode16k(blob: Blob): Promise<Float32Array> {
@@ -206,45 +207,89 @@ const KN_PARTS: { text: string; words: WordOut[]; seconds: number }[] = [
   },
 ];
 
-export const MOCK_PASSAGE: Passage = {
+export type DemoPart = { text: string; words: WordOut[] };
+type DemoStory = { id: string; title?: string; parts: DemoPart[] };
+
+/** The design's demo story (Figma measurement example), kept word for word. */
+const KN_STORY: DemoStory = {
   id: "kn-101",
-  language: "kn-IN",
   title: "ಬಣ್ಣದ ಚಿಟ್ಟೆ",
-  level: "2",
-  text: KN_PARTS.map((p) => p.text).join(". ") + ".",
+  parts: KN_PARTS.map((p) => ({ text: p.text, words: p.words })),
 };
 
-export const MOCK_PARTS: { text: string }[] = KN_PARTS.map((p) => ({ text: p.text }));
+/**
+ * One demo story per language: Kannada is the design's; Tamil and Hindi are real open
+ * passages, generated into `data/demo.json` by `scripts/build_demo_stories.py`. A child in
+ * Tamil is given Tamil, never the Kannada story.
+ */
+const STORIES: Record<Lang, DemoStory> = {
+  "kn-IN": KN_STORY,
+  "ta-IN": demoData.languages["ta-IN"] as unknown as DemoStory,
+  "hi-IN": demoData.languages["hi-IN"] as unknown as DemoStory,
+};
 
-/** The demo story's reference words, in reading order. */
-export function mockReferenceWords(): string[] {
-  return KN_PARTS.flatMap((p) => p.words.map((w) => w.word).filter((w): w is string => !!w));
+/** The demo story for a language; Kannada when an unknown code slips through. */
+export function demoStory(lang: Lang): DemoStory {
+  return STORIES[lang] ?? KN_STORY;
 }
 
-export const MOCK_TITLE = "ಬಣ್ಣದ ಚಿಟ್ಟೆ";
-
-export function mockAttempt(passageId: string, language: string, partIndex: number): Attempt {
-  const part = KN_PARTS[Math.min(partIndex, KN_PARTS.length - 1)];
-  const correct = part.words.filter((w) => w.op === "correct").length;
+export function mockPassage(lang: Lang): Passage {
+  const story = demoStory(lang);
+  const parts = story.parts.map((p) => p.text);
   return {
-    notice: NOTICE,
-    request_id: `mock-${passageId}-${partIndex}`,
-    learner: "learner-1",
-    passage_id: passageId,
-    language,
-    provider: "fixture",
-    transcript: part.words.map((w) => w.said ?? "").join(" ").trim(),
-    accuracy: correct / part.words.length,
-    wcpm: Math.round((correct / part.seconds) * 60),
-    words: part.words,
-    part_index: partIndex,
+    id: story.id,
+    language: lang,
+    title: story.title ?? null,
+    level: "2",
+    text: parts.join(" "),
+    parts,
   };
+}
+
+export function mockPassages(lang: Lang): Passage[] {
+  return [mockPassage(lang)];
+}
+
+/** A passage by id: the id's language prefix picks the story. */
+export function mockGetPassage(id: string): Passage {
+  return { ...mockPassage(mockLanguageOf(id)), id };
+}
+
+/** The demo story's reference words, in reading order. */
+export function mockReferenceWords(lang: Lang = "kn-IN"): string[] {
+  return demoStory(lang).parts.flatMap((p) =>
+    p.words.map((w) => w.word).filter((w): w is string => !!w),
+  );
 }
 
 export const MOCK_DURATIONS = KN_PARTS.map((p) => p.seconds);
 
-export function mockPassages(lang: Lang): Passage[] {
-  return [{ ...MOCK_PASSAGE, language: lang, id: `${lang.slice(0, 2)}-101` }];
+/** How long a demo part takes: the design's times for Kannada, else by length. */
+function demoSeconds(lang: Lang, index: number, words: number): number {
+  if (lang === "kn-IN") return MOCK_DURATIONS[Math.min(index, MOCK_DURATIONS.length - 1)] ?? 12;
+  return Math.max(3, Math.round(words * 0.8));
+}
+
+export function mockAttempt(passageId: string, language: string, partIndex: number): Attempt {
+  const lang: Lang = isLang(language) ? language : "kn-IN";
+  const parts = demoStory(lang).parts;
+  const index = Math.min(Math.max(partIndex, 0), parts.length - 1);
+  const part = parts[index];
+  const correct = part.words.filter((w) => w.op === "correct").length;
+  const seconds = demoSeconds(lang, index, part.words.length);
+  return {
+    notice: NOTICE,
+    request_id: `mock-${passageId}-${index}`,
+    learner: "learner-1",
+    passage_id: passageId,
+    language: lang,
+    provider: "fixture",
+    transcript: part.words.map((w) => w.said ?? "").join(" ").trim(),
+    accuracy: correct / part.words.length,
+    wcpm: Math.round((correct / seconds) * 60),
+    words: part.words,
+    part_index: index,
+  };
 }
 
 export function mockNoticeLines(): string[] {

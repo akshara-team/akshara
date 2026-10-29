@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { MOCK_DURATIONS, mockAttempt } from "./mock";
+import { MOCK_DURATIONS, mockAttempt, mockPassage } from "./mock";
 
 /**
  * The mock fixtures reproduce the Figma handoff's demo attempt
@@ -36,5 +36,19 @@ describe("mock fixtures", () => {
 
   it("flags exactly one word as a spelling-variant check", () => {
     expect(allWords().filter((w) => w.check)).toHaveLength(1);
+  });
+
+  it("serves the demo story in the language asked for, never Kannada", () => {
+    const ta = mockPassage("ta-IN");
+    expect(ta.language).toBe("ta-IN");
+    expect(ta.parts?.[0] ?? "").toMatch(/[\u0B80-\u0BFF]/); // Tamil block
+    expect(ta.parts?.[0] ?? "").not.toMatch(/[\u0C80-\u0CFF]/); // not Kannada
+
+    const hi = mockPassage("hi-IN");
+    expect(hi.parts?.[0] ?? "").toMatch(/[\u0900-\u097F]/); // Devanagari
+
+    const attempt = mockAttempt("ta-101", "ta-IN", 0);
+    expect(attempt.language).toBe("ta-IN");
+    expect(attempt.words[0].word ?? "").toMatch(/[\u0B80-\u0BFF]/);
   });
 });

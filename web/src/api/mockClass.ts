@@ -1,5 +1,5 @@
 import type { Lang } from "../theme/script";
-import { MOCK_PARTS, MOCK_PASSAGE, MOCK_TITLE, mockReferenceWords } from "./mock";
+import { demoStory, mockPassage, mockReferenceWords } from "./mock";
 import { replay, type Task } from "./placement";
 import type {
   Attempt,
@@ -71,8 +71,10 @@ function seededReading(
   date: string,
   wcpm: number,
   accuracy: number,
+  lang: Lang,
 ): PartAttempt {
-  const ref = mockReferenceWords();
+  const story = mockPassage(lang);
+  const ref = mockReferenceWords(lang);
   const correct = Math.round(accuracy * ref.length);
   const wrong = ref.length - correct;
   const bad = new Set(
@@ -89,9 +91,9 @@ function seededReading(
   return {
     childId,
     session: `seed-${childId}-${date}`,
-    passage_id: "kn-101",
-    title: MOCK_TITLE,
-    language: "kn-IN",
+    passage_id: story.id,
+    title: story.title ?? null,
+    language: lang,
     part_index: null,
     at: Date.parse(`${date}T10:00:00+05:30`) / 1000,
     seconds: (correct / wcpm) * 60,
@@ -114,29 +116,10 @@ function seed(): MockClass {
     created_at: made,
     consent_date: "2026-09-29",
   });
-  const history: [number, [string, number, number][]][] = [
-    [
-      1,
-      [
-        ["2026-10-05", 30, 0.8],
-        ["2026-10-12", 36, 0.85],
-        ["2026-10-19", 42, 0.9],
-      ],
-    ],
-    [
-      2,
-      [
-        ["2026-10-12", 46, 0.9],
-        ["2026-10-19", 50, 0.95],
-      ],
-    ],
-    [
-      3,
-      [
-        ["2026-10-05", 24, 0.65],
-        ["2026-10-19", 28, 0.7],
-      ],
-    ],
+  const history: [number, Lang, [string, number, number][]][] = [
+    [1, "kn-IN", [["2026-10-05", 30, 0.8], ["2026-10-12", 36, 0.85], ["2026-10-19", 42, 0.9]]],
+    [2, "kn-IN", [["2026-10-12", 46, 0.9], ["2026-10-19", 50, 0.95]]],
+    [3, "kn-IN", [["2026-10-05", 24, 0.65], ["2026-10-19", 28, 0.7]]],
   ];
   return {
     marks: {},
@@ -149,8 +132,8 @@ function seed(): MockClass {
       child(4, "Kavin S.", "ta-IN", 2),
       child(5, "Isha R.", "hi-IN", 3),
     ],
-    attempts: history.flatMap(([id, rows]) =>
-      rows.map(([date, wcpm, acc]) => seededReading(id, date, wcpm, acc)),
+    attempts: history.flatMap(([id, lang, rows]) =>
+      rows.map(([date, wcpm, acc]) => seededReading(id, date, wcpm, acc, lang)),
     ),
   };
 }
@@ -279,26 +262,36 @@ function out(row: ChildRow): Child {
   };
 }
 
-/** Demo placement items, in Kannada like the demo story. */
-const ITEMS: Record<Task, () => PlacementItem> = {
-  letters: () => ({ task: "letters", text: "ಕ  ರ  ನ  ಮ  ಲ", words: ["ಕ", "ರ", "ನ", "ಮ", "ಲ"], passage_id: null }),
-  words: () => ({
-    task: "words",
-    text: "ಮಳೆ  ಮಾತು  ಸರಿ  ಕೊಡೆ  ನೀವು",
-    words: ["ಮಳೆ", "ಮಾತು", "ಸರಿ", "ಕೊಡೆ", "ನೀವು"],
-    passage_id: null,
-  }),
-  paragraph: () => {
-    const text = MOCK_PARTS[0].text;
-    return { task: "paragraph", text, words: text.split(/\s+/), passage_id: MOCK_PASSAGE.id };
-  },
-  story: () => ({
-    task: "story",
-    text: MOCK_PASSAGE.text,
-    words: mockReferenceWords(),
-    passage_id: MOCK_PASSAGE.id,
-  }),
-};
+const LETTERISH = /[.,!?।"'“”‘’]/;
+
+/** The first few letters of a text, in order, without repeats or punctuation. */
+function lettersOf(text: string, count: number): string[] {
+  return [...new Set([...text].filter((c) => c.trim() && !LETTERISH.test(c)))].slice(0, count);
+}
+
+/** Demo placement items, built from the child's own story so the script matches. */
+function demoItems(lang: Lang): Record<Task, PlacementItem> {
+  const story = demoStory(lang);
+  const first = story.parts[0]?.text ?? "";
+  const letters = lettersOf(first, 5);
+  const words = first.split(/\s+/).filter(Boolean).slice(0, 5);
+  return {
+    letters: { task: "letters", text: letters.join("  "), words: letters, passage_id: null },
+    words: { task: "words", text: words.join("  "), words, passage_id: null },
+    paragraph: {
+      task: "paragraph",
+      text: first,
+      words: first.split(/\s+/).filter(Boolean),
+      passage_id: story.id,
+    },
+    story: {
+      task: "story",
+      text: story.parts.map((p) => p.text).join(" "),
+      words: mockReferenceWords(lang),
+      passage_id: story.id,
+    },
+  };
+}
 
 /** What the demo "hears": a Class 2 reader who reads words but stumbles on a paragraph. */
 function demoStates(item: PlacementItem): MarkState[] {
@@ -314,7 +307,7 @@ function placementOut(row: PlacementRow): Placement {
     child_id: row.childId,
     level: s.level,
     uncertain: s.uncertain,
-    item: s.task ? ITEMS[s.task]() : null,
+    item: s.task ? demoItems(find(row.childId).language)[s.task] : null,
     done: row.items.map((i, k) => ({ ...i, outcome: s.outcomes[k] ?? null })),
   };
 }
@@ -325,7 +318,8 @@ function findPlacement(id: number): PlacementRow {
   return row;
 }
 
-const DEMO_SKILLS: Skills = {
+/** The Kannada demo skills (the design's example: two letters and a vowel sign). */
+const KN_SKILLS: Skills = {
   working_on: [
     { id: "letter:ಳ", kind: "letter", text: "ಳ", p: 0.31 },
     { id: "letter:ಷ", kind: "letter", text: "ಷ", p: 0.38 },
@@ -337,6 +331,17 @@ const DEMO_SKILLS: Skills = {
     { id: "sign:ಾ", kind: "sign", text: "ಾ", p: 0.96 },
   ],
 };
+
+/** Demo skills in the child's own script: the Kannada example, else letters from their story. */
+function demoSkills(lang: Lang): Skills {
+  if (lang === "kn-IN") return KN_SKILLS;
+  const letters = lettersOf(demoStory(lang).parts[0]?.text ?? "", 6);
+  const skill = (text: string, p: number) => ({ id: `letter:${text}`, kind: "letter", text, p });
+  return {
+    working_on: letters.slice(0, 3).map((text, i) => skill(text, 0.31 + i * 0.07)),
+    learned: letters.slice(3, 6).map((text, i) => skill(text, 0.96 - i * 0.01)),
+  };
+}
 
 /** Same status codes as the API, so the screens handle both modes the same way. */
 export class MockApiError extends Error {
@@ -550,13 +555,17 @@ export const mockClass = {
   },
 
   async childSkills(id: number): Promise<Skills> {
-    find(id);
-    return readingsOf(id).length ? DEMO_SKILLS : { working_on: [], learned: [] };
+    const child = find(id);
+    return readingsOf(id).length ? demoSkills(child.language) : { working_on: [], learned: [] };
   },
 
   async nextFor(childId: number): Promise<Next> {
-    find(childId);
-    return { passage_id: MOCK_PASSAGE.id, reason: "at the child's level", level: levelOf(childId).level };
+    const child = find(childId);
+    return {
+      passage_id: mockPassage(child.language).id,
+      reason: "at the child's level",
+      level: levelOf(childId).level,
+    };
   },
 
   /** Same rules as `src/akshara/review.py`. */
