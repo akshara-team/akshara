@@ -14,6 +14,7 @@ export { NoiseCheck } from "./NoiseCheck";
 export { ProgressBar } from "./ProgressBar";
 export { ProgressDots } from "./ProgressDots";
 export { Radio } from "./Radio";
+export { RewardsStrip } from "./RewardsStrip";
 export { ScreenError } from "./ScreenError";
 export { SayButton } from "./SayButton";
 export { Select } from "./Select";
