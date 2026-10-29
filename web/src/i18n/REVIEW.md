@@ -6,8 +6,8 @@ Claude** and have not been checked by a native speaker yet. Teacher screens stay
 
 | File | Language | Reviewer | State |
 |---|---|---|---|
-| `kn.json` | Kannada | Daniel | draft, not reviewed |
-| `ta.json` | Tamil | Daniel | draft, not reviewed |
+| `kn.json` | Kannada | Daniel | reviewed 2026-10-29 (familiar register) |
+| `ta.json` | Tamil | Daniel | reviewed 2026-10-29 (familiar register) |
 | `hi.json` | Hindi | Achindra | draft, not reviewed |
 
 ## What to check

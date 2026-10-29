@@ -33,17 +33,27 @@ const CUTS: Record<Lang, readonly [number, number, number]> = {
 };
 
 /**
+ * The end-of-Grade-3 goal band (the "Meets" level) for a language, or null when
+ * the language has no benchmark. FLS 2022 set Grade 3 only, so this is the one
+ * goal every child is shown against.
+ */
+export function fslGoal(lang: Lang): FslGoal | null {
+  const cuts = CUTS[lang];
+  if (!cuts) return null;
+  return { low: cuts[1] + 1, high: cuts[2] };
+}
+
+/**
  * Places a reading in the FLS 2022 Grade 3 level for its language, with the
  * end-of-Grade-3 goal to show it against. Returns null when the grade has no
  * band, or the reading is not a real number.
  */
 export function nipunBand(lang: Lang, grade: number, wcpm: number): FslBand | null {
   const cuts = CUTS[lang];
-  if (grade !== 3 || !cuts || !Number.isFinite(wcpm)) return null;
+  const goal = grade === 3 ? fslGoal(lang) : null;
+  if (!cuts || !goal || !Number.isFinite(wcpm)) return null;
 
   const [belowMax, partialMax, meetsMax] = cuts;
-  const goal: FslGoal = { low: partialMax + 1, high: meetsMax };
-
   if (wcpm <= belowMax) return { level: "below", min: 0, max: belowMax, goal };
   if (wcpm <= partialMax) return { level: "partially", min: belowMax + 1, max: partialMax, goal };
   if (wcpm <= meetsMax) return { level: "meets", min: partialMax + 1, max: meetsMax, goal };

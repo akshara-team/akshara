@@ -1,5 +1,5 @@
 import type { Lang } from "../theme/script";
-import { NIPUN_BAND } from "./teacherData";
+import { nipunBand } from "../lib/nipun";
 import type { Child, Level, Reader } from "./types";
 
 export type RosterStatus = "in-target" | "practise" | "new";
@@ -58,9 +58,11 @@ const round = (v: number | null | undefined) => (v == null ? null : Math.round(v
 export function toRoster(children: Child[]): { roster: RosterEntry[]; metrics: ClassMetrics } {
   const roster: RosterEntry[] = children.map((c) => {
     const wcpm = round(c.latest?.wcpm);
+    // The FLS 2022 Grade 3 goal is the one target, per language (lib/nipun.ts).
+    const band = wcpm == null ? null : nipunBand(c.language, 3, wcpm);
     const status: RosterStatus = !c.latest
       ? "new"
-      : wcpm != null && wcpm >= NIPUN_BAND.min // faster than the band is not a problem
+      : band && (band.level === "meets" || band.level === "exceeds") // at or past the goal
         ? "in-target"
         : "practise";
     return {

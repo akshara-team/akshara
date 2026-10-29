@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api, childIdOf, storyFor } from "../../api";
-import { NIPUN_BAND } from "../../api/teacherData";
+import { fslGoal } from "../../lib/nipun";
 import {
   Button,
   Card,
@@ -9,6 +9,7 @@ import {
   LanguageBadge,
   ProgressBar,
   PageHeader,
+  RewardsStrip,
   UserSwitchIcon,
   WordChip,
   wordStatus,
@@ -38,6 +39,7 @@ export function ChildHome() {
   const recent = store.readings.slice(0, 3);
   const bars = [...recent].reverse(); // oldest to newest
   const best = Math.max(0, ...store.readings.map((r) => r.wcpm ?? 0));
+  const goal = fslGoal(store.lang);
 
   async function start(reuseLast = false) {
     if (!reader) {
@@ -121,6 +123,15 @@ export function ChildHome() {
               )}
             </div>
 
+            <RewardsStrip
+              readings={store.readings}
+              labels={{
+                stars: t("rewards.stars"),
+                streak: t("rewards.streak"),
+                best: t("rewards.best"),
+              }}
+            />
+
             {recent.length === 0 ? (
               <Card>
                 <p className="reader-name">
@@ -142,7 +153,7 @@ export function ChildHome() {
                         {r.storyTitle}
                       </span>
                       <ProgressBar
-                        value={r.wcpm ? (r.wcpm / NIPUN_BAND.max) * 100 : 0}
+                        value={r.wcpm && goal ? (r.wcpm / goal.high) * 100 : 0}
                         label={t("home.target", { title: r.storyTitle })}
                       />
                       <span className="reader-meta">

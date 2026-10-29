@@ -21,7 +21,7 @@ const child = (
 });
 
 describe("toRoster", () => {
-  it("derives status from the latest reading against the band's lower edge (35)", () => {
+  it("derives status from the latest reading against the Kannada goal (30-48)", () => {
     const { roster } = toRoster([
       child(1, "A", 42),
       child(2, "B", 28),
@@ -47,9 +47,9 @@ describe("toRoster", () => {
 
   it("computes mean WCPM, mean accuracy and the needs-help count", () => {
     const { metrics } = toRoster([
-      child(1, "A", 40, 0.9),
+      child(1, "A", 45, 0.9),
       child(2, "B", 50, 0.8),
-      child(3, "C", 30, 0.5),
+      child(3, "C", 25, 0.5),
     ]);
     expect(metrics.avgWcpm).toBe(40);
     expect(metrics.accuracy).toBeCloseTo(0.7333, 3);
