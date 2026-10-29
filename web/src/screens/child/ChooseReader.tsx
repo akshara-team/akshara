@@ -54,7 +54,7 @@ export function ChooseReader() {
           <h1 className="hero__title">
             <Tx k="reader.title" />
           </h1>
-          <SayButton k="say.choose" lang={lang} />
+          <SayButton k="reader.sub" lang={lang} />
         </div>
         <p className="hero__sub">
           <Tx k="reader.sub" />

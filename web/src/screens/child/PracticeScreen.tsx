@@ -212,7 +212,7 @@ function Word({
         <p className="controls__label">
           <Tx k={phase === "listening" ? "practice.listen" : "practice.yourTurn"} />
         </p>
-        {phase === "ready" && <SayButton k="say.practice" lang={lang} />}
+        {phase === "ready" && <SayButton k="practice.yourTurn" lang={lang} />}
       </div>
 
       {phase !== "done" ? (

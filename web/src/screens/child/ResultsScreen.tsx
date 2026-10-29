@@ -83,7 +83,7 @@ export function ResultsScreen() {
                 <h1 className="card__title">
                   <Tx k="results.title" /> <SparklesIcon className="inline-icon" />
                 </h1>
-                <SayButton k="say.results" lang={lang} />
+                <SayButton k="results.title" lang={lang} />
               </div>
               <p className="reader-meta">
                 <Tx k={accuracy >= 0.8 ? "feedback.wellRead" : "feedback.keepGoing"} />

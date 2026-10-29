@@ -195,7 +195,7 @@ export function ReadingScreen() {
                 <p className="controls__desc">
                   <Tx k={idle ? "read.readAloud" : "read.readPace"} />
                 </p>
-                {idle && <SayButton k="say.read" lang={lang} />}
+                {idle && <SayButton k="read.readAloud" lang={lang} />}
               </div>
 
               {error && (
