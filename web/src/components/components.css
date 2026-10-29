@@ -117,6 +117,24 @@
   background: var(--color-background-soft);
 }
 
+/* ---------- BenchmarkBand ---------- */
+/* One neutral pill: it says where the child is against the goal, not a pass or fail. */
+.benchmarkband {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-8) var(--space-16);
+  border-radius: var(--radius-pill);
+  background: var(--color-background-soft);
+  font-size: var(--text-badge);
+}
+.benchmarkband__value {
+  font-weight: var(--font-weight-bold);
+}
+.benchmarkband__label {
+  color: var(--color-text-secondary);
+}
+
 /* ---------- MicButton ---------- */
 .micbutton {
   width: var(--size-mic);
