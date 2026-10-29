@@ -107,9 +107,9 @@ export function ChildHome() {
         ) : (
           <>
             <div className="say-row">
-              <SayButton k="say.home" lang={store.lang} />
+              <SayButton k="home.firstStoryHelp" lang={store.lang} />
               <p className="note">
-                <Tx k="say.home" />
+                <Tx k="home.firstStoryHelp" />
               </p>
             </div>
             <div className="home__actions">

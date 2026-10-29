@@ -70,7 +70,7 @@ export function FeedbackScreen() {
           <p className="feedback-hero__sub">
             <Tx k="common.part" vars={{ n: currentPart, total }} />
           </p>
-          <SayButton k="say.feedback" lang={lang} />
+          <SayButton k="feedback.listenAndSay" lang={lang} />
         </div>
         {noisy && (
           <p className="feedback-hero__sub feedback-hero__noisy">

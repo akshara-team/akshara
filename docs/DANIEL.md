@@ -53,8 +53,8 @@ everyday words, the familiar "you" (ನೀನು / நீ), keep every `{placeho
 
 Look closely at the newest lines:
 
-- `say.*`: spoken aloud by Timbre when the child taps the speaker. **Keep each under 60
-  characters** (a test fails otherwise) and make them sound natural when heard, not read.
+- The instruction beside a speaker button: spoken aloud by Timbre, so **keep each under 60
+  characters** (a test fails otherwise) and make it sound natural when heard, not read.
 - `sentence.*`, `check.saved*`, `home.waiting`, `read.noise*`, `feedback.noisy`: practice
   sentences, readings saved offline, the noise check.
 

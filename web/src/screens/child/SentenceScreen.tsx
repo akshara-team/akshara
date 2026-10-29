@@ -120,7 +120,7 @@ export function SentenceScreen() {
           <h1 className="recovery-hero__title">
             <Tx k="sentence.title" />
           </h1>
-          <SayButton k="say.sentence" lang={lang} />
+          <SayButton k="sentence.title" lang={lang} />
         </div>
         {phase === "loading" || !sentence ? (
           <p className="note" role="status">

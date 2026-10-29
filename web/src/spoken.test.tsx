@@ -15,12 +15,26 @@ describe("spoken instructions (WP6)", () => {
     vi.unstubAllGlobals();
   });
 
+  // The speaker reads the same line the screen shows, so these are the spoken keys.
+  const SPOKEN = [
+    "reader.sub",
+    "home.firstStoryHelp",
+    "read.readAloud",
+    "feedback.listenAndSay",
+    "results.title",
+    "practice.yourTurn",
+    "sentence.title",
+  ];
+
   for (const [name, table] of Object.entries(LANGUAGE_FILES)) {
     it(`every spoken line in ${name}.json fits one Timbre clip`, () => {
-      const long = Object.entries(table as Record<string, string>)
-        .filter(([k]) => k.startsWith("say.") && k !== "say.label")
-        .filter(([, v]) => v.length > TIMBRE_MAX);
-      expect(long).toEqual([]);
+      const rows = table as Record<string, string>;
+      expect(SPOKEN.filter((k) => (rows[k] ?? "").length > TIMBRE_MAX)).toEqual([]);
+    });
+
+    it(`${name}.json keeps one line per instruction, no parallel say.* table`, () => {
+      const extra = Object.keys(table).filter((k) => k.startsWith("say.") && k !== "say.label");
+      expect(extra).toEqual([]);
     });
   }
 
@@ -44,6 +58,6 @@ describe("spoken instructions (WP6)", () => {
     await act(async () => {
       fireEvent.click(await screen.findByRole("button", { name: t("ta-IN", "say.label") }));
     });
-    expect(spoken).toEqual([{ text: t("ta-IN", "say.home"), lang: "ta-IN" }]);
+    expect(spoken).toEqual([{ text: t("ta-IN", "home.firstStoryHelp"), lang: "ta-IN" }]);
   });
 });
