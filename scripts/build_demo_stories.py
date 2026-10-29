@@ -31,13 +31,23 @@ def words_with_errors(rec: dict) -> list[dict]:
     for index, word in enumerate(rec["reference"].split()):
         error = mistakes.get(index)
         if error and error.get("type") == "skip":
-            out.append({"op": "skipped", "word": word, "said": None, "index": index, "check": False})
+            out.append(
+                {"op": "skipped", "word": word, "said": None, "index": index, "check": False}
+            )
         elif error and error.get("said"):
             out.append(
-                {"op": "substituted", "word": word, "said": error["said"], "index": index, "check": False}
+                {
+                    "op": "substituted",
+                    "word": word,
+                    "said": error["said"],
+                    "index": index,
+                    "check": False,
+                }
             )
         else:
-            out.append({"op": "correct", "word": word, "said": word, "index": index, "check": False})
+            out.append(
+                {"op": "correct", "word": word, "said": word, "index": index, "check": False}
+            )
     return out
 
 
