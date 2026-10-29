@@ -1,4 +1,5 @@
 export { Avatar } from "./Avatar";
+export { BenchmarkBand } from "./BenchmarkBand";
 export { Button, type ButtonIcon } from "./Button";
 export { Card } from "./Card";
 export { Checkbox } from "./Checkbox";
