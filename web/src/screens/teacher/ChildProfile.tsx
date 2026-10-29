@@ -185,7 +185,6 @@ export function ChildProfile() {
               <Card>
                 <p className="eyebrow">
                   {first}’s WCPM
-                  {goal ? ` · End-of-Grade-3 goal: ${goal.low}–${goal.high}` : ""}
                 </p>
                 <div
                   className="chart"

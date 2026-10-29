@@ -7,6 +7,7 @@ import { LEVEL_TEXT } from "./PlacementScreen";
 import type { Child } from "../../api/types";
 import { Avatar, Button, Card, EmptyState, Select, StatusBadge, PageHeader } from "../../components";
 import { useIsDesktop } from "../../state/useMediaQuery";
+import { fslGoal } from "../../lib/nipun";
 import { scriptName, type Lang } from "../../theme/script";
 
 const STATUS_TEXT = {
@@ -82,6 +83,7 @@ export function TeacherDashboard() {
   ];
   const source = isMock ? "demo data" : "live";
   const gradeLabel = grade === "all" ? "All classes" : `Class ${grade}`;
+  const goal = fslGoal(language);
 
   const openChild = (id: number) => navigate(`/teacher/child/${id}`);
 
@@ -113,6 +115,11 @@ export function TeacherDashboard() {
             {data.metrics.total} {data.metrics.total === 1 ? "child" : "children"} · latest
             readings · {source}
           </p>
+          {goal && (
+            <p className="note">
+              Goal (FLS 2022, Grade 3): {goal.low}–{goal.high} words a minute
+            </p>
+          )}
         </Card>
 
         <div className="filters">

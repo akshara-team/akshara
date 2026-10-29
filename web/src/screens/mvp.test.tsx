@@ -90,7 +90,7 @@ describe("MVP routes", () => {
   it("renders a child profile with history", async () => {
     at("/teacher/child/1");
     expect(await screen.findByText(/reading history · 3 readings/i)).toBeTruthy();
-    expect(screen.getByText(/end-of-grade-3 goal:/i)).toBeTruthy();
+    expect(screen.getByText(/end-of-grade-3 goal/i)).toBeTruthy();
   });
 
   it("renders a reading with the calculation spelled out", async () => {
