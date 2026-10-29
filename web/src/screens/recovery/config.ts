@@ -1,3 +1,4 @@
+import type { ButtonIcon } from "../../components";
 import type { CopyKey } from "../../i18n";
 
 /**
@@ -12,8 +13,8 @@ export type RecoveryVariant = {
   steps?: CopyKey[];
   /** Shown in place of steps when the screen is just a waiting state. */
   note?: CopyKey;
-  primary: { label: CopyKey; to: string };
-  secondary?: { label: CopyKey; to: string };
+  primary: { label: CopyKey; to: string; icon?: ButtonIcon };
+  secondary?: { label: CopyKey; to: string; icon?: ButtonIcon };
 };
 
 type Kind = "microphone" | "loading" | "connection" | "offline" | "speech" | "service";
@@ -21,8 +22,8 @@ type Kind = "microphone" | "loading" | "connection" | "offline" | "speech" | "se
 function variant(
   key: Kind,
   parts: { steps?: boolean; note?: boolean },
-  primary: string,
-  secondary?: string,
+  primary: { to: string; icon?: ButtonIcon },
+  secondary?: { to: string; icon?: ButtonIcon },
 ): RecoveryVariant {
   const k = (s: string) => `recovery.${key}.${s}` as CopyKey;
   return {
@@ -31,19 +32,41 @@ function variant(
     subtitle: k("subtitle"),
     steps: parts.steps ? [k("step1"), k("step2"), k("step3")] : undefined,
     note: parts.note ? k("note") : undefined,
-    primary: { label: k("primary"), to: primary },
-    secondary: secondary ? { label: k("secondary"), to: secondary } : undefined,
+    primary: { label: k("primary"), to: primary.to, icon: primary.icon },
+    secondary: secondary
+      ? { label: k("secondary"), to: secondary.to, icon: secondary.icon }
+      : undefined,
   };
 }
 
 /** "/read" means "this story again"; the screen adds the passage id. */
 export const RECOVERY: Record<Kind, RecoveryVariant> = {
-  microphone: variant("microphone", { steps: true }, "/read", "/reader"),
-  loading: variant("loading", { note: true }, "/reader"),
-  connection: variant("connection", { note: true }, "/"),
-  offline: variant("offline", { steps: true }, "/checking", "/read"),
-  speech: variant("speech", { steps: true }, "/checking", "/reader"),
-  service: variant("service", { steps: true }, "/checking", "/reader"),
+  microphone: variant(
+    "microphone",
+    { steps: true },
+    { to: "/read", icon: "mic" },
+    { to: "/reader", icon: "person" },
+  ),
+  loading: variant("loading", { note: true }, { to: "/reader", icon: "wait" }),
+  connection: variant("connection", { note: true }, { to: "/", icon: "teacher" }),
+  offline: variant(
+    "offline",
+    { steps: true },
+    { to: "/checking", icon: "send" },
+    { to: "/read", icon: "repeat" },
+  ),
+  speech: variant(
+    "speech",
+    { steps: true },
+    { to: "/checking", icon: "retry" },
+    { to: "/reader", icon: "person" },
+  ),
+  service: variant(
+    "service",
+    { steps: true },
+    { to: "/checking", icon: "retry" },
+    { to: "/reader", icon: "person" },
+  ),
 };
 
 export function recoveryVariant(kind: string | undefined): RecoveryVariant {

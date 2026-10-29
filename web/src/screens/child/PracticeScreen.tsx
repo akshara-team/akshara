@@ -50,12 +50,13 @@ export function PracticeScreen() {
             </h1>
             <div className="actions">
               {sentenceFor !== undefined && (
-                <Button block onClick={() => navigate("/practice/sentence")}>
+                <Button block icon="book" onClick={() => navigate("/practice/sentence")}>
                   <Tx k="sentence.start" />
                 </Button>
               )}
               <Button
                 block
+                icon="finish"
                 variant={sentenceFor !== undefined ? "ghost" : "primary"}
                 onClick={finish}
               >
@@ -224,7 +225,7 @@ function Word({
           <p className="controls__desc">
             <Tx k={phase === "checking" ? "practice.checking" : phase === "recording" ? "read.recording" : "read.tapToStart"} />
           </p>
-          <Button variant="outline" onClick={() => void listen(parts)} disabled={phase !== "ready"}>
+          <Button variant="outline" icon="audio" onClick={() => void listen(parts)} disabled={phase !== "ready"}>
             <Tx k="practice.listen" />
           </Button>
           {isMock && phase === "ready" && (
@@ -235,7 +236,7 @@ function Word({
         </div>
       ) : (
         <div className="actions">
-          <Button block onClick={onNext}>
+          <Button block icon="next" onClick={onNext}>
             <Tx k="practice.next" />
           </Button>
         </div>

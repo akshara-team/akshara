@@ -82,11 +82,16 @@ export function RecoveryScreen() {
             )}
 
             <div className="actions">
-              <Button block onClick={() => go(v.primary.to)}>
+              <Button block icon={v.primary.icon ?? "none"} onClick={() => go(v.primary.to)}>
                 <Tx k={v.primary.label} />
               </Button>
               {v.secondary && (
-                <Button variant="ghost" block onClick={() => go(v.secondary!.to)}>
+                <Button
+                  variant="ghost"
+                  block
+                  icon={v.secondary.icon ?? "none"}
+                  onClick={() => go(v.secondary!.to)}
+                >
                   <Tx k={v.secondary.label} />
                 </Button>
               )}

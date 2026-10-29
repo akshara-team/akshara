@@ -49,7 +49,7 @@ export function FeedbackScreen() {
             <Tx k="feedback.nothing" />
           </p>
           <div className="actions">
-            <Button block onClick={() => navigate(`/read/${passage?.id ?? ""}`)}>
+            <Button block icon="previous" onClick={() => navigate(`/read/${passage?.id ?? ""}`)}>
               <Tx k="feedback.backToReading" />
             </Button>
           </div>
@@ -152,7 +152,7 @@ export function FeedbackScreen() {
             )}
 
             <div className="actions">
-              <Button block onClick={next}>
+              <Button block icon={isLast ? "results" : "next"} onClick={next}>
                 <Tx
                   k={isLast ? "feedback.seeResults" : "feedback.next"}
                   vars={{ n: currentPart + 1 }}

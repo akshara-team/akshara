@@ -5,9 +5,11 @@ import { NIPUN_BAND } from "../../api/teacherData";
 import {
   Button,
   Card,
+  GlobeIcon,
   LanguageBadge,
   ProgressBar,
   PageHeader,
+  UserSwitchIcon,
   WordChip,
   wordStatus,
   SayButton,
@@ -95,7 +97,7 @@ export function ChildHome() {
               <Tx k="home.findNameHelp" />
             </p>
             <div className="actions">
-              <Button block onClick={() => navigate("/switch")}>
+              <Button block icon="person" onClick={() => navigate("/switch")}>
                 <Tx k="home.chooseName" />
               </Button>
             </div>
@@ -109,11 +111,11 @@ export function ChildHome() {
               </p>
             </div>
             <div className="home__actions">
-              <Button block disabled={busy} onClick={() => start()}>
+              <Button block icon="book" disabled={busy} onClick={() => start()}>
                 <Tx k={busy ? "home.opening" : "home.readStory"} />
               </Button>
               {last && (
-                <Button variant="outline" block disabled={busy} onClick={() => start(true)}>
+                <Button variant="outline" block icon="repeat" disabled={busy} onClick={() => start(true)}>
                   <Tx k="home.readAgain" vars={{ title: last.storyTitle }} />
                 </Button>
               )}
@@ -207,9 +209,11 @@ export function ChildHome() {
 
             <div className="home__links">
               <button type="button" className="screen__link" onClick={() => navigate("/switch")}>
+                <UserSwitchIcon width={18} height={18} />
                 <Tx k="home.notMe" />
               </button>
               <button type="button" className="screen__link" onClick={() => navigate("/switch")}>
+                <GlobeIcon width={18} height={18} />
                 <Tx k="home.changeLanguage" />
               </button>
             </div>

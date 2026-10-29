@@ -59,7 +59,7 @@ export function NoiseCheck({ lang }: { lang: Lang }) {
   return (
     <div className="noise-check">
       {state !== "listening" && (
-        <Button variant="ghost" onClick={() => void listen()}>
+        <Button variant="ghost" icon="quiet" onClick={() => void listen()}>
           <Tx k="read.noiseCheck" />
         </Button>
       )}

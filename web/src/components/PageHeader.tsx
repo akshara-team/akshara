@@ -3,7 +3,7 @@ import { load as loadChild } from "../state/storage";
 import { useDocumentTitle } from "../state/useDocumentTitle";
 import { useIsDesktop } from "../state/useMediaQuery";
 import { Avatar } from "./Avatar";
-import { ArrowLeftIcon } from "./icons";
+import { ArrowLeftIcon, GlobeIcon, UsersIcon, UserSwitchIcon } from "./icons";
 
 const TITLES: Record<string, string> = {
   "/": "Welcome",
@@ -112,9 +112,15 @@ export function PageHeader({
               <Avatar initials={child.reader?.initials ?? "·"} size="sm" />
             </summary>
             <div className="account__menu">
-              <Link to="/switch">Switch reader</Link>
-              <Link to="/switch">Change language</Link>
-              <Link to="/teacher">Teacher view</Link>
+              <Link to="/switch">
+                <UserSwitchIcon width={18} height={18} /> Switch reader
+              </Link>
+              <Link to="/switch">
+                <GlobeIcon width={18} height={18} /> Change language
+              </Link>
+              <Link to="/teacher">
+                <UsersIcon width={18} height={18} /> Teacher view
+              </Link>
             </div>
           </details>
         )}
