@@ -1,6 +1,6 @@
 import type { Lang } from "../theme/script";
 import { liveApi } from "./live";
-import { MOCK_PARTS, MOCK_PASSAGE, MOCK_TITLE, mockAttempt, mockPassages } from "./mock";
+import { mockAttempt, mockGetPassage, mockPassage, mockPassages } from "./mock";
 import { mockClass } from "./mockClass";
 import type {
   Attempt,
@@ -83,7 +83,7 @@ export type Api = {
 
 const mock: Api = {
   listPassages: async (lang) => mockPassages(lang),
-  partsOf: () => MOCK_PARTS.map((p) => p.text),
+  partsOf: (passage) => passage.parts ?? [passage.text],
   submitAttempt: async ({ childId, session, passageId, title, lang, partIndex }) => {
     // Like a real upload, the demo cannot send with no connection, so the offline queue shows.
     if (typeof navigator !== "undefined" && navigator.onLine === false) {
@@ -91,7 +91,7 @@ const mock: Api = {
     }
     const attempt = mockAttempt(passageId, lang, partIndex);
     if (childId !== undefined && session) {
-      mockClass.record(childId, session, attempt, title ?? MOCK_TITLE);
+      mockClass.record(childId, session, attempt, title ?? mockPassage(lang).title ?? null);
     }
     return attempt;
   },
@@ -101,7 +101,7 @@ const mock: Api = {
   editChild: (id, patch) => mockClass.editChild(id, patch),
   deleteChild: (id) => mockClass.deleteChild(id),
   childReadings: (id) => mockClass.childReadings(id),
-  getPassage: async (id) => ({ ...MOCK_PASSAGE, id }),
+  getPassage: async (id) => mockGetPassage(id),
   nextFor: (id) => mockClass.nextFor(id),
   childSkills: (id) => mockClass.childSkills(id),
   startPlacement: (id) => mockClass.startPlacement(id),
