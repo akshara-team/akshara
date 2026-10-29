@@ -111,6 +111,7 @@ export function CheckingScreen() {
             {!isLast ? (
               <Button
                 block
+                icon="next"
                 onClick={() => {
                   goToNextPart();
                   navigate(`/read/${passage?.id ?? ""}`, { replace: true });
@@ -119,11 +120,11 @@ export function CheckingScreen() {
                 <Tx k="feedback.next" vars={{ n: currentPart + 1 }} />
               </Button>
             ) : anyChecked ? (
-              <Button block onClick={() => navigate("/results", { replace: true })}>
+              <Button block icon="results" onClick={() => navigate("/results", { replace: true })}>
                 <Tx k="feedback.seeResults" />
               </Button>
             ) : (
-              <Button block onClick={() => navigate("/home", { replace: true })}>
+              <Button block icon="home" onClick={() => navigate("/home", { replace: true })}>
                 <Tx k="common.home" />
               </Button>
             )}
@@ -145,12 +146,13 @@ export function CheckingScreen() {
             <Tx k={`check.${failed}`} />
           </p>
           <div className="actions">
-            <Button block onClick={() => navigate(`/recovery/${failed}`, { replace: true })}>
+            <Button block icon="help" onClick={() => navigate(`/recovery/${failed}`, { replace: true })}>
               <Tx k="check.whatToDo" />
             </Button>
             <Button
               variant="ghost"
               block
+              icon="repeat"
               onClick={() => navigate(passage ? `/read/${passage.id}` : "/home", { replace: true })}
             >
               <Tx k="check.readAgain" />

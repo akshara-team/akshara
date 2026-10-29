@@ -137,11 +137,11 @@ export function ResultsScreen() {
 
             <div className="actions">
               {practise.length > 0 && (
-                <Button block onClick={() => navigate("/practice", { state: { words: practise } })}>
+                <Button block icon="practice" onClick={() => navigate("/practice", { state: { words: practise } })}>
                   <Tx k="practice.start" />
                 </Button>
               )}
-              <Button variant={practise.length ? "ghost" : "primary"} block onClick={finish}>
+              <Button variant={practise.length ? "ghost" : "primary"} block icon="finish" onClick={finish}>
                 <Tx k="results.finish" />
               </Button>
             </div>

@@ -77,7 +77,7 @@ export function ChooseReader() {
               </p>
             </Card>
 
-            <Button variant="ghost" block onClick={() => navigate("/")}>
+            <Button variant="ghost" block icon="language" onClick={() => navigate("/")}>
               <Tx k="reader.otherLanguage" />
             </Button>
           </div>
@@ -99,7 +99,7 @@ export function ChooseReader() {
                 <p className="note">
                   <Tx k="reader.noneHelp" vars={{ language }} />
                 </p>
-                <Button variant="outline" onClick={() => navigate("/teacher/add")}>
+                <Button variant="outline" icon="add" onClick={() => navigate("/teacher/add")}>
                   <Tx k="reader.addChild" />
                 </Button>
               </EmptyState>
@@ -139,7 +139,7 @@ export function ChooseReader() {
 
             <div className="actions">
               {selected && (
-                <Button block disabled={busy} onClick={start}>
+                <Button block icon="next" disabled={busy} onClick={start}>
                   {busy ? (
                     <Tx k="reader.opening" />
                   ) : (

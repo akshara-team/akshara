@@ -101,7 +101,7 @@ export function SentenceScreen() {
               <Tx k="sentence.none" />
             </h1>
             <div className="actions">
-              <Button block onClick={finish}>
+              <Button block icon="finish" onClick={finish}>
                 <Tx k="results.finish" />
               </Button>
             </div>
@@ -152,7 +152,7 @@ export function SentenceScreen() {
                   ))}
                 </div>
                 <div className="actions">
-                  <Button block onClick={finish}>
+                  <Button block icon="finish" onClick={finish}>
                     <Tx k="results.finish" />
                   </Button>
                 </div>

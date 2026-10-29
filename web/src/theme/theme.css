@@ -156,6 +156,14 @@
   /* ---------- Info surface ---------- */
   --color-info-bg: var(--color-background-soft);
   --color-info-border: var(--color-secondary);
+
+  /* ---------- Icons ---------- */
+  /* Stroke-only SVGs from `icons.tsx` (fill:none, stroke:currentColor, 2px, round caps).
+     One picture per child action, so a child who cannot read still reads the button;
+     components.css lists what each one means. Sizes are what the components pass today. */
+  --icon-size-sm: 20px; /* inside a button, beside its label */
+  --icon-size: 24px; /* default icon in a control */
+  --icon-size-lg: 44px; /* the microphone, and other big primary taps */
 }
 
 * {

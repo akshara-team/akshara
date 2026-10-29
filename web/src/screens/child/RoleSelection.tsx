@@ -106,7 +106,7 @@ export function RoleSelection() {
             </p>
 
             <div className="actions">
-              <Button block onClick={() => navigate("/reader")}>
+              <Button block icon="book" onClick={() => navigate("/reader")}>
                 Start reading
               </Button>
             </div>

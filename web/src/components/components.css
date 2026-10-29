@@ -510,6 +510,9 @@
   z-index: 20;
 }
 .account__menu a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
   padding: var(--space-8) var(--space-12);
   border-radius: var(--radius-12);
   color: var(--color-text-primary);
@@ -604,3 +607,41 @@
   align-items: center;
   gap: var(--space-12);
 }
+
+/* ---------- Icons (child-action pictograms) ----------
+   The SVG set lives in `icons.tsx`; this is the reference for what each one means,
+   so every button gets one picture and a child who cannot read still knows the action.
+   Stroke-only, `currentColor`, so colour comes from the button's own text colour;
+   inside `.btn` the icon sits 8px before its label (`.btn` gap). Sizes: theme.css.
+
+   Reading out loud
+     MicIcon        start reading aloud        read.tapToStart
+     StopIcon       stop and send              read.recording
+     VolumeIcon     listen / hear it           common.listen, SayButton
+     BookIcon       read a story               home.readStory, role card
+     RepeatIcon     read it again              home.readAgain, check.readAgain
+     SparklesIcon   practise these words       practice.start
+     FlagIcon       finish reading             results.finish
+     TrendingUpIcon see results / progress     feedback.seeResults
+     EarIcon        is it quiet here?          read.noiseCheck
+
+   Moving around
+     ArrowRightIcon next part / next word      feedback.next, practice.next
+     ArrowLeftIcon  back                       header
+     HomeIcon       go home                    common.home
+
+   Who, and what language
+     UsersIcon      I am a teacher             role card
+     PersonIcon     choose my name             home.chooseName
+     UserSwitchIcon not me / switch reader     home.notMe
+     PersonAddIcon  add a child                reader.addChild
+     GlobeIcon      change language            home.changeLanguage
+
+   When something goes wrong
+     RefreshIcon    try again / check again    recovery.*.primary
+     UploadIcon     send my reading again      recovery.offline.primary
+     WifiOffIcon    no internet               recovery.offline
+     ClockIcon      wait a moment              recovery.loading.primary
+     QuestionIcon   show me what to do         check.whatToDo
+     HandIcon       ask a teacher              recovery.connection.primary
+     CloseIcon      close / dismiss            any X button */
