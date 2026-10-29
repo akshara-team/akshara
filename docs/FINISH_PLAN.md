@@ -122,11 +122,13 @@ sources are in the Oct 26 session notes in `docs/WORKLOG.md`.
   the child, attempts, audio, skill states and reviews.
 - Done when: the delete is tested to leave no rows or files behind.
 
-## WP8. NIPUN benchmark bands (Daniel builds D2, Claude wires it in Oct 30)
+## WP8. FLS 2022 Grade 3 reading bands (Daniel builds D2, Claude wires it in Oct 30)
 
-- Dashboard and profile show correct words per minute against grade bands from the
-  Foundational Learning Study 2022 for each language (source cited on the page).
-- Done when: each child shows "below / at / above" for their grade, with the number.
+- Dashboard and profile show a child's correct words per minute in the Foundational Learning
+  Study (FLS) 2022 **Grade 3** level for their language, against the "Meets" goal (Hindi 35–54,
+  Kannada 30–48, Tamil 28–49; source cited on the page). FLS 2022 assessed Grade 3 only.
+- Done when: each child shows their number against the end-of-Grade-3 goal (below / partially
+  meets / meets / exceeds), labelled as a goal, not a pass/fail mark.
 
 ## WP9. Real conditions (Oct 31, 1 day)
 
@@ -165,7 +167,7 @@ conflict with ours. Claude wires his pieces into the screens.
 | # | Daniel's task | Size | When | Needs from us |
 |---|---|---|---|---|
 | D1 | Review the Kannada and Tamil child-screen text Claude drafted (`web/src/i18n/kn.json`, `ta.json`), fix what sounds wrong | 1 h | Oct 28–30 | done: drafts and loader merged Oct 27 |
-| D2 | NIPUN bands: `web/src/lib/nipun.ts` + `web/src/components/BenchmarkBand.tsx`, with tests | 1–2 h | Oct 28–30 | nothing |
+| D2 | FLS 2022 Grade 3 reading bands: `web/src/lib/nipun.ts` + `web/src/components/BenchmarkBand.tsx`, with tests | 1–2 h | Oct 28–30 | nothing |
 | D3 | Rewards: `web/src/state/rewards.ts` + `web/src/components/RewardsStrip.tsx`, with tests | 1–2 h | Oct 30–31 | nothing |
 | D4 | Native test pass on his phone in Kannada and Tamil, issues filed on GitHub | 1 h | Nov 1 | the finished build |
 | D5 | *Optional, after Nov 3:* render the held-out clips (`docs/HOLDOUT_HOWTO.md`) and the pending Kannada/Tamil script and skill-order reviews | — | if time | nothing |
@@ -188,12 +190,13 @@ the record.
 > `{placeholder}`. `npm test -- i18n` must pass. Mark the files reviewed in `REVIEW.md`.
 >
 > **D2 `feat/nipun-bands`.** `src/lib/nipun.ts` exports
-> `nipunBand(lang: "kn-IN" | "ta-IN" | "hi-IN", grade: number, wcpm: number): { band: "below" | "at" | "above"; low: number; high: number } | null`
-> (null when there is no benchmark for that grade). Take the oral reading fluency benchmarks
-> for grades 2–3 per language from the Foundational Learning Study 2022 national report
-> (air.org PDF) and cite the page in a comment. `components/BenchmarkBand.tsx` shows the band
-> as a small labelled pill with the number and target range, readable without colour.
-> Unit tests for every language and the edges.
+> `nipunBand(lang: "kn-IN" | "ta-IN" | "hi-IN", grade: number, wcpm: number): { level: "below" | "partially" | "meets" | "exceeds"; min: number; max: number | null; goal: { low: number; high: number } } | null`
+> (null when the grade has no band — only Grade 3 does). Use the **FLS 2022 Grade 3** benchmark
+> from each language's "Benchmark of ORF with Comprehension and Student Performance" table in the
+> national report, citing the page: Hindi 0–16 / 17–34 / 35–54 / 55+ (p. 29), Kannada 0–13 /
+> 14–29 / 30–48 / 49+ (p. 32), Tamil 0–8 / 9–27 / 28–49 / 50+ (p. 62). `components/BenchmarkBand.tsx`
+> shows the child's number against the Meets goal — a position, not a pass/fail pill, readable
+> without colour. Unit tests for every language, the four cut-offs rising, and the edges.
 >
 > **D3 `feat/rewards`.** `src/state/rewards.ts` computes, from the reading history in
 > `src/state/storage.ts` (read only): stars (one per finished story), the current streak of
