@@ -1,9 +1,10 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { api, isMock } from "../../api";
 import { initialsOf, levelOf } from "../../api/classSummary";
-import { NIPUN_BAND } from "../../api/teacherData";
+import { fslGoal } from "../../lib/nipun";
 import {
   Avatar,
+  BenchmarkBand,
   Button,
   Card,
   EmptyState,
@@ -81,7 +82,8 @@ export function ChildProfile() {
   const previous = readings[1];
   // Oldest first for the chart, at most the last six readings.
   const chart = readings.slice(0, 6).reverse();
-  const max = Math.max(NIPUN_BAND.max, ...chart.map((r) => r.wcpm ?? 0));
+  const goal = fslGoal(child.language);
+  const max = Math.max(goal?.high ?? 0, ...chart.map((r) => r.wcpm ?? 0));
 
   return (
     <>
@@ -176,9 +178,14 @@ export function ChildProfile() {
                 />
               </div>
 
+              {latest.wcpm != null && (
+                <BenchmarkBand lang={child.language} grade={3} wcpm={latest.wcpm} />
+              )}
+
               <Card>
                 <p className="eyebrow">
-                  {first}’s WCPM · Target band: {NIPUN_BAND.min}–{NIPUN_BAND.max}
+                  {first}’s WCPM
+                  {goal ? ` · End-of-Grade-3 goal: ${goal.low}–${goal.high}` : ""}
                 </p>
                 <div
                   className="chart"
@@ -193,7 +200,7 @@ export function ChildProfile() {
                         {r.wcpm == null ? "—" : Math.round(r.wcpm)}
                       </span>
                       <div
-                        className={`chart__bar ${(r.wcpm ?? 0) >= NIPUN_BAND.min ? "chart__bar--ok" : ""}`}
+                        className={`chart__bar ${goal && (r.wcpm ?? 0) >= goal.low ? "chart__bar--ok" : ""}`}
                         style={{ height: `${((r.wcpm ?? 0) / max) * 100}%` }}
                       />
                       <span className="chart__label">{shortDate(r.at)}</span>

@@ -13,7 +13,7 @@ import {
 import { useSession } from "../../state/session";
 import { addReading, buildReading } from "../../state/storage";
 import { scriptClass } from "../../theme/script";
-import { NIPUN_BAND } from "../../api/teacherData";
+import { fslGoal } from "../../lib/nipun";
 import { useCopy } from "../../i18n";
 import { load } from "../../state/storage";
 import { PRACTICE_WORDS } from "./PracticeScreen";
@@ -40,6 +40,7 @@ export function ResultsScreen() {
   const accuracy = totalWords ? correct / totalWords : 0;
   const wcpm = seconds > 0 ? Math.round((correct / seconds) * 60) : null;
   const missed = words.filter((w) => w.op === "substituted" || w.op === "skipped");
+  const goal = fslGoal(lang);
   // The first few different words the child missed, in reading order.
   const practise = [...new Set(missed.map((w) => w.word).filter((w): w is string => !!w))].slice(
     0,
@@ -110,11 +111,13 @@ export function ResultsScreen() {
                   <Tx k="results.firstTime" />
                 </span>
               )}
-              <div className="nipun">
-                <span className="nipun__pill">
-                  <Tx k="results.target" vars={{ min: NIPUN_BAND.min, max: NIPUN_BAND.max }} />
-                </span>
-              </div>
+              {goal && (
+                <div className="nipun">
+                  <span className="nipun__pill">
+                    <Tx k="results.target" vars={{ min: goal.low, max: goal.high }} />
+                  </span>
+                </div>
+              )}
             </div>
 
             {missed.length > 0 && (

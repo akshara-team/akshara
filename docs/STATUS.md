@@ -1,6 +1,6 @@
 # Status: what is done and what is next
 
-*Last updated 2026-10-28. Keep this file current when work lands; it is the fastest way for
+*Last updated 2026-10-29. Keep this file current when work lands; it is the fastest way for
 either of us to see where the project stands. The day-by-day plan is
 [FINISH_PLAN.md](FINISH_PLAN.md); the log is [WORKLOG.md](WORKLOG.md).*
 
@@ -25,14 +25,16 @@ practice sentences for each child's weak sounds; a teacher approves each one fir
 | Learner model: skill graph, BKT mastery, ASER placement, next story (Phase 4) | Done, in the app; measured on simulated children |
 | Microphone, live (WP0) | Done in Chrome with synthetic clips; one reading into a real mic still to do |
 | Teacher data: children, profiles, readings (WP1) | Done |
-| Child screens in the child's language (WP6) | Done, with spoken instructions; kn/ta/hi text is Claude's draft, not yet reviewed |
+| Child screens in the child's language (WP6) | Done, with spoken instructions; Kannada and Tamil text reviewed (familiar register), Hindi still a draft |
+| Child buttons carry a picture | Done: one pictogram per action on every child button and link (`components/icons.tsx`) |
 | Evon practice sentences | Built and tested; the batch has not run yet ([EVON_HOWTO.md](EVON_HOWTO.md)), so children get story sentences until it does |
 | Placement and learner model in the app (WP2, WP3) | Done |
 | Akshara practice with Timbre (WP4) | Done, checked live |
 | Teacher review queue with word clips (WP5) | Done; not yet checked in a browser with a real recording |
 | Trust: reliability page, consent, 30-day deletion, delete a child (WP7) | Done |
-| NIPUN benchmark bands (WP8) | Waits on Daniel's D2 |
-| Offline readings, noise check (WP9) | Done; rewards (stars, streak) wait on Daniel's D3 |
+| FLS 2022 Grade 3 bands (WP8, D2) | Done; wired into the child profile and the dashboard status, per language (Hindi 35-54, Kannada 30-48, Tamil 28-49) |
+| Offline readings, noise check (WP9) | Done |
+| Stars and reading streak (WP9, D3) | Done; on the child home |
 | End-to-end tests, Pages dry run, docs (WP10) | Done; the hands-on browser pass and Lighthouse are Checkpoint A |
 | Public demo (GitHub Pages, mock mode) | Builds and serves under `/akshara/`; goes live when the repo is public |
 
@@ -40,8 +42,7 @@ practice sentences for each child's weak sounds; a teacher approves each one fir
 
 - **Achindra**: scorer, providers, service, store and API, the studies, demo video, docs.
 - **Daniel**: the original web app, the API contract, the frontend stack, the Kannada and Tamil
-  passages; now D1 (review the Kannada and Tamil text), D2 (NIPUN bands), D3 (rewards), D4
-  (a test pass on his phone).
+  passages; now D4 (a test pass on his phone) and D6 (approve Evon's sentences).
 - Claude writes most of the remaining code; see [FINISH_PLAN.md](FINISH_PLAN.md).
 
 We enter as a pair (decided Oct 28). Both are interviewed separately, so each should be able to explain their own part.
@@ -51,7 +52,7 @@ We enter as a pair (decided Oct 28). Both are interviewed separately, so each sh
 1. **Checkpoint A** (Achindra, about 30 minutes): use the app as a teacher and as a child in
    live mode. Check that the right word plays in Review, switch the network off mid-story, try
    "Is it quiet here?", read one sentence into a real microphone, run Lighthouse.
-2. **Daniel**: send him his brief, [DANIEL.md](DANIEL.md). D1 review, D2 bands, D3 rewards.
+2. **Daniel**: D1-D3 are merged (Kannada/Tamil text, FLS bands, rewards); left is D4 (a pass on his phone) and D6 (approve Evon's sentences).
 3. **Hindi text review** (Achindra): `web/src/i18n/hi.json`.
 4. **Run Evon's batch** (Kaggle's free 2×T4 or a rented GPU, see [EVON_HOWTO.md](EVON_HOWTO.md)), then approve its sentences in the app.
 5. **Record the demo video** (Nov 1) in live mode.
@@ -69,7 +70,7 @@ We enter as a pair (decided Oct 28). Both are interviewed separately, so each sh
 
 ## Current numbers
 
-- **277 Python tests**, **158 web tests** (axe on 22 routes); CI runs both on every PR.
+- **277 Python tests**, **180 web tests** (axe on 22 routes); CI runs both on every PR.
 - End-to-end, one child from consent to deletion: `tests/test_end_to_end.py` (API) and
   `web/src/endToEnd.test.tsx` (screens, mock mode).
 - Production web bundle: **112 kB JS / 125 kB total gzip** (budget 120 / 160), including the
@@ -84,5 +85,5 @@ We enter as a pair (decided Oct 28). Both are interviewed separately, so each sh
 - A change in one sound is mostly not caught (8 of 39); the reliability page says so.
 - Word clips in Review are estimated from pauses, since Prisma gives no word timings.
 - Placement passages are short book blurbs, weaker evidence than the paper ASER test.
-- Child text in Kannada, Tamil and Hindi has not been reviewed by a native speaker yet.
+- Kannada and Tamil child text reviewed by a native speaker; Hindi is still a draft.
 - No logins: one teacher per server. The noise thresholds are uncalibrated guesses.

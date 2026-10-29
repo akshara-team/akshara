@@ -48,16 +48,16 @@ describe("MVP routes", () => {
       readings: 1, latest: { at: 1, accuracy, wcpm }, previous: null,
     }); // prettier-ignore
     vi.spyOn(api, "listChildren").mockResolvedValue([
-      kid(1, "Meera S.", 0.75, 30),
-      kid(2, "Kabir", 0.95, 45),
+      kid(1, "Meera S.", 0.75, 25),
+      kid(2, "Kabir", 0.95, 51),
     ]);
     at("/teacher");
     expect(await screen.findByText("Meera S.")).toBeTruthy();
     expect(screen.getByText("Kabir")).toBeTruthy();
-    // mean WCPM (30 + 45) / 2 = 38, accuracy (0.75 + 0.95) / 2 = 85%
+    // mean WCPM (25 + 51) / 2 = 38, accuracy (0.75 + 0.95) / 2 = 85%
     expect(screen.getByText("38")).toBeTruthy();
     expect(screen.getByText("85%")).toBeTruthy();
-    expect(screen.getByText("1 / 2")).toBeTruthy(); // Meera is below the band
+    expect(screen.getByText("1 / 2")).toBeTruthy(); // Meera is below the goal
   });
 
   it("says so when the class cannot be loaded", async () => {
@@ -90,7 +90,7 @@ describe("MVP routes", () => {
   it("renders a child profile with history", async () => {
     at("/teacher/child/1");
     expect(await screen.findByText(/reading history · 3 readings/i)).toBeTruthy();
-    expect(screen.getByText(/target band:/i)).toBeTruthy();
+    expect(screen.getByText(/end-of-grade-3 goal:/i)).toBeTruthy();
   });
 
   it("renders a reading with the calculation spelled out", async () => {
