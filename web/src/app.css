@@ -1,3 +1,4 @@
+/* Hallmark · shape: app screen · genre: playful · theme: brand · redesign: full · paper: #fffdf7 · accent: #fde047 · display: Inter · body: Inter · axes: light/grotesk-sans/warm · posture: settled · contrast: pass · v2.0.0 */
 .app-shell {
   min-height: 100dvh;
   display: flex;
@@ -121,4 +122,13 @@
 .app-main:focus,
 .app-main h1[tabindex="-1"]:focus {
   outline: none;
+}
+
+/* Display heads wrap in balance, never one orphan word. */
+.app-main h1,
+.hero__title,
+.card__title,
+.feedback-hero__title,
+.recovery-hero__title {
+  text-wrap: balance;
 }
