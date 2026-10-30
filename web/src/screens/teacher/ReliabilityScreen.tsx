@@ -81,7 +81,6 @@ export function ReliabilityScreen() {
     <>
       <PageHeader back backTo="/teacher" nav={TEACHER_NAV} />
       <div className="screen-body reliability">
-        <p className="eyebrow">Teacher · Reliability</p>
         <h1 className="card__title">How reliable is this?</h1>
         <p className="lead">
           Akshara listens with a speech service and compares what it heard with the story. It

@@ -33,7 +33,6 @@ export function SelectStory() {
     <>
       <PageHeader back backTo="/teacher" nav={NAV} />
       <div className="screen-body">
-        <p className="eyebrow">Teacher · Story</p>
         <h1 className="card__title">
           Choose a story <BookIcon className="inline-icon" />
         </h1>
@@ -66,7 +65,7 @@ export function SelectStory() {
               </>
             )}
             <Button variant="ghost" block onClick={() => navigate("/reader")}>
-              Let each child get their own story
+              Let each child choose
             </Button>
           </div>
 

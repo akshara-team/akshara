@@ -78,13 +78,12 @@ export function AttemptDetails() {
     <>
       <PageHeader back backTo={`/teacher/child/${child.id}`} badge={levelOf(child.grade)} nav={NAV} />
       <div className="screen-body">
-        <p className="eyebrow">Teacher · Reading · {shortDate(reading.at)}</p>
         <h1 className="card__title">{first}’s reading</h1>
         <p className="reader-meta">
           <span className={scriptClass(lang)} lang={lang}>
             {reading.title ?? reading.passage_id}
-          </span>{" "}
-          · {partsText}
+          </span>
+          , {partsText}, {shortDate(reading.at)}
         </p>
 
         <div className="workspace workspace--w320">
@@ -108,7 +107,7 @@ export function AttemptDetails() {
                 {Math.round(reading.accuracy * 100)}%
               </p>
               <p className="note">
-                {count("substituted")} read differently · {count("skipped")} skipped ·{" "}
+                {count("substituted")} read differently, {count("skipped")} skipped,{" "}
                 {count("inserted")} extra
               </p>
             </Card>

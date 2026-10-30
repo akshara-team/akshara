@@ -54,7 +54,6 @@ export function SentencesScreen() {
     <>
       <PageHeader back backTo="/teacher" nav={TEACHER_NAV} />
       <div className="screen-body reliability">
-        <p className="eyebrow">Teacher · Practice sentences</p>
         <h1 className="card__title">Practice sentences from Evon</h1>
         <p className="lead">
           Evon, Gnani’s open language model, writes short sentences for the sounds children find
@@ -86,9 +85,9 @@ export function SentencesScreen() {
         ) : (
           <>
             <p className="note" role="status">
-              {pending.length} waiting · {approved.length} approved · {stories} sentences from
+              {pending.length} waiting, {approved.length} approved, {stories} sentences from
               stories ready to use
-              {done ? ` · ${done}` : ""}
+              {done ? `, ${done}` : ""}
             </p>
 
             {pending.length === 0 ? (

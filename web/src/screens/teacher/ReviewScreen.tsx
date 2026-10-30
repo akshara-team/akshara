@@ -102,7 +102,6 @@ export function ReviewScreen() {
     <>
       <PageHeader back backTo="/teacher" nav={TEACHER_NAV} />
       <div className="screen-body">
-        <p className="eyebrow">Teacher · Review</p>
         <h1 className="card__title">Words to hear</h1>
         <p className="reader-meta">
           The speech service can mishear a child. Listen to these words and set the mark yourself;
@@ -131,7 +130,9 @@ export function ReviewScreen() {
             )}
             <Card>
               <p className="eyebrow">Keyboard</p>
-              <p className="note">Space plays · 1 correct · 2 misread · 3 skipped · → later</p>
+              <p className="note">
+                Space plays. 1 correct, 2 misread, 3 skipped. The right arrow goes on.
+              </p>
             </Card>
           </div>
 

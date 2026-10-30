@@ -96,9 +96,6 @@ export function TeacherDashboard() {
         nav={TEACHER_NAV}
       />
       <div className="screen-body">
-        <p className="eyebrow">
-          Teacher · {data.metrics.total} {data.metrics.total === 1 ? "child" : "children"} · {source}
-        </p>
         <h1 className="card__title">Your reading class</h1>
 
         {deleted && (
