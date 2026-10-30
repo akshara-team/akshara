@@ -11,7 +11,7 @@ export function ScreenError({ error, onRetry }: { error: Error; onRetry: () => v
       <div className="screen-error__card">
         <h1 className="screen-error__title">This screen stopped working</h1>
         <p className="screen-error__text">
-          Something went wrong on this screen only. The rest of the app is fine — you can try
+          Something went wrong on this screen only. The rest of the app is fine. You can try
           again, or go back to the start.
         </p>
         <pre className="screen-error__detail">{error.message}</pre>

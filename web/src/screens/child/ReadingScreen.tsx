@@ -67,7 +67,7 @@ export function ReadingScreen() {
   useEffect(() => () => recorder.current?.cancel(), []);
 
   const total = Math.max(parts.length, 1);
-  const text = parts[currentPart - 1]?.text ?? passage?.text ?? "No passage loaded.";
+  const text = parts[currentPart - 1]?.text ?? passage?.text ?? "";
 
   function handOver(seconds: number, audio: Blob | null, noisy = false) {
     // The id is fixed here, so every later send of this clip (a retry, or the offline queue)
@@ -149,7 +149,9 @@ export function ReadingScreen() {
               />
             </div>
 
-            <ListenButton uiLang={lang} text={text} lang={lang} label={t("common.listen")} block />
+            {text && (
+              <ListenButton uiLang={lang} text={text} lang={lang} label={t("common.listen")} block />
+            )}
           </div>
 
           {/* Right: the passage and the mic. */}
@@ -157,7 +159,7 @@ export function ReadingScreen() {
             <div className="passage-card">
               <div className="passage-card__accent" aria-hidden="true" />
               <p className={`reading-text ${scriptClass(lang)}`} lang={lang}>
-                {text}
+                {text || <Tx k="recovery.noStory" />}
               </p>
             </div>
             {passage?.credit?.publisher && (

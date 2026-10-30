@@ -1,3 +1,4 @@
+/* Hallmark · shape: app screen · genre: playful · theme: brand · redesign: full · paper: #fffdf5 · accent: #fde047 · display: Inter · body: Inter · axes: light/grotesk-sans/warm · posture: settled · contrast: pass · v2.0.0 */
 /* Design-system components — sizes/radii/colours from the Figma library
    (section 05 · Akshara · Native component library). */
 
@@ -550,7 +551,7 @@
   background: var(--color-surface);
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-12);
-  box-shadow: 0 8px 24px rgb(17 24 39 / 8%);
+  box-shadow: var(--shadow-card);
   z-index: 20;
 }
 .account__menu a {
@@ -602,9 +603,11 @@
 }
 .level-meter__fill {
   display: block;
+  width: 100%;
   height: 100%;
+  transform-origin: left center;
   background: var(--color-feedback-success);
-  transition: width 100ms linear;
+  transition: transform 100ms linear;
 }
 @media (prefers-reduced-motion: reduce) {
   .level-meter__fill {
@@ -628,6 +631,23 @@
   font-weight: var(--font-weight-semibold);
 }
 
+/* Pressed: every control answers the finger. */
+.btn:active:not(:disabled),
+.micbutton:active,
+.say-button:active:not(:disabled),
+.rolecard:active,
+.reader-row:active,
+.screen__link:active,
+.screen-error__button:active {
+  transform: translateY(1px);
+  filter: brightness(0.97);
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn, .micbutton, .say-button, .rolecard, .reader-row, .screen__link {
+    transition: none;
+  }
+}
+
 /* ---------- Spoken instruction (WP6) ---------- */
 .say-button {
   display: inline-flex;
@@ -643,8 +663,12 @@
   cursor: pointer;
   vertical-align: middle;
 }
+/* Disabled: fill, ink and cursor, not opacity alone. */
 .say-button:disabled {
-  opacity: 0.6;
+  background: var(--color-surface-muted);
+  border-color: var(--color-border);
+  color: var(--color-muted);
+  cursor: not-allowed;
 }
 .say-row {
   display: flex;

@@ -19,13 +19,13 @@
   /* Red for text and outlines on white: feedback-danger is too light for text (3.8:1). */
   --color-danger-text: #b91c1c;
 
-  --color-background: #ffffff;
+  --color-background: #fffdf7;
   --color-background-soft: #eff6ff;
-  --color-surface: #ffffff;
+  --color-surface: #fffdf7;
   --color-surface-muted: #f9fafb;
   --color-surface-selected: #fffbeb;
   --color-border: #d1d5db;
-  --color-on-accent: #ffffff;
+  --color-on-accent: #fffdf7;
 
   --color-text-primary: #111827;
   --color-text-secondary: #374151;
@@ -122,7 +122,7 @@
   --size-error-card: 375px;
   --size-passage-max: 640px; /* keeps reading lines short on desktop */
   --size-recovery-card: 560px;
-  --size-home-max: 720px; /* the child home column on desktop */
+  --size-home-max: 880px; /* the child home column on desktop */
 
   /* Desktop workspace side columns, straight from the frames. */
   --workspace-side-profile: 360px;

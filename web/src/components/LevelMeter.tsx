@@ -10,7 +10,7 @@ export function LevelMeter({ value, label }: { value: number; label: string }) {
       aria-valuemax={100}
       aria-valuenow={pct}
     >
-      <span className="level-meter__fill" style={{ width: `${pct}%` }} />
+      <span className="level-meter__fill" style={{ transform: `scaleX(${pct / 100})` }} />
     </div>
   );
 }

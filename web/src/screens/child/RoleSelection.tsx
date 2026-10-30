@@ -83,9 +83,6 @@ export function RoleSelection() {
                 <span className="rolecard__title">I am reading</span>
                 <span className="rolecard__sub">Choose a story and read it aloud</span>
               </span>
-              <span className="rolecard__arrow" aria-hidden="true">
-                ›
-              </span>
             </button>
 
             <button type="button" className="rolecard" onClick={() => navigate("/teacher")}>
@@ -95,9 +92,6 @@ export function RoleSelection() {
               <span>
                 <span className="rolecard__title">I am a teacher</span>
                 <span className="rolecard__sub">Choose stories · Track progress</span>
-              </span>
-              <span className="rolecard__arrow" aria-hidden="true">
-                ›
               </span>
             </button>
 

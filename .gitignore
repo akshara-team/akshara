@@ -47,3 +47,6 @@ dump.txt
 2026-*.txt
 
 results/recordings/
+
+# Hallmark run artefacts (before/after screenshots, records)
+.hallmark/

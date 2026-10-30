@@ -6,7 +6,7 @@ export function NotFound() {
       <div className="emptystate">
         <h1 className="card__title">Nothing here</h1>
         <Link className="screen__link" to="/">
-          Back to start →
+          Back to start
         </Link>
       </div>
     </section>
