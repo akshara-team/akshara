@@ -1,9 +1,8 @@
 /* Hallmark · shape: app screen · genre: playful · theme: brand · redesign: full · paper: #fffdf5 · accent: #fde047 · display: Inter · body: Inter · axes: light/grotesk-sans/warm · posture: settled · contrast: pass · v2.0.0 */
 /* Hallmark · pre-emit critique: P proportion · H hierarchy · E emphasis · S restraint · R rhythm · V verbatim · weakest: S, four listen affordances on the reading screen cut to one action and one helper */
-/* Hallmark · waive 37 · three slots, display Inter, body Inter, one Noto face per script · the stacks are the same face's fallbacks, not extra families */
+/* Hallmark · waive 37 · three slots, display Inter, body Inter, one Noto face per script · the child reads Kannada, Tamil and Hindi, so three faces are the material and the stacks are their fallbacks */
 /* Hallmark · dismissed 49 · the role card's label is its two-line block, not a link string */
 /* Hallmark · dismissed F4 · one filled primary per screen; blue is the quiet action ink, the yellow mic is the reading action */
-/* Hallmark · waive 23 · the yellow is the brand's signature and appears once, on the entry screen · the child's first screen is the handshake, not a hero */
 /* Child-flow screens — layout mirrors the Figma frames (375 x 812). */
 
 .screen-body {

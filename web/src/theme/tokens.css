@@ -19,7 +19,7 @@
   --color-paper-3: var(--color-surface-selected);
   --color-ink: var(--color-text-primary);
   --color-ink-2: var(--color-text-secondary);
-  --color-muted: var(--color-muted);
+  /* --color-muted is the theme's own token (#6b7280); do not alias it to itself. */
   --color-rule: var(--color-border);
   --color-accent: var(--color-brand-primary);
   --color-accent-ink: var(--color-text-primary);

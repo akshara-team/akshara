@@ -72,7 +72,6 @@ export function PlacementScreen() {
     <>
       <PageHeader back backTo={`/teacher/child/${id}`} nav={NAV} />
       <div className="screen-body">
-        <p className="eyebrow">Teacher · Reading level</p>
         <h1 className="card__title">Find {name}’s reading level</h1>
 
         {failed || child.error ? (

@@ -270,7 +270,8 @@
 .field__control {
   min-height: var(--size-control);
   padding: var(--space-12) var(--space-16);
-  border: var(--border-width) solid var(--color-border);
+  /* A field edge must read against its surface: 3:1, so the muted ink, not the hairline rule. */
+  border: var(--border-width) solid var(--color-muted);
   border-radius: var(--radius-12);
   background: var(--color-surface);
   color: var(--color-text-primary);
