@@ -26,7 +26,7 @@ export default defineConfig({
         theme_color: "#FDE047",
         background_color: "#FFFFFF",
         display: "standalone",
-        orientation: "portrait",
+        orientation: "any",
         // Relative, so the installed app opens under whatever base it was built for.
         start_url: ".",
         scope: ".",

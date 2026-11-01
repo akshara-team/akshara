@@ -211,6 +211,7 @@ export function ReadingScreen() {
               {isMock && phase === "idle" && (
                 <Button
                   variant="ghost"
+                  icon="play"
                   onClick={() => handOver(MOCK_DURATIONS[currentPart - 1] ?? 12, null)}
                 >
                   <Tx k="read.demoReading" />

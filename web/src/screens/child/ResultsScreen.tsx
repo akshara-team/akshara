@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Button,
+  CheckIcon,
   ListenButton,
   RepeatIcon,
   SparklesIcon,
@@ -86,7 +87,8 @@ export function ResultsScreen() {
                 <SayButton k="results.title" lang={lang} />
               </div>
               <p className="reader-meta">
-                <Tx k={accuracy >= 0.8 ? "feedback.wellRead" : "feedback.keepGoing"} />
+                <Tx k={accuracy >= 0.8 ? "feedback.wellRead" : "feedback.keepGoing"} />{" "}
+                <CheckIcon className="inline-icon" />
               </p>
             </div>
 
