@@ -39,6 +39,9 @@ export default defineConfig({
     }),
   ],
   server: {
+    // The phone pass (D4) opens this dev server through an HTTPS tunnel, whose hostname Vite
+    // cannot know in advance. A leading dot allows the provider's subdomains.
+    allowedHosts: [".trycloudflare.com", ".ngrok-free.app", ".ngrok.io", ".loca.lt"],
     proxy: {
       // Dev: avoid CORS by proxying the API. No backend change needed.
       // AKSHARA_API points the proxy elsewhere when port 8000 is taken.
