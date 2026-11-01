@@ -12,6 +12,7 @@ import {
   HomeIcon,
   MicIcon,
   PersonAddIcon,
+  PlayIcon,
   PersonIcon,
   QuestionIcon,
   RefreshIcon,
@@ -54,7 +55,8 @@ export type ButtonIcon =
   | "language"
   | "close"
   | "repeat"
-  | "mic";
+  | "mic"
+  | "play";
 
 const size = { width: 20, height: 20 } as const;
 
@@ -81,6 +83,7 @@ const ICONS: Record<Exclude<ButtonIcon, "none">, ReactNode> = {
   close: <CloseIcon {...size} />,
   repeat: <RepeatIcon {...size} />,
   mic: <MicIcon {...size} />,
+  play: <PlayIcon {...size} />,
 };
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {

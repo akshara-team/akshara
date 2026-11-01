@@ -226,3 +226,9 @@ export const CloseIcon = (p: SVGProps<SVGSVGElement>) => (
     <path d="M6 6l12 12M18 6L6 18" />
   </svg>
 );
+
+export const PlayIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)} aria-hidden="true">
+    <path d="M8 5l11 7-11 7z" />
+  </svg>
+);

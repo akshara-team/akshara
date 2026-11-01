@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api, childIdOf, isMock } from "../../api";
 import { ApiError } from "../../api/live";
-import { Button, LanguageBadge, ProgressDots, Spinner, PageHeader } from "../../components";
+import { Button, CheckIcon, LanguageBadge, ProgressDots, Spinner, PageHeader } from "../../components";
 import { enqueue } from "../../state/outbox";
 import { useSession } from "../../state/session";
 import { useCopy } from "../../i18n";
@@ -102,7 +102,8 @@ export function CheckingScreen() {
         <PageHeader back backTo="/home" />
         <div className="screen-body">
           <h1 className="recovery-hero__title">
-            <Tx k="check.savedTitle" />
+            <Tx k="check.savedTitle" />{" "}
+            <CheckIcon className="inline-icon" />
           </h1>
           <p className="note" role="status">
             <Tx k="check.savedBody" />

@@ -4,7 +4,7 @@ import { api, childIdOf, isMock } from "../../api";
 import { RecordingError, createRecorder, type Recorder } from "../../api/mock";
 import type { MarkState } from "../../api/types";
 import { playToEnd } from "../../audio/playback";
-import { Button, MicButton, PageHeader, SayButton } from "../../components";
+import { Button, CheckIcon, MicButton, PageHeader, SayButton, StarIcon } from "../../components";
 import { useCopy, type CopyKey } from "../../i18n";
 import { useSession } from "../../state/session";
 import { load as loadChild } from "../../state/storage";
@@ -46,7 +46,8 @@ export function PracticeScreen() {
         <div className="screen-body">
           <div className="checking">
             <h1 className="recovery-hero__title">
-              <Tx k="practice.done" vars={{ count: words.length }} />
+              <Tx k="practice.done" vars={{ count: words.length }} />{" "}
+              <StarIcon className="inline-icon" />
             </h1>
             <div className="actions">
               {sentenceFor !== undefined && (
@@ -229,7 +230,7 @@ function Word({
             <Tx k="practice.listen" />
           </Button>
           {isMock && phase === "ready" && (
-            <Button variant="ghost" onClick={() => void judge(null)}>
+            <Button variant="ghost" icon="play" onClick={() => void judge(null)}>
               <Tx k="read.demoReading" />
             </Button>
           )}
@@ -245,6 +246,7 @@ function Word({
       {message && (
         <p className={result === "correct" ? "practice-message" : "note"} role="status">
           <Tx k={message} />
+          {result === "correct" && <>{" "}<CheckIcon className="inline-icon" /></>}
         </p>
       )}
     </div>

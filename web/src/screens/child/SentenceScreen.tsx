@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { api, childIdOf, isMock } from "../../api";
 import { RecordingError, createRecorder, type Recorder } from "../../api/mock";
 import type { SentenceFor, SentenceRead } from "../../api/types";
-import { Button, ListenButton, MicButton, PageHeader, WordChip, wordStatus, SayButton } from "../../components";
+import { Button, CheckIcon, ListenButton, MicButton, PageHeader, WordChip, wordStatus, SayButton } from "../../components";
 import { useCopy, type CopyKey } from "../../i18n";
 import { useSession } from "../../state/session";
 import { load as loadChild } from "../../state/storage";
@@ -138,7 +138,8 @@ export function SentenceScreen() {
             {phase === "done" ? (
               <>
                 <p className="practice-message" role="status">
-                  <Tx k={result && result.accuracy >= 0.99 ? "sentence.great" : "sentence.good"} />
+                  <Tx k={result && result.accuracy >= 0.99 ? "sentence.great" : "sentence.good"} />{" "}
+                  <CheckIcon className="inline-icon" />
                 </p>
                 <div className="chips">
                   {words.map((w, i) => (
@@ -169,7 +170,7 @@ export function SentenceScreen() {
                   <Tx k={phase === "checking" ? "practice.checking" : phase === "recording" ? "read.recording" : "read.tapToStart"} />
                 </p>
                 {isMock && phase === "ready" && (
-                  <Button variant="ghost" onClick={() => void judge(null)}>
+                  <Button variant="ghost" icon="play" onClick={() => void judge(null)}>
                     <Tx k="read.demoReading" />
                   </Button>
                 )}
