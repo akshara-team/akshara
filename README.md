@@ -2,7 +2,17 @@
 
 **A reading tutor that listens.** A child reads a story aloud in Kannada, Tamil or Hindi. Akshara hears every word, helps with the ones they missed, akshara by akshara, and tells the teacher who needs help with what. Built on all three of Gnani AI's models: Prisma hears the child, Timbre speaks to them, and Evon is wired in to write their practice sentences (its first batch is still to run).
 
-**Try it:** [akshara-team.github.io/akshara](https://akshara-team.github.io/akshara/) (demo mode in the browser: no backend, no microphone needed, synthetic data).
+**Try it in the browser:** [akshara-team.github.io/akshara](https://akshara-team.github.io/akshara/). This is **demo mode**: no backend and no Gnani model is called; the marks come from fixtures and the voice is the device's. Synthetic data, no microphone needed (tap "Use demo reading").
+
+**See the models work** (needs a Gnani API key, about 0.05 to 0.1 credits a reading):
+
+```bash
+./run.sh install      # Python (uv) and web dependencies
+cp .env.example .env  # then put your key in GNANI_API_KEY
+./run.sh live         # backend + web; open the address it prints
+```
+
+Then tap a child, read the story aloud: **Prisma** hears it and every word comes back marked right, different or skipped; tap "Practise these words" and **Timbre** says each akshara of a missed word, then the whole word.
 
 Entry for the [Great Indian AI Internship Challenge](https://www.gnani.ai/internship) (deadline Nov 10, 2026).
 
@@ -46,14 +56,14 @@ once.
 | Reliability studies (synthetic audio, 3 languages, 90 passages, 4 audio conditions) | Done, in [docs/RESULTS.md](docs/RESULTS.md) |
 | Mitigations (chunked re-check, per-word acoustic check, fusion) | Tried and measured; not in the app, as they did not beat Prisma alone |
 | Learner model: skill graph, mastery tracking, placement, next story | Done, in the app; measured on simulated children |
-| Web app (`web/`, React PWA): child flow, practice, teacher class, profiles, placement, review queue, sentences, reliability page | Done, mock and live modes; 158 tests including axe on 22 routes |
+| Web app (`web/`, React PWA): child flow, practice, teacher class, profiles, placement, review queue, sentences, reliability page | Done, mock and live modes; 199 tests including axe on 22 routes. Child screens and the class register redrawn to [DESIGN.md](DESIGN.md) ("a picture book that listens") |
 | Consent, 30-day recording deletion, delete a child's data | Done |
 | Offline readings, noise check | Done |
 | Evon practice sentences (teacher-approved) | Built; Evon's batch not yet run, so story sentences are used until it is ([docs/EVON_HOWTO.md](docs/EVON_HOWTO.md)) |
 | Spoken instructions on every child screen | Done (Timbre, cached) |
 | End-to-end tests, one child from consent to deletion | Done (API and screens) |
 | FLS 2022 Grade 3 reading bands, stars and streak | In progress (Daniel) |
-| Demo video | [docs/demo/akshara_demo.mp4](docs/demo/akshara_demo.mp4) (an earlier version) |
+| Demo video | [docs/demo/akshara_demo_2026-11.webm](docs/demo/akshara_demo_2026-11.webm) (60 s, silent with captions, demo mode; recorded by `scripts/record_demo.mjs`) |
 
 **Where things stand, and what is next:** [docs/STATUS.md](docs/STATUS.md).
 
