@@ -92,10 +92,8 @@ def main() -> None:
         if lang in LANGS and lang not in seen:
             seen[lang] = rec
 
-    titles = {
-        r["id"]: r.get("title")
-        for r in (json.loads(x) for x in SOURCES.read_text(encoding="utf-8").splitlines() if x.strip())
-    }
+    lines = SOURCES.read_text(encoding="utf-8").splitlines()
+    titles = {r["id"]: r.get("title") for r in (json.loads(x) for x in lines if x.strip())}
 
     languages: dict[str, dict] = {}
     for lang in LANGS:
