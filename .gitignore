@@ -50,3 +50,7 @@ results/recordings/
 
 # Hallmark run artefacts (before/after screenshots, records)
 .hallmark/
+
+# Design-tool scratch (decision pages)
+.impeccable/questions/
+.impeccable/decision-*.json
