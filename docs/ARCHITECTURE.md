@@ -73,6 +73,6 @@ no connection -> the browser keeps the clip (IndexedDB) and sends it later with 
 ## Not built or not verified
 
 - No logins or multiple teachers; one server serves one class.
-- The evidence model and fusion are not in the app; Evon is not used.
-- Spoken instructions for the child screens (WP6) are not built.
+- The evidence model and fusion are not in the app (measured, did not beat Prisma alone).
+- Evon's practice-sentence pipeline is built and tested, but its first batch has not run.
 - The Dockerfile has not been built on this machine.

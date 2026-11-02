@@ -1,6 +1,8 @@
 # Akshara
 
-**A reading tutor that listens.** A child reads a story aloud in Kannada, Tamil or Hindi. Akshara hears every word, helps with the ones they missed, akshara by akshara, and tells the teacher who needs help with what. Built on all three of Gnani AI's models: Prisma hears the child, Timbre speaks to them, Evon writes their practice.
+**A reading tutor that listens.** A child reads a story aloud in Kannada, Tamil or Hindi. Akshara hears every word, helps with the ones they missed, akshara by akshara, and tells the teacher who needs help with what. Built on all three of Gnani AI's models: Prisma hears the child, Timbre speaks to them, and Evon is wired in to write their practice sentences (its first batch is still to run).
+
+**Try it:** [akshara-team.github.io/akshara](https://akshara-team.github.io/akshara/) (demo mode in the browser: no backend, no microphone needed, synthetic data).
 
 Entry for the [Great Indian AI Internship Challenge](https://www.gnani.ai/internship) (deadline Nov 10, 2026).
 
@@ -23,8 +25,9 @@ Entry for the [Great Indian AI Internship Challenge](https://www.gnani.ai/intern
    then the whole word, and the child reads it again.
 4. **A learner model** tracks which letters, vowel signs and conjuncts each child knows, and
    picks the next story.
-5. **Practice sentences.** **Evon v3.3** writes short sentences for the sounds a child finds
-   hard; code checks every one, a teacher approves it, and the child reads it.
+5. **Practice sentences.** **Evon v3.3** is wired in to write short sentences for the sounds a
+   child finds hard; code checks every one, a teacher approves it, and the child reads it. Its
+   first batch has not run yet, so children get sentences from their stories until it does.
 6. **The teacher** sees the class, listens to the marks worth checking (a clip of just that
    word) and corrects them; a teacher's mark replaces the computer's.
 
@@ -113,7 +116,7 @@ set `VITE_API_MODE=live` to talk to the API. Screens, data modes and known gaps:
 
 - **Prisma v2.5** (speech-to-text, verbatim): hears every reading, placement item and practice word.
 - **Timbre v3.0** (text-to-speech): says each akshara, each missed word, each practice sentence and each instruction.
-- **Evon v3.3** (language model, self-hosted): writes practice sentences for a child's weak sounds, in strict JSON, checked by code and approved by a teacher.
+- **Evon v3.3** (language model, self-hosted): wired in to write practice sentences for a child's weak sounds, in strict JSON, checked by code and approved by a teacher. The pipeline is built and tested; its first batch is still to run.
 
 ## Data
 

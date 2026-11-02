@@ -1,6 +1,6 @@
 # Status: what is done and what is next
 
-*Last updated 2026-10-29. Keep this file current when work lands; it is the fastest way for
+*Last updated 2026-11-02. Keep this file current when work lands; it is the fastest way for
 either of us to see where the project stands. The day-by-day plan is
 [FINISH_PLAN.md](FINISH_PLAN.md); the log is [WORKLOG.md](WORKLOG.md).*
 
@@ -11,8 +11,9 @@ consent) and places them with a short ASER-style test. The child reads a story p
 level, part by part, and sees which words were right. Missed words are practised straight away:
 split into aksharas, said by Timbre, read again. A learner model tracks which letters and sounds
 each child knows and picks the next story. The teacher sees the class, listens to the marks
-worth checking and corrects them, and can read how reliable the marks are. Evon writes
-practice sentences for each child's weak sounds; a teacher approves each one first.
+worth checking and corrects them, and can read how reliable the marks are. Evon is wired
+in to write practice sentences for each child's weak sounds (a teacher approves each one); its
+first batch has not run yet.
 
 ## Where things stand
 
@@ -36,7 +37,8 @@ practice sentences for each child's weak sounds; a teacher approves each one fir
 | Offline readings, noise check (WP9) | Done |
 | Stars and reading streak (WP9, D3) | Done; on the child home |
 | End-to-end tests, Pages dry run, docs (WP10) | Done; the hands-on browser pass and Lighthouse are Checkpoint A |
-| Public demo (GitHub Pages, mock mode) | Builds and serves under `/akshara/`; goes live when the repo is public |
+| Public demo (GitHub Pages, mock mode) | Live: https://akshara-team.github.io/akshara/ (repo public since Nov 2, now under the `akshara-team` org) |
+| Look and feel | Redesigned Nov 2 as an Activity-Based Learning classroom: one colour per activity, the reading ladder, StoryWeaver cover art, akshara cards in practice ([PRODUCT.md](../PRODUCT.md)) |
 
 ## Who owns what
 
@@ -49,15 +51,17 @@ We enter as a pair (decided Oct 28). Both are interviewed separately, so each sh
 
 ## What is next, in order
 
-1. **Checkpoint A** (Achindra, about 30 minutes): use the app as a teacher and as a child in
-   live mode. Check that the right word plays in Review, switch the network off mid-story, try
-   "Is it quiet here?", read one sentence into a real microphone, run Lighthouse.
-2. **Daniel**: D1-D3 are merged (Kannada/Tamil text, FLS bands, rewards); left is D4 (a pass on his phone) and D6 (approve Evon's sentences).
-3. **Hindi text review** (Achindra): `web/src/i18n/hi.json`.
-4. **Run Evon's batch** (Kaggle's free 2×T4 or a rented GPU, see [EVON_HOWTO.md](EVON_HOWTO.md)), then approve its sentences in the app.
-5. **Record the demo video** (Nov 1) in live mode.
-6. **Go public, post** (Nov 2–3): make the repo public, turn on Pages, post the demo (drafts in
-   [POST.md](POST.md)), share it for a week before the Nov 10 cutoff. **Submit by Nov 9.**
+Done since Oct 29: Checkpoint A (live mode, real microphone), the Hindi text review, Daniel's
+phone test (D4), the repo made public and moved to the `akshara-team` org, Pages turned on, and
+the redesign.
+
+1. **Evon's first batch** (Daniel, free Kaggle 2×T4): build llama.cpp for the T4s, keep the
+   model in `/tmp`, run `scripts/evon_sentences.py`, commit the sentences; then approve them in
+   the app (D6). Until then the docs say Evon is wired in and its batch is pending.
+2. **Re-record the demo video** on the redesigned app. In demo mode the practice moment opens
+   directly at `/practice?words=<word>,<word>`.
+3. **Post** (drafts in [POST.md](POST.md)), reshare for a week before the Nov 10 cutoff.
+   **Submit by Nov 9.**
 
 ## How to run it
 
@@ -70,7 +74,7 @@ We enter as a pair (decided Oct 28). Both are interviewed separately, so each sh
 
 ## Current numbers
 
-- **277 Python tests**, **180 web tests** (axe on 22 routes); CI runs both on every PR.
+- **277 Python tests**, **199 web tests** (axe on 22 routes); CI runs both on every PR.
 - End-to-end, one child from consent to deletion: `tests/test_end_to_end.py` (API) and
   `web/src/endToEnd.test.tsx` (screens, mock mode).
 - Production web bundle: **112 kB JS / 125 kB total gzip** (budget 120 / 160), including the

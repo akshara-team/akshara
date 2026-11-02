@@ -3,7 +3,7 @@
 ## Setup
 
 ```bash
-git clone https://github.com/Achindra2003/akshara.git
+git clone https://github.com/akshara-team/akshara.git
 cd akshara
 ./run.sh install        # uv sync + npm install (also: npm run install:all)
 cp .env.example .env    # put the API key in .env, never in code
