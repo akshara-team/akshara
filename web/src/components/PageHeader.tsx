@@ -2,7 +2,8 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { load as loadChild } from "../state/storage";
 import { useDocumentTitle } from "../state/useDocumentTitle";
 import { useIsDesktop } from "../state/useMediaQuery";
-import { Avatar } from "./Avatar";
+import { ChildPicture, pictureOf } from "./ChildPicture";
+import { Logo } from "./Logo";
 import { ArrowLeftIcon, GlobeIcon, UsersIcon, UserSwitchIcon } from "./icons";
 
 const TITLES: Record<string, string> = {
@@ -76,7 +77,7 @@ export function PageHeader({
     <header className="page-header">
       <div className="page-header__row">
         <Link className="page-header__logo" to={home} aria-label={`${brand} home`}>
-          <img src={`${import.meta.env.BASE_URL}logo.png`} alt={brand} height={32} />
+          <Logo lang={child.lang} size={36} />
         </Link>
 
         {back && (
@@ -109,7 +110,9 @@ export function PageHeader({
         {showAccount && (
           <details className="account">
             <summary className="account__trigger" aria-label="My account">
-              <Avatar initials={child.reader?.initials ?? "·"} size="sm" />
+              {child.reader && (
+                <ChildPicture picture={pictureOf(child.reader.id, child.reader.picture)} size="sm" />
+              )}
             </summary>
             <div className="account__menu">
               <Link to="/switch">

@@ -314,6 +314,12 @@
 .field--select {
   position: relative;
 }
+/* One chevron: ours. The browser's own arrow is hidden, and the text keeps clear of ours. */
+.field--select .field__control {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: calc(var(--space-12) + var(--icon-size-sm) + var(--space-8));
+}
 .field__chevron {
   position: absolute;
   right: var(--space-12);
@@ -451,6 +457,7 @@
   position: sticky;
   top: 0;
   z-index: 10;
+  padding-top: env(safe-area-inset-top, 0px);
   background: var(--color-surface);
   border-bottom: var(--border-width) solid var(--color-border);
 }

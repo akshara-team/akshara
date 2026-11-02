@@ -66,21 +66,21 @@ describe("child home", () => {
 
   it("shows role selection when no child is saved", () => {
     at("/");
-    expect(screen.getByText(/a little reading/i)).toBeTruthy();
+    expect(screen.getByRole("heading", { name: kn("reader.title") })).toBeTruthy();
   });
 
-  it("shows saved progress, readings and a repeat option", () => {
+  it("shows saved progress: a finished story's kolam and a star per reading, no speeds", () => {
     setReaderAndLang(reader, "kn-IN");
     addReading(reading("a", 30));
     addReading(reading("b", 36));
     addReading(reading("c", 42));
-    at("/home");
+    const { container } = at("/home");
 
     expect(screen.getByText(kn("home.welcomeBack", { name: "Aarav" }))).toBeTruthy();
-    expect(screen.getByText(kn("home.best", { wcpm: 42 }))).toBeTruthy();
-    expect(screen.getByText(kn("home.readAgain", { title: "ಬಣ್ಣದ ಚಿಟ್ಟೆ" }))).toBeTruthy();
-    // three readings -> three rows with the story title
-    expect(screen.getAllByText("ಬಣ್ಣದ ಚಿಟ್ಟೆ").length).toBeGreaterThanOrEqual(3);
+    // three readings of one story -> one finished kolam, three stars
+    expect(screen.getAllByRole("img", { name: "ಬಣ್ಣದ ಚಿಟ್ಟೆ" })).toHaveLength(1);
+    expect(screen.getByLabelText(`${kn("rewards.stars")}: 3`)).toBeTruthy();
+    expect(container.textContent).not.toMatch(/\d+\s*%|wcpm/i);
   });
 
   it("shows an empty state for a new reader", () => {

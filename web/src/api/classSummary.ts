@@ -46,6 +46,7 @@ export function toReader(c: Child): Reader {
     initials: c.avatar || initialsOf(c.alias),
     level: levelOf(c.grade),
     lang: c.language,
+    picture: c.avatar,
   };
 }
 

@@ -160,5 +160,22 @@
   "ladder.story": "कहानी",
   "ladder.here": "तुम यहाँ हो",
   "home.today": "आज की कहानी",
-  "results.star": "तुम्हें एक तारा मिला!"
+  "results.star": "तुम्हें एक तारा मिला!",
+  "voice.tapYou": "अपनी तस्वीर छुओ।",
+  "voice.listening": "मैं सुन रहा हूँ। ज़ोर से पढ़ो!",
+  "voice.thinking": "तुम्हारा पढ़ना देख रहा हूँ…",
+  "voice.readyStory": "तुम्हारी कहानी तैयार है। पढ़ो दबाओ!",
+  "feedback.tapWord": "शब्द छूकर सुनो।",
+  "results.wordsRight": "तुमने {total} में से {right} शब्द सही पढ़े!",
+  "home.myStories": "मेरी कहानियाँ",
+  "pic.bird": "चिड़िया",
+  "pic.butterfly": "तितली",
+  "pic.cat": "बिल्ली",
+  "pic.cow": "गाय",
+  "pic.dog": "कुत्ता",
+  "pic.fish": "मछली",
+  "pic.flower": "फूल",
+  "pic.sun": "सूरज",
+  "pic.tree": "पेड़",
+  "pic.boat": "नाव"
 }

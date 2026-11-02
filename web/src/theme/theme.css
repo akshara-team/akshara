@@ -11,6 +11,88 @@
    and each activity swaps the brand hue below; a screen keeps to one hue.
    ============================================================================ */
 
+/* ---------- "A picture book that listens" (DESIGN.md, approved 2026-11-02) ----------
+   Named for the world: the rice-flour kolam, the limewash wall, the slate and its chalk,
+   ink on paper, peacock-blue doors, turmeric, leaf, laterite earth, the class register.
+   The child screens and the register use only these; the older tokens below remain for
+   screens not yet redrawn. */
+:root {
+  --rice: #fbfaf6;
+  --limewash: #eef3f6;
+  --slate: #1f2a2e;
+  --slate-2: #2c393e;
+  --slate-frame: #6b5640; /* the slate's thin wooden frame line */
+  --chalk: #f4f1e8;
+  --chalk-dim: #b9c2bf;
+  --ink: #1c2140;
+  --ink-2: #454a6b;
+  --ink-muted: #5c6180;
+  --peacock: #0a6e9e;
+  --peacock-wash: #dfeef6;
+  --turmeric: #f2b01e;
+  --turmeric-deep: #7a5300;
+  --turmeric-wash: #fdf0cc;
+  --leaf: #2f8f46;
+  --leaf-deep: #1e6e33;
+  --leaf-wash: #e1f2e5;
+  --laterite: #c2452d;
+  --laterite-wash: #fbe5df;
+  --register-line: #c9d3dc;
+  --register-margin: #d9534f;
+
+  /* Six type roles. */
+  --type-display: clamp(1.75rem, 1.2rem + 2.4vw, 2.75rem);
+  --type-reading: clamp(2rem, 1.4rem + 3vw, 2.75rem);
+  --type-slate: clamp(3rem, 2rem + 6vw, 5rem);
+  --type-voice: clamp(1.15rem, 0.95rem + 1vw, 1.5rem);
+  --type-body: 1rem;
+  --type-label: 0.875rem;
+
+  /* One spacing scale: 4 8 12 16 24 32 48 64. */
+  --s-4: 4px;
+  --s-8: 8px;
+  --s-12: 12px;
+  --s-16: 16px;
+  --s-24: 24px;
+  --s-32: 32px;
+  --s-48: 48px;
+  --s-64: 64px;
+  --gutter-x: var(--s-16);
+  --pad-surface: var(--s-24);
+  --gap-groups: var(--s-32);
+
+  --r-inner: 10px;
+  --r-tile: 16px;
+  --r-page: 24px;
+  --r-pill: 999px;
+
+  --bar-top: 64px;
+  --bar-action: 76px;
+  --tap-child: 76px;
+  --voice-size: 56px;
+  --mark-size: 40px;
+  --tile-size: clamp(68px, 14vw, 120px);
+  --row-register: 56px;
+  --max-content: 760px;
+  --max-register: 1040px;
+
+  --shadow-page: 0 1px 2px rgb(28 33 64 / 8%), 0 18px 36px -18px rgb(28 33 64 / 30%);
+  --shadow-edge: inset 0 -5px 0 rgb(28 33 64 / 22%);
+
+  --t-press: 120ms;
+  --t-ui: 200ms;
+  --t-explain: 450ms;
+  --t-reward: 900ms;
+  --stagger: 60ms;
+}
+@media (min-width: 600px) {
+  :root {
+    --gutter-x: var(--s-32);
+    --pad-surface: var(--s-32);
+    --gap-groups: var(--s-48);
+  }
+}
+
 :root {
   /* ---------- Colour ---------- */
   /* The four activity hues, as the cards on the classroom wall. Each has an
@@ -181,7 +263,8 @@
   --duration-spin-reduced: 2.5s;
   --duration-fast: 120ms;
   --duration-base: 180ms;
-  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 
   /* ---------- Focus ---------- */
   --focus-ring: 2px solid var(--color-focus);

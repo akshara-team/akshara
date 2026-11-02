@@ -77,6 +77,13 @@ describe("initials and readers", () => {
 
   it("turns a child into the child flow's reader", () => {
     const r = toReader({ ...child(7, "Meera S.", 40), avatar: "MS" });
-    expect(r).toEqual({ id: "7", alias: "Meera S.", initials: "MS", level: "Class 3", lang: "kn-IN" });
+    expect(r).toEqual({
+      id: "7",
+      alias: "Meera S.",
+      initials: "MS",
+      level: "Class 3",
+      lang: "kn-IN",
+      picture: "MS",
+    });
   });
 });

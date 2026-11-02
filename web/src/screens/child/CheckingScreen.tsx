@@ -2,7 +2,17 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api, childIdOf, isMock } from "../../api";
 import { ApiError } from "../../api/live";
-import { Button, CheckIcon, LanguageBadge, ProgressDots, Spinner, PageHeader } from "../../components";
+import {
+  Action,
+  ArrowRightIcon,
+  CheckIcon,
+  ChildFrame,
+  HomeIcon,
+  Kolam,
+  RepeatIcon,
+  StarIcon,
+  pictureOf,
+} from "../../components";
 import { enqueue } from "../../state/outbox";
 import { useSession } from "../../state/session";
 import { useCopy } from "../../i18n";
@@ -10,6 +20,9 @@ import { scriptClass } from "../../theme/script";
 import { storyTitle } from "./title";
 
 type Failure = "offline" | "speech" | "service";
+
+/** The demo answers instantly; it waits this long so the checking kolam is seen (not in tests). */
+const DEMO_WAIT_MS = isMock && import.meta.env.MODE !== "test" ? 1800 : 0;
 
 function classify(error: unknown): Failure {
   if (typeof navigator !== "undefined" && navigator.onLine === false) return "offline";
@@ -44,7 +57,7 @@ export function CheckingScreen() {
   const [saved, setSaved] = useState(false);
 
   const total = Math.max(parts.length, 1);
-  const { t, Tx } = useCopy(lang);
+  const { Tx } = useCopy(lang);
 
   useEffect(() => {
     if (started.current) return;
@@ -68,10 +81,14 @@ export function CheckingScreen() {
 
     (async () => {
       try {
-        const attempt = await api.submitAttempt({
-          ...send,
-          audio: pending.audio ?? new Blob([], { type: "audio/wav" }),
-        });
+        const [attempt] = await Promise.all([
+          api.submitAttempt({
+            ...send,
+            audio: pending.audio ?? new Blob([], { type: "audio/wav" }),
+          }),
+          // The demo answers at once; hold the kolam long enough to be seen.
+          new Promise((r) => setTimeout(r, DEMO_WAIT_MS)),
+        ]);
         recordAttempt(currentPart - 1, attempt, pending.seconds);
         setPending(null);
         navigate("/feedback", { replace: true, state: { noisy: Boolean(pending.noisy) } });
@@ -94,133 +111,92 @@ export function CheckingScreen() {
     })();
   }, [pending, reader, passage, lang, currentPart, sessionId, recordAttempt, setPending, navigate]);
 
+  const mark = reader ? pictureOf(reader.id, reader.picture) : null;
+
   if (saved) {
     const isLast = currentPart >= total;
     const anyChecked = parts.some((p) => p.attempt);
     return (
-      <>
-        <PageHeader back backTo="/home" />
-        <div className="screen-body">
-          <h1 className="recovery-hero__title">
-            <Tx k="check.savedTitle" />{" "}
-            <CheckIcon className="inline-icon" />
+      <ChildFrame
+        lang={lang}
+        lineKey="check.savedTitle"
+        title="Checking"
+        mark={mark}
+        action={
+          !isLast ? (
+            <Action
+              icon={<ArrowRightIcon />}
+              onClick={() => {
+                goToNextPart();
+                navigate(`/read/${passage?.id ?? ""}`, { replace: true });
+              }}
+            >
+              <Tx k="feedback.next" vars={{ n: currentPart + 1 }} />
+            </Action>
+          ) : anyChecked ? (
+            <Action icon={<StarIcon />} onClick={() => navigate("/results", { replace: true })}>
+              <Tx k="feedback.seeResults" />
+            </Action>
+          ) : (
+            <Action icon={<HomeIcon />} onClick={() => navigate("/home", { replace: true })}>
+              <Tx k="common.home" />
+            </Action>
+          )
+        }
+      >
+        <div className="center-stage">
+          <h1 className={`display ${scriptClass(lang)}`} lang={lang}>
+            <Tx k="check.savedTitle" /> <CheckIcon className="inline-icon" />
           </h1>
           <p className="note" role="status">
             <Tx k="check.savedBody" />
           </p>
-          <div className="actions">
-            {!isLast ? (
-              <Button
-                block
-                icon="next"
-                onClick={() => {
-                  goToNextPart();
-                  navigate(`/read/${passage?.id ?? ""}`, { replace: true });
-                }}
-              >
-                <Tx k="feedback.next" vars={{ n: currentPart + 1 }} />
-              </Button>
-            ) : anyChecked ? (
-              <Button block icon="results" onClick={() => navigate("/results", { replace: true })}>
-                <Tx k="feedback.seeResults" />
-              </Button>
-            ) : (
-              <Button block icon="home" onClick={() => navigate("/home", { replace: true })}>
-                <Tx k="common.home" />
-              </Button>
-            )}
-          </div>
         </div>
-      </>
+      </ChildFrame>
     );
   }
 
   if (failed) {
     return (
-      <>
-        <PageHeader back backTo="/home" />
-        <div className="screen-body">
-          <h1 className="recovery-hero__title">
+      <ChildFrame
+        lang={lang}
+        lineKey="check.failed"
+        title="Checking"
+        mark={mark}
+        action={
+          <>
+            <Action icon={<RepeatIcon />} onClick={() => navigate(passage ? `/read/${passage.id}` : "/home", { replace: true })}>
+              <Tx k="check.readAgain" />
+            </Action>
+            <button type="button" className="action-aside" onClick={() => navigate(`/recovery/${failed}`, { replace: true })}>
+              <Tx k="check.whatToDo" />
+            </button>
+          </>
+        }
+      >
+        <div className="center-stage">
+          <h1 className={`display ${scriptClass(lang)}`} lang={lang}>
             <Tx k="check.failed" />
           </h1>
           <p className="note">
             <Tx k={`check.${failed}`} />
           </p>
-          <div className="actions">
-            <Button block icon="help" onClick={() => navigate(`/recovery/${failed}`, { replace: true })}>
-              <Tx k="check.whatToDo" />
-            </Button>
-            <Button
-              variant="ghost"
-              block
-              icon="repeat"
-              onClick={() => navigate(passage ? `/read/${passage.id}` : "/home", { replace: true })}
-            >
-              <Tx k="check.readAgain" />
-            </Button>
-          </div>
         </div>
-      </>
+      </ChildFrame>
     );
   }
 
   return (
-    <>
-      <PageHeader back={false} />
-      <div className="screen-body">
-        <div className="workspace workspace--w360">
-          {/* Left: story and part context. */}
-          <div className="stack">
-            <div className="metarow">
-              <LanguageBadge lang={lang} />
-              <div className="metarow__text">
-                <span className="eyebrow">
-                  <Tx k="check.title" />
-                </span>
-                <span className={`metarow__title ${scriptClass(lang)}`} lang={lang}>
-                  {storyTitle(passage)}
-                </span>
-              </div>
-            </div>
-
-            <div className="context">
-              <div className="context__row">
-                <Tx k="common.part" vars={{ n: currentPart, total }} />
-                <ProgressDots total={total} current={currentPart} />
-              </div>
-            </div>
-          </div>
-
-          {/* Right: the wait itself. */}
-          <div className="stack">
-            <div className="checking">
-              <Spinner label={t("check.heard")} />
-              <h1 className="recovery-hero__title">
-                <Tx k="check.greatJob" />
-              </h1>
-              <p className="note">
-                <Tx k="check.heard" />
-              </p>
-              <p className="note">
-                <Tx k="check.soon" />
-              </p>
-            </div>
-
-            <div className="passage-card">
-              <div className="passage-card__accent" aria-hidden="true" />
-              <p className={`reading-text ${scriptClass(lang)}`} lang={lang}>
-                {parts[currentPart - 1]?.text ?? ""}
-              </p>
-            </div>
-
-            {isMock && (
-              <p className="note">
-                Demo mode: results come from fixtures, so this finishes instantly.
-              </p>
-            )}
-          </div>
-        </div>
+    <ChildFrame lang={lang} lineKey="voice.thinking" title="Checking" mark={mark}>
+      <div className="center-stage checking-stage" role="status">
+        <Kolam seed={passage?.id ?? "akshara"} mode="loop" className="checking-stage__kolam" />
+        <h1 className={`display ${scriptClass(lang)}`} lang={lang}>
+          <Tx k="check.greatJob" />
+        </h1>
+        <p className={`center-stage__sub ${scriptClass(lang)}`} lang={lang}>
+          {storyTitle(passage)} · <Tx k="common.part" vars={{ n: currentPart, total }} />
+        </p>
       </div>
-    </>
+    </ChildFrame>
   );
 }

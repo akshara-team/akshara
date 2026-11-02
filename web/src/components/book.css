@@ -1,0 +1,840 @@
+/* ============================================================================
+   "A picture book that listens": the child's components (DESIGN.md).
+   Three surfaces on the limewash wall: the book page (rice), the slate (dark), the
+   register (ruled). Tokens only; motion only on transform, opacity and the kolam line.
+   ============================================================================ */
+
+/* ---------- The frame: top bar, focal object, one action ---------- */
+.app-main:has(> .frame) {
+  max-width: 100%;
+}
+.frame {
+  --frame-pad-top: max(var(--s-8), env(safe-area-inset-top, 0px));
+  --frame-pad-bottom: max(var(--s-16), env(safe-area-inset-bottom, 0px));
+  display: grid;
+  grid-template-rows: var(--bar-top) minmax(0, 1fr) auto;
+  gap: var(--s-12);
+  width: 100%;
+  max-width: var(--max-content);
+  height: 100dvh;
+  margin-inline: auto;
+  padding: var(--frame-pad-top) max(var(--gutter-x), env(safe-area-inset-right, 0px))
+    var(--frame-pad-bottom) max(var(--gutter-x), env(safe-area-inset-left, 0px));
+  background: var(--limewash);
+  color: var(--ink);
+}
+.frame__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--s-12);
+  min-width: 0;
+}
+.frame__line {
+  flex: 1;
+  min-width: 0;
+  max-width: none;
+  margin: 0;
+  font-size: var(--type-voice);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+.frame__mark {
+  flex: none;
+  display: grid;
+  place-items: center;
+  min-width: 48px;
+  min-height: 48px;
+  border-radius: var(--r-tile);
+}
+.frame__focal {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-12);
+}
+.frame__action {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-8);
+}
+
+/* ---------- The voice control ---------- */
+.voice {
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: var(--voice-size);
+  height: var(--voice-size);
+  border: 0;
+  border-radius: 50%;
+  background: var(--rice);
+  color: var(--peacock);
+  box-shadow: var(--shadow-page);
+  cursor: pointer;
+  transition: transform var(--t-press) var(--ease-out);
+}
+.voice:active {
+  transform: scale(0.97);
+}
+.voice svg {
+  position: relative;
+}
+.voice__ring {
+  position: absolute;
+  inset: calc(var(--s-4) * -1);
+  border-radius: 50%;
+  border: 3px solid var(--peacock);
+  opacity: 0;
+  transform: scale(1);
+  /* Long enough to glide between level readings (every 100 ms), short enough to follow them. */
+  transition:
+    transform var(--t-ui) var(--ease-out),
+    opacity var(--t-ui) var(--ease-out);
+}
+.voice[data-listening="true"] {
+  background: var(--peacock);
+  color: var(--rice);
+}
+.voice[data-listening="true"] .voice__ring {
+  opacity: 1;
+  transform: scale(calc(1 + var(--lvl, 0) * 0.5));
+}
+.voice[data-speaking="true"] .voice__ring {
+  opacity: 0.6;
+}
+.frame[data-surface="slate"] .voice {
+  color: var(--slate);
+}
+
+/* ---------- The child's mark: a picture in chalk on a small slate ---------- */
+.child-mark {
+  display: grid;
+  place-items: center;
+  width: var(--mark-size);
+  height: var(--mark-size);
+  border-radius: var(--r-inner);
+  background: var(--slate);
+  box-shadow: inset 0 0 0 2px var(--slate-frame);
+}
+.child-mark svg {
+  width: 70%;
+  height: 70%;
+  fill: var(--chalk);
+}
+.child-mark--lg {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  border-radius: var(--r-tile);
+  box-shadow: inset 0 0 0 4px var(--slate-frame);
+}
+.child-mark--lg svg {
+  width: 58%;
+  height: 58%;
+}
+
+/* ---------- The one action ---------- */
+.action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-12);
+  width: 100%;
+  min-height: var(--bar-action);
+  padding: var(--s-8) var(--s-24);
+  border: 0;
+  border-radius: var(--r-pill);
+  font: inherit;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+  box-shadow: var(--shadow-edge);
+  transition: transform var(--t-press) var(--ease-out);
+}
+.action:active:not(:disabled) {
+  transform: scale(0.97);
+  box-shadow: none;
+}
+.action:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.action__icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+.action__icon svg {
+  width: 30px;
+  height: 30px;
+}
+.action--peacock {
+  background: var(--peacock);
+  color: var(--rice);
+}
+.action--turmeric {
+  background: var(--turmeric);
+  color: var(--ink);
+}
+.action--leaf {
+  background: var(--leaf-deep);
+  color: var(--rice);
+}
+/* The demo's stand-in for a real voice: quiet, under the action. */
+.action-aside {
+  align-self: center;
+  min-height: 44px;
+  padding: var(--s-8) var(--s-16);
+  border: 0;
+  background: none;
+  color: var(--ink-muted);
+  font: inherit;
+  font-size: var(--type-label);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+.frame[data-surface="slate"] .action-aside {
+  color: var(--ink-2);
+}
+
+/* ---------- The picture-book page ---------- */
+.book-page {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-16);
+  padding: var(--pad-surface);
+  border-radius: var(--r-page);
+  background: var(--rice);
+  box-shadow: var(--shadow-page);
+  overflow: hidden;
+}
+.book-page__art {
+  flex: 1 1 0;
+  min-height: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  margin: 0;
+}
+.book-page__art img {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: calc(var(--r-page) - var(--s-12));
+}
+.book-page__art figcaption {
+  flex: none;
+}
+.book-page__art--kolam {
+  align-items: center;
+  justify-content: center;
+}
+.book-page__art--kolam .kolam {
+  height: 100%;
+  max-height: 240px;
+}
+.book-page__text {
+  flex: none;
+  min-width: 0;
+}
+.art-credit {
+  display: block;
+  font-size: 0.75rem;
+  line-height: 1.3;
+  color: var(--ink-muted);
+}
+.reading {
+  margin: 0;
+  font-size: var(--type-reading);
+  font-weight: 500;
+  line-height: 1.65;
+  color: var(--ink);
+  overflow-wrap: break-word;
+}
+/* A tablet held sideways: the book opens, picture left, text right. */
+@media (min-width: 600px) and (orientation: landscape) {
+  .book-page {
+    flex-direction: row;
+    align-items: stretch;
+  }
+  .book-page__art {
+    flex: 1 1 50%;
+  }
+  .book-page__text {
+    flex: 1 1 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+/* ---------- The slate and its akshara tiles ---------- */
+.slate {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-24);
+  padding: var(--pad-surface);
+  border-radius: var(--r-page);
+  background: var(--slate);
+  color: var(--chalk);
+  box-shadow:
+    inset 0 0 0 6px var(--slate-frame),
+    var(--shadow-page);
+}
+.slate {
+  container-type: inline-size;
+}
+.tiles {
+  --n: 1;
+  /* As big as the slate allows for this many aksharas, up to the token's largest tile. */
+  --tile: clamp(52px, calc((100cqi - (var(--n) - 1) * var(--s-12)) / var(--n) - var(--s-16)), 120px);
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: var(--s-12);
+  max-width: 100%;
+}
+.tile {
+  --i: 0;
+  display: grid;
+  place-items: center;
+  min-width: var(--tile);
+  height: calc(var(--tile) * 1.15);
+  padding-inline: var(--s-8);
+  border-radius: var(--r-tile);
+  background: var(--slate-2);
+  color: var(--chalk);
+  font-size: calc(var(--tile) * 0.46);
+  font-weight: 600;
+  line-height: 1;
+  /* The slide apart and together is explanatory (450 ms); the lift lands with the voice
+     (200 ms), so it uses the separate `translate` property and its own timing. */
+  transition:
+    transform var(--t-explain) var(--ease-in-out),
+    translate var(--t-ui) var(--ease-out),
+    background-color var(--t-ui) var(--ease-out),
+    color var(--t-ui) var(--ease-out);
+}
+/* Joined: each tile slides toward the middle by its share of the gaps, so the word closes. */
+.tiles[data-joined="true"] .tile {
+  transform: translateX(calc(((var(--n) - 1) / 2 - var(--i)) * var(--s-12)));
+}
+.tile[data-state="lit"] {
+  background: var(--turmeric);
+  color: var(--ink);
+  translate: 0 calc(var(--s-8) * -1);
+}
+.tile[data-state="ok"] {
+  background: var(--leaf);
+  color: var(--rice);
+}
+.tiles[data-state="ok"] {
+  animation: word-pop var(--t-ui) var(--ease-out) both;
+}
+@keyframes word-pop {
+  50% {
+    transform: scale(1.04);
+  }
+}
+.slate__count {
+  margin: 0;
+  font-size: var(--type-label);
+  font-weight: 600;
+  color: var(--chalk-dim);
+}
+.slate__word {
+  margin: 0;
+  font-size: var(--type-voice);
+  font-weight: 600;
+  color: var(--chalk-dim);
+}
+
+/* ---------- Words marked in place ---------- */
+.marked {
+  margin: 0;
+  /* A notch under the reading size on a phone, so a long Tamil word keeps to one line. */
+  font-size: clamp(1.75rem, 1.1rem + 3vw, 2.75rem);
+  font-weight: 500;
+  line-height: 1.75;
+  color: var(--ink);
+  overflow-wrap: break-word;
+}
+.mark {
+  --i: 0;
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  margin: 0;
+  padding: 0 var(--s-8) 0 var(--s-4);
+  border: 0;
+  border-radius: var(--r-inner);
+  background: none;
+  color: inherit;
+  font: inherit;
+  line-height: 1.3;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 0.18em;
+  text-decoration-skip-ink: none;
+  /* backwards, not both: once in, the word lets go of transform so a press can scale it. */
+  animation: mark-in var(--t-ui) var(--ease-out) backwards;
+  animation-delay: calc(var(--i) * var(--stagger));
+  transition: transform var(--t-press) var(--ease-out);
+}
+.mark__sign {
+  position: absolute;
+  top: 0;
+  right: calc(var(--s-4) * -1);
+  display: grid;
+  place-items: center;
+  line-height: 0;
+}
+.mark[data-status="correct"] {
+  text-decoration-color: var(--leaf);
+}
+.mark[data-status="correct"] .mark__sign {
+  color: var(--leaf-deep);
+}
+.mark[data-status="substituted"] {
+  background: var(--turmeric-wash);
+  text-decoration-color: var(--turmeric);
+}
+.mark[data-status="substituted"] .mark__sign {
+  color: var(--turmeric-deep);
+}
+.mark[data-status="skipped"] {
+  text-decoration-color: var(--laterite);
+  text-decoration-style: dashed;
+}
+/* Skipped: an empty kolam dot in laterite, never a cross. */
+.mark[data-status="skipped"] .mark__sign::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  margin-top: var(--s-4);
+  border-radius: 50%;
+  border: 3px solid var(--laterite);
+}
+.mark[data-status="uncertain"] {
+  text-decoration-color: var(--ink);
+  text-decoration-style: dotted;
+}
+.mark:active {
+  transform: scale(0.97);
+}
+@keyframes mark-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+/* ---------- Kolam ---------- */
+.kolam {
+  display: block;
+  overflow: visible;
+}
+.kolam__dot {
+  fill: var(--ink-2);
+}
+.kolam__line {
+  fill: none;
+  stroke-width: 0.17;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: calc(1 - var(--kolam-p, 1));
+  transition: stroke-dashoffset var(--t-reward) var(--ease-in-out);
+}
+.kolam--peacock .kolam__line {
+  stroke: var(--peacock);
+}
+.kolam--leaf .kolam__line {
+  stroke: var(--leaf);
+}
+.kolam--chalk .kolam__dot {
+  fill: var(--chalk-dim);
+}
+.kolam--chalk .kolam__line {
+  stroke: var(--chalk);
+}
+.kolam--rice .kolam__dot {
+  fill: var(--chalk-dim);
+}
+.kolam--rice .kolam__line {
+  stroke: var(--rice);
+}
+.kolam--draw .kolam__line {
+  animation: kolam-draw var(--t-reward) var(--ease-in-out) both;
+}
+.kolam--loop .kolam__line {
+  animation: kolam-loop 2.4s var(--ease-in-out) infinite;
+}
+@keyframes kolam-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+@keyframes kolam-loop {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: -1;
+  }
+}
+
+/* ---------- Logo ---------- */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-8);
+  color: var(--ink);
+}
+.logo svg {
+  flex: none;
+  overflow: visible;
+}
+.logo__dot {
+  fill: var(--ink-2);
+}
+.logo__line {
+  fill: none;
+  stroke: var(--peacock);
+  stroke-width: 2.4;
+  stroke-linejoin: round;
+}
+.logo__akshara {
+  fill: var(--ink);
+  font-size: 19px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+.logo__word {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+/* ---------- Reduced motion: fades stay, movement goes ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .tile,
+  .tiles[data-joined="true"] .tile,
+  .tile[data-state="lit"] {
+    transform: none;
+    translate: none;
+  }
+  .mark:active {
+    transform: none;
+  }
+  .tiles[data-state="ok"] {
+    animation: none;
+  }
+  @keyframes mark-in {
+    from {
+      opacity: 0;
+    }
+  }
+  .kolam--loop .kolam__line {
+    animation-duration: 4.8s;
+  }
+}
+
+/* ---------- The class register (teacher) ----------
+   Ruled rows on rice paper with a red margin line; ink is its one action colour. */
+.register-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-16);
+  width: 100%;
+  max-width: var(--max-register);
+  margin-inline: auto;
+  padding: var(--s-24) var(--gutter-x) var(--s-48);
+  color: var(--ink);
+}
+.app-main:has(> .register-page) {
+  max-width: 100%;
+}
+.register-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-12);
+}
+.register-head__title {
+  margin: 0;
+  font-size: var(--type-display);
+  font-weight: 800;
+  line-height: 1.1;
+}
+.register-head .btn--primary {
+  background: var(--ink);
+  color: var(--rice);
+  border-color: var(--ink);
+}
+.register-filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-12);
+}
+@media (min-width: 600px) {
+  .register-filters {
+    grid-template-columns: repeat(2, minmax(0, 220px));
+  }
+}
+.register-status {
+  margin: 0;
+  max-width: 70ch;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+.register-status strong {
+  color: var(--ink);
+}
+.register-status__goal {
+  display: block;
+  font-size: var(--type-label);
+  color: var(--ink-muted);
+}
+.register-note {
+  margin: 0;
+  font-size: var(--type-label);
+  color: var(--ink-2);
+}
+.link-button {
+  min-height: 44px;
+  padding: 0 var(--s-4);
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+.register {
+  position: relative;
+  border-radius: var(--r-tile);
+  background: var(--rice);
+  box-shadow: var(--shadow-page);
+  overflow: hidden;
+}
+/* The red margin line, 24 px from the register's left edge. */
+.register::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--s-24);
+  width: 2px;
+  background: var(--register-margin);
+  opacity: 0.7;
+  pointer-events: none;
+}
+.register__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+.register__table th,
+.register__table td {
+  height: var(--row-register);
+  padding: 0 var(--s-12);
+  border-bottom: 1px solid var(--register-line);
+  text-align: left;
+  vertical-align: middle;
+}
+.register__table :is(th, td):first-child {
+  padding-left: calc(var(--s-24) + var(--s-12));
+}
+.register__table thead th {
+  font-size: var(--type-label);
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+.register__table .num {
+  text-align: right;
+}
+.register__group th {
+  height: 40px;
+  padding-top: var(--s-12);
+  font-size: var(--type-label);
+  font-weight: 700;
+  text-transform: none;
+  color: var(--peacock);
+  background: var(--peacock-wash);
+}
+.register__child {
+  display: flex;
+  align-items: center;
+  gap: var(--s-12);
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform var(--t-press) var(--ease-out);
+}
+.register__child:active {
+  transform: scale(0.97);
+}
+.register__child > span:not(.child-mark) {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.register__name {
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.register__meta {
+  font-size: var(--type-label);
+  color: var(--ink-muted);
+}
+.register__steps {
+  display: inline-flex;
+  gap: var(--s-4);
+}
+.register__steps i {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--register-line);
+  color: var(--rice);
+}
+.register__steps i[data-on="true"] {
+  border-color: var(--leaf);
+  background: var(--leaf);
+}
+.register__steps svg {
+  stroke-width: 3;
+}
+.register__status {
+  font-size: var(--type-label);
+  font-weight: 600;
+}
+.register__row[data-status="practise"] .register__status {
+  color: var(--turmeric-deep);
+}
+.register__row[data-status="in-target"] .register__status {
+  color: var(--leaf-deep);
+}
+.register__row[data-status="new"] .register__status {
+  color: var(--ink-muted);
+}
+/* A phone: the register keeps the child, the steps, the latest reading and the status. */
+@media (max-width: 599px) {
+  .register__wide {
+    display: none;
+  }
+  .register__table th,
+  .register__table td {
+    padding: 0 var(--s-8);
+  }
+  .register__table :is(th, td):first-child {
+    padding-left: calc(var(--s-24) + var(--s-8));
+  }
+  .register__steps-col {
+    display: none;
+  }
+}
+.register-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-12);
+}
+.art-credit cite {
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* The slate is a board on the wall, not the whole wall: on a tall tablet it stops growing
+   and sits in the middle, so the tiles stay the focus. */
+.frame[data-surface="slate"] .frame__focal {
+  justify-content: center;
+}
+.frame[data-surface="slate"] .slate {
+  flex: 1 1 auto;
+  max-height: 560px;
+}
+
+/* A long word (more than five aksharas) wraps onto rows of five; its tiles do not slide
+   together, since a slide across rows would cross the slate. */
+.tiles[data-long="true"] {
+  --tile: clamp(52px, calc((100cqi - 4 * var(--s-12)) / 5 - var(--s-16)), 120px);
+  flex-wrap: wrap;
+  row-gap: var(--s-12);
+}
+.tiles[data-long="true"][data-joined="true"] .tile {
+  transform: none;
+}
+
+/* Worst cases (break-ui, 320 px): the mark never squashes, names wrap only between words
+   where they can, and the one call to action keeps to one line. */
+.register__child .child-mark {
+  flex-shrink: 0;
+}
+.register__name {
+  overflow-wrap: anywhere;
+}
+.register__child > span:not(.child-mark) {
+  min-width: 5rem;
+}
+.register {
+  overflow-x: auto;
+}
+.register-head {
+  flex-wrap: wrap;
+}
+.register-head .btn {
+  white-space: nowrap;
+}
+
+/* Hover, for a mouse or trackpad only (a classroom tablet has none): a little deeper. */
+@media (hover: hover) and (pointer: fine) {
+  .action:hover:not(:disabled) {
+    filter: brightness(0.94);
+  }
+  .voice:hover,
+  .lang-pick__letter:hover {
+    box-shadow:
+      0 0 0 2px var(--peacock),
+      var(--shadow-page);
+  }
+  .reader-tile:hover .child-mark {
+    box-shadow:
+      inset 0 0 0 4px var(--turmeric),
+      var(--shadow-page);
+  }
+  .register__child:hover .register__name {
+    text-decoration: underline;
+  }
+}

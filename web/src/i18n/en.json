@@ -160,5 +160,22 @@
   "ladder.story": "Story",
   "ladder.here": "You are here",
   "home.today": "Today’s story",
-  "results.star": "You earned a star!"
+  "results.star": "You earned a star!",
+  "voice.tapYou": "Tap your picture.",
+  "voice.listening": "I am listening. Read aloud!",
+  "voice.thinking": "Let me check your reading…",
+  "voice.readyStory": "Your story is ready. Tap read!",
+  "feedback.tapWord": "Tap a word to hear it.",
+  "results.wordsRight": "You read {right} of {total} words!",
+  "home.myStories": "My stories",
+  "pic.bird": "Bird",
+  "pic.butterfly": "Butterfly",
+  "pic.cat": "Cat",
+  "pic.cow": "Cow",
+  "pic.dog": "Dog",
+  "pic.fish": "Fish",
+  "pic.flower": "Flower",
+  "pic.sun": "Sun",
+  "pic.tree": "Tree",
+  "pic.boat": "Boat"
 }

@@ -94,7 +94,7 @@ describe("keyboard and screen readers", () => {
 
   it("marks native-script text with its language", () => {
     const { container } = at("/read/kn-101");
-    const passage = container.querySelector(".reading-text");
+    const passage = container.querySelector(".reading");
     expect(passage?.getAttribute("lang")).toBeTruthy();
   });
 });

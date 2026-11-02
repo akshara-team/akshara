@@ -22,13 +22,14 @@ describe("shell", () => {
     }
   });
 
-  it("gives the child flow its layouts: script tiles and role cards, then the reading workspace", () => {
+  it("gives the child flow its frame: three script letters and the class, then the book page", async () => {
     const { container: role } = at("/");
-    expect(role.querySelectorAll(".script-tile").length).toBe(3);
-    expect(role.querySelectorAll(".role-grid .rolecard").length).toBe(2);
+    expect(role.querySelectorAll(".lang-pick__letter").length).toBe(3);
+    expect(await screen.findByRole("list", { name: t("kn-IN", "reader.title") })).toBeTruthy();
+    expect(role.querySelector(".frame .voice")).toBeTruthy();
 
     const { container: reading } = at("/read/kn-101");
-    expect(reading.querySelector(".workspace--w360")).toBeTruthy();
+    expect(reading.querySelector(".frame .book-page .reading")).toBeTruthy();
   });
 
   it("colours each screen by its activity", () => {

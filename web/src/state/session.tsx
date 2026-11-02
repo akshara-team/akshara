@@ -9,6 +9,7 @@ import {
 import type { Attempt, Part, Passage, Reader } from "../api/types";
 import type { Lang } from "../theme/script";
 import { newId } from "./ids";
+import { load } from "./storage";
 
 /** A recording waiting to be checked by the API. */
 export type Pending = {
@@ -42,7 +43,8 @@ type SessionValue = {
 const SessionContext = createContext<SessionValue | null>(null);
 
 export function SessionProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>("kn-IN");
+  // Starts in the language this device last read in, so the class list matches it.
+  const [lang, setLang] = useState<Lang>(() => load().lang);
   const [reader, setReader] = useState<Reader | null>(null);
   const [passage, setPassage] = useState<Passage | null>(null);
   const [parts, setParts] = useState<Part[]>([]);

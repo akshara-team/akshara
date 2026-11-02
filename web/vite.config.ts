@@ -23,8 +23,8 @@ export default defineConfig({
         name: "Akshara — reading practice",
         short_name: "Akshara",
         description: "Reading practice for early-grade children in Kannada, Tamil and Hindi.",
-        theme_color: "#FDE047",
-        background_color: "#FFFFFF",
+        theme_color: "#eef3f6",
+        background_color: "#eef3f6",
         display: "standalone",
         orientation: "any",
         // Relative, so the installed app opens under whatever base it was built for.

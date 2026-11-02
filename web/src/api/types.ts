@@ -64,6 +64,8 @@ export type Reader = {
   initials: string;
   level: string;
   lang: Lang;
+  /** The child's picture (a bird, a boat…), when the teacher chose one. */
+  picture?: string | null;
 };
 
 /** Mirrors `ReadingBrief` in the backend schemas. */

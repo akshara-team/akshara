@@ -160,5 +160,22 @@
   "ladder.story": "கதை",
   "ladder.here": "நீ இங்கே இருக்கிறாய்",
   "home.today": "இன்றைய கதை",
-  "results.star": "உனக்கு ஒரு நட்சத்திரம் கிடைத்தது!"
+  "results.star": "உனக்கு ஒரு நட்சத்திரம் கிடைத்தது!",
+  "voice.tapYou": "உன் படத்தைத் தொடு.",
+  "voice.listening": "நான் கேட்கிறேன். சத்தமாகப் படி!",
+  "voice.thinking": "உன் வாசிப்பைப் பார்க்கிறேன்…",
+  "voice.readyStory": "உன் கதை தயார். படி என்பதைத் தொடு!",
+  "feedback.tapWord": "சொல்லைத் தொட்டு கேள்.",
+  "results.wordsRight": "{total} சொற்களில் {right} சரியாகப் படித்தாய்!",
+  "home.myStories": "என் கதைகள்",
+  "pic.bird": "பறவை",
+  "pic.butterfly": "பட்டாம்பூச்சி",
+  "pic.cat": "பூனை",
+  "pic.cow": "பசு",
+  "pic.dog": "நாய்",
+  "pic.fish": "மீன்",
+  "pic.flower": "பூ",
+  "pic.sun": "சூரியன்",
+  "pic.tree": "மரம்",
+  "pic.boat": "படகு"
 }

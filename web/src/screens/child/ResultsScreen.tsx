@@ -1,55 +1,37 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Button,
-  CheckIcon,
-  ListenButton,
-  RepeatIcon,
-  SparklesIcon,
-  StarIcon,
-  StatCard,
-  PageHeader,
-  TrendingUpIcon,
-  SayButton,
-} from "../../components";
+import { Action, ChildFrame, FlagIcon, Kolam, SparklesIcon, StarIcon, pictureOf } from "../../components";
 import { useSession } from "../../state/session";
-import { addReading, buildReading } from "../../state/storage";
+import { addReading, buildReading, load as loadChild } from "../../state/storage";
 import { scriptClass } from "../../theme/script";
-import { fslGoal } from "../../lib/nipun";
 import { useCopy } from "../../i18n";
-import { load } from "../../state/storage";
 import { PRACTICE_WORDS } from "./PracticeScreen";
 import { storyTitle } from "./title";
 
+const PUNCTUATION = /[.,!?;:"'“”‘’।॥()]/g;
+
+/**
+ * The end of a story: its kolam completes, line by line, and joins the child's row at home.
+ * A count of words read right and a star; speeds and percentages are the teacher's.
+ */
 export function ResultsScreen() {
-  const { lang, passage, parts, sessionId, reset } = useSession();
+  const { lang, reader, passage, parts, sessionId, reset } = useSession();
   const navigate = useNavigate();
-  const { t, Tx } = useCopy(lang);
+  const { Tx } = useCopy(lang);
   const saved = useRef(false);
-  // Earlier readings on this device, before this one is saved: the child's own journey.
-  const [earlier] = useState(() =>
-    load()
-      .readings.filter((r) => r.id !== sessionId && r.wcpm != null)
-      .slice(0, 2)
-      .reverse(),
-  );
+  const me = reader ?? loadChild().reader;
 
-  const read = parts.filter((p) => p.attempt);
-  const words = read.flatMap((p) => p.attempt?.words ?? []);
-  const totalWords = words.length;
-  const correct = words.filter((w) => w.op === "correct").length;
-  const seconds = read.reduce((sum, p) => sum + (p.seconds ?? 0), 0);
-  const accuracy = totalWords ? correct / totalWords : 0;
-  const wcpm = seconds > 0 ? Math.round((correct / seconds) * 60) : null;
-  const missed = words.filter((w) => w.op === "substituted" || w.op === "skipped");
-  const goal = fslGoal(lang);
+  const words = parts.filter((p) => p.attempt).flatMap((p) => p.attempt?.words ?? []);
+  const counted = words.filter((w) => w.op !== "inserted");
+  const right = counted.filter((w) => w.op === "correct").length;
+  const missed = counted.filter((w) => w.op === "substituted" || w.op === "skipped");
   // The first few different words the child missed, in reading order.
-  const practise = [...new Set(missed.map((w) => w.word).filter((w): w is string => !!w))].slice(
-    0,
-    PRACTICE_WORDS,
-  );
+  // Punctuation is not an akshara: "பார்க்கலாம்." is practised as பார்க்கலாம்.
+  const practise = [
+    ...new Set(missed.map((w) => (w.word ?? "").replace(PUNCTUATION, "")).filter(Boolean)),
+  ].slice(0, PRACTICE_WORDS);
 
-  // Record the reading once, so the child's home can show it later.
+  // Record the reading once, so the child's home can show its kolam.
   useEffect(() => {
     if (saved.current || !sessionId || !passage) return;
     const reading = buildReading({
@@ -70,98 +52,49 @@ export function ResultsScreen() {
   }
 
   return (
-    <>
-      <PageHeader back backTo="/home" />
-      <div className="screen-body">
-        <div className="workspace workspace--w360">
-          {/* Left: celebration and the two headline numbers. */}
-          <div className="stack">
-            <div className="star-award" role="status">
-              <span className="star-award__star" aria-hidden="true">
-                <StarIcon width={56} height={56} />
-              </span>
-              <span className="star-award__text">
-                <Tx k="results.star" />
-              </span>
-            </div>
-
-            <div className="stack--tight stack">
-              <div className="say-row">
-                <h1 className="card__title">
-                  <Tx k="results.title" /> <SparklesIcon className="inline-icon" />
-                </h1>
-                <SayButton k="results.title" lang={lang} />
-              </div>
-              <p className={`results-story ${scriptClass(lang)}`} lang={lang}>
-                {storyTitle(passage)}
-              </p>
-              <p className="reader-meta">
-                <Tx k={accuracy >= 0.8 ? "feedback.wellRead" : "feedback.keepGoing"} />{" "}
-                <CheckIcon className="inline-icon" />
-              </p>
-            </div>
-
-            <div className="stats-grid">
-              <StatCard label={t("results.speed")} value={wcpm == null ? "—" : String(wcpm)} />
-              <StatCard label={t("results.accuracy")} value={`${Math.round(accuracy * 100)}%`} />
-            </div>
-          </div>
-
-          {/* Right: progress, practice and the way out. */}
-          <div className="stack">
-            <div className="progress-note">
-              <h2 className="section-title">
-                <Tx k="results.progress" /> <TrendingUpIcon className="inline-icon" />
-              </h2>
-              {earlier.length ? (
-                <span className="progress-note__journey">
-                  {[...earlier.map((r) => Math.round(r.wcpm ?? 0)), wcpm ?? "—"].join(" → ")}
-                </span>
-              ) : (
-                <span className="note">
-                  <Tx k="results.firstTime" />
-                </span>
-              )}
-              {goal && (
-                <div className="nipun">
-                  <span className="nipun__pill">
-                    <Tx k="results.target" vars={{ min: goal.low, max: goal.high }} />
-                  </span>
-                </div>
-              )}
-            </div>
-
-            {missed.length > 0 && (
-              <div className="practice">
-                <h2 className="section-title">
-                  <Tx k="results.practise" /> <RepeatIcon className="inline-icon" />
-                </h2>
-                {missed.map((w, i) => (
-                  <div className="practice__row" key={`${w.word}-${i}`}>
-                    <span className={`reading-text ${scriptClass(lang)}`} lang={lang}>{w.word}</span>
-                    <ListenButton uiLang={lang} text={w.word ?? ""} lang={lang} label={t("common.listen")} />
-                  </div>
-                ))}
-              </div>
-            )}
-
-            <p className="note">
-              <Tx k="results.adults" />
-            </p>
-
-            <div className="actions">
-              {practise.length > 0 && (
-                <Button block icon="practice" onClick={() => navigate("/practice", { state: { words: practise } })}>
-                  <Tx k="practice.start" />
-                </Button>
-              )}
-              <Button variant={practise.length ? "ghost" : "primary"} block icon="finish" onClick={finish}>
-                <Tx k="results.finish" />
-              </Button>
-            </div>
-          </div>
+    <ChildFrame
+      lang={lang}
+      lineKey="results.title"
+      title="Results"
+      mark={me ? pictureOf(me.id, me.picture) : null}
+      action={
+        practise.length > 0 ? (
+          <>
+            <Action
+              icon={<SparklesIcon />}
+              onClick={() => navigate("/practice", { state: { words: practise } })}
+            >
+              <Tx k="practice.start" />
+            </Action>
+            <button type="button" className="action-aside" onClick={finish}>
+              <Tx k="results.finish" />
+            </button>
+          </>
+        ) : (
+          <Action icon={<FlagIcon />} onClick={finish}>
+            <Tx k="results.finish" />
+          </Action>
+        )
+      }
+    >
+      <div className="finish" role="status">
+        <div className="finish__kolam">
+          <Kolam seed={passage?.id ?? "akshara"} tone="leaf" mode="draw" />
+          <span className="finish__star keep-motion" role="img" aria-label={`${storyTitle(passage)}: ★`}>
+            <StarIcon width={56} height={56} aria-hidden="true" />
+          </span>
         </div>
+        <h1 className={`display ${scriptClass(lang)}`} lang={lang}>
+          {counted.length > 0 ? (
+            <Tx k="results.wordsRight" vars={{ right, total: counted.length }} />
+          ) : (
+            <Tx k="results.title" />
+          )}
+        </h1>
+        <p className={`finish__story ${scriptClass(lang)}`} lang={lang}>
+          {storyTitle(passage)}
+        </p>
       </div>
-    </>
+    </ChildFrame>
   );
 }

@@ -10,25 +10,23 @@ import {
   type Recorder,
 } from "../../api/mock";
 import {
-  Button,
-  LanguageBadge,
-  LevelMeter,
-  ListenButton,
-  MicButton,
-  NoiseCheck,
-  ProgressBar,
-  ProgressDots,
-  PageHeader,
-  SayButton,
+  Action,
+  BookPage,
+  ChildFrame,
+  Kolam,
+  MicIcon,
+  StopIcon,
+  pictureOf,
 } from "../../components";
+import { coverFor } from "../../data/covers";
 import { meterValue } from "../../audio/noise";
 import { newId } from "../../state/ids";
+import { load as loadChild } from "../../state/storage";
 import { useSession } from "../../state/session";
 import { LANGS, scriptClass, type Lang } from "../../theme/script";
 
 const isLang = (l: string): l is Lang => (LANGS as readonly string[]).includes(l);
 import { useCopy, type CopyKey } from "../../i18n";
-import { storyTitle } from "./title";
 
 /** requesting: waiting for mic permission; processing: turning the clip into a WAV. */
 type Phase = "idle" | "requesting" | "recording" | "processing";
@@ -39,7 +37,7 @@ const PROBLEM_TEXT: Record<RecordingError["problem"], CopyKey> = {
 };
 
 export function ReadingScreen() {
-  const { lang, passage, parts, currentPart, setPending, beginPassage, setLang } = useSession();
+  const { lang, reader, passage, parts, currentPart, setPending, beginPassage, setLang } = useSession();
   const navigate = useNavigate();
   const { passageId } = useParams();
 
@@ -79,7 +77,7 @@ export function ReadingScreen() {
       const db = recorder.current?.level();
       if (db != null) setLevel(meterValue(db));
       if (s >= MAX_RECORDING_S) finishRef.current();
-    }, 250);
+    }, 100);
     return () => clearInterval(timer);
   }, [phase]);
 
@@ -131,116 +129,62 @@ export function ReadingScreen() {
   }
 
   const idle = phase === "idle" || phase === "requesting";
-  const labelKey: CopyKey = idle
-    ? "read.tapToStart"
-    : phase === "recording"
-      ? "read.recording"
-      : "read.checking";
-  const title = storyTitle(passage);
-  const micState = phase === "recording" ? "recording" : phase === "idle" ? "idle" : "processing";
+  const art = passage ? coverFor(passage) : null;
+  const me = reader ?? loadChild().reader;
 
   return (
-    <>
-      <PageHeader back backTo="/home" />
-      <div className="screen-body">
-        <div className="workspace workspace--w360">
-          {/* Left: story and part context, plus Listen. */}
-          <div className="stack">
-            <div className="metarow">
-              <LanguageBadge lang={lang} />
-              <div className="metarow__text">
-                <span className="eyebrow">
-                  <Tx k="read.eyebrow" />
-                </span>
-                <span className={`metarow__title ${scriptClass(lang)}`} lang={lang}>
-                  {title}
-                </span>
-              </div>
-            </div>
-
-            <div className="context">
-              <div className="context__row">
-                <Tx k="common.part" vars={{ n: currentPart, total }} />
-                <ProgressDots total={total} current={currentPart} />
-              </div>
-              <ProgressBar
-                value={(currentPart / total) * 100}
-                label={t("common.part", { n: currentPart, total })}
-              />
-            </div>
-
-            {text && (
-              <ListenButton uiLang={lang} text={text} lang={lang} label={t("common.listen")} block />
-            )}
-          </div>
-
-          {/* Right: the passage and the mic. */}
-          <div className="stack">
-            <div className="passage-card">
-              <div className="passage-card__accent" aria-hidden="true" />
-              <p className={`reading-text ${scriptClass(lang)}`} lang={lang}>
-                {text || <Tx k="recovery.noStory" />}
-              </p>
-            </div>
-            {passage?.credit?.publisher && (
-              <p className="note">
-                {passage.credit.url ? (
-                  <a href={passage.credit.url} target="_blank" rel="noreferrer">
-                    <Tx k="read.storyFrom" vars={{ publisher: passage.credit.publisher }} />
-                  </a>
-                ) : (
-                  <Tx k="read.storyFrom" vars={{ publisher: passage.credit.publisher }} />
-                )}
-                {passage.credit.licence ? ` · ${passage.credit.licence.split(" (")[0]}` : ""}
-              </p>
-            )}
-
-            <div className="controls">
-              <MicButton
-                state={micState}
-                onClick={onMic}
-                label={t(labelKey)}
-              />
-              <p className="controls__label">
-                <Tx k={labelKey} />
-              </p>
-              {phase === "recording" && (
-                <>
-                  {/* role="timer" is not announced every tick, unlike aria-live. */}
-                  <p className="controls__timer" role="timer" aria-label={`Recording, ${elapsed} s`}>
-                    {elapsed}s
-                  </p>
-                  <LevelMeter value={level} label={t("read.level")} />
-                </>
-              )}
-              <div className="say-row">
-                <p className="controls__desc">
-                  <Tx k={idle ? "read.readAloud" : "read.readPace"} />
-                </p>
-                {idle && <SayButton k="read.readAloud" lang={lang} />}
-              </div>
-
-              {error && (
-                <p className="field__error" role="alert">
-                  <Tx k={error} />
-                </p>
-              )}
-
-              {phase === "idle" && <NoiseCheck lang={lang} />}
-
-              {isMock && phase === "idle" && (
-                <Button
-                  variant="ghost"
-                  icon="play"
-                  onClick={() => handOver(MOCK_DURATIONS[currentPart - 1] ?? 12, null)}
-                >
-                  <Tx k="read.demoReading" />
-                </Button>
-              )}
-            </div>
-          </div>
+    <ChildFrame
+      lang={lang}
+      lineKey={phase === "recording" ? "voice.listening" : idle ? "read.readAloud" : "read.checking"}
+      level={phase === "recording" ? level : undefined}
+      mark={me ? pictureOf(me.id, me.picture) : null}
+      title="Reading"
+      heading
+      action={
+        <>
+          <Action
+            icon={phase === "recording" ? <StopIcon /> : <MicIcon />}
+            aria-pressed={phase === "recording"}
+            disabled={phase === "requesting" || phase === "processing"}
+            onClick={onMic}
+          >
+            <Tx k={idle ? "read.tapToStart" : phase === "recording" ? "read.recording" : "read.checking"} />
+          </Action>
+          {isMock && phase === "idle" && (
+            <button
+              type="button"
+              className="action-aside"
+              onClick={() => handOver(MOCK_DURATIONS[currentPart - 1] ?? 12, null)}
+            >
+              <Tx k="read.demoReading" />
+            </button>
+          )}
+        </>
+      }
+    >
+      <BookPage art={art} artFrom={passage?.title} lang={lang} fallback={passage ? <Kolam seed={passage.id} progress={(currentPart - 1) / total} /> : null}>
+        <p className={`reading ${scriptClass(lang)}`} lang={lang}>
+          {text || <Tx k="recovery.noStory" />}
+        </p>
+        <div className="page-foot">
+          <span className="part-dots" role="img" aria-label={t("common.part", { n: currentPart, total })}>
+            {parts.map((_, i) => (
+              <i key={i} data-done={i < currentPart - 1} data-here={i === currentPart - 1} />
+            ))}
+          </span>
+          {phase === "recording" && (
+            /* role="timer" is not announced every tick, unlike aria-live. */
+            <span className="page-foot__timer num" role="timer" aria-label={`Recording, ${elapsed} s`}>
+              {elapsed}s
+            </span>
+          )}
         </div>
-      </div>
-    </>
+        {error && (
+          <p className="field__error" role="alert">
+            <Tx k={error} />
+          </p>
+        )}
+      </BookPage>
+    </ChildFrame>
   );
 }

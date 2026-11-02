@@ -1,15 +1,30 @@
 export { Avatar } from "./Avatar";
 export { BenchmarkBand } from "./BenchmarkBand";
 export { Button, type ButtonIcon } from "./Button";
+export {
+  Action,
+  AksharaTile,
+  ArtCredit,
+  BookPage,
+  ChildFrame,
+  ChildMark,
+  MarkedText,
+  Slate,
+  VoiceControl,
+  type TileState,
+} from "./Book";
 export { Card } from "./Card";
+export { ChildPicture, PICTURES, pictureOf } from "./ChildPicture";
 export { Checkbox } from "./Checkbox";
 export { EmptyState } from "./EmptyState";
 export { ErrorBoundary } from "./ErrorBoundary";
 export { Input } from "./Input";
+export { Kolam, seedOf } from "./Kolam";
 export { Ladder, type Rung } from "./Ladder";
 export { LanguageBadge } from "./LanguageBadge";
 export { LevelMeter } from "./LevelMeter";
 export { ListenButton } from "./ListenButton";
+export { FIRST_AKSHARA, Logo } from "./Logo";
 export { MicButton, type MicState } from "./MicButton";
 export { NoiseCheck } from "./NoiseCheck";
 export { ProgressBar } from "./ProgressBar";

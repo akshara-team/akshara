@@ -56,7 +56,8 @@ describe("spoken instructions (WP6)", () => {
       </MemoryRouter>,
     );
     await act(async () => {
-      fireEvent.click(await screen.findByRole("button", { name: t("ta-IN", "say.label") }));
+      const speaker = new RegExp(`^${t("ta-IN", "say.label")}`);
+      fireEvent.click(await screen.findByRole("button", { name: speaker }));
     });
     expect(spoken).toEqual([{ text: t("ta-IN", "home.firstStoryHelp"), lang: "ta-IN" }]);
   });

@@ -1,14 +1,21 @@
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { api, isMock } from "../../api";
-import { toRoster } from "../../api/classSummary";
-import { TEACHER_NAV } from "./nav";
-import { LEVEL_TEXT } from "./PlacementScreen";
-import type { Child } from "../../api/types";
-import { Avatar, Button, Card, EmptyState, Select, StatusBadge, PageHeader } from "../../components";
-import { useIsDesktop } from "../../state/useMediaQuery";
+import { toRoster, type RosterEntry } from "../../api/classSummary";
+import type { Child, Level } from "../../api/types";
+import {
+  Button,
+  CheckIcon,
+  ChildMark,
+  EmptyState,
+  PageHeader,
+  Select,
+  pictureOf,
+} from "../../components";
 import { fslGoal } from "../../lib/nipun";
-import { scriptName, type Lang } from "../../theme/script";
+import { load as loadChild } from "../../state/storage";
+import { scriptEnglish, scriptName, type Lang } from "../../theme/script";
+import { TEACHER_NAV } from "./nav";
 
 const STATUS_TEXT = {
   "in-target": "On target",
@@ -16,14 +23,33 @@ const STATUS_TEXT = {
   new: "No reading yet",
 } as const;
 
-const STATUS_TONE = { "in-target": "success", practise: "warning", new: "neutral" } as const;
+/** ASER's reading steps, top to bottom: the register's groups (Teaching at the Right Level). */
+const STEPS: { key: Level | "none"; name: string }[] = [
+  { key: "story", name: "Story" },
+  { key: "paragraph", name: "Paragraph" },
+  { key: "word", name: "Word" },
+  { key: "letter", name: "Letter" },
+  { key: "beginner", name: "Beginning" },
+  { key: "none", name: "Not placed yet" },
+];
 
+/** The four steps a child climbs, as ticks in the register. */
+const CLIMB: Level[] = ["letter", "word", "paragraph", "story"];
+
+function stepOf(c: RosterEntry): Level | "none" {
+  return c.readingLevel ?? "none";
+}
+
+/**
+ * The class register: ruled rows on rice paper with a red margin, grouped by the reading step
+ * each child is on, so the teacher can teach each group at its level. One status sentence,
+ * one call to action. Calm and factual: the data never moves.
+ */
 export function TeacherDashboard() {
   const navigate = useNavigate();
   const deleted = (useLocation().state as { deleted?: string } | null)?.deleted;
-  const isDesktop = useIsDesktop();
   const [grade, setGrade] = useState("all");
-  const [language, setLanguage] = useState<Lang>("kn-IN");
+  const [language, setLanguage] = useState<Lang>(() => loadChild().lang);
   const [children, setChildren] = useState<Child[] | null>(null);
   const [failed, setFailed] = useState(false);
 
@@ -67,59 +93,37 @@ export function TeacherDashboard() {
 
   const data = useMemo(
     () =>
-      toRoster(
-        (children ?? []).filter((c) => grade === "all" || String(c.grade) === grade),
-      ),
+      toRoster((children ?? []).filter((c) => grade === "all" || String(c.grade) === grade)),
     [children, grade],
   );
+  const groups = STEPS.map((s) => ({
+    ...s,
+    rows: data.roster.filter((c) => stepOf(c) === s.key),
+  })).filter((g) => g.rows.length > 0);
 
-  const metrics = [
-    { value: data.metrics.avgWcpm == null ? "—" : String(data.metrics.avgWcpm), label: "Avg WCPM" },
-    {
-      value: data.metrics.accuracy == null ? "—" : `${Math.round(data.metrics.accuracy * 100)}%`,
-      label: "Accuracy",
-    },
-    { value: `${data.metrics.needHelp} / ${data.metrics.total}`, label: "Need help" },
-  ];
-  const source = isMock ? "demo data" : "live";
-  const gradeLabel = grade === "all" ? "All classes" : `Class ${grade}`;
+  const m = data.metrics;
   const goal = fslGoal(language);
-
+  const gradeLabel = grade === "all" ? "All classes" : `Class ${grade}`;
   const openChild = (id: number) => navigate(`/teacher/child/${id}`);
 
   return (
     <>
-      <PageHeader
-        back
-        backTo="/"
-        badge={gradeLabel}
-        nav={TEACHER_NAV}
-      />
-      <div className="screen-body">
-        <h1 className="card__title">Your reading class</h1>
-
-        {deleted && (
-          <p className="banner" role="status">
-            {deleted} and all their readings, recordings and marks are deleted.
-          </p>
-        )}
-
-        <Card>
-          <p className="reader-name">
-            {gradeLabel} · {scriptName(language)}
-          </p>
-          <p className="reader-meta">
-            {data.metrics.total} {data.metrics.total === 1 ? "child" : "children"} · latest
-            readings · {source}
-          </p>
-          {goal && (
-            <p className="note">
-              Goal (FLS 2022, Grade 3): {goal.low}–{goal.high} words a minute
-            </p>
+      <PageHeader back backTo="/" badge={gradeLabel} nav={TEACHER_NAV} />
+      <div className="register-page">
+        <div className="register-head">
+          <h1 className="register-head__title">Your reading class</h1>
+          {toHear != null && toHear > 0 && (
+            <Button
+              icon="audio"
+              className="register-head__cta"
+              onClick={() => navigate("/teacher/review")}
+            >
+              Listen and check
+            </Button>
           )}
-        </Card>
+        </div>
 
-        <div className="filters">
+        <div className="register-filters">
           <Select
             label="Class"
             value={grade}
@@ -141,49 +145,45 @@ export function TeacherDashboard() {
           />
         </div>
 
-        <div className="metrics">
-          {metrics.map((m) => (
-            <div className="metric" key={m.label}>
-              <span className="metric__value">{m.value}</span>
-              <span className="metric__label">{m.label}</span>
-            </div>
-          ))}
-        </div>
+        {deleted && (
+          <p className="banner" role="status">
+            {deleted} and all their readings, recordings and marks are deleted.
+          </p>
+        )}
+
+        {/* One status sentence: the class in figures, and what is waiting for the teacher. */}
+        <p className="register-status">
+          <span className="num">{m.total}</span> {m.total === 1 ? "child" : "children"} reading{" "}
+          {scriptEnglish(language)}
+          {m.avgWcpm != null && (
+            <>
+              {" "}· average <span className="num">{m.avgWcpm}</span> words a minute,{" "}
+              <span className="num">{Math.round((m.accuracy ?? 0) * 100)}%</span> right
+            </>
+          )}
+          {" "}· <span className="num">{m.needHelp} of {m.total}</span> to practise with
+          {toHear != null && toHear > 0 && (
+            <>
+              {" "}· <strong>{toHear} {toHear === 1 ? "mark" : "marks"} to check by ear</strong>
+            </>
+          )}
+          {goal && (
+            <span className="register-status__goal">
+              Goal (FLS 2022, Grade 3): {goal.low}-{goal.high} words a minute.{" "}
+              {isMock ? "Demo data." : null}
+            </span>
+          )}
+        </p>
 
         {toApprove > 0 && (
-          <Card>
-            <p className="reader-name">
-              {toApprove} {toApprove === 1 ? "practice sentence" : "practice sentences"} from Evon
-              to approve
-            </p>
-            <p className="note">A child sees a sentence only after you approve it.</p>
-            <div className="actions">
-              <Button variant="outline" onClick={() => navigate("/teacher/sentences")}>
-                Read and approve
-              </Button>
-            </div>
-          </Card>
+          <p className="register-note">
+            {toApprove} {toApprove === 1 ? "practice sentence" : "practice sentences"} from Evon
+            to approve; a child sees a sentence only after you approve it.{" "}
+            <button type="button" className="link-button" onClick={() => navigate("/teacher/sentences")}>
+              Read and approve
+            </button>
+          </p>
         )}
-
-        {toHear != null && toHear > 0 && (
-          <Card>
-            <p className="reader-name">
-              {toHear} {toHear === 1 ? "mark" : "marks"} to check by ear
-            </p>
-            <p className="note">
-              Words the speech service may have misheard. Listening takes a few seconds each.
-            </p>
-            <div className="actions">
-              <Button icon="audio" onClick={() => navigate("/teacher/review")}>
-                Listen and check
-              </Button>
-            </div>
-          </Card>
-        )}
-
-        <p className="step__label">
-          {data.metrics.total} {data.metrics.total === 1 ? "child" : "children"} · latest readings
-        </p>
 
         {failed ? (
           <EmptyState title="Could not load the class">
@@ -198,89 +198,92 @@ export function TeacherDashboard() {
             <p className="note">Add a child who reads in {scriptName(language)} to start.</p>
             <Button onClick={() => navigate("/teacher/add")}>Add a child</Button>
           </EmptyState>
-        ) : isDesktop ? (
-          /* Desktop frame: a five-column roster table. */
-          <table className="roster-table">
-            <thead>
-              <tr>
-                <th scope="col">Child</th>
-                <th scope="col">Level</th>
-                <th scope="col">Latest WCPM</th>
-                <th scope="col">Accuracy</th>
-                <th scope="col">Previous</th>
-                <th scope="col">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.roster.map((c) => (
-                <tr key={c.id} onClick={() => openChild(c.id)}>
-                  <td>
-                    <span className="roster-table__child">
-                      <Avatar initials={c.initials} />
-                      <span>
-                        <span className="roster-table__name">{c.name}</span>
-                        <br />
-                        <span className="reader-meta">{c.level}</span>
-                      </span>
-                    </span>
-                  </td>
-                  <td>
-                    {c.readingLevel ? LEVEL_TEXT[c.readingLevel].name : "—"}
-                    {c.levelUncertain ? " ?" : ""}
-                  </td>
-                  <td>{c.wcpm ?? "—"}</td>
-                  <td>{c.accuracy == null ? "—" : `${Math.round(c.accuracy * 100)}%`}</td>
-                  <td className="reader-meta">{c.previousWcpm ?? "—"}</td>
-                  <td>
-                    <StatusBadge tone={STATUS_TONE[c.status]}>{STATUS_TEXT[c.status]}</StatusBadge>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
         ) : (
-          /* Mobile frame: the same rows as cards. */
-          <div className="stack--tight stack">
-            {data.roster.map((c) => (
-              <button
-                key={c.id}
-                type="button"
-                className="reader-row"
-                onClick={() => openChild(c.id)}
-              >
-                <Avatar initials={c.initials} />
-                <span className="reader-info">
-                  <span className="reader-name">{c.name}</span>
-                  <span className="reader-meta">
-                    {c.readingLevel ? `${LEVEL_TEXT[c.readingLevel].name} level · ` : ""}
-                    {c.status === "new"
-                      ? `${c.level} · no reading yet`
-                      : `${c.wcpm ?? "—"} WCPM · ${Math.round((c.accuracy ?? 0) * 100)}% accuracy`}
-                  </span>
-                </span>
-                <StatusBadge tone={STATUS_TONE[c.status]}>{STATUS_TEXT[c.status]}</StatusBadge>
-              </button>
-            ))}
+          <div className="register">
+            <table className="register__table">
+              <thead>
+                <tr>
+                  <th scope="col">Child</th>
+                  <th scope="col" className="register__steps-col">
+                    Steps
+                  </th>
+                  <th scope="col" className="num">
+                    Latest WCPM
+                  </th>
+                  <th scope="col" className="num register__wide">
+                    Accuracy
+                  </th>
+                  <th scope="col" className="num register__wide">
+                    Previous
+                  </th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {groups.map((g) => (
+                  <Fragment key={g.key}>
+                    <tr className="register__group">
+                      <th scope="rowgroup" colSpan={6}>
+                        {g.name} <span className="num">· {g.rows.length}</span>
+                      </th>
+                    </tr>
+                    {g.rows.map((c) => (
+                      <RegisterRow key={c.id} c={c} onOpen={() => openChild(c.id)} />
+                    ))}
+                  </Fragment>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
 
-        <div className="actions">
-          <button
-            type="button"
-            className="btn btn--outline btn--block"
-            onClick={() => navigate("/teacher/story")}
-          >
+        <div className="register-foot">
+          <Button variant="outline" onClick={() => navigate("/teacher/story")}>
             Choose a story
-          </button>
-          <button
-            type="button"
-            className="btn btn--ghost btn--block"
-            onClick={() => navigate("/teacher/add")}
-          >
+          </Button>
+          <Button variant="ghost" onClick={() => navigate("/teacher/add")}>
             Add a child
-          </button>
+          </Button>
         </div>
       </div>
     </>
+  );
+}
+
+/** One child on the register: picture, nickname, steps climbed, last reading, status. */
+function RegisterRow({ c, onOpen }: { c: RosterEntry; onOpen: () => void }) {
+  const reached = c.readingLevel ? CLIMB.indexOf(c.readingLevel as Level) : -1;
+  return (
+    <tr className="register__row" data-status={c.status}>
+      <td>
+        <button type="button" className="register__child" onClick={onOpen}>
+          <ChildMark picture={pictureOf(c.id)} />
+          <span>
+            <span className="register__name">{c.name}</span>
+            <span className="register__meta">
+              {c.level}
+              {c.levelUncertain ? " · level to confirm" : ""}
+            </span>
+          </span>
+        </button>
+      </td>
+      <td className="register__steps-col">
+        <span className="register__steps" aria-label={`${reached + 1} of 4 steps`}>
+          {CLIMB.map((s, i) => (
+            <i key={s} data-on={i <= reached} title={s}>
+              {i <= reached && <CheckIcon width={14} height={14} />}
+            </i>
+          ))}
+        </span>
+      </td>
+      <td className="num">{c.wcpm ?? "-"}</td>
+      <td className="num register__wide">
+        {c.accuracy == null ? "-" : `${Math.round(c.accuracy * 100)}%`}
+      </td>
+      <td className="num register__wide">{c.previousWcpm ?? "-"}</td>
+      <td>
+        <span className="register__status">{STATUS_TEXT[c.status]}</span>
+      </td>
+    </tr>
   );
 }

@@ -55,7 +55,7 @@ describe("review queue (mock mode)", () => {
   it("says when there is nothing to hear", async () => {
     at("/teacher/review");
     await screen.findByText(/items? left/);
-    fireEvent.change(screen.getByLabelText(/language/i), { target: { value: "ta-IN" } });
+    fireEvent.change(screen.getByLabelText(/language/i), { target: { value: "hi-IN" } });
     expect(await screen.findByText(/nothing to hear/i)).toBeTruthy();
   });
 });
