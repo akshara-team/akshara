@@ -122,7 +122,17 @@ describe("theme contrast (WCAG AA)", () => {
   // Text pairs the stylesheets actually use: 4.5:1.
   const text: [string, string][] = [
     ["color-text-primary", "color-background"],
-    ["color-text-primary", "color-brand-primary"], // primary button, mic button
+    ["color-on-brand", "color-brand-primary"], // primary button, mic button (reading hue)
+    ["hue-read-ink", "hue-read"], // each activity's ink on its own hue
+    ["hue-practice-ink", "hue-practice"],
+    ["hue-reward-ink", "hue-reward"],
+    ["hue-teacher-ink", "hue-teacher"],
+    ["hue-read-deep", "color-surface"], // a hue's deep shade as text on a card
+    ["hue-practice-deep", "color-surface"],
+    ["hue-reward-deep", "color-surface"],
+    ["color-text-primary", "hue-read-soft"], // text on an activity's soft field
+    ["color-text-primary", "hue-practice-soft"],
+    ["color-text-primary", "hue-reward-soft"],
     ["color-text-primary", "color-background-soft"], // language badge, avatar, active tab
     ["color-text-secondary", "color-background-soft"], // info banner
     ["color-on-accent", "color-secondary"], // secondary button, skip link

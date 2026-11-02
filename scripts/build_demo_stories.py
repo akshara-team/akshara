@@ -18,6 +18,7 @@ import re
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 PASSAGES = ROOT / "data" / "open_passages" / "passages.jsonl"
+SOURCES = ROOT / "data" / "open_passages" / "sources.jsonl"
 OUT = ROOT / "web" / "src" / "data" / "demo.json"
 LANGS = ["ta-IN", "hi-IN"]
 
@@ -91,6 +92,11 @@ def main() -> None:
         if lang in LANGS and lang not in seen:
             seen[lang] = rec
 
+    titles = {
+        r["id"]: r.get("title")
+        for r in (json.loads(x) for x in SOURCES.read_text(encoding="utf-8").splitlines() if x.strip())
+    }
+
     languages: dict[str, dict] = {}
     for lang in LANGS:
         rec = seen.get(lang)
@@ -99,6 +105,7 @@ def main() -> None:
         languages[lang] = {
             "id": f"{lang[:2]}-101",
             "source": rec["id"],
+            "title": titles.get(rec["id"]),
             "level": "2",
             "parts": parts(rec),
         }

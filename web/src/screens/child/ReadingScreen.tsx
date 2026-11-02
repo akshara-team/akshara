@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { isMock } from "../../api";
+import { useNavigate, useParams } from "react-router-dom";
+import { api, isMock } from "../../api";
 import {
   MAX_RECORDING_S,
   MOCK_DURATIONS,
@@ -24,7 +24,9 @@ import {
 import { meterValue } from "../../audio/noise";
 import { newId } from "../../state/ids";
 import { useSession } from "../../state/session";
-import { scriptClass } from "../../theme/script";
+import { LANGS, scriptClass, type Lang } from "../../theme/script";
+
+const isLang = (l: string): l is Lang => (LANGS as readonly string[]).includes(l);
 import { useCopy, type CopyKey } from "../../i18n";
 import { storyTitle } from "./title";
 
@@ -37,8 +39,26 @@ const PROBLEM_TEXT: Record<RecordingError["problem"], CopyKey> = {
 };
 
 export function ReadingScreen() {
-  const { lang, passage, parts, currentPart, setPending } = useSession();
+  const { lang, passage, parts, currentPart, setPending, beginPassage, setLang } = useSession();
   const navigate = useNavigate();
+  const { passageId } = useParams();
+
+  // Opened from a link or a reload: the session is empty, so load the story the URL names.
+  useEffect(() => {
+    if (passage || !passageId) return;
+    let live = true;
+    api
+      .getPassage(passageId)
+      .then((p) => {
+        if (!live) return;
+        if (isLang(p.language)) setLang(p.language);
+        beginPassage(p, api.partsOf(p));
+      })
+      .catch(() => {});
+    return () => {
+      live = false;
+    };
+  }, [passage, passageId, beginPassage, setLang]);
   const { t, Tx } = useCopy(lang);
 
   const [phase, setPhase] = useState<Phase>("idle");

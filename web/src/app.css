@@ -1,9 +1,46 @@
-/* Hallmark · shape: app screen · genre: playful · theme: brand · redesign: full · paper: #fffdf7 · accent: #fde047 · display: Inter · body: Inter · axes: light/grotesk-sans/warm · posture: settled · contrast: pass · v2.0.0 */
+/* One hue field per activity. The shell sets data-activity from the route
+   (activityOf in App.tsx); everything that says "brand" follows it. */
+.app-shell[data-activity="read"] {
+  --color-brand-primary: var(--hue-read);
+  --color-on-brand: var(--hue-read-ink);
+  --color-brand-deep: var(--hue-read-deep);
+  --color-brand-soft: var(--hue-read-soft);
+}
+.app-shell[data-activity="practice"] {
+  --color-brand-primary: var(--hue-practice);
+  --color-on-brand: var(--hue-practice-ink);
+  --color-brand-deep: var(--hue-practice-deep);
+  --color-brand-soft: var(--hue-practice-soft);
+}
+.app-shell[data-activity="reward"] {
+  --color-brand-primary: var(--hue-reward);
+  --color-on-brand: var(--hue-reward-ink);
+  --color-brand-deep: var(--hue-reward-deep);
+  --color-brand-soft: var(--hue-reward-soft);
+}
+.app-shell[data-activity="teacher"] {
+  --color-brand-primary: var(--hue-teacher);
+  --color-on-brand: var(--hue-teacher-ink);
+  --color-brand-deep: var(--hue-teacher-deep);
+  --color-brand-soft: var(--hue-teacher-soft);
+}
+.app-shell[data-activity] {
+  --color-surface-selected: var(--color-brand-soft);
+  --color-focus: var(--color-brand-deep);
+}
+
 .app-shell {
   min-height: 100dvh;
   display: flex;
   justify-content: center;
   background: var(--color-background);
+  /* Feels installed, not browsed: no grey tap flash, no long-press text select on controls. */
+  -webkit-tap-highlight-color: transparent;
+}
+.app-shell :is(button, [role="button"], a) {
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
 }
 
 /* Mobile-first: the design's primary frame is 375 x 812. */
@@ -20,6 +57,17 @@
    (1024 x 768 in the compact frames). One flat canvas — no outer frame, so the
    cards are the only surfaces (no box inside a box).
    The 900px literal is --breakpoint-desktop; media queries cannot read vars. */
+/* A shared classroom tablet held upright: fill it, do not show a phone strip. */
+@media (min-width: 600px) and (max-width: 899px) {
+  .app-main {
+    max-width: 100%;
+  }
+  .app-main .screen-body {
+    padding: var(--space-32);
+    gap: var(--gap-section);
+  }
+}
+
 /* A phone turned on its side is wider than the portrait frame: let it fill. */
 @media (orientation: landscape) and (max-height: 540px) {
   .app-main {
@@ -86,6 +134,7 @@
 
 /* Inline SVG sitting in a line of text. */
 .inline-icon {
+  display: inline-block;
   width: var(--inline-icon-size);
   height: var(--inline-icon-size);
   vertical-align: var(--inline-icon-offset);

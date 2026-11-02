@@ -29,10 +29,10 @@
   --font-body: var(--font-ui);
   --font-outlier: var(--font-body);
 
-  --radius-card: var(--radius-16);
+  --radius-card: var(--radius-20);
   --rule-hair: 1px;
-  --shadow-card: 0 1px 2px rgb(17 24 39 / 6%);
-  --tracking-display: -0.02em;
+  --shadow-card: var(--shadow-1);
+  --tracking-display: -0.005em;
   /* One control height per role, an app scale: 44px is the tap floor, 52px the primary. */
   --control-h: 44px;
   --control-h-lg: 52px;

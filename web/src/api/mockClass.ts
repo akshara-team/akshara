@@ -240,6 +240,19 @@ function readingsOf(childId: number): Reading[] {
 const brief = (r: Reading | undefined): ReadingBrief | null =>
   r ? { at: r.at, accuracy: r.accuracy, wcpm: r.wcpm } : null;
 
+/**
+ * Where the demo class's synthetic children stand on the child's reading ladder before any
+ * placement is run in this browser. Only the child's "next story" uses it; the teacher's
+ * screens still show "not placed" until a real placement. A real placement replaces it.
+ */
+const DEMO_LEVEL: Record<number, Level> = {
+  1: "paragraph",
+  2: "story",
+  3: "word",
+  4: "paragraph",
+  5: "word",
+};
+
 function levelOf(childId: number): { level: Level | null; uncertain: boolean } {
   const done = state()
     .placements.filter((p) => p.childId === childId)
@@ -564,7 +577,7 @@ export const mockClass = {
     return {
       passage_id: mockPassage(child.language).id,
       reason: "at the child's level",
-      level: levelOf(childId).level,
+      level: levelOf(childId).level ?? DEMO_LEVEL[childId] ?? null,
     };
   },
 

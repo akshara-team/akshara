@@ -174,7 +174,7 @@ export function TeacherDashboard() {
               Words the speech service may have misheard. Listening takes a few seconds each.
             </p>
             <div className="actions">
-              <Button variant="outline" onClick={() => navigate("/teacher/review")}>
+              <Button icon="audio" onClick={() => navigate("/teacher/review")}>
                 Listen and check
               </Button>
             </div>

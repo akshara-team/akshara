@@ -208,7 +208,7 @@ const KN_PARTS: { text: string; words: WordOut[]; seconds: number }[] = [
 ];
 
 export type DemoPart = { text: string; words: WordOut[] };
-type DemoStory = { id: string; title?: string; parts: DemoPart[] };
+type DemoStory = { id: string; title?: string; source?: string; parts: DemoPart[] };
 
 /** The design's demo story (Figma measurement example), kept word for word. */
 const KN_STORY: DemoStory = {
@@ -243,6 +243,14 @@ export function mockPassage(lang: Lang): Passage {
     level: "2",
     text: parts.join(" "),
     parts,
+    // Tamil and Hindi are real StoryWeaver books: carry the credit so the cover and its
+    // licence line can be shown. Kannada is the design's own story and has none.
+    credit: story.source
+      ? {
+          url: `https://storyweaver.org.in/en/stories/${story.source.replace(/^sw-/, "")}`,
+          licence: "CC BY 4.0",
+        }
+      : null,
   };
 }
 

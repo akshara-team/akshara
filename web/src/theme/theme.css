@@ -1,54 +1,88 @@
-/* Hallmark · shape: app screen · genre: playful · theme: brand · redesign: full · paper: #fffdf7 · accent: #fde047 · display: Inter · body: Inter · axes: light/grotesk-sans/warm · posture: settled · contrast: pass · v2.0.0 */
 /* ============================================================================
-   Akshara theme — the single source of design values.
+   Akshara theme: the single source of design values.
 
    Every colour, size, space, radius, weight and duration used by the app is
    declared here as a custom property; component and screen stylesheets only
    reference `var(--…)` and never repeat a literal.
 
-   Values come from the Figma handoff: the colour foundation (2:41891), the
-   layout foundation (2:41939) and the desktop frames' own geometry.
+   The world: an Activity-Based Learning classroom. Laminated activity cards on
+   a cool limewash wall, one full-strength hue per kind of activity, and the
+   child's ladder of milestones. The shell sets `data-activity` from the route,
+   and each activity swaps the brand hue below; a screen keeps to one hue.
    ============================================================================ */
 
 :root {
   /* ---------- Colour ---------- */
-  --color-brand-primary: #fde047;
-  --color-secondary: #2563eb;
-  --color-feedback-success: #22c55e;
-  --color-feedback-warning: #f59e0b;
-  --color-feedback-danger: #ef4444;
-  /* Red for text and outlines on white: feedback-danger is too light for text (3.8:1). */
-  --color-danger-text: #b91c1c;
+  /* The four activity hues, as the cards on the classroom wall. Each has an
+     ink for text on it, a deep shade for text in that hue on white, and a soft
+     tint for its fields. */
+  --hue-read: #0b6fa4; /* peacock blue */
+  --hue-read-ink: #ffffff;
+  --hue-read-deep: #0a5f8c;
+  --hue-read-soft: #e2eff7;
+  --hue-practice: #f6a800; /* marigold */
+  --hue-practice-ink: #1b1f4b;
+  --hue-practice-deep: #7a5000;
+  --hue-practice-soft: #fff1cc;
+  --hue-reward: #1f7a34; /* parrot green */
+  --hue-reward-ink: #ffffff;
+  --hue-reward-deep: #1f7a34;
+  --hue-reward-soft: #e2f3e6;
+  --hue-reward-bright: #2e9e44;
+  --hue-teacher: #1b1f4b; /* indigo ink */
+  --hue-teacher-ink: #ffffff;
+  --hue-teacher-deep: #1b1f4b;
+  --hue-teacher-soft: #e6e8f4;
+  --hue-skip: #d7263d; /* kumkum red: a skipped word, nothing else */
 
-  --color-background: #fffdf7;
-  --color-background-soft: #eff6ff;
-  --color-surface: #fffdf7;
-  --color-surface-muted: #f9fafb;
-  --color-surface-selected: #fffbeb;
-  --color-border: #d1d5db;
-  --color-on-accent: #fffdf7;
+  /* The brand hue is the reading hue until an activity says otherwise. */
+  --color-brand-primary: #0b6fa4;
+  --color-on-brand: #ffffff;
+  --color-brand-deep: #0a5f8c;
+  --color-brand-soft: #e2eff7;
+  --color-secondary: #1b1f4b;
+  --color-feedback-success: #2e9e44;
+  --color-feedback-warning: #f6a800;
+  --color-feedback-danger: #d7263d;
+  /* Red for text and outlines on white. */
+  --color-danger-text: #b3172c;
 
-  --color-text-primary: #111827;
-  --color-text-secondary: #374151;
-  --color-muted: #6b7280;
-  --color-focus: #2563eb;
+  /* Limewash wall, white laminate cards. */
+  --color-background: #eef3f7;
+  --color-background-soft: #e2eff7;
+  --color-surface: #fdfeff;
+  --color-surface-muted: #f4f7fa;
+  --color-surface-selected: #e2eff7;
+  --color-border: #cbd5df;
+  --color-on-accent: #ffffff;
 
-  /* WordChip states (Figma: WordChip 2:42372). The fourth is ours: the scorer
-     emits `check` for a word accepted only by a spelling rule. */
-  --chip-correct-bg: #dcfce7;
-  --chip-correct-border: #22c55e;
-  --chip-substituted-bg: #fef3c7;
-  --chip-substituted-border: #f59e0b;
-  --chip-skipped-bg: #fee2e2;
-  --chip-skipped-border: #ef4444;
-  --chip-uncertain-bg: #eff6ff;
-  --chip-uncertain-border: #2563eb;
+  --color-text-primary: #1b1f4b;
+  --color-text-secondary: #3d4270;
+  --color-muted: #555a80;
+  --color-focus: #0b6fa4;
+
+  /* Word marks. Each also has its own shape (WordChip), so none relies on colour. */
+  --chip-correct-bg: #e2f3e6;
+  --chip-correct-border: #2e9e44;
+  --chip-substituted-bg: #fff1cc;
+  --chip-substituted-border: #f6a800;
+  --chip-skipped-bg: #fde4e7;
+  --chip-skipped-border: #d7263d;
+  --chip-uncertain-bg: #e6e8f4;
+  --chip-uncertain-border: #1b1f4b;
+
+  /* Depth: laminate lifted off the wall, shadows tinted with the ink. */
+  --shadow-1: 0 1px 2px rgb(27 31 75 / 8%), 0 2px 6px -2px rgb(27 31 75 / 10%);
+  --shadow-2: 0 2px 4px rgb(27 31 75 / 6%), 0 12px 28px -12px rgb(27 31 75 / 28%);
+  --shadow-press: 0 1px 1px rgb(27 31 75 / 12%);
 
   /* ---------- Type ---------- */
-  --font-ui: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-kn: "Noto Sans Kannada", var(--font-ui);
-  --font-ta: "Noto Sans Tamil", var(--font-ui);
-  --font-hi: "Noto Sans Devanagari", var(--font-ui);
+  /* One rounded family in all three scripts (Ek Type's Baloo), so Kannada,
+     Tamil, Hindi and the English UI read as one voice. Noto stays as fallback. */
+  --font-ui: "Baloo 2", "Noto Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-kn: "Baloo Tamma 2", "Noto Sans Kannada", var(--font-ui);
+  --font-ta: "Baloo Thambi 2", "Noto Sans Tamil", var(--font-ui);
+  --font-hi: "Baloo 2", "Noto Sans Devanagari", var(--font-ui);
 
   --text-heading-1: 28px;
   --text-heading-2: 24px;
@@ -89,7 +123,10 @@
   /* ---------- Shape ---------- */
   --radius-12: 12px;
   --radius-16: 16px;
+  --radius-20: 20px; /* activity cards */
+  --radius-28: 28px; /* the big story card */
   --radius-pill: 999px;
+  --size-card-band: 8px; /* the coloured top band of an activity card */
 
   --border-width: 1px;
   --border-width-2: 2px;

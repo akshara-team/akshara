@@ -6,6 +6,7 @@ import {
   ListenButton,
   RepeatIcon,
   SparklesIcon,
+  StarIcon,
   StatCard,
   PageHeader,
   TrendingUpIcon,
@@ -75,9 +76,14 @@ export function ResultsScreen() {
         <div className="workspace workspace--w360">
           {/* Left: celebration and the two headline numbers. */}
           <div className="stack">
-            <p className={`eyebrow ${scriptClass(lang)}`} lang={lang}>
-              {storyTitle(passage)}
-            </p>
+            <div className="star-award" role="status">
+              <span className="star-award__star" aria-hidden="true">
+                <StarIcon width={56} height={56} />
+              </span>
+              <span className="star-award__text">
+                <Tx k="results.star" />
+              </span>
+            </div>
 
             <div className="stack--tight stack">
               <div className="say-row">
@@ -86,6 +92,9 @@ export function ResultsScreen() {
                 </h1>
                 <SayButton k="results.title" lang={lang} />
               </div>
+              <p className={`results-story ${scriptClass(lang)}`} lang={lang}>
+                {storyTitle(passage)}
+              </p>
               <p className="reader-meta">
                 <Tx k={accuracy >= 0.8 ? "feedback.wellRead" : "feedback.keepGoing"} />{" "}
                 <CheckIcon className="inline-icon" />
@@ -101,9 +110,9 @@ export function ResultsScreen() {
           {/* Right: progress, practice and the way out. */}
           <div className="stack">
             <div className="progress-note">
-              <p className="eyebrow">
+              <h2 className="section-title">
                 <Tx k="results.progress" /> <TrendingUpIcon className="inline-icon" />
-              </p>
+              </h2>
               {earlier.length ? (
                 <span className="progress-note__journey">
                   {[...earlier.map((r) => Math.round(r.wcpm ?? 0)), wcpm ?? "—"].join(" → ")}
@@ -124,9 +133,9 @@ export function ResultsScreen() {
 
             {missed.length > 0 && (
               <div className="practice">
-                <p className="practice__eyebrow">
+                <h2 className="section-title">
                   <Tx k="results.practise" /> <RepeatIcon className="inline-icon" />
-                </p>
+                </h2>
                 {missed.map((w, i) => (
                   <div className="practice__row" key={`${w.word}-${i}`}>
                     <span className={`reading-text ${scriptClass(lang)}`} lang={lang}>{w.word}</span>

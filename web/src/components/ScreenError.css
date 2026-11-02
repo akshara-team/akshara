@@ -54,7 +54,7 @@
   border: none;
   border-radius: var(--radius-pill);
   background: var(--color-brand-primary);
-  color: var(--color-text-primary);
+  color: var(--color-on-brand);
   font: inherit;
   font-weight: var(--font-weight-semibold);
   cursor: pointer;

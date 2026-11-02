@@ -64,12 +64,25 @@ function useFocusOnRouteChange(main: RefObject<HTMLElement>) {
 const sendQueued = (q: Queued) =>
   api.submitAttempt({ ...q, audio: q.audio ?? new Blob([], { type: "audio/wav" }) });
 
+/**
+ * Which kind of activity a route is, as the colour-coded cards of an Activity-Based Learning
+ * classroom: reading, practice, rewards, or the teacher's own screens. The theme swaps the
+ * brand hue on `data-activity`, so each screen keeps to one colour.
+ */
+export function activityOf(pathname: string): "read" | "practice" | "reward" | "teacher" {
+  if (pathname.startsWith("/teacher")) return "teacher";
+  if (pathname.startsWith("/practice")) return "practice";
+  if (pathname.startsWith("/results")) return "reward";
+  return "read";
+}
+
 /** Owns the shell: one responsive frame for every route, plus offline handling. */
 function Shell({ children }: { children: ReactNode }) {
   useOfflineRedirect();
   useOutboxSync(sendQueued);
   const main = useRef<HTMLElement>(null);
   useFocusOnRouteChange(main);
+  const { pathname } = useLocation();
 
   // Handled in JS so the router never sees a "#main" hash change.
   function skipToContent(event: MouseEvent<HTMLAnchorElement>) {
@@ -78,7 +91,7 @@ function Shell({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="app-shell">
+    <div className="app-shell" data-activity={activityOf(pathname)}>
       <a className="skip-link" href="#main" onClick={skipToContent}>
         Skip to content
       </a>

@@ -152,5 +152,13 @@
   "rewards.stars": "Stars",
   "rewards.streak": "Day streak",
   "rewards.best": "Best streak",
-  "say.label": "Hear what to do"
+  "say.label": "Hear what to do",
+  "ladder.title": "My reading ladder",
+  "ladder.letter": "Letters",
+  "ladder.word": "Words",
+  "ladder.paragraph": "Paragraph",
+  "ladder.story": "Story",
+  "ladder.here": "You are here",
+  "home.today": "Today’s story",
+  "results.star": "You earned a star!"
 }

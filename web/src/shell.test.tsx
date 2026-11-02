@@ -22,12 +22,20 @@ describe("shell", () => {
     }
   });
 
-  it("gives the child flow a desktop workspace", () => {
+  it("gives the child flow its layouts: script tiles and role cards, then the reading workspace", () => {
     const { container: role } = at("/");
-    expect(role.querySelector(".workspace--w360")).toBeTruthy();
+    expect(role.querySelectorAll(".script-tile").length).toBe(3);
+    expect(role.querySelectorAll(".role-grid .rolecard").length).toBe(2);
 
     const { container: reading } = at("/read/kn-101");
     expect(reading.querySelector(".workspace--w360")).toBeTruthy();
+  });
+
+  it("colours each screen by its activity", () => {
+    expect(at("/").container.querySelector('[data-activity="read"]')).toBeTruthy();
+    expect(at("/practice").container.querySelector('[data-activity="practice"]')).toBeTruthy();
+    expect(at("/results").container.querySelector('[data-activity="reward"]')).toBeTruthy();
+    expect(at("/teacher").container.querySelector('[data-activity="teacher"]')).toBeTruthy();
   });
 
   it("gives recovery a desktop workspace", () => {

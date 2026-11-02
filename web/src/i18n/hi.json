@@ -152,5 +152,13 @@
   "rewards.stars": "तारे",
   "rewards.streak": "लगातार दिन",
   "rewards.best": "सबसे लंबा",
-  "say.label": "क्या करना है, सुनो"
+  "say.label": "क्या करना है, सुनो",
+  "ladder.title": "मेरी पढ़ाई की सीढ़ी",
+  "ladder.letter": "अक्षर",
+  "ladder.word": "शब्द",
+  "ladder.paragraph": "अनुच्छेद",
+  "ladder.story": "कहानी",
+  "ladder.here": "तुम यहाँ हो",
+  "home.today": "आज की कहानी",
+  "results.star": "तुम्हें एक तारा मिला!"
 }

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { api, childIdOf, isMock } from "../../api";
 import { RecordingError, createRecorder, type Recorder } from "../../api/mock";
@@ -25,7 +25,12 @@ export function PracticeScreen() {
   const { lang, reader, reset } = useSession();
   const navigate = useNavigate();
   const location = useLocation();
-  const words = ((location.state as { words?: string[] } | null)?.words ?? []).slice(
+  // Demo mode also takes the words from the link (/practice?words=a,b), so the practice
+  // moment can be opened directly when recording the demo.
+  const linked = isMock
+    ? (new URLSearchParams(location.search).get("words") ?? "").split(",").filter(Boolean)
+    : [];
+  const words = ((location.state as { words?: string[] } | null)?.words ?? linked).slice(
     0,
     PRACTICE_WORDS,
   );
@@ -74,9 +79,14 @@ export function PracticeScreen() {
     <>
       <PageHeader back backTo="/home" />
       <div className="screen-body">
-        <p className="eyebrow">
-          <Tx k="practice.title" /> · <Tx k="practice.wordOf" vars={{ n: index + 1, total: words.length }} />
-        </p>
+        <div className="practice-head">
+          <h1 className="practice-head__title">
+            <Tx k="practice.title" />
+          </h1>
+          <p className="practice-head__count">
+            <Tx k="practice.wordOf" vars={{ n: index + 1, total: words.length }} />
+          </p>
+        </div>
         <Word
           key={index}
           word={words[index]}
@@ -194,14 +204,22 @@ function Word({
   }
 
   const tone = result === "correct" ? "practice-tile--ok" : result ? "practice-tile--miss" : "";
+  // The aksharas close back into the word when Timbre says it whole, and when it is read right.
+  const joined = lit === "all" || result === "correct";
 
   return (
     <div className="stack practice-word">
-      <div className="practice-tiles" lang={lang} aria-label={word} role="img">
+      <div
+        className={`practice-tiles ${joined ? "practice-tiles--joined" : ""}`}
+        lang={lang}
+        aria-label={word}
+        role="img"
+      >
         {parts.map((a, i) => (
           <span
-            key={i}
+            key={`${parts.length}-${i}`}
             aria-hidden="true"
+            style={{ "--i": i } as CSSProperties}
             className={`practice-tile ${scriptClass(lang)} ${lit === i || lit === "all" ? "practice-tile--lit" : ""} ${tone}`}
           >
             {a}

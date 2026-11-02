@@ -152,5 +152,13 @@
   "rewards.stars": "ನಕ್ಷತ್ರಗಳು",
   "rewards.streak": "ದಿನಗಳ ಸರಣಿ",
   "rewards.best": "ಅತ್ಯುತ್ತಮ ಸರಣಿ",
-  "say.label": "ಏನು ಮಾಡಬೇಕು ಎಂದು ಕೇಳು"
+  "say.label": "ಏನು ಮಾಡಬೇಕು ಎಂದು ಕೇಳು",
+  "ladder.title": "ನನ್ನ ಓದಿನ ಏಣಿ",
+  "ladder.letter": "ಅಕ್ಷರ",
+  "ladder.word": "ಪದ",
+  "ladder.paragraph": "ಪ್ಯಾರಾ",
+  "ladder.story": "ಕಥೆ",
+  "ladder.here": "ನೀನು ಇಲ್ಲಿದ್ದೀಯ",
+  "home.today": "ಇಂದಿನ ಕಥೆ",
+  "results.star": "ನಿನಗೆ ಒಂದು ನಕ್ಷತ್ರ ಸಿಕ್ಕಿತು!"
 }

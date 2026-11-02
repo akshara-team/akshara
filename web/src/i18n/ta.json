@@ -152,5 +152,13 @@
   "rewards.stars": "நட்சத்திரங்கள்",
   "rewards.streak": "நாள் தொடர்",
   "rewards.best": "சிறந்த தொடர்",
-  "say.label": "என்ன செய்ய வேண்டும் என்று கேள்"
+  "say.label": "என்ன செய்ய வேண்டும் என்று கேள்",
+  "ladder.title": "என் வாசிப்பு ஏணி",
+  "ladder.letter": "எழுத்து",
+  "ladder.word": "சொல்",
+  "ladder.paragraph": "பத்தி",
+  "ladder.story": "கதை",
+  "ladder.here": "நீ இங்கே இருக்கிறாய்",
+  "home.today": "இன்றைய கதை",
+  "results.star": "உனக்கு ஒரு நட்சத்திரம் கிடைத்தது!"
 }

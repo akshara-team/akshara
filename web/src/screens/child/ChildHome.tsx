@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api, childIdOf, storyFor } from "../../api";
+import type { Level, Passage } from "../../api/types";
 import { fslGoal } from "../../lib/nipun";
 import {
   Button,
   Card,
   GlobeIcon,
+  Ladder,
   LanguageBadge,
   ProgressBar,
   PageHeader,
@@ -14,6 +16,7 @@ import {
   WordChip,
   wordStatus,
   SayButton,
+  StoryCover,
 } from "../../components";
 import { useQueuedCount } from "../../state/outbox";
 import { useSession } from "../../state/session";
@@ -21,9 +24,13 @@ import { useChildProgress } from "../../state/useChildProgress";
 import { useCopy } from "../../i18n";
 import { scriptClass, scriptName } from "../../theme/script";
 
+/** ASER's steps, bottom to top: where a child's placement level sits on the ladder. */
+const RUNG_OF: Record<Level, number> = { beginner: 0, letter: 0, word: 1, paragraph: 2, story: 3 };
+
 /**
- * The child's home. One big action, their own progress, and no tables — the
- * teacher dashboard is the detailed view; this is the child's.
+ * The child's home, as their corner of the classroom wall: the reading ladder with their
+ * rung lit, today's story card with its picture and one big Read button, then their stars.
+ * No tables: the teacher dashboard is the detailed view; this is the child's.
  */
 export function ChildHome() {
   const navigate = useNavigate();
@@ -41,6 +48,36 @@ export function ChildHome() {
   const best = Math.max(0, ...store.readings.map((r) => r.wcpm ?? 0));
   const goal = fslGoal(store.lang);
 
+  // Today's story and the child's rung, fetched up front so the card can show its picture.
+  const [next, setNext] = useState<Passage | null>(null);
+  const [level, setLevel] = useState<Level | null>(null);
+  useEffect(() => {
+    if (!reader) return;
+    let live = true;
+    const childId = childIdOf(reader.id);
+    (async () => {
+      try {
+        if (childId !== undefined) {
+          const n = await api.nextFor(childId);
+          if (live) setLevel(n.level);
+        }
+      } catch {
+        /* no placement yet: the ladder starts at the bottom */
+      }
+      const passage = await storyFor(store.lang, childId);
+      if (live) setNext(passage);
+    })().catch(() => {});
+    return () => {
+      live = false;
+    };
+  }, [reader?.id, store.lang]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const rung = level ? RUNG_OF[level] : 0;
+  const rungs = (["letter", "word", "paragraph", "story"] as const).map((k) => ({
+    key: k,
+    label: t(`ladder.${k}`),
+  }));
+
   async function start(reuseLast = false) {
     if (!reader) {
       navigate("/switch");
@@ -48,11 +85,10 @@ export function ChildHome() {
     }
     setBusy(true);
     try {
-      const passage = await storyFor(
-        store.lang,
-        childIdOf(reader.id),
-        reuseLast && last ? last.passageId : null,
-      );
+      const passage =
+        !reuseLast && next
+          ? next
+          : await storyFor(store.lang, childIdOf(reader.id), reuseLast && last ? last.passageId : null);
       if (!passage) return;
       setReader(reader);
       setLang(store.lang);
@@ -68,9 +104,6 @@ export function ChildHome() {
       <PageHeader />
       <div className="home">
         <div className="home__hero">
-          <p className="eyebrow">
-            <Tx k="home.eyebrow" />
-          </p>
           <h1 className="card__title">
             {reader ? <Tx k="home.welcomeBack" vars={{ name: first }} /> : <Tx k="home.hello" />}
           </h1>
@@ -106,21 +139,43 @@ export function ChildHome() {
           </Card>
         ) : (
           <>
-            <div className="say-row">
-              <SayButton k="home.firstStoryHelp" lang={store.lang} />
-              <p className="note">
-                <Tx k="home.firstStoryHelp" />
-              </p>
-            </div>
-            <div className="home__actions">
-              <Button block icon="book" disabled={busy} onClick={() => start()}>
-                <Tx k={busy ? "home.opening" : "home.readStory"} />
-              </Button>
-              {last && (
-                <Button variant="outline" block icon="repeat" disabled={busy} onClick={() => start(true)}>
-                  <Tx k="home.readAgain" vars={{ title: last.storyTitle }} />
-                </Button>
-              )}
+            <div className="home-wall">
+              <Ladder
+                title={t("ladder.title")}
+                rungs={rungs}
+                current={rung}
+                hereLabel={t("ladder.here")}
+                lang={store.lang}
+                scriptClassName={scriptClass(store.lang)}
+              />
+
+              <section className="story-card" aria-label={t("home.today")}>
+                {next && <StoryCover passage={next} lang={store.lang} />}
+                <div className="story-card__body">
+                  <h2
+                    className={`story-card__title ${scriptClass(store.lang)}`}
+                    lang={store.lang}
+                  >
+                    {next?.title ?? <Tx k="home.readStory" />}
+                  </h2>
+                  <div className="say-row">
+                    <SayButton k="home.firstStoryHelp" lang={store.lang} />
+                    <p className="note">
+                      <Tx k="home.firstStoryHelp" />
+                    </p>
+                  </div>
+                  <div className="home__actions">
+                    <Button block icon="book" disabled={busy} onClick={() => start()}>
+                      <Tx k={busy ? "home.opening" : "home.readStory"} />
+                    </Button>
+                    {last && (
+                      <Button variant="outline" block icon="repeat" disabled={busy} onClick={() => start(true)}>
+                        <Tx k="home.readAgain" vars={{ title: last.storyTitle }} />
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </section>
             </div>
 
             <RewardsStrip
