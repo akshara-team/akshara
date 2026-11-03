@@ -250,6 +250,35 @@ def test_practice_scores_one_word(heard, state, tmp_path):
     assert Store(db).skills(kid), "the practice should teach the learner model"
 
 
+@pytest.mark.parametrize(
+    ("word", "heard", "state"),
+    [
+        ("நாளை", "நாலு", "unsure"),  # heard live from a correct reading
+        ("குடை", "குடல்", "unsure"),  # heard live from a correct reading
+        ("குடை", "மழை", "error"),  # a different word
+        ("பார்க்கலாம்", "பார்க்கவில்லை", "error"),  # a longer word, two aksharas off
+    ],
+)
+def test_practice_counts_a_near_word_as_not_sure(word, heard, state):
+    c = practice_client(heard)
+    r = c.post(
+        "/v1/practice",
+        files={"audio": ("w.wav", wav(1), "audio/wav")},
+        data={"word": word, "lang": "ta-IN"},
+    )
+    assert r.status_code == 200 and r.json()["state"] == state
+
+
+def test_practice_refuses_a_word_with_no_letters():
+    c = practice_client("")
+    r = c.post(
+        "/v1/practice",
+        files={"audio": ("w.wav", wav(1), "audio/wav")},
+        data={"word": "?", "lang": "ta-IN"},
+    )
+    assert r.status_code == 400
+
+
 def test_practice_without_a_child_teaches_nothing_and_checks_inputs():
     c = practice_client("ಹಾರುತ್ತಿತ್ತು")
     ok = c.post(

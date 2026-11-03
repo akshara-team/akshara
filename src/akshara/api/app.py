@@ -38,6 +38,7 @@ from akshara.api.schemas import (
     SkillsOut,
 )
 from akshara.content import bank as sentence_bank
+from akshara.core.aksharas import near_miss
 from akshara.core.aksharas import split as split_aksharas
 from akshara.core.align import score
 from akshara.core.parts import split_parts
@@ -580,9 +581,15 @@ def create_app(
                 log.warning("provider failed: %s", e)
                 raise HTTPException(502, "speech provider failed") from e
         s = score(word.strip(), transcript, seconds, loose=lang != "kn-IN")
-        mark = next(m for m in s.marks if m.op != "inserted")
+        mark = next((m for m in s.marks if m.op != "inserted"), None)
+        if mark is None:
+            raise HTTPException(400, "the word has no letters to read")
         trace = [{"op": mark.op, "check": mark.op == "correct" and mark.said != mark.ref_word}]
         state = tutor.states(trace)[0]
+        # One word alone is where the speech service mishears most: a near word is "not sure",
+        # never "wrong" (the child moves on; the learner model counts it at half weight).
+        if mark.op == "substituted" and near_miss(word, mark.said or "", lang):
+            state = "unsure"
         if child_id is not None:
             learn(child_id, lang, [(word.strip(), state)])
         return {"word": word.strip(), "said": mark.said or transcript or None, "state": state}
