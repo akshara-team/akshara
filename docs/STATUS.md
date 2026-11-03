@@ -35,10 +35,10 @@ first batch has not run yet.
 | Trust: reliability page, consent, 30-day deletion, delete a child (WP7) | Done |
 | FLS 2022 Grade 3 bands (WP8, D2) | Done; wired into the child profile and the dashboard status, per language (Hindi 35-54, Kannada 30-48, Tamil 28-49) |
 | Offline readings, noise check (WP9) | Done |
-| Stars and reading streak (WP9, D3) | Done; on the child home |
+| Stars and reading streak (WP9, D3) | Done; on the child home, beside the row of kolams (the streak shows from two days) |
 | End-to-end tests, Pages dry run, docs (WP10) | Done; the hands-on browser pass and Lighthouse are Checkpoint A |
 | Public demo (GitHub Pages, mock mode) | Live: https://akshara-team.github.io/akshara/ (repo public since Nov 2, now under the `akshara-team` org) |
-| Look and feel | Redesigned Nov 2 as an Activity-Based Learning classroom: one colour per activity, the reading ladder, StoryWeaver cover art, akshara cards in practice ([PRODUCT.md](../PRODUCT.md)) |
+| Look and feel | Redesigned Nov 2-3 to [DESIGN.md](../DESIGN.md), "a picture book that listens": the book page, the slate, the kolam as progress and reward, the teacher's register; every screen |
 
 ## Who owns what
 
@@ -58,9 +58,7 @@ the redesign.
 1. **Evon's first batch** (Daniel, free Kaggle 2×T4): build llama.cpp for the T4s, keep the
    model in `/tmp`, run `scripts/evon_sentences.py`, commit the sentences; then approve them in
    the app (D6). Until then the docs say Evon is wired in and its batch is pending.
-2. **Re-record the demo video** on the redesigned app. In demo mode the practice moment opens
-   directly at `/practice?words=<word>,<word>`.
-3. **Post** (drafts in [POST.md](POST.md)), reshare for a week before the Nov 10 cutoff.
+2. **Post** (drafts in [POST.md](POST.md)), reshare for a week before the Nov 10 cutoff.
    **Submit by Nov 9.**
 
 ## How to run it
@@ -88,6 +86,9 @@ the redesign.
 - Synthetic voices only: no child has used it, and no teacher has marked the same readings to
   measure agreement.
 - A change in one sound is mostly not caught (8 of 39); the reliability page says so.
+- One word alone is the hardest case for the speech service: a short word read right was
+  heard as a near word in 2 of 3 live tries (Nov 3). A practice re-read heard that way counts
+  as "not sure": the child is told "good try" and moves on, never "try again".
 - Word clips in Review are estimated from pauses, since Prisma gives no word timings.
 - Placement passages are short book blurbs, weaker evidence than the paper ASER test.
 - Kannada and Tamil child text reviewed by a native speaker; Hindi is still a draft.
