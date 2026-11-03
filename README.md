@@ -12,7 +12,7 @@ cp .env.example .env  # then put your key in GNANI_API_KEY
 ./run.sh live         # backend + web; open the address it prints
 ```
 
-Then tap a child, read the story aloud: **Prisma** hears it and every word comes back marked right, different or skipped; tap "Practise these words" and **Timbre** says each akshara of a missed word, then the whole word.
+The class starts empty. Tap **I am the teacher**, then **Add a child** (a nickname, the reading language, the parent's consent). Back on the first screen, tap the class's letter (ಅ, அ or अ), tap the child's picture and read the story aloud: **Prisma** hears it and every word comes back marked right, different or skipped. Tap **Practise these words** and **Timbre** says each akshara of a missed word, then the whole word. Checked from a fresh clone on 2026-11-03.
 
 Entry for the [Great Indian AI Internship Challenge](https://www.gnani.ai/internship) (deadline Nov 10, 2026).
 

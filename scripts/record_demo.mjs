@@ -120,6 +120,9 @@ const context = await browser.newContext({
 });
 await context.addInitScript(INIT);
 const page = await context.newPage();
+// The recording starts with the browser's blank page: paint it the wall's colour at once, so
+// the first frame (the post's thumbnail) is never white.
+await page.setContent('<body style="margin:0;background:#eef3f6;height:100vh"></body>');
 const t0 = Date.now();
 // Served from the app's own origin (intercepted here, never part of the app), so the app in
 // the frame keeps its storage: a page with no origin would make it third-party.

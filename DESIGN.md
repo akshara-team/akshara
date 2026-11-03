@@ -403,6 +403,13 @@ the earlier look.
 | Kolam | `web/src/components/Kolam.tsx` | A sikku-style line: a 45° ray bouncing inside the dot grid, each bounce an arc round the edge dot, corners a half circle. Coprime grids (3x4, 4x5, ...) give one closed line. Seeded by story id. Used for the checking loader (loop), the finished story (draws in 900 ms, leaf), the home row and the art fallback |
 | Logo | `web/src/components/Logo.tsx` | The script's first akshara set inside one kolam line weaving round a ring of eight dots. The akshara is type, not itself drawn as the line |
 | Register | `web/src/screens/teacher/TeacherDashboard.tsx` | Ruled 56 px rows, red margin, grouped by reading step; one status sentence; one call to action (Listen and check). Phone hides accuracy, previous and the step ticks |
+| Child profile, reading detail | `ChildProfile.tsx`, `AttemptDetails.tsx` | Register pages: one status sentence; the sounds a child is working on as chalk-on-slate tiles; the reading shown with the same in-place marks the child saw (named in English for the teacher, with the word heard) |
+| Review | `ReviewScreen.tsx` | The three marks use the child's signs: tick (leaf), swap (turmeric), empty dot (laterite) |
+| Add / edit child | `ChildForm.tsx` | The teacher picks the child's picture; pictures a classmate has are dimmed. Stored as a code (`p0`-`p9`) in the 4-character `avatar` field |
+| Practice sentence, recovery, not found | `SentenceScreen.tsx`, `RecoveryScreen.tsx`, `NotFound.tsx` | On the child frame; recovery steps on a book page with one action |
+| Placement, story choice, sentences, reliability | `PlacementScreen.tsx`, `SelectStory.tsx`, `SentencesScreen.tsx`, `ReliabilityScreen.tsx` | Register pages: one status sentence, the text on a book page, ruled rows; placement marks use the reading marks |
+| Shared controls | `components.css` | Buttons (pills; ink primary with the pressed edge on the register), fields, radios (a row of pills), checkbox, table (ruled), badges, banner, empty state, and the teacher's header: a plain back link and underlined section tabs |
+| Tokens | `theme.css`, `base.css` | Only the world's tokens; the previous design's tokens, stylesheets and unused components are removed |
 
 Differences from the spec above, and why:
 - **Story art:** StoryWeaver page illustrations need a login, so the book's cover is used on
@@ -412,9 +419,11 @@ Differences from the spec above, and why:
 - **Long words on the slate** (more than five aksharas) wrap in rows of five and do not slide
   together; tiles never get smaller than 52 px.
 - **The checking screen** waits at least 1.8 s in demo mode so the kolam is seen.
-- **Raw values** remain in `book.css` for small details (dot sizes, stroke widths, the 1.25 rem
-  action label, the 0.75 rem credit). The token check is not automated yet.
+- **Raw values** remain for small details (dot sizes, stroke widths, the 1.25 rem action label,
+  the 0.75 rem credit). The token check is not automated yet.
 - **Dark mode** is not defined.
+- **Contrast:** rice on plain leaf is under 4.5:1, so a word read right turns deep leaf
+  (#1e6e33). The palette's text pairs are in the contrast test.
 
 ## Sources
 - Medhi, Sagar, Toyama, *Text-free user interfaces for illiterate and semi-literate users*,
