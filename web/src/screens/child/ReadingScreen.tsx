@@ -28,6 +28,9 @@ import { LANGS, scriptClass, type Lang } from "../../theme/script";
 const isLang = (l: string): l is Lang => (LANGS as readonly string[]).includes(l);
 import { useCopy, type CopyKey } from "../../i18n";
 
+/** A part longer than this (live stories run to 20 words) is set a step smaller. */
+const LONG_PART_WORDS = 10;
+
 /** requesting: waiting for mic permission; processing: turning the clip into a WAV. */
 type Phase = "idle" | "requesting" | "recording" | "processing";
 
@@ -163,7 +166,11 @@ export function ReadingScreen() {
       }
     >
       <BookPage art={art} artFrom={passage?.title} lang={lang} fallback={passage ? <Kolam seed={passage.id} progress={(currentPart - 1) / total} /> : null}>
-        <p className={`reading ${scriptClass(lang)}`} lang={lang}>
+        <p
+          className={`reading ${scriptClass(lang)}`}
+          data-long={text.split(/\s+/).length > LONG_PART_WORDS}
+          lang={lang}
+        >
           {text || <Tx k="recovery.noStory" />}
         </p>
         <div className="page-foot">

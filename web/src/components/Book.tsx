@@ -7,7 +7,6 @@ import { t, type CopyKey } from "../i18n";
 import { useDocumentTitle } from "../state/useDocumentTitle";
 import { scriptClass, type Lang } from "../theme/script";
 import { PICTURE_PATHS, type PictureName } from "./pictureShapes";
-import { wordStatus, type WordStatus } from "./WordChip";
 import { CheckIcon, MicIcon, QuestionIcon, SwapIcon, VolumeIcon } from "./icons";
 
 /* The child's screens, assembled from a few parts that never style themselves differently:
@@ -225,6 +224,16 @@ export function Slate({ children, className }: { children: ReactNode; className?
   return <div className={["slate", className].filter(Boolean).join(" ")}>{children}</div>;
 }
 
+export type WordStatus = "correct" | "substituted" | "skipped" | "uncertain";
+
+/** A scorer word (`op` + `check`) as one of the four marks. */
+export function wordStatus(w: { op: string; check?: boolean }): WordStatus {
+  if (w.check) return "uncertain";
+  if (w.op === "substituted") return "substituted";
+  if (w.op === "skipped") return "skipped";
+  return "correct";
+}
+
 export type TileState = "idle" | "lit" | "ok";
 
 /** One akshara in chalk on its own tile. */
@@ -271,11 +280,28 @@ const MARK_SAID: Record<WordStatus, CopyKey> = {
  * read as another word (turmeric, swap), skipped (an empty laterite dot), not sure (ink,
  * question mark). Tap a word to hear it. Marks never rely on colour alone.
  */
-export function MarkedText({ words, lang }: { words: WordOut[]; lang: Lang }) {
+const MARK_SAID_EN: Record<WordStatus, string> = {
+  correct: "read correctly",
+  substituted: "read as a different word",
+  skipped: "skipped",
+  uncertain: "check this word",
+};
+
+export function MarkedText({
+  words,
+  lang,
+  forTeacher = false,
+}: {
+  words: WordOut[];
+  lang: Lang;
+  /** On a teacher screen the marks are named in English, with the word that was heard. */
+  forTeacher?: boolean;
+}) {
   return (
-    <p className={`marked ${scriptClass(lang)}`} lang={lang}>
+    <p className={`marked ${scriptClass(lang)}`} lang={lang} data-long={words.length > 10}>
       {words.map((w, i) => {
         const status = wordStatus(w);
+        const heard = forTeacher && status === "substituted" && w.said ? w.said : null;
         return (
           <span key={`${w.index ?? i}-${w.word ?? ""}`}>
             <button
@@ -283,6 +309,7 @@ export function MarkedText({ words, lang }: { words: WordOut[]; lang: Lang }) {
               // keep-motion: under reduced motion the marks still fade in (no rise); see book.css.
               className="mark keep-motion"
               data-status={status}
+              title={heard ? `Heard as ${heard}` : undefined}
               style={{ "--i": i } as CSSProperties}
               onClick={() => void play(w.word ?? "", lang)}
             >
@@ -290,7 +317,14 @@ export function MarkedText({ words, lang }: { words: WordOut[]; lang: Lang }) {
               <span className="mark__sign" aria-hidden="true">
                 {MARK_ICON[status]}
               </span>
-              <span className="sr-only">, {t(lang, MARK_SAID[status])}</span>
+              {forTeacher ? (
+                <span className="sr-only" lang="en">
+                  , {MARK_SAID_EN[status]}
+                  {heard ? `, heard as ${heard}` : ""}
+                </span>
+              ) : (
+                <span className="sr-only">, {t(lang, MARK_SAID[status])}</span>
+              )}
             </button>{" "}
           </span>
         );

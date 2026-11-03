@@ -3,7 +3,8 @@ import axe from "axe-core";
 import { MemoryRouter, useNavigate } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 import { App } from "./App";
-import { WordChip } from "./components/WordChip";
+import { MarkedText } from "./components";
+import { t } from "./i18n";
 import theme from "./theme/theme.css?raw";
 
 const ROUTES = [
@@ -87,9 +88,14 @@ describe("keyboard and screen readers", () => {
   });
 
   it("says a word's result aloud, not only with colour and icon", () => {
-    render(<WordChip status="skipped" word="ಮನೆ" lang="kn-IN" />);
+    const words = [{ op: "skipped" as const, word: "ಮನೆ", said: null, index: 0, check: false }];
+    const { unmount } = render(<MarkedText words={words} lang="kn-IN" />);
+    // The child hears it in their language; the teacher in English.
+    expect(screen.getByText(new RegExp(t("kn-IN", "chip.skipped")))).toBeTruthy();
+    expect(screen.getByText("ಮನೆ").closest("[lang]")?.getAttribute("lang")).toBe("kn-IN");
+    unmount();
+    render(<MarkedText words={words} lang="kn-IN" forTeacher />);
     expect(screen.getByText(/skipped/)).toBeTruthy();
-    expect(screen.getByText("ಮನೆ").getAttribute("lang")).toBe("kn-IN");
   });
 
   it("marks native-script text with its language", () => {
@@ -121,25 +127,29 @@ function contrast(a: string, b: string): number {
 describe("theme contrast (WCAG AA)", () => {
   // Text pairs the stylesheets actually use: 4.5:1.
   const text: [string, string][] = [
-    ["color-text-primary", "color-background"],
-    ["color-on-brand", "color-brand-primary"], // primary button, mic button (reading hue)
-    ["hue-read-ink", "hue-read"], // each activity's ink on its own hue
-    ["hue-practice-ink", "hue-practice"],
-    ["hue-reward-ink", "hue-reward"],
-    ["hue-teacher-ink", "hue-teacher"],
-    ["hue-read-deep", "color-surface"], // a hue's deep shade as text on a card
-    ["hue-practice-deep", "color-surface"],
-    ["hue-reward-deep", "color-surface"],
-    ["color-text-primary", "hue-read-soft"], // text on an activity's soft field
-    ["color-text-primary", "hue-practice-soft"],
-    ["color-text-primary", "hue-reward-soft"],
-    ["color-text-primary", "color-background-soft"], // language badge, avatar, active tab
-    ["color-text-secondary", "color-background-soft"], // info banner
-    ["color-on-accent", "color-secondary"], // secondary button, skip link
-    ["color-secondary", "color-background"], // ghost button
-    ["color-muted", "color-background"],
-    ["color-muted", "color-surface-muted"],
-    ["color-danger-text", "color-surface"], // field errors, delete button
+    ["ink", "limewash"], // text on the wall
+    ["rice", "ink"], // the register's action, the skip link
+    ["ink-2", "limewash"], // a register's status sentence
+    ["ink-2", "peacock-wash"], // a banner
+    ["ink-muted", "rice"],
+    ["color-danger-text", "rice"], // field errors, the delete button
+    ["leaf-deep", "leaf-wash"], // "on target", the benchmark
+    ["turmeric-deep", "turmeric-wash"], // "practise together"
+    // The picture book that listens (DESIGN.md).
+    ["ink", "rice"], // the book page
+    ["ink-2", "rice"],
+    ["ink-muted", "rice"], // credits, hints
+    ["ink-muted", "limewash"], // the wall
+    ["rice", "peacock"], // the action on the book
+    ["ink", "turmeric"], // the action on the slate, a lit tile
+    ["ink", "turmeric-wash"], // a word read as another
+    ["chalk", "slate"], // the slate
+    ["chalk", "slate-2"], // a tile
+    ["chalk-dim", "slate"], // the word count on the slate
+    ["rice", "leaf-deep"], // a tile read right
+    ["leaf-deep", "rice"], // a tick, "on target"
+    ["turmeric-deep", "rice"], // "practise together"
+    ["peacock", "peacock-wash"], // a register group
   ];
   for (const [fg, bg] of text) {
     it(`${fg} on ${bg} is at least 4.5:1`, () => {
@@ -148,7 +158,9 @@ describe("theme contrast (WCAG AA)", () => {
   }
 
   // Icon on a control: 3:1 (non-text contrast). The disabled "processing" mic is exempt.
-  it("the stop icon on the recording button is at least 3:1", () => {
-    expect(contrast(token("color-on-accent"), token("color-feedback-danger"))).toBeGreaterThanOrEqual(3);
+  // Non-text contrast: 3:1 for the edges that hold meaning.
+  it("a field's edge and a skipped word's dot are at least 3:1", () => {
+    expect(contrast(token("ink-muted"), token("rice"))).toBeGreaterThanOrEqual(3);
+    expect(contrast(token("laterite"), token("rice"))).toBeGreaterThanOrEqual(3);
   });
 });

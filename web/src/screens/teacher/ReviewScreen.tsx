@@ -2,8 +2,17 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { api, isMock } from "../../api";
 import type { ReviewItem, ReviewResult } from "../../api/types";
-import { Button, Card, EmptyState, PageHeader, Select, StatusBadge } from "../../components";
+import {
+  Button,
+  CheckIcon,
+  EmptyState,
+  PageHeader,
+  Select,
+  StatusBadge,
+  SwapIcon,
+} from "../../components";
 import { useLoad } from "../../state/useLoad";
+import { load as loadChild } from "../../state/storage";
 import { scriptClass, type Lang } from "../../theme/script";
 import { shortDate } from "./ChildProfile";
 import { TEACHER_NAV } from "./nav";
@@ -24,7 +33,8 @@ const itemKey = (i: ReviewItem) => `${i.kind}/${i.request_id ?? i.child_id}/${i.
  */
 export function ReviewScreen() {
   const navigate = useNavigate();
-  const [lang, setLang] = useState<Lang>("kn-IN");
+  // The class's language: the one this device last read in.
+  const [lang, setLang] = useState<Lang>(() => loadChild().lang);
   const { data, error } = useLoad(() => api.reviewQueue(lang), [lang]);
   const [gone, setGone] = useState<Set<string>>(new Set());
   const [later, setLater] = useState<string[]>([]);
@@ -101,15 +111,12 @@ export function ReviewScreen() {
   return (
     <>
       <PageHeader back backTo="/teacher" nav={TEACHER_NAV} />
-      <div className="screen-body">
-        <h1 className="card__title">Words to hear</h1>
-        <p className="reader-meta">
-          The speech service can mishear a child. Listen to these words and set the mark yourself;
-          your mark replaces the computer’s everywhere.
-        </p>
+      <div className="register-page">
+        <div className="register-head">
+          <h1 className="register-head__title">Words to hear</h1>
+        </div>
 
-        <div className="workspace workspace--w300">
-          <div className="stack">
+        <div className="register-filters">
             <Select
               label="Language"
               value={lang}
@@ -123,20 +130,23 @@ export function ReviewScreen() {
                 { value: "hi-IN", label: "हिंदी · Hindi" },
               ]}
             />
-            {data && (
-              <p className="note" role="status">
-                {queue.length} {queue.length === 1 ? "item" : "items"} left
-              </p>
-            )}
-            <Card>
-              <p className="eyebrow">Keyboard</p>
-              <p className="note">
-                Space plays. 1 correct, 2 misread, 3 skipped. The right arrow goes on.
-              </p>
-            </Card>
-          </div>
+        </div>
 
-          <div className="stack">
+        <p className="register-status">
+          The speech service can mishear a child. Listen to these words and set the mark yourself;
+          your mark replaces the computer’s everywhere.
+          {data && (
+            <strong role="status">
+              {" "}
+              {queue.length} {queue.length === 1 ? "item" : "items"} left
+            </strong>
+          )}
+          <span className="register-status__goal register-status__keys">
+            Keyboard: Space plays. 1 correct, 2 misread, 3 skipped. The right arrow goes on.
+          </span>
+        </p>
+
+        <div className="review-stage">
             {error ? (
               <EmptyState title="Could not load the queue">
                 <p className="note">Check the connection, then open this page again.</p>
@@ -153,12 +163,12 @@ export function ReviewScreen() {
                 </Link>
               </EmptyState>
             ) : item.kind === "placement" ? (
-              <Card>
-                <p className="eyebrow">
+              <article className="book-page book-page--teacher">
+                <p className="register__meta">
                   {item.child} · reading level <StatusBadge tone="warning">Listen again</StatusBadge>
                 </p>
-                <p className="reader-name">{item.reason}</p>
-                <div className="actions">
+                <p className="card__title">{item.reason}</p>
+                <div className="register-actions">
                   <Button onClick={() => navigate(`/teacher/child/${item.child_id}/placement`)}>
                     Check {item.child.split(" ")[0]}’s level again
                   </Button>
@@ -166,10 +176,10 @@ export function ReviewScreen() {
                     Later
                   </Button>
                 </div>
-              </Card>
+              </article>
             ) : (
-              <Card>
-                <p className="eyebrow">
+              <article className="book-page book-page--teacher">
+                <p className="register__meta">
                   {item.child} · {shortDate(item.at)} ·{" "}
                   <span className={scriptClass(lang)} lang={lang}>
                     {item.title ?? item.passage_id}
@@ -216,15 +226,26 @@ export function ReviewScreen() {
 
                 <div className="review-marks" role="group" aria-label="Your mark">
                   {MARKS.map((m) => (
-                    <Button
+                    <button
+                      type="button"
                       key={m.result}
-                      variant={m.result === "correct" ? "primary" : "outline"}
+                      className="review-mark"
+                      data-result={m.result}
                       disabled={saving}
                       onClick={() => void mark(m.result)}
                       aria-keyshortcuts={m.key}
                     >
+                      <span className="review-mark__sign" aria-hidden="true">
+                        {m.result === "correct" ? (
+                          <CheckIcon width={18} height={18} />
+                        ) : m.result === "misread" ? (
+                          <SwapIcon width={18} height={18} />
+                        ) : (
+                          <i className="mark-legend__dot" />
+                        )}
+                      </span>
                       {m.label} ({m.key})
-                    </Button>
+                    </button>
                   ))}
                   <Button variant="ghost" onClick={skip} aria-keyshortcuts="ArrowRight">
                     Later (→)
@@ -235,9 +256,8 @@ export function ReviewScreen() {
                     {failed}
                   </p>
                 )}
-              </Card>
+              </article>
             )}
-          </div>
         </div>
       </div>
     </>

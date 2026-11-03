@@ -5,9 +5,6 @@
    ============================================================================ */
 
 /* ---------- The frame: top bar, focal object, one action ---------- */
-.app-main:has(> .frame) {
-  max-width: 100%;
-}
 .frame {
   --frame-pad-top: max(var(--s-8), env(safe-area-inset-top, 0px));
   --frame-pad-bottom: max(var(--s-16), env(safe-area-inset-bottom, 0px));
@@ -343,7 +340,8 @@
   translate: 0 calc(var(--s-8) * -1);
 }
 .tile[data-state="ok"] {
-  background: var(--leaf);
+  /* Deep leaf: rice on plain leaf is under 4.5:1. */
+  background: var(--leaf-deep);
   color: var(--rice);
 }
 .tiles[data-state="ok"] {
@@ -572,9 +570,6 @@
   margin-inline: auto;
   padding: var(--s-24) var(--gutter-x) var(--s-48);
   color: var(--ink);
-}
-.app-main:has(> .register-page) {
-  max-width: 100%;
 }
 .register-head {
   display: flex;
@@ -836,5 +831,283 @@
   }
   .register__child:hover .register__name {
     text-decoration: underline;
+  }
+}
+
+/* Long parts (a live story's part runs to 20 words): the type steps down, the picture gives
+   way first, and if the words still do not fit they scroll inside the page, never under the
+   action. */
+.reading[data-long="true"],
+.marked[data-long="true"] {
+  font-size: clamp(1.5rem, 1rem + 2.4vw, 2.25rem);
+}
+.marked[data-long="true"] {
+  line-height: 1.6;
+}
+.book-page__text {
+  flex: 0 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.book-page__art {
+  min-height: 72px;
+}
+
+/* ---------- Register pages beyond the class list ---------- */
+.register-head__who {
+  display: flex;
+  align-items: center;
+  gap: var(--s-12);
+  min-width: 0;
+}
+.register-head__who .register-head__title {
+  overflow-wrap: anywhere;
+}
+.register-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-16);
+  margin-top: calc(var(--s-8) * -1);
+}
+.register-links .link-button {
+  padding: 0;
+  font-size: var(--type-label);
+}
+.register-section {
+  margin: var(--s-16) 0 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+.register__open {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 700;
+  color: var(--ink);
+}
+/* The sounds a child is working on, as chalk on slate tiles (the same tiles as practice). */
+.sounds {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-16);
+  padding: var(--pad-surface);
+  border-radius: var(--r-tile);
+  background: var(--rice);
+  box-shadow: var(--shadow-page);
+}
+.sounds__row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-8);
+}
+.sounds__label {
+  margin: 0;
+  font-size: var(--type-label);
+  font-weight: 700;
+  color: var(--ink-2);
+}
+.sounds__tiles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-8);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.sound {
+  display: grid;
+  place-items: center;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 var(--s-8);
+  border-radius: var(--r-inner);
+  background: var(--limewash);
+  color: var(--ink);
+  font-size: 1.375rem;
+  font-weight: 600;
+  line-height: 1;
+}
+.sound--now {
+  background: var(--slate);
+  color: var(--chalk);
+}
+.sound--more {
+  background: none;
+  font-size: var(--type-label);
+  color: var(--ink-muted);
+}
+.progress-page {
+  margin: 0;
+  padding: var(--pad-surface);
+  border-radius: var(--r-tile);
+  background: var(--rice);
+  box-shadow: var(--shadow-page);
+}
+.register-page .chart__bar {
+  background: var(--ink-muted);
+}
+.register-page .chart__bar--ok {
+  background: var(--leaf);
+}
+.register-page .benchmarkband {
+  align-self: flex-start;
+  background: var(--leaf-wash);
+  color: var(--ink);
+}
+
+/* The teacher's reading page: the same marked page the child saw, plus a key. */
+.book-page--teacher {
+  flex: none;
+  gap: var(--s-12);
+}
+.book-page--teacher .marked {
+  font-size: clamp(1.5rem, 1.1rem + 2vw, 2.25rem);
+}
+.mark-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-8) var(--s-16);
+  margin: 0;
+  font-size: var(--type-label);
+  color: var(--ink-2);
+}
+.mark-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-4);
+}
+.mark-legend svg {
+  color: var(--ink);
+}
+.mark-legend__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 3px solid var(--laterite);
+}
+.heard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-8);
+}
+.heard__text {
+  margin: 0;
+  font-size: 1.375rem;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+.practise-word {
+  font-size: 1.75rem;
+  font-weight: 500;
+}
+.register-status p {
+  margin: 0;
+}
+
+/* The child's picture, chosen by the teacher: chalk marks on small slates. */
+.picture-pick {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--s-8);
+}
+.picture-pick__option {
+  display: grid;
+  place-items: center;
+  min-height: 56px;
+  padding: var(--s-4);
+  border: 2px solid transparent;
+  border-radius: var(--r-tile);
+  background: none;
+  cursor: pointer;
+  transition: transform var(--t-press) var(--ease-out);
+}
+.picture-pick__option:active {
+  transform: scale(0.97);
+}
+.picture-pick__option .child-mark {
+  width: 48px;
+  height: 48px;
+}
+.picture-pick__option[data-taken="true"] .child-mark {
+  opacity: 0.45;
+}
+.picture-pick__option[aria-checked="true"] {
+  border-color: var(--ink);
+}
+.picture-pick__option[aria-checked="true"] .child-mark {
+  opacity: 1;
+}
+
+/* The older passage card (placement, story choice) becomes a book page: rice, one soft
+   shadow, no accent bar. */
+.passage-card {
+  border: 0;
+  border-radius: var(--r-page);
+  background: var(--rice);
+  box-shadow: var(--shadow-page);
+}
+.passage-card__accent {
+  display: none;
+}
+
+/* The teacher's mark on a word: the same signs as the child's page (tick, swap, empty dot). */
+.review-marks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-8);
+}
+.review-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-8);
+  min-height: 52px;
+  padding: 0 var(--s-16);
+  border: 2px solid var(--register-line);
+  border-radius: var(--r-pill);
+  background: var(--rice);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform var(--t-press) var(--ease-out);
+}
+.review-mark:active:not(:disabled) {
+  transform: scale(0.97);
+}
+.review-mark:disabled {
+  opacity: 0.55;
+}
+.review-mark[data-result="correct"] {
+  border-color: var(--leaf-deep);
+  background: var(--leaf-wash);
+}
+.review-mark[data-result="correct"] .review-mark__sign {
+  color: var(--leaf-deep);
+}
+.review-mark[data-result="misread"] {
+  border-color: var(--turmeric);
+  background: var(--turmeric-wash);
+}
+.review-mark[data-result="misread"] .review-mark__sign {
+  color: var(--turmeric-deep);
+}
+.review-mark[data-result="skipped"] {
+  border-color: var(--laterite);
+}
+.review-mark__sign {
+  display: grid;
+  place-items: center;
+}
+
+/* The book opens sideways only for a child's picture and text; a teacher's page and a
+   recovery note stay one column. */
+@media (min-width: 600px) and (orientation: landscape) {
+  .book-page--teacher,
+  .book-page--note,
+  .book-page--sentence {
+    flex-direction: column;
+    align-items: stretch;
   }
 }

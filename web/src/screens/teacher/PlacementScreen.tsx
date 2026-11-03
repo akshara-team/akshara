@@ -5,12 +5,11 @@ import { RecordingError, createRecorder, type Recorder } from "../../api/mock";
 import type { Level, MarkState, Placement } from "../../api/types";
 import {
   Button,
-  Card,
+  CheckIcon,
   EmptyState,
-  MicButton,
   PageHeader,
+  QuestionIcon,
   StatusBadge,
-  WordChip,
 } from "../../components";
 import { useLoad } from "../../state/useLoad";
 import { scriptClass, type Lang } from "../../theme/script";
@@ -39,10 +38,16 @@ const NEXT_MARK: Record<MarkState, MarkState> = {
   unsure: "correct",
 };
 
-const CHIP: Record<MarkState, "correct" | "skipped" | "uncertain"> = {
+/** A placement mark, drawn with the reading marks (book.css): right, missed, not sure. */
+const MARK: Record<MarkState, "correct" | "skipped" | "uncertain"> = {
   correct: "correct",
   error: "skipped",
   unsure: "uncertain",
+};
+const MARK_SAID: Record<MarkState, string> = {
+  correct: "right",
+  error: "missed",
+  unsure: "not sure",
 };
 
 /**
@@ -71,8 +76,10 @@ export function PlacementScreen() {
   return (
     <>
       <PageHeader back backTo={`/teacher/child/${id}`} nav={NAV} />
-      <div className="screen-body">
-        <h1 className="card__title">Find {name}’s reading level</h1>
+      <div className="register-page">
+        <div className="register-head">
+          <h1 className="register-head__title">Find {name}’s reading level</h1>
+        </div>
 
         {failed || child.error ? (
           <EmptyState title={failed ?? "Child not found"}>
@@ -168,119 +175,147 @@ function Step({
 
   const right = marks?.filter((m) => m === "correct").length ?? 0;
   const unsure = marks?.filter((m) => m === "unsure").length ?? 0;
+  const spaced = item.task === "letters" || item.task === "words";
 
   return (
-    <div className="workspace workspace--w320">
-      <div className="stack">
-        <Card>
-          <p className="eyebrow">
-            Step {placement.done.length + 1} · {task.name}
-          </p>
-          <p className="reader-name">{task.ask}</p>
-          <p className="note">Passes at {task.pass} right. Read once, without help.</p>
-        </Card>
-        {placement.done.length > 0 && (
-          <ol className="steps">
-            {placement.done.map((d, i) => (
-              <li className="steps__item" key={i}>
-                <span className="steps__num">{i + 1}</span>
-                <span>
-                  {TASK[d.task].name}: {d.states.filter((s) => s === "correct").length} of{" "}
-                  {d.states.length} right · {d.outcome === "open" ? "one more item" : d.outcome}
-                </span>
-              </li>
-            ))}
-          </ol>
-        )}
-      </div>
+    <>
+      {/* One status sentence: which step, what the child does, what passes. */}
+      <p className="register-status">
+        <strong>
+          Step {placement.done.length + 1} · {task.name}.
+        </strong>{" "}
+        {task.ask} Passes at {task.pass} right. Read once, without help.
+      </p>
 
-      <div className="stack">
-        <div className="passage-card">
-          <div className="passage-card__accent" aria-hidden="true" />
+      {placement.done.length > 0 && <DoneSteps placement={placement} />}
+
+      <article className="book-page book-page--teacher">
+        {!marks ? (
           <p
-            className={`reading-text ${scriptClass(lang)} ${item.task === "letters" || item.task === "words" ? "reading-text--spaced" : ""}`}
+            className={`reading ${scriptClass(lang)} ${spaced ? "reading--spaced" : ""}`}
             lang={lang}
           >
             {item.text}
           </p>
-        </div>
-
-        {!marks ? (
-          <div className="controls">
-            <MicButton
-              state={phase === "recording" ? "recording" : phase === "idle" ? "idle" : "processing"}
-              onClick={mic}
-              label={phase === "recording" ? "Stop recording" : "Record the child reading"}
-            />
-            <p className="controls__label">
-              {phase === "recording"
-                ? "Recording · tap to stop"
-                : phase === "checking"
-                  ? "Checking…"
-                  : "Record the child reading"}
-            </p>
-            <Button
-              variant="ghost"
-              onClick={() => setMarks(item.words.map(() => "correct"))}
-              disabled={phase !== "idle"}
-            >
-              Mark by ear instead
-            </Button>
-          </div>
         ) : (
           <>
-            <p className="step__label">
+            <p className="sounds__label" role="status">
               Tap a word to change its mark · {right} of {marks.length} right
               {unsure ? ` · ${unsure} unsure` : ""}
             </p>
-            <div className="chips" role="group" aria-label="Marks">
+            <p
+              className={`marked ${scriptClass(lang)} ${spaced ? "marked--spaced" : ""}`}
+              lang={lang}
+              role="group"
+              aria-label="Marks"
+            >
               {item.words.map((w, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  className="chip-button"
-                  aria-label={`${w}: ${marks[i]}. Tap to change.`}
-                  // From the latest marks, so quick taps in a row all count.
-                  onClick={() =>
-                    setMarks((prev) => prev && prev.map((m, k) => (k === i ? NEXT_MARK[m] : m)))
-                  }
-                >
-                  <WordChip status={CHIP[marks[i]]} word={w} lang={lang} />
-                </button>
+                <span key={i}>
+                  <button
+                    type="button"
+                    className="mark mark--still"
+                    data-status={MARK[marks[i]]}
+                    aria-label={`${w}: ${MARK_SAID[marks[i]]}. Tap to change.`}
+                    // From the latest marks, so quick taps in a row all count.
+                    onClick={() =>
+                      setMarks((prev) => prev && prev.map((m, k) => (k === i ? NEXT_MARK[m] : m)))
+                    }
+                  >
+                    <span className="mark__word">{w}</span>
+                    <span className="mark__sign" aria-hidden="true">
+                      {MARK[marks[i]] === "correct" ? (
+                        <CheckIcon width={16} height={16} />
+                      ) : MARK[marks[i]] === "uncertain" ? (
+                        <QuestionIcon width={16} height={16} />
+                      ) : null}
+                    </span>
+                  </button>{" "}
+                </span>
               ))}
-            </div>
+            </p>
             {heard !== null && (
-              <p className="note">
+              <p className="heard__line">
                 Heard:{" "}
                 <span className={scriptClass(lang)} lang={lang}>
                   {heard || "nothing"}
                 </span>
               </p>
             )}
-            <div className="actions">
-              <Button block onClick={confirm} disabled={phase === "saving"}>
-                {phase === "saving" ? "Saving…" : "Confirm and continue"}
-              </Button>
-              <Button
-                variant="ghost"
-                block
-                onClick={() => {
-                  setMarks(null);
-                  setHeard(null);
-                }}
-              >
-                Start this item again
-              </Button>
-            </div>
           </>
         )}
+      </article>
 
-        {problem && (
-          <p className="field__error" role="alert">
-            {problem}
-          </p>
-        )}
-      </div>
+      {!marks ? (
+        <div className="register-actions">
+          <Button
+            icon={phase === "recording" ? "none" : "mic"}
+            onClick={mic}
+            disabled={phase === "checking" || phase === "saving"}
+            aria-pressed={phase === "recording"}
+          >
+            {phase === "recording"
+              ? "Stop recording"
+              : phase === "checking"
+                ? "Checking…"
+                : "Record the child reading"}
+          </Button>
+          <button
+            type="button"
+            className="link-button"
+            onClick={() => setMarks(item.words.map(() => "correct"))}
+            disabled={phase !== "idle"}
+          >
+            Mark by ear instead
+          </button>
+        </div>
+      ) : (
+        <div className="register-actions">
+          <Button onClick={confirm} disabled={phase === "saving"}>
+            {phase === "saving" ? "Saving…" : "Confirm and continue"}
+          </Button>
+          <button
+            type="button"
+            className="link-button"
+            onClick={() => {
+              setMarks(null);
+              setHeard(null);
+            }}
+          >
+            Start this item again
+          </button>
+        </div>
+      )}
+
+      {problem && (
+        <p className="field__error" role="alert">
+          {problem}
+        </p>
+      )}
+    </>
+  );
+}
+
+/** The items done so far, as ruled rows. */
+function DoneSteps({ placement }: { placement: Placement }) {
+  return (
+    <div className="register">
+      <table className="register__table">
+        <tbody>
+          {placement.done.map((d, i) => (
+            <tr key={i} className="register__row">
+              <td>
+                <strong>
+                  {i + 1}. {TASK[d.task].name}
+                </strong>
+              </td>
+              <td className="num">
+                {d.states.filter((x) => x === "correct").length} of {d.states.length} right
+              </td>
+              <td>{d.outcome === "open" ? "one more item" : d.outcome}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
@@ -296,40 +331,27 @@ function Result({
 }) {
   const level = LEVEL_TEXT[placement.level ?? "beginner"];
   return (
-    <div className="stack">
-      <Card>
-        <p className="eyebrow">Reading level</p>
-        <p className="card__title">
-          {level.name}{" "}
-          {placement.uncertain && <StatusBadge tone="warning">Listen again</StatusBadge>}
-        </p>
-        <p className="note">
-          {name} {level.means}. Stories will start at this level and move up as {name} reads
-          well.
-        </p>
+    <>
+      <p className="register-status">
+        Reading step <strong>{level.name}</strong>
         {placement.uncertain && (
-          <p className="note">
-            Some words were hard to judge from the recording. Listen to {name} read once more
-            before relying on this level.
-          </p>
+          <>
+            {" "}
+            <StatusBadge tone="warning">Listen again</StatusBadge>
+          </>
         )}
-      </Card>
-      <ol className="steps">
-        {placement.done.map((d, i) => (
-          <li className="steps__item" key={i}>
-            <span className="steps__num">{i + 1}</span>
-            <span>
-              {TASK[d.task].name}: {d.states.filter((s) => s === "correct").length} of{" "}
-              {d.states.length} right · {d.outcome}
-            </span>
-          </li>
-        ))}
-      </ol>
-      <div className="actions">
-        <Button block onClick={onDone}>
-          Back to {name}
-        </Button>
+        . {name} {level.means}. Stories will start at this step and move up as {name} reads well.
+        {placement.uncertain && (
+          <span className="register-status__goal">
+            Some words were hard to judge from the recording. Listen to {name} read once more
+            before relying on this step.
+          </span>
+        )}
+      </p>
+      <DoneSteps placement={placement} />
+      <div className="register-actions">
+        <Button onClick={onDone}>Back to {name}</Button>
       </div>
-    </div>
+    </>
   );
 }

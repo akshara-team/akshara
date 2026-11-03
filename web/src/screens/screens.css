@@ -1,373 +1,90 @@
-/* Hallmark · shape: app screen · genre: playful · theme: brand · redesign: full · paper: #fffdf5 · accent: #fde047 · display: Inter · body: Inter · axes: light/grotesk-sans/warm · posture: settled · contrast: pass · v2.0.0 */
-/* Hallmark · pre-emit critique: P proportion · H hierarchy · E emphasis · S restraint · R rhythm · V verbatim · weakest: S, four listen affordances on the reading screen cut to one action and one helper */
-/* Hallmark · waive 37 · three slots, display Inter, body Inter, one Noto face per script · the child reads Kannada, Tamil and Hindi, so three faces are the material and the stacks are their fallbacks */
-/* Hallmark · dismissed 49 · the role card's label is its two-line block, not a link string */
-/* Hallmark · dismissed F4 · one filled primary per screen; blue is the quiet action ink, the yellow mic is the reading action */
-/* Child-flow screens — layout mirrors the Figma frames (375 x 812). */
+/* ============================================================================
+   Teacher pages beyond the class list: the parts that are theirs alone. The
+   register itself (page, head, status sentence, ruled rows) is in book.css.
+   ============================================================================ */
 
-.screen-body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-16);
-  padding: var(--space-20);
-}
-
-/* ---------- Hero + greeting (role selection, choose reader) ---------- */
-.hero {
-  background: var(--color-brand-primary);
-  padding: var(--space-24) var(--space-20);
-  border-bottom-left-radius: var(--radius-16);
-  border-bottom-right-radius: var(--radius-16);
-}
-.hero__title {
+/* ---------- Shared small print and stacks ---------- */
+.note {
   margin: 0;
-  font-size: var(--text-heading-1);
-  font-weight: var(--font-weight-bold);
+  color: var(--ink-2);
+  font-size: var(--type-label);
+  line-height: 1.5;
 }
-.hero__sub {
-  margin: var(--space-4) 0 0;
-  font-size: var(--text-body);
-}
-
-/* A quiet label, sentence case and untracked: the heading carries the weight. */
-.eyebrow {
-  margin: 0;
-  font-size: var(--text-meta);
-  letter-spacing: normal;
-  text-transform: none;
-  font-weight: var(--font-weight-medium);
-  color: var(--color-muted);
-}
-.greeting {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
-.greeting__school {
-  margin: 0;
-  font-weight: var(--font-weight-semibold);
-}
-.greeting__hello {
-  margin: 0;
-  font-size: var(--text-heading-3);
-}
-
-.step {
-  display: flex;
-  align-items: center;
-  gap: var(--space-12);
-}
-.step__num {
-  width: var(--size-step-num);
-  height: var(--size-step-num);
-  flex: none;
-  display: grid;
-  place-items: center;
-  border-radius: var(--radius-pill);
-  background: var(--color-brand-primary);
-  font-weight: var(--font-weight-bold);
-}
-.step__label {
-  font-weight: var(--font-weight-semibold);
-}
-
 .stack {
   display: flex;
   flex-direction: column;
-  gap: var(--space-12);
+  gap: var(--s-12);
 }
-.stack--tight {
-  gap: var(--space-8);
+.section-title {
+  margin: var(--s-16) 0 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--ink);
 }
-
-.rolecard {
-  display: flex;
-  align-items: center;
-  gap: var(--space-16);
-  padding: var(--space-16);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-16);
-  background: var(--color-surface);
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-  width: 100%;
-}
-.rolecard__icon {
-  display: flex;
-  align-items: center;
-  color: var(--color-text-primary);
-}
-.rolecard__title {
-  display: block;
-  font-weight: var(--font-weight-bold);
-}
-.rolecard__sub {
-  display: block;
-  color: var(--color-text-secondary);
-  font-size: var(--text-secondary);
-}
-.rolecard__arrow {
-  margin-left: auto;
-  font-size: var(--text-heading-3);
-}
-
-.note {
-  margin: 0;
-  color: var(--color-muted);
-  font-size: var(--text-meta);
-}
-
-/* ---------- Choose reader ---------- */
-.reader-row {
-  display: flex;
-  align-items: center;
-  gap: var(--space-12);
-  padding: var(--space-12) var(--space-16);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-16);
-  background: var(--color-surface);
-  width: 100%;
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-}
-.reader-row--selected {
-  border-color: var(--color-brand-primary);
-  background: var(--color-surface-selected);
-}
-.reader-info {
+.plain-list {
   display: flex;
   flex-direction: column;
-}
-.reader-name {
-  font-weight: var(--font-weight-semibold);
-}
-.reader-meta {
-  color: var(--color-text-secondary);
-  font-size: var(--text-secondary);
-}
-.reader-check {
-  margin-left: auto;
-  color: var(--color-feedback-success);
-  font-weight: var(--font-weight-bold);
-}
-
-/* ---------- Reading ---------- */
-.metarow {
-  display: flex;
-  align-items: center;
-  gap: var(--space-12);
-}
-.metarow__text {
-  display: flex;
-  flex-direction: column;
-}
-.metarow__title {
-  font-size: var(--text-heading-3);
-  font-weight: var(--font-weight-semibold);
-}
-
-.context {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-8);
-}
-.context__row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: var(--text-secondary);
-  color: var(--color-text-secondary);
-}
-
-.passage-card {
-  position: relative;
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-16);
-  padding: var(--space-24) var(--space-20);
-  background: var(--color-surface);
-  min-height: var(--size-reading-min);
-}
-.passage-card__accent {
-  position: absolute;
-  inset: var(--space-8) var(--space-20) auto;
-  height: var(--size-accent-bar);
-  border-radius: var(--radius-pill);
-  background: var(--color-brand-primary);
-}
-.passage-text {
-  margin: var(--space-16) 0 0;
-  color: var(--color-text-primary);
-}
-
-.controls {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-12);
-  margin-top: auto;
-}
-.controls__label {
+  gap: var(--s-8);
   margin: 0;
-  font-size: var(--text-heading-3);
-  font-weight: var(--font-weight-semibold);
-  text-align: center;
+  padding-left: var(--s-24);
+  color: var(--ink);
+  line-height: 1.5;
 }
-.controls__desc {
-  margin: 0;
-  color: var(--color-text-secondary);
-  font-size: var(--text-secondary);
-  text-align: center;
-}
-.controls__timer {
-  margin: 0;
-  color: var(--color-feedback-danger);
-  font-weight: var(--font-weight-semibold);
-  font-variant-numeric: tabular-nums;
-}
-
-/* Numbers line up in tables and stat cards. */
-.statcard__value,
-.metric__value,
-.reading-row,
-.roster-table td,
-.table td {
-  font-variant-numeric: tabular-nums;
-}
-
-/* ---------- Feedback ---------- */
-.feedback-hero {
-  background: var(--color-brand-primary);
-  padding: var(--space-20);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
-.feedback-hero__title {
-  margin: 0;
-  font-size: var(--text-heading-2);
-  font-weight: var(--font-weight-bold);
-}
-.feedback-hero__sub {
-  margin: 0;
-  color: var(--color-text-secondary);
-  font-size: var(--text-secondary);
-}
-
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-8);
-}
-.legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-12);
-  font-size: var(--text-meta);
-  color: var(--color-muted);
-}
-.legend span {
+.screen__link {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-4);
+  min-height: 44px;
+  color: var(--ink);
+  font-weight: 700;
 }
 
-.practice {
+/* The row of controls under a register's content: the action first, then quieter ones. */
+.register-actions {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-8);
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-12);
 }
-.practice__eyebrow {
+.register-status__keys {
+  display: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .register-status__keys {
+    display: block;
+  }
+}
+/* A folded list (approved sentences): a summary line, then ruled items. */
+.register-more {
+  padding: var(--s-16) var(--pad-surface);
+  border-radius: var(--r-tile);
+  background: var(--rice);
+  box-shadow: var(--shadow-page);
+}
+.register-more summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  cursor: pointer;
+}
+.register-list {
   margin: 0;
-  font-size: var(--text-meta);
-  color: var(--color-muted);
+  padding: 0;
+  list-style: none;
 }
-.practice__row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-12);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-12);
-  padding: var(--space-8) var(--space-12);
+.register-list li {
+  padding: var(--s-12) 0;
+  border-top: 1px solid var(--register-line);
+  font-size: 1.25rem;
 }
 
-/* ---------- Results ---------- */
-.stats-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-12);
-}
-.progress-note {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-8);
-}
-.progress-note__journey {
-  font-size: var(--text-heading-3);
-  font-weight: var(--font-weight-bold);
-}
-.nipun {
-  display: flex;
-  align-items: center;
-  gap: var(--space-8);
-  font-size: var(--text-meta);
-}
-.nipun__pill {
-  background: var(--color-background-soft);
-  border-radius: var(--radius-pill);
-  padding: var(--space-4) var(--space-8);
-  font-weight: var(--font-weight-semibold);
-}
-
-.actions {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-8);
-  margin-top: auto;
-}
-
-/* ---------- Teacher ---------- */
-.filters {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-12);
-}
-.metrics {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-8);
-}
-.metric {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-12);
-  padding: var(--space-12);
-  background: var(--color-surface);
-}
-.metric__value {
-  font-size: var(--text-heading-3);
-  font-weight: var(--font-weight-bold);
-}
-.metric__label {
-  font-size: var(--text-meta);
-  color: var(--color-text-secondary);
-}
-.metric__delta {
-  font-size: var(--text-meta);
-  color: var(--color-feedback-success);
-}
-
+/* ---------- Words a minute, over time ---------- */
 .chart {
   display: flex;
   align-items: flex-end;
-  gap: var(--space-16);
+  gap: var(--s-16);
   height: var(--size-chart-height);
-  padding-top: var(--space-12);
+  padding-top: var(--s-12);
 }
 .chart__col {
   flex: 1;
@@ -376,1074 +93,194 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  gap: var(--space-4);
+  gap: var(--s-4);
 }
 .chart__bar {
   width: var(--size-chart-bar);
-  border-radius: var(--radius-12) var(--radius-12) 0 0;
-  background: var(--color-secondary);
   min-height: var(--size-chart-min);
-}
-.chart__bar--ok {
-  background: var(--color-feedback-success);
+  border-radius: var(--r-inner) var(--r-inner) 0 0;
 }
 .chart__value {
-  font-size: var(--text-meta);
-  font-weight: var(--font-weight-semibold);
+  font-size: var(--type-label);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
 }
 .chart__label {
-  font-size: var(--text-meta);
-  color: var(--color-muted);
+  font-size: 0.75rem;
+  color: var(--ink-muted);
 }
 
-.fieldset {
-  border: none;
-  margin: 0;
-  padding: 0;
+/* ---------- Review: one word at a time ---------- */
+.review-stage {
   display: flex;
   flex-direction: column;
-  gap: var(--space-8);
+  gap: var(--s-16);
 }
-.avatar-picker {
-  display: flex;
-  gap: var(--space-12);
-}
-.avatar-pick {
-  border: none;
-  background: none;
-  padding: 0;
-  cursor: pointer;
-}
-
-/* ---------- Recovery ---------- */
-.recovery-hero {
-  background: var(--color-brand-primary);
-  padding: var(--space-24) var(--space-20);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
-.recovery-hero__title {
-  margin: 0;
-  font-size: var(--text-heading-2);
-  font-weight: var(--font-weight-bold);
-}
-.recovery-hero__sub {
-  margin: 0;
-  font-size: var(--text-secondary);
-  color: var(--color-text-secondary);
-}
-
-.steps {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-12);
-}
-.steps__item {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-12);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-12);
-  padding: var(--space-12);
-}
-.steps__num {
-  flex: none;
-  width: var(--size-steps-num);
-  height: var(--size-steps-num);
-  display: grid;
-  place-items: center;
-  border-radius: var(--radius-pill);
-  background: var(--color-background-soft);
-  font-size: var(--text-meta);
-  font-weight: var(--font-weight-bold);
-}
-
-.checking {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-8);
-  text-align: center;
-  padding: var(--space-16) 0;
-}
-
-/* ---------- Desktop workspaces ----------
-   Two columns taken from the Figma desktop frames: a fixed side column and a
-   flexible main column, 32px apart. Side widths are the frames' own values:
-   profile 360 | 808, attempt 320 | 848, story 300 | 868, add child 340 | 560. */
-.workspace {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-16);
-}
-@media (min-width: 900px) {
-  .workspace {
-    display: grid;
-    grid-template-columns: var(--side, 360px) minmax(0, 1fr);
-    gap: var(--space-32);
-    align-items: start;
-  }
-  .workspace--w360 {
-    --side: var(--workspace-side-profile);
-  }
-  .workspace--w320 {
-    --side: var(--workspace-side-attempt);
-  }
-  .workspace--w300 {
-    --side: var(--workspace-side-story);
-  }
-  .workspace--w340 {
-    --side: var(--workspace-side-form);
-    margin-top: var(--space-24);
-  }
-  .workspace > * {
-    min-width: 0;
-  }
-}
-
-/* ---------- Child home ---------- */
-.home {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-20);
-  padding: var(--space-20);
-}
-@media (min-width: 900px) {
-  .home {
-    /* A column-flex item with auto margins shrink-wraps: 240px, not the token.
-       `width: 100%` lets the max-width do the work. */
-    width: 100%;
-    max-width: var(--size-home-max);
-    margin-inline: auto;
-    padding: var(--space-40) 0;
-    gap: var(--space-24);
-  }
-}
-.home__hero {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-8);
-}
-.home__meta {
-  display: flex;
-  align-items: center;
-  gap: var(--space-12);
-}
-.home__actions {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-8);
-}
-.home__progress {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
-.home__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-16);
-}
-/* `.screen__link` is a link elsewhere; here it is also a button. */
-button.screen__link {
-  background: none;
-  border: none;
-  padding: 0;
-  font: inherit;
-  cursor: pointer;
-}
-.reading-row {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-8);
-  padding: var(--space-16);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-16);
-  background: var(--color-surface);
-}
-.reading-row__head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--space-12);
-}
-.reading-row__chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-6);
-}
-
-/* Desktop: banners take the same 40px inset as the teacher frames, and the
-   reading column is capped so lines stay readable on a wide screen. */
-@media (min-width: 900px) {
-  .hero,
-  .feedback-hero,
-  .recovery-hero {
-    padding: var(--space-40);
-  }
-  .hero__title,
-  .feedback-hero__title,
-  .recovery-hero__title {
-    font-size: var(--text-heading-1);
-  }
-  .passage-card {
-    max-width: var(--size-passage-max);
-  }
-}
-
-/* The roster is a table on desktop and a card list on mobile, as in the design.
-   Which one renders is decided in JS (useIsDesktop), so the DOM never holds both. */
-.roster-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: var(--color-surface);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-16);
-  overflow: hidden;
-}
-.roster-table th {
-  text-align: left;
-  padding: var(--space-12) var(--space-20);
-  border-bottom: var(--border-width) solid var(--color-border);
-  color: var(--color-text-secondary);
-  font-size: var(--text-secondary);
-  font-weight: var(--font-weight-semibold);
-}
-.roster-table td {
-  padding: var(--space-12) var(--space-20);
-  border-bottom: var(--border-width) solid var(--color-border);
-  font-size: var(--text-secondary);
-}
-.roster-table tbody tr {
-  cursor: pointer;
-}
-.roster-table tbody tr:hover {
-  background: var(--color-surface-muted);
-}
-.roster-table tbody tr:last-child td {
-  border-bottom: none;
-}
-.roster-table__child {
-  display: flex;
-  align-items: center;
-  gap: var(--space-12);
-}
-.roster-table__name {
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text-primary);
-}
-
-/* Header, teacher nav and account menu styles live in components.css. */
-
-/* Placement: letters and words get room between them, as on the ASER sheet. */
-.reading-text--spaced {
-  word-spacing: var(--space-24);
-}
-/* A mark the teacher can tap to change. */
-.chip-button {
-  background: none;
-  border: 0;
-  padding: 0;
-  border-radius: var(--radius-pill);
-  cursor: pointer;
-}
-.chip-button:focus-visible {
-  outline: var(--focus-ring);
-  outline-offset: var(--focus-ring-offset);
-}
-
-/* Akshara practice: the missed word as tiles, one per akshara. */
-.practice-word {
-  align-items: center;
-  text-align: center;
-}
-.practice-tiles {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--space-8);
-}
-.practice-tile {
-  min-width: var(--space-56);
-  padding: var(--space-12) var(--space-16);
-  border: 2px solid var(--color-border);
-  border-radius: var(--radius-16);
-  background: var(--color-surface);
-  font-size: var(--text-reading);
-  transition:
-    background var(--duration-base),
-    border-color var(--duration-base),
-    transform var(--duration-fast);
-}
-.practice-tile--lit {
-  background: var(--color-surface-selected);
-  border-color: var(--color-brand-primary);
-  transform: scale(1.08);
-}
-.practice-tile--ok {
-  background: var(--chip-correct-bg);
-  border-color: var(--chip-correct-border);
-}
-.practice-tile--miss {
-  background: var(--chip-substituted-bg);
-  border-color: var(--chip-substituted-border);
-}
-.practice-message {
-  font-size: var(--text-heading-3);
-  font-weight: var(--font-weight-medium);
-}
-@media (prefers-reduced-motion: reduce) {
-  .practice-tile {
-    transition: none;
-  }
-  .practice-tile--lit {
-    transform: none;
-  }
-}
-
-/* Review queue: the word to hear, large, and the marks in a row. */
 .review-word {
-  font-size: var(--text-reading);
-  margin: var(--space-8) 0;
-}
-.review-marks {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-8);
-  margin-top: var(--space-16);
+  margin: 0;
+  font-size: var(--type-reading);
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--ink);
 }
 
-/* ---------- Reliability (WP7) ---------- */
-.reliability {
-  max-width: 880px;
+/* ---------- Placement ---------- */
+/* Letters and words are read one by one: give them room. */
+.reading--spaced,
+.marked--spaced {
+  word-spacing: 0.6em;
+}
+/* Marks the teacher sets by hand do not arrive; they are just there. */
+.mark--still {
+  animation: none;
+}
+.heard__line {
+  margin: 0;
+  font-size: var(--type-label);
+  color: var(--ink-2);
+}
+
+/* ---------- Choose a story ---------- */
+.story-pick {
+  display: grid;
+  gap: var(--s-24);
+  align-items: start;
+}
+@media (min-width: 900px) {
+  .story-pick {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  }
+}
+.story-pick__page .book-page__art {
+  flex: none;
+  height: 200px;
+}
+.story-pick__title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.story-pick__text {
+  margin: 0;
+  font-size: 1.375rem;
+  line-height: 1.6;
+}
+.register__pick {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   width: 100%;
-  margin: 0 auto;
-  gap: var(--space-24);
+  min-height: var(--row-register);
+  padding: var(--s-8) 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
 }
-.lead {
-  margin: 0;
-  color: var(--color-text-secondary);
-  font-size: var(--text-body);
-  line-height: 1.5;
-  max-width: 65ch;
+.register__row[data-selected="true"] {
+  background: var(--peacock-wash);
 }
-.section-title {
-  margin: 0;
-  font-size: var(--text-heading-3);
-  color: var(--color-text-primary);
+.register__row[data-selected="true"] .register__name {
+  color: var(--peacock);
+}
+
+/* ---------- Sentences ---------- */
+.sentence-line {
+  margin: 0 0 var(--s-4);
+  padding-top: var(--s-12);
+  font-size: 1.5rem;
+  line-height: 1.4;
+}
+.register__table td .register-actions {
+  padding: var(--s-12) 0;
+}
+
+/* ---------- Add or edit a child ---------- */
+.register-page--form {
+  max-width: var(--max-content);
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-16);
+}
+.form__fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-24);
+  padding: var(--pad-surface);
+  border-radius: var(--r-tile);
+  background: var(--rice);
+  box-shadow: var(--shadow-page);
+}
+.danger-zone {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-12);
+  padding-top: var(--s-24);
+  border-top: 1px solid var(--register-line);
+}
+.danger-zone__ask {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-12);
+}
+
+/* ---------- How reliable is this? ---------- */
+.reliability__table {
+  min-width: 520px;
+}
+.reliability__table td,
+.reliability__table th {
+  height: auto;
+  padding-block: var(--s-12);
 }
 .table-scroll {
   overflow-x: auto;
   max-width: 100%;
 }
 .table-scroll:focus-visible {
-  outline: 2px solid var(--color-focus);
+  outline: 2px solid var(--peacock);
   outline-offset: 2px;
-}
-.reliability__table {
-  min-width: 520px;
-}
-.reliability__table th[scope="row"] {
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text-primary);
-  min-width: 150px;
-}
-.reliability__table td {
-  vertical-align: top;
-  font-variant-numeric: tabular-nums;
 }
 .figure {
   display: block;
-  color: var(--color-text-primary);
-  font-weight: var(--font-weight-semibold);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
 }
-.figure__range,
+.figure__range {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+}
 .verdict {
   display: block;
-  color: var(--color-muted);
-  font-size: var(--text-meta);
-  font-weight: normal;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+.verdict--ok {
+  color: var(--leaf-deep);
 }
 .verdict--weak {
   color: var(--color-danger-text);
-  font-weight: var(--font-weight-semibold);
 }
-.plain-list {
-  margin: 0;
-  padding-left: var(--space-20);
+.reliability__means {
   display: flex;
   flex-direction: column;
-  gap: var(--space-8);
-  color: var(--color-text-secondary);
-  line-height: 1.5;
+  gap: var(--s-12);
+  padding: var(--pad-surface);
+  border-radius: var(--r-tile);
+  background: var(--rice);
+  box-shadow: var(--shadow-page);
 }
-.plain-list a {
-  color: var(--color-secondary);
+.reliability__means .section-title {
+  margin-top: 0;
 }
-
-/* ---------- Delete a child (WP7) ---------- */
-.danger-zone {
+.reliability section {
   display: flex;
   flex-direction: column;
-  gap: var(--space-12);
-  margin-top: var(--space-16);
-  border-color: var(--color-danger-text);
-}
-
-.feedback-hero__noisy {
-  font-weight: var(--font-weight-semibold);
-}
-
-/* ---------- Practice sentences ---------- */
-.sentence-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-12);
-}
-.sentence-text {
-  margin: 0;
-  font-size: var(--text-heading-3);
-  line-height: 1.6;
-  color: var(--color-text-primary);
-}
-.actions--row {
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-.say-row--center {
-  justify-content: center;
-}
-
-/* ---------- Activity hue fields: text on the hue uses the hue's own ink ---------- */
-.hero,
-.feedback-hero,
-.recovery-hero,
-.step__num {
-  color: var(--color-on-brand);
-}
-.hero .eyebrow,
-.feedback-hero__sub,
-.recovery-hero__sub {
-  color: color-mix(in oklab, var(--color-on-brand) 84%, transparent);
-}
-
-/* ---------- Welcome: the classroom wall ---------- */
-.welcome-hero {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: var(--space-24);
-  padding: var(--space-32) var(--space-24) var(--space-40);
-  background: var(--color-brand-primary);
-  color: var(--color-on-brand);
-  border-bottom-left-radius: var(--radius-28);
-  border-bottom-right-radius: var(--radius-28);
-  overflow: hidden;
-}
-.welcome-hero__title {
-  font-size: clamp(2rem, 1.2rem + 3.2vw, 3.25rem);
-  font-weight: 800;
-  line-height: 1.02;
-  max-width: 14ch;
-}
-.welcome-hero__hello {
-  margin-top: var(--space-12);
-  font-size: var(--text-heading-2);
-  line-height: 1.4;
-}
-.welcome-hero__school {
-  margin-top: var(--space-8);
-  font-size: var(--text-secondary);
-  color: color-mix(in oklab, var(--color-on-brand) 80%, transparent);
-}
-/* Three laminated letter cards pinned to the wall, slightly askew. */
-.welcome-hero__tiles {
-  display: flex;
-  gap: var(--space-12);
-  padding-right: var(--space-8);
-}
-.akshara-tile {
-  display: grid;
-  place-items: center;
-  width: clamp(64px, 9vw, 104px);
-  aspect-ratio: 3 / 4;
-  border-radius: var(--radius-16);
-  background: var(--color-surface);
-  color: var(--hue-read);
-  font-size: clamp(2.4rem, 1.4rem + 3vw, 4rem);
-  font-weight: 700;
-  line-height: 1;
-  box-shadow: var(--shadow-2);
-  border-top: var(--size-card-band) solid var(--hue-practice);
-  transform: rotate(-4deg);
-  transition: transform var(--duration-base) var(--ease-out);
-}
-.akshara-tile:nth-child(2) {
-  border-top-color: var(--hue-reward-bright);
-  transform: rotate(3deg) translateY(10px);
-}
-.akshara-tile:nth-child(3) {
-  border-top-color: var(--hue-skip);
-  transform: rotate(-2deg) translateY(-6px);
-}
-.akshara-tile[data-on="true"] {
-  transform: rotate(0deg) translateY(-12px) scale(1.06);
-}
-@media (max-width: 599px) {
-  .welcome-hero {
-    grid-template-columns: 1fr;
-    padding: var(--space-24) var(--space-20) var(--space-32);
-  }
-  .welcome-hero__tiles {
-    order: -1;
-  }
-  .akshara-tile {
-    width: 58px;
-    font-size: 2.2rem;
-  }
-}
-
-.welcome-body {
-  display: grid;
-  align-content: start;
-  gap: var(--space-32);
-}
-.welcome-step {
-  display: grid;
-  gap: var(--space-16);
-}
-.step {
-  margin: 0;
-  font-size: var(--text-heading-3);
-}
-.step__label {
-  font-weight: var(--font-weight-bold);
-}
-
-/* Language: the script's own first letter, large, so a child finds theirs without English. */
-.script-tiles {
-  display: grid;
-  align-items: start;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--space-12);
-}
-.script-tile {
-  position: relative;
-  display: grid;
-  justify-items: center;
-  gap: var(--space-2);
-  padding: var(--space-20) var(--space-8) var(--space-16);
-  border: var(--border-width-2) solid transparent;
-  border-radius: var(--radius-20);
-  background: var(--color-surface);
-  box-shadow: var(--shadow-1);
-  color: var(--color-text-primary);
-  font: inherit;
-  cursor: pointer;
-  transition:
-    transform var(--duration-fast) var(--ease-out),
-    border-color var(--duration-base) var(--ease-out),
-    box-shadow var(--duration-base) var(--ease-out);
-}
-.script-tile:active {
-  transform: translateY(2px) scale(0.98);
-}
-.script-tile[aria-checked="true"] {
-  border-color: var(--color-brand-primary);
-  background: var(--color-brand-soft);
-  box-shadow: var(--shadow-2);
-}
-.script-tile__letter {
-  font-size: clamp(2.75rem, 1.8rem + 3vw, 4.25rem);
-  line-height: 1.1;
-  font-weight: 700;
-  color: var(--color-brand-deep);
-}
-.script-tile__name {
-  font-size: var(--text-heading-3);
-  font-weight: var(--font-weight-semibold);
-}
-.script-tile__en {
-  font-size: var(--text-secondary);
-  color: var(--color-muted);
-}
-.script-tile__check {
-  position: absolute;
-  top: var(--space-12);
-  right: var(--space-12);
-  width: 28px;
-  height: 28px;
-  padding: 5px;
-  border-radius: var(--radius-pill);
-  background: var(--color-brand-primary);
-  color: var(--color-on-brand);
-}
-
-/* Who are you: two big activity cards, each in its own hue. */
-.role-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-16);
-}
-@media (max-width: 519px) {
-  .role-grid {
-    grid-template-columns: 1fr;
-  }
-}
-.role-grid .rolecard {
-  --tile-hue: var(--hue-read);
-  display: grid;
-  justify-items: start;
-  align-content: start;
-  gap: var(--space-4);
-  padding: var(--space-24);
-  border: 0;
-  border-top: var(--size-card-band) solid var(--tile-hue);
-  border-radius: var(--radius-20);
-  background: var(--color-surface);
-  box-shadow: var(--shadow-1);
-  transition:
-    transform var(--duration-fast) var(--ease-out),
-    box-shadow var(--duration-base) var(--ease-out);
-}
-.role-grid .rolecard:active {
-  transform: translateY(2px) scale(0.985);
-  box-shadow: var(--shadow-press);
-}
-@media (hover: hover) {
-  .role-grid .rolecard:hover {
-    box-shadow: var(--shadow-2);
-  }
-}
-.role-grid .rolecard--teacher {
-  --tile-hue: var(--hue-teacher);
-}
-.role-grid .rolecard__icon {
-  display: grid;
-  place-items: center;
-  width: 64px;
-  height: 64px;
-  margin-bottom: var(--space-8);
-  border-radius: var(--radius-pill);
-  background: var(--tile-hue);
-  color: var(--color-on-accent);
-}
-.role-grid .rolecard__title {
-  font-size: var(--text-heading-2);
-  line-height: 1.15;
-}
-
-/* ---------- Child home: the reading ladder and today's story ---------- */
-.home__hero .card__title {
-  font-size: clamp(1.75rem, 1.2rem + 2vw, 2.5rem);
-  font-weight: 800;
-}
-.home-wall {
-  display: grid;
-  grid-template-columns: minmax(200px, 0.8fr) minmax(0, 1.6fr);
-  gap: var(--space-24);
-  align-items: stretch;
-}
-@media (max-width: 599px) {
-  .home-wall {
-    grid-template-columns: 1fr;
-  }
-  .home-wall .ladder {
-    order: 2;
-  }
-}
-
-/* The ladder painted on the wall: two rails, rungs read bottom to top. */
-.ladder {
-  display: grid;
-  align-content: start;
-  gap: var(--space-12);
-  padding: var(--space-20) var(--space-16);
-  border-radius: var(--radius-20);
-  background: var(--color-surface);
-  box-shadow: var(--shadow-1);
-}
-.ladder__title {
-  font-size: var(--text-heading-3);
-  font-weight: var(--font-weight-bold);
-}
-.ladder__rungs {
-  position: relative;
-  display: grid;
-  gap: var(--space-12);
-  margin: 0;
-  padding: var(--space-8) var(--space-12);
-  list-style: none;
-}
-.ladder__rungs::before,
-.ladder__rungs::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 6px;
-  border-radius: var(--radius-pill);
-  background: var(--hue-teacher-soft);
-}
-.ladder__rungs::before {
-  left: 0;
-}
-.ladder__rungs::after {
-  right: 0;
-}
-.ladder__rung {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: center;
-  gap: var(--space-12);
-  min-height: 56px;
-  padding: var(--space-8) var(--space-12);
-  border-radius: var(--radius-16);
-  background: var(--color-surface-muted);
-  border: var(--border-width-2) dashed var(--color-border);
-  color: var(--color-muted);
-}
-.ladder__badge {
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-pill);
-  background: var(--color-surface);
-  font-weight: var(--font-weight-bold);
-  font-size: var(--text-secondary);
-}
-.ladder__label {
-  font-size: var(--text-body);
-  font-weight: var(--font-weight-semibold);
-}
-.ladder__rung[data-state="done"] {
-  border-style: solid;
-  border-color: transparent;
-  background: var(--hue-reward-soft);
-  color: var(--hue-reward-deep);
-}
-.ladder__rung[data-state="done"] .ladder__badge {
-  background: var(--hue-reward-bright);
-  color: var(--color-on-accent);
-}
-.ladder__rung[data-state="here"] {
-  border-style: solid;
-  border-color: transparent;
-  background: var(--color-brand-primary);
-  color: var(--color-on-brand);
-  box-shadow: var(--shadow-2);
-  transform: scale(1.04);
-}
-.ladder__rung[data-state="here"] .ladder__badge {
-  background: var(--color-on-brand);
-  color: var(--color-brand-primary);
-}
-.ladder__here {
-  grid-column: 2;
-  font-size: var(--text-secondary);
-  color: color-mix(in oklab, var(--color-on-brand) 85%, transparent);
-  line-height: 1.2;
-}
-
-/* Today's story: the picture leads, one big Read button. */
-.story-card {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  overflow: hidden;
-  border-radius: var(--radius-28);
-  background: var(--color-surface);
-  box-shadow: var(--shadow-2);
-  border-top: var(--size-card-band) solid var(--color-brand-primary);
-}
-.story-card__body {
-  display: grid;
-  align-content: start;
-  gap: var(--space-16);
-  padding: var(--space-20) var(--space-24) var(--space-24);
-}
-.story-card__title {
-  font-size: clamp(1.75rem, 1.2rem + 2.2vw, 2.75rem);
-  font-weight: 700;
-  line-height: 1.25;
-  max-width: none;
-}
-.story-card .home__actions .btn--primary {
-  min-height: 64px;
-  font-size: var(--text-heading-2);
-}
-
-.story-cover {
-  position: relative;
-  margin: 0;
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  background: var(--color-brand-soft);
-}
-.story-cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.story-cover__credit {
-  position: absolute;
-  right: var(--space-8);
-  bottom: var(--space-8);
-  padding: var(--space-2) var(--space-8);
-  border-radius: var(--radius-pill);
-  background: rgb(27 31 75 / 62%);
-  color: var(--color-on-accent);
-  font-size: var(--text-meta);
-  line-height: 1.5;
-}
-.story-cover--sm {
-  width: 56px;
-  aspect-ratio: 1;
-  border-radius: var(--radius-12);
-  flex: none;
-}
-/* No picture for this book: the classroom card, its first akshara, large. */
-.story-cover--card {
-  display: grid;
-  place-items: center;
-  background:
-    radial-gradient(circle at 78% 22%, color-mix(in oklab, var(--hue-practice) 55%, transparent) 0 18%, transparent 19%),
-    radial-gradient(circle at 18% 82%, color-mix(in oklab, var(--hue-reward-bright) 45%, transparent) 0 14%, transparent 15%),
-    var(--color-brand-primary);
-}
-.story-cover__glyph {
-  display: grid;
-  place-items: center;
-  width: 42%;
-  aspect-ratio: 3 / 4;
-  border-radius: var(--radius-20);
-  background: var(--color-surface);
-  color: var(--color-brand-deep);
-  font-size: clamp(3rem, 2rem + 4vw, 5.5rem);
-  font-weight: 700;
-  line-height: 1;
-  box-shadow: var(--shadow-2);
-  transform: rotate(-3deg);
-}
-.story-cover--sm .story-cover__glyph {
-  width: 60%;
-  font-size: 1.4rem;
-  border-radius: var(--radius-12);
-}
-
-/* ---------- Akshara practice: the signature moment ----------
-   The missed word arrives as laminated akshara cards that drop in one after
-   another; the card Timbre is saying lifts in marigold; when the whole word is
-   said (or read right) the cards close back into one word. */
-.practice-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--space-12);
-}
-.practice-head__title {
-  font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.25rem);
-  font-weight: 800;
-}
-.practice-head__count {
-  padding: var(--space-4) var(--space-12);
-  border-radius: var(--radius-pill);
-  background: var(--color-brand-soft);
-  color: var(--color-brand-deep);
-  font-weight: var(--font-weight-bold);
-  font-variant-numeric: tabular-nums;
-}
-.practice-word {
-  gap: var(--space-24);
-}
-.practice-tiles {
-  flex-wrap: nowrap;
-  gap: var(--space-16);
-  padding: var(--space-40) var(--space-16);
-  border-radius: var(--radius-28);
-  background: var(--color-brand-soft);
-  transition: gap var(--dur-long) var(--ease-out);
-}
-.practice-tiles--joined {
-  gap: var(--space-2);
-}
-.practice-tile {
-  display: grid;
-  place-items: center;
-  min-width: clamp(64px, 12vw, 120px);
-  min-height: clamp(96px, 18vw, 150px);
-  padding: var(--space-8) var(--space-16);
-  border: 0;
-  border-top: var(--size-card-band) solid var(--color-brand-primary);
-  border-radius: var(--radius-20);
-  background: var(--color-surface);
-  color: var(--color-text-primary);
-  font-size: clamp(2.75rem, 1.6rem + 4vw, 4.5rem);
-  font-weight: 700;
-  line-height: 1;
-  box-shadow: var(--shadow-1);
-  animation: akshara-drop var(--dur-long) var(--ease-out) both;
-  animation-delay: calc(var(--i, 0) * 110ms);
-  transition:
-    background-color var(--duration-base) var(--ease-out),
-    color var(--duration-base) var(--ease-out),
-    transform var(--dur-short) var(--ease-out),
-    box-shadow var(--dur-short) var(--ease-out),
-    border-radius var(--dur-long) var(--ease-out);
-}
-@keyframes akshara-drop {
-  from {
-    opacity: 0;
-    transform: translateY(-28px) rotate(-6deg) scale(0.92);
-  }
-}
-.practice-tile--lit {
-  background: var(--color-brand-primary);
-  color: var(--color-on-brand);
-  border-top-color: var(--color-brand-deep);
-  transform: translateY(-10px) scale(1.06);
-  box-shadow: var(--shadow-2);
-}
-/* Joined: the cards butt together into one word, inner corners square off. */
-.practice-tiles--joined .practice-tile {
-  border-radius: var(--radius-12);
-  transform: none;
-}
-.practice-tiles--joined .practice-tile:first-child {
-  border-top-left-radius: var(--radius-20);
-  border-bottom-left-radius: var(--radius-20);
-}
-.practice-tiles--joined .practice-tile:last-child {
-  border-top-right-radius: var(--radius-20);
-  border-bottom-right-radius: var(--radius-20);
-}
-.practice-tile--ok {
-  background: var(--hue-reward-bright);
-  color: var(--color-on-accent);
-  border-top-color: var(--hue-reward-deep);
-}
-.practice-tile--miss {
-  background: var(--chip-substituted-bg);
-  border-top-color: var(--chip-substituted-border);
-}
-.practice-message {
-  font-size: var(--text-heading-2);
-  font-weight: var(--font-weight-bold);
-  color: var(--hue-reward-deep);
-  text-align: center;
-}
-@media (prefers-reduced-motion: reduce) {
-  .practice-tile {
-    animation: none;
-  }
-  .practice-tiles,
-  .practice-tile {
-    transition: none;
-  }
-}
-
-/* ---------- Results: the star lands ---------- */
-.star-award {
-  display: flex;
-  align-items: center;
-  gap: var(--space-16);
-  padding: var(--space-20) var(--space-24);
-  border-radius: var(--radius-28);
-  background: var(--hue-reward-bright);
-  color: var(--color-on-accent);
-  box-shadow: var(--shadow-2);
-}
-.star-award__star {
-  display: grid;
-  place-items: center;
-  width: 88px;
-  height: 88px;
-  flex: none;
-  border-radius: var(--radius-pill);
-  background: var(--hue-practice);
-  color: var(--hue-practice-ink);
-  box-shadow: inset 0 -5px 0 rgb(27 31 75 / 18%);
-  animation: star-land 640ms var(--ease-out) both 120ms;
-}
-.star-award__star svg {
-  fill: currentColor;
-}
-.star-award__text {
-  font-size: clamp(1.4rem, 1rem + 1.6vw, 2rem);
-  font-weight: 800;
-  line-height: 1.15;
-}
-@keyframes star-land {
-  0% {
-    opacity: 0;
-    transform: scale(0.3) rotate(-90deg);
-  }
-  60% {
-    opacity: 1;
-    transform: scale(1.15) rotate(8deg);
-  }
-  100% {
-    transform: scale(1) rotate(0deg);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .star-award__star {
-    animation: none;
-  }
-}
-.results-story {
-  font-size: var(--text-heading-3);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text-secondary);
-}
-.section-title {
-  margin: 0;
-  font-size: var(--text-heading-3);
-  font-weight: var(--font-weight-bold);
-  max-width: none;
-}
-
-/* ---------- Word marks: laminated chips, each state with its own shape ---------- */
-.wordchip {
-  gap: var(--space-8);
-  padding: var(--space-6) var(--space-12) var(--space-6) var(--space-6);
-  border-width: var(--border-width-2);
-  border-radius: var(--radius-16);
-  box-shadow: var(--shadow-1);
-}
-.wordchip__icon {
-  display: grid;
-  place-items: center;
-  width: 26px;
-  height: 26px;
-  border-radius: var(--radius-pill);
-  color: var(--color-on-accent);
-}
-.wordchip--correct .wordchip__icon {
-  background: var(--hue-reward-bright);
-}
-.wordchip--substituted .wordchip__icon {
-  background: var(--hue-practice);
-  color: var(--hue-practice-ink);
-}
-.wordchip--skipped .wordchip__icon {
-  background: var(--hue-skip);
-}
-.wordchip--uncertain .wordchip__icon {
-  background: var(--hue-teacher);
-}
-.wordchip__word {
-  font-weight: var(--font-weight-semibold);
+  gap: var(--s-12);
 }

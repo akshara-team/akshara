@@ -257,7 +257,7 @@ function RegisterRow({ c, onOpen }: { c: RosterEntry; onOpen: () => void }) {
     <tr className="register__row" data-status={c.status}>
       <td>
         <button type="button" className="register__child" onClick={onOpen}>
-          <ChildMark picture={pictureOf(c.id)} />
+          <ChildMark picture={pictureOf(c.id, c.picture)} />
           <span>
             <span className="register__name">{c.name}</span>
             <span className="register__meta">

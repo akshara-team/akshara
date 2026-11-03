@@ -86,6 +86,11 @@ const ICONS: Record<Exclude<ButtonIcon, "none">, ReactNode> = {
   play: <PlayIcon {...size} />,
 };
 
+/** The pictogram for a child action, for components that draw their own button. */
+export function buttonIcon(name: ButtonIcon): ReactNode {
+  return name === "none" ? null : ICONS[name];
+}
+
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: Variant;
   icon?: ButtonIcon;

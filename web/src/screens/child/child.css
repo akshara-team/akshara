@@ -328,3 +328,79 @@
 .who__top {
   flex-wrap: wrap;
 }
+
+/* ---------- Recovery: what to do, on a page ---------- */
+.book-page--note {
+  flex: 0 1 auto;
+}
+.steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-12);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--type-voice);
+  font-weight: 600;
+  line-height: 1.35;
+}
+.steps-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-12);
+}
+.steps-list__num {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--peacock-wash);
+  color: var(--peacock);
+  font-size: var(--type-label);
+  font-weight: 800;
+}
+.page-note {
+  margin: 0;
+  font-size: var(--type-voice);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+/* ---------- The practice sentence ---------- */
+/* One sentence: a smaller page, centred on the wall, not a stretched card. */
+.book-page--sentence {
+  flex: 0 1 auto;
+  margin-block: auto;
+}
+
+/* ---------- Not found ---------- */
+.lost {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-16);
+  padding: var(--gutter-x);
+  background: var(--limewash);
+  color: var(--ink);
+  text-align: center;
+}
+.lost__title {
+  margin: 0;
+  font-size: var(--type-display);
+  font-weight: 800;
+}
+.lost .kolam {
+  width: 120px;
+  height: auto;
+}
+.lost a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 700;
+  color: var(--peacock);
+}

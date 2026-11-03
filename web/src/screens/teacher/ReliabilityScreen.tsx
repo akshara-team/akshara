@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Card, PageHeader } from "../../components";
+import { PageHeader } from "../../components";
 import reliability from "../../data/reliability.json";
 import { LANGS, scriptEnglish } from "../../theme/script";
 import { RETENTION_DAYS } from "./ChildForm";
@@ -80,9 +80,11 @@ export function ReliabilityScreen() {
   return (
     <>
       <PageHeader back backTo="/teacher" nav={TEACHER_NAV} />
-      <div className="screen-body reliability">
-        <h1 className="card__title">How reliable is this?</h1>
-        <p className="lead">
+      <div className="register-page reliability">
+        <div className="register-head">
+          <h1 className="register-head__title">How reliable is this?</h1>
+        </div>
+        <p className="register-status">
           Akshara listens with a speech service and compares what it heard with the story. It
           catches most skipped and wrong words. It often misses a small change in one sound, so
           use the marks to decide who to listen to, not as a grade.
@@ -95,8 +97,8 @@ export function ReliabilityScreen() {
           <p className="note">
             Out of the mistakes we put into {total} test readings across the three languages.
           </p>
-          <div className="table-scroll" role="region" aria-label="Table of mistakes caught" tabIndex={0}>
-            <table className="table reliability__table">
+          <div className="register table-scroll" role="region" aria-label="Table of mistakes caught" tabIndex={0}>
+            <table className="register__table reliability__table">
               <thead>
                 <tr>
                   <th scope="col">Mistake</th>
@@ -152,8 +154,8 @@ export function ReliabilityScreen() {
             The same readings, made harder on purpose. Each cell shows the share of all mistakes
             caught, then the share of correct words marked wrong.
           </p>
-          <div className="table-scroll" role="region" aria-label="Table of results with worse sound" tabIndex={0}>
-            <table className="table reliability__table">
+          <div className="register table-scroll" role="region" aria-label="Table of results with worse sound" tabIndex={0}>
+            <table className="register__table reliability__table">
               <thead>
                 <tr>
                   <th scope="col">Recording</th>
@@ -184,8 +186,10 @@ export function ReliabilityScreen() {
           </div>
         </section>
 
-        <Card className="stack">
-          <h2 className="section-title">What this means for you</h2>
+        <section className="reliability__means" aria-labelledby="means-heading">
+          <h2 className="section-title" id="means-heading">
+            What this means for you
+          </h2>
           <ul className="plain-list">
             <li>A red word for a skipped or wrong word is usually right.</li>
             <li>
@@ -198,7 +202,7 @@ export function ReliabilityScreen() {
               Your mark replaces Akshara’s.
             </li>
           </ul>
-        </Card>
+        </section>
 
         <section className="stack" aria-labelledby="limits-heading">
           <h2 className="section-title" id="limits-heading">

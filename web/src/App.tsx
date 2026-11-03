@@ -67,15 +67,13 @@ const sendQueued = (q: Queued) =>
   api.submitAttempt({ ...q, audio: q.audio ?? new Blob([], { type: "audio/wav" }) });
 
 /**
- * Which kind of activity a route is, as the colour-coded cards of an Activity-Based Learning
- * classroom: reading, practice, rewards, or the teacher's own screens. The theme swaps the
- * brand hue on `data-activity`, so each screen keeps to one colour.
+ * Which of the three surfaces (DESIGN.md) a route is: the teacher's register, the practice
+ * slate, or the picture book. The shell sets the surface's one action colour from it.
  */
-export function activityOf(pathname: string): "read" | "practice" | "reward" | "teacher" {
-  if (pathname.startsWith("/teacher")) return "teacher";
-  if (pathname.startsWith("/practice")) return "practice";
-  if (pathname.startsWith("/results")) return "reward";
-  return "read";
+export function surfaceOf(pathname: string): "book" | "slate" | "register" {
+  if (pathname.startsWith("/teacher")) return "register";
+  if (pathname === "/practice") return "slate";
+  return "book";
 }
 
 /** Owns the shell: one responsive frame for every route, plus offline handling. */
@@ -93,7 +91,7 @@ function Shell({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="app-shell" data-activity={activityOf(pathname)}>
+    <div className="app-shell" data-surface={surfaceOf(pathname)}>
       <a className="skip-link" href="#main" onClick={skipToContent}>
         Skip to content
       </a>

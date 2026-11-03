@@ -2,9 +2,8 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { load as loadChild } from "../state/storage";
 import { useDocumentTitle } from "../state/useDocumentTitle";
 import { useIsDesktop } from "../state/useMediaQuery";
-import { ChildPicture, pictureOf } from "./ChildPicture";
 import { Logo } from "./Logo";
-import { ArrowLeftIcon, GlobeIcon, UsersIcon, UserSwitchIcon } from "./icons";
+import { ArrowLeftIcon } from "./icons";
 
 const TITLES: Record<string, string> = {
   "/": "Welcome",
@@ -46,9 +45,9 @@ function labelFor(to: string | undefined): string {
 }
 
 /**
- * The one header for every screen: the logo is the way home, the back link has
- * a label, teacher routes get navigation, and child routes get the account menu
- * (switch reader / language / teacher view).
+ * The teacher's header: the logo is the way home, the back link has a label, and the
+ * sections are a row of links (tabs under the header on a phone). Child screens use
+ * their own frame (Book.tsx).
  */
 export function PageHeader({
   brand = "Akshara",
@@ -69,9 +68,7 @@ export function PageHeader({
   const isDesktop = useIsDesktop();
 
   const child = loadChild();
-  const isTeacher = pathname.startsWith("/teacher");
   const home = child.reader ? "/home" : "/switch";
-  const showAccount = Boolean(child.reader) && !isTeacher && pathname !== "/" && pathname !== "/switch";
 
   return (
     <header className="page-header">
@@ -107,26 +104,6 @@ export function PageHeader({
           </nav>
         )}
 
-        {showAccount && (
-          <details className="account">
-            <summary className="account__trigger" aria-label="My account">
-              {child.reader && (
-                <ChildPicture picture={pictureOf(child.reader.id, child.reader.picture)} size="sm" />
-              )}
-            </summary>
-            <div className="account__menu">
-              <Link to="/switch">
-                <UserSwitchIcon width={18} height={18} /> Switch reader
-              </Link>
-              <Link to="/switch">
-                <GlobeIcon width={18} height={18} /> Change language
-              </Link>
-              <Link to="/teacher">
-                <UsersIcon width={18} height={18} /> Teacher view
-              </Link>
-            </div>
-          </details>
-        )}
       </div>
 
       {nav && nav.length > 0 && !isDesktop && (

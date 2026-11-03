@@ -1,39 +1,23 @@
-/* One hue field per activity. The shell sets data-activity from the route
-   (activityOf in App.tsx); everything that says "brand" follows it. */
-.app-shell[data-activity="read"] {
-  --color-brand-primary: var(--hue-read);
-  --color-on-brand: var(--hue-read-ink);
-  --color-brand-deep: var(--hue-read-deep);
-  --color-brand-soft: var(--hue-read-soft);
+/* The shell: one frame for every route. The route's surface (DESIGN.md: the book, the slate
+   or the register) sets the one action colour; everything else is the screen's own. */
+.app-shell[data-surface="book"] {
+  --color-brand-primary: var(--peacock);
+  --color-on-brand: var(--rice);
 }
-.app-shell[data-activity="practice"] {
-  --color-brand-primary: var(--hue-practice);
-  --color-on-brand: var(--hue-practice-ink);
-  --color-brand-deep: var(--hue-practice-deep);
-  --color-brand-soft: var(--hue-practice-soft);
+.app-shell[data-surface="slate"] {
+  --color-brand-primary: var(--turmeric);
+  --color-on-brand: var(--ink);
 }
-.app-shell[data-activity="reward"] {
-  --color-brand-primary: var(--hue-reward);
-  --color-on-brand: var(--hue-reward-ink);
-  --color-brand-deep: var(--hue-reward-deep);
-  --color-brand-soft: var(--hue-reward-soft);
-}
-.app-shell[data-activity="teacher"] {
-  --color-brand-primary: var(--hue-teacher);
-  --color-on-brand: var(--hue-teacher-ink);
-  --color-brand-deep: var(--hue-teacher-deep);
-  --color-brand-soft: var(--hue-teacher-soft);
-}
-.app-shell[data-activity] {
-  --color-surface-selected: var(--color-brand-soft);
-  --color-focus: var(--color-brand-deep);
+.app-shell[data-surface="register"] {
+  --color-brand-primary: var(--ink);
+  --color-on-brand: var(--rice);
 }
 
 .app-shell {
   min-height: 100dvh;
   display: flex;
   justify-content: center;
-  background: var(--color-background);
+  background: var(--limewash);
   /* Feels installed, not browsed: no grey tap flash, no long-press text select on controls. */
   -webkit-tap-highlight-color: transparent;
 }
@@ -42,53 +26,17 @@
   user-select: none;
   touch-action: manipulation;
 }
-
-/* Mobile-first: the design's primary frame is 375 x 812. */
 .app-main {
   width: 100%;
-  max-width: var(--size-shell-mobile);
   min-height: 100dvh;
-  background: var(--color-background);
   display: flex;
   flex-direction: column;
+  background: var(--limewash);
 }
 
-/* Desktop: the design's desktop frames are 1280 wide with a 40px content inset
-   (1024 x 768 in the compact frames). One flat canvas — no outer frame, so the
-   cards are the only surfaces (no box inside a box).
-   The 900px literal is --breakpoint-desktop; media queries cannot read vars. */
-/* A shared classroom tablet held upright: fill it, do not show a phone strip. */
-@media (min-width: 600px) and (max-width: 899px) {
-  .app-main {
-    max-width: 100%;
-  }
-  .app-main .screen-body {
-    padding: var(--space-32);
-    gap: var(--gap-section);
-  }
-}
-
-/* A phone turned on its side is wider than the portrait frame: let it fill. */
-@media (orientation: landscape) and (max-height: 540px) {
-  .app-main {
-    max-width: 100%;
-  }
-}
-
-@media (min-width: 900px) {
-  .app-main {
-    max-width: var(--size-shell-desktop);
-  }
-  .app-main .screen-body {
-    padding: var(--space-40);
-    gap: var(--gap-section);
-  }
-}
-
-/* A short fade as each route mounts; off when motion is reduced. */
 /* A screen change is seen dozens of times a day: a 120 ms opacity change, no movement. */
 .app-main > * {
-  animation: screen-in var(--duration-fast) var(--ease-out) both;
+  animation: screen-in var(--t-press) var(--ease-out) both;
 }
 @keyframes screen-in {
   from {
@@ -101,39 +49,12 @@
   }
 }
 
-/* Scaffolding used by NotFound. */
-.screen {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-12);
-  padding: var(--space-20);
-}
-
-.screen__title {
-  font-size: var(--text-heading-3);
-  margin: 0;
-}
-
-.screen__note {
-  margin: 0;
-  color: var(--color-text-secondary);
-  font-size: var(--text-secondary);
-}
-
-.screen__link {
-  min-height: var(--size-tap);
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-6);
-  color: var(--color-secondary);
-}
-
 /* Inline SVG sitting in a line of text. */
 .inline-icon {
   display: inline-block;
-  width: var(--inline-icon-size);
-  height: var(--inline-icon-size);
-  vertical-align: var(--inline-icon-offset);
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
   flex: none;
 }
 
@@ -155,34 +76,25 @@
 /* First tab stop on every screen; hidden until it has keyboard focus. */
 .skip-link {
   position: absolute;
-  top: var(--space-8);
-  left: var(--space-8);
-  z-index: 10;
-  padding: var(--space-8) var(--space-16);
-  border-radius: var(--radius-pill);
-  background: var(--color-secondary);
-  color: var(--color-on-accent);
-  font-weight: var(--font-weight-semibold);
+  top: var(--s-8);
+  left: var(--s-8);
+  z-index: 30;
+  padding: var(--s-8) var(--s-16);
+  border-radius: var(--r-pill);
+  background: var(--ink);
+  color: var(--rice);
+  font-weight: 600;
   transform: translateY(-200%);
 }
 .skip-link:focus-visible {
   transform: none;
 }
 
-/* Focus moved here by script (route change, skip link) shows no ring:
-   it is not something the user tabbed to. */
+/* Focus moved here by script (route change, skip link) shows no ring: it is not something the
+   user tabbed to. */
 .app-main:focus,
 .app-main h1[tabindex="-1"]:focus {
   outline: none;
-}
-
-/* Display heads wrap in balance, never one orphan word. */
-.app-main h1,
-.hero__title,
-.card__title,
-.feedback-hero__title,
-.recovery-hero__title {
-  text-wrap: balance;
 }
 
 /* Feels installed on a phone (mobile-native baseline). */
