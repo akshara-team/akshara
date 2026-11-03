@@ -23,7 +23,7 @@ missing feature.
 ## Run it (no API key, no credits)
 
 ```bash
-git clone https://github.com/Achindra2003/akshara && cd akshara
+git clone https://github.com/akshara-team/akshara && cd akshara
 cd web && npm install && npm run dev      # http://localhost:5173, mock mode
 ```
 

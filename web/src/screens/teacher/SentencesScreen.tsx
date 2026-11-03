@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { api, isMock } from "../../api";
 import type { Sentence } from "../../api/types";
-import { Button, Card, EmptyState, ListenButton, PageHeader, Select } from "../../components";
+import { Button, EmptyState, ListenButton, PageHeader, Select } from "../../components";
+import { load as loadChild } from "../../state/storage";
 import { scriptClass, type Lang } from "../../theme/script";
 import { TEACHER_NAV } from "./nav";
 
@@ -17,7 +18,8 @@ export function skillLabel(id: string): string {
  * one only after a teacher approves it here.
  */
 export function SentencesScreen() {
-  const [lang, setLang] = useState<Lang>("kn-IN");
+  // The class's language: the one this device last read in.
+  const [lang, setLang] = useState<Lang>(() => loadChild().lang);
   const [rows, setRows] = useState<Sentence[] | null>(null);
   const [failed, setFailed] = useState(false);
   const [done, setDone] = useState<string | null>(null);
@@ -53,15 +55,12 @@ export function SentencesScreen() {
   return (
     <>
       <PageHeader back backTo="/teacher" nav={TEACHER_NAV} />
-      <div className="screen-body reliability">
-        <h1 className="card__title">Practice sentences from Evon</h1>
-        <p className="lead">
-          Evon, Gnani’s open language model, writes short sentences for the sounds children find
-          hard. Code checks every one: the right script, short, and only sounds taught so far. A
-          child sees a sentence only after you approve it.
-        </p>
+      <div className="register-page">
+        <div className="register-head">
+          <h1 className="register-head__title">Practice sentences from Evon</h1>
+        </div>
 
-        <div className="filters">
+        <div className="register-filters">
           <Select
             label="Language"
             value={lang}
@@ -74,6 +73,18 @@ export function SentencesScreen() {
           />
         </div>
 
+        <p className="register-status">
+          Evon, Gnani’s open language model, writes short sentences for the sounds children find
+          hard. Code checks every one: the right script, short, and only sounds taught so far. A
+          child sees a sentence only after you approve it.
+          {rows && (
+            <span className="register-status__goal" role="status">
+              {pending.length} waiting, {approved.length} approved, {stories} sentences from
+              stories ready to use{done ? `, ${done}` : ""}.
+            </span>
+          )}
+        </p>
+
         {failed ? (
           <p className="note" role="alert">
             Could not load the sentences.
@@ -84,12 +95,6 @@ export function SentencesScreen() {
           </p>
         ) : (
           <>
-            <p className="note" role="status">
-              {pending.length} waiting, {approved.length} approved, {stories} sentences from
-              stories ready to use
-              {done ? `, ${done}` : ""}
-            </p>
-
             {pending.length === 0 ? (
               <EmptyState title="Nothing waiting for you">
                 <p className="note">
@@ -100,37 +105,41 @@ export function SentencesScreen() {
                 </p>
               </EmptyState>
             ) : (
-              <ul className="sentence-list">
-                {pending.map((s) => (
-                  <li key={s.id}>
-                    <Card className="stack sentence-card">
-                      <p className={`sentence-text ${scriptClass(lang)}`} lang={lang}>
-                        {s.text}
-                      </p>
-                      <p className="note">
-                        Practises{" "}
-                        <span className={scriptClass(lang)} lang={lang}>
-                          {s.skill ? skillLabel(s.skill) : "—"}
-                        </span>{" "}
-                        · written by Evon, passed the code checks
-                      </p>
-                      <div className="actions actions--row">
-                        <ListenButton text={s.text} lang={lang} />
-                        <Button onClick={() => void decide(s, "approved")}>Approve</Button>
-                        <Button variant="ghost" onClick={() => void decide(s, "rejected")}>
-                          Reject
-                        </Button>
-                      </div>
-                    </Card>
-                  </li>
-                ))}
-              </ul>
+              <div className="register">
+                <table className="register__table">
+                  <tbody>
+                    {pending.map((s) => (
+                      <tr key={s.id} className="register__row">
+                        <td>
+                          <p className={`sentence-line ${scriptClass(lang)}`} lang={lang}>
+                            {s.text}
+                          </p>
+                          <span className="register__meta">
+                            Practises{" "}
+                            <span className={scriptClass(lang)} lang={lang}>
+                              {s.skill ? skillLabel(s.skill) : "-"}
+                            </span>
+                            , written by Evon, passed the code checks
+                          </span>
+                          <div className="register-actions">
+                            <ListenButton text={s.text} lang={lang} />
+                            <Button onClick={() => void decide(s, "approved")}>Approve</Button>
+                            <Button variant="ghost" onClick={() => void decide(s, "rejected")}>
+                              Reject
+                            </Button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             )}
 
             {approved.length > 0 && (
-              <details className="card">
-                <summary className="reader-name">Approved ({approved.length})</summary>
-                <ul className="plain-list">
+              <details className="register-more">
+                <summary>Approved ({approved.length})</summary>
+                <ul className="register-list">
                   {approved.map((s) => (
                     <li key={s.id} className={scriptClass(lang)} lang={lang}>
                       {s.text}

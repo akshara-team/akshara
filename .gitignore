@@ -34,6 +34,9 @@ Thumbs.db
 .vscode/
 .idea/
 results/*.sqlite
+# Each checkout counts its own paid calls against the cap (src/akshara/providers/ledger.py).
+# The study's calls are kept as a record in results/ledger_study.jsonl.
+results/ledger.jsonl
 data/fonts/
 results/bench/
 results/emissions/
@@ -50,3 +53,7 @@ results/recordings/
 
 # Hallmark run artefacts (before/after screenshots, records)
 .hallmark/
+
+# Design-tool scratch (decision pages)
+.impeccable/questions/
+.impeccable/decision-*.json

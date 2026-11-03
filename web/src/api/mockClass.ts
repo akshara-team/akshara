@@ -120,17 +120,29 @@ function seed(): MockClass {
     [1, "kn-IN", [["2026-10-05", 30, 0.8], ["2026-10-12", 36, 0.85], ["2026-10-19", 42, 0.9]]],
     [2, "kn-IN", [["2026-10-12", 46, 0.9], ["2026-10-19", 50, 0.95]]],
     [3, "kn-IN", [["2026-10-05", 24, 0.65], ["2026-10-19", 28, 0.7]]],
+    [6, "ta-IN", [["2026-10-12", 30, 0.85], ["2026-10-19", 34, 0.86]]],
+    [7, "ta-IN", [["2026-10-12", 18, 0.6], ["2026-10-19", 21, 0.64]]],
+    [8, "ta-IN", [["2026-10-19", 41, 0.93]]],
+    [9, "ta-IN", [["2026-10-12", 26, 0.79], ["2026-10-19", 29, 0.86]]],
+    [10, "ta-IN", [["2026-10-19", 12, 0.5]]],
   ];
   return {
     marks: {},
     placements: [],
-    nextId: 6,
+    nextId: 12,
     children: [
       child(1, "Aarav Gowda", "kn-IN", 3),
       child(2, "Diya K.", "kn-IN", 2),
       child(3, "Rohan M.", "kn-IN", 3),
       child(4, "Kavin S.", "ta-IN", 2),
       child(5, "Isha R.", "hi-IN", 3),
+      // A fuller Tamil class for the demo; synthetic nicknames, like every child here.
+      child(6, "Meena R.", "ta-IN", 3),
+      child(7, "Arjun K.", "ta-IN", 2),
+      child(8, "Yazhini P.", "ta-IN", 3),
+      child(9, "Selvi M.", "ta-IN", 3),
+      child(10, "Karthik V.", "ta-IN", 2),
+      child(11, "Nila S.", "ta-IN", 2),
     ],
     attempts: history.flatMap(([id, lang, rows]) =>
       rows.map(([date, wcpm, acc]) => seededReading(id, date, wcpm, acc, lang)),
@@ -240,6 +252,24 @@ function readingsOf(childId: number): Reading[] {
 const brief = (r: Reading | undefined): ReadingBrief | null =>
   r ? { at: r.at, accuracy: r.accuracy, wcpm: r.wcpm } : null;
 
+/**
+ * Where the demo class's synthetic children stand on the reading steps before any placement
+ * is run in this browser, so the teacher's register has its groups. A real placement replaces
+ * it; a child the teacher adds starts unplaced.
+ */
+const DEMO_LEVEL: Record<number, Level> = {
+  1: "paragraph",
+  2: "story",
+  3: "word",
+  4: "paragraph",
+  5: "word",
+  6: "paragraph",
+  7: "word",
+  8: "story",
+  9: "paragraph",
+  10: "letter",
+};
+
 function levelOf(childId: number): { level: Level | null; uncertain: boolean } {
   const done = state()
     .placements.filter((p) => p.childId === childId)
@@ -257,7 +287,7 @@ function out(row: ChildRow): Child {
     readings: rs.length,
     latest: brief(rs[0]),
     previous: brief(rs[1]),
-    level,
+    level: level ?? DEMO_LEVEL[row.id] ?? null,
     level_uncertain: uncertain,
   };
 }
@@ -564,7 +594,7 @@ export const mockClass = {
     return {
       passage_id: mockPassage(child.language).id,
       reason: "at the child's level",
-      level: levelOf(childId).level,
+      level: levelOf(childId).level ?? DEMO_LEVEL[childId] ?? null,
     };
   },
 

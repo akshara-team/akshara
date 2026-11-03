@@ -70,3 +70,28 @@ def parse(text: str, lang: str) -> Akshara:
         else:
             marks += ch
     return Akshara(text, tuple(cons), vowel, sign, dead, marks)
+
+
+def _distance(a: list[str], b: list[str]) -> int:
+    """Edit distance counted in aksharas."""
+    prev = list(range(len(b) + 1))
+    for i, x in enumerate(a, 1):
+        cur = [i]
+        for j, y in enumerate(b, 1):
+            cur.append(min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (x != y)))
+        prev = cur
+    return prev[-1]
+
+
+def near_miss(target: str, heard: str, lang: str) -> bool:
+    """Whether `heard` is close enough to `target` that the speech service may have misheard it.
+
+    Measured live (docs/WORKLOG.md, 2026-11-03): Timbre saying a short Tamil word correctly was
+    heard as a near word in two of three tries (நாளை as நாலு, குடை as குடல்), so a single word
+    heard this way is not proof of a mistake. Near means: the same first akshara, and at most one
+    akshara different (two for a word of one or two aksharas, where one sound is most of it).
+    """
+    a, b = split(target.strip(), lang), split(heard.strip(), lang)
+    if not a or not b or a == b or a[0] != b[0]:
+        return False
+    return _distance(a, b) <= (2 if len(a) <= 2 else 1)

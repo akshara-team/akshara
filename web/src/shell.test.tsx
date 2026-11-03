@@ -22,17 +22,27 @@ describe("shell", () => {
     }
   });
 
-  it("gives the child flow a desktop workspace", () => {
+  it("gives the child flow its frame: three script letters and the class, then the book page", async () => {
     const { container: role } = at("/");
-    expect(role.querySelector(".workspace--w360")).toBeTruthy();
+    expect(role.querySelectorAll(".lang-pick__letter").length).toBe(3);
+    expect(await screen.findByRole("list", { name: t("kn-IN", "reader.title") })).toBeTruthy();
+    expect(role.querySelector(".frame .voice")).toBeTruthy();
 
     const { container: reading } = at("/read/kn-101");
-    expect(reading.querySelector(".workspace--w360")).toBeTruthy();
+    expect(reading.querySelector(".frame .book-page .reading")).toBeTruthy();
   });
 
-  it("gives recovery a desktop workspace", () => {
+  it("puts each screen on one surface: the book, the slate or the register", () => {
+    expect(at("/").container.querySelector('.app-shell[data-surface="book"]')).toBeTruthy();
+    expect(at("/practice").container.querySelector('.app-shell[data-surface="slate"]')).toBeTruthy();
+    expect(at("/results").container.querySelector('.app-shell[data-surface="book"]')).toBeTruthy();
+    expect(at("/teacher").container.querySelector('.app-shell[data-surface="register"]')).toBeTruthy();
+  });
+
+  it("gives recovery the child frame: the steps on a page, one action", () => {
     const { container } = at("/recovery/microphone");
-    expect(container.querySelector(".workspace--w320")).toBeTruthy();
+    expect(container.querySelectorAll(".frame .book-page .steps-list li").length).toBe(3);
+    expect(container.querySelectorAll(".frame__action .action").length).toBe(1);
   });
 
   it("routes to the offline recovery screen when the browser goes offline", async () => {

@@ -1,18 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { api, isMock, statusOf } from "../../api";
-import { initialsOf } from "../../api/classSummary";
 import type { Child } from "../../api/types";
 import {
-  Avatar,
   Button,
-  Card,
   Checkbox,
+  ChildMark,
   Input,
+  PICTURES,
   PageHeader,
   Radio,
   Select,
+  pictureCode,
+  pictureOf,
 } from "../../components";
+import type { PictureName } from "../../components/pictureShapes";
 import { forgetReader } from "../../state/storage";
 import { useLoad } from "../../state/useLoad";
 import type { Lang } from "../../theme/script";
@@ -47,7 +49,7 @@ export function ChildForm({ mode }: { mode: "add" | "edit" }) {
   return (
     <>
       <PageHeader back backTo={mode === "edit" ? `/teacher/child/${id}` : "/teacher"} nav={NAV} />
-      <div className="screen-body">
+      <div className="register-page register-page--form">
         {mode === "edit" && error ? (
           <p className="note" role="alert">
             Could not load this child.
@@ -69,6 +71,16 @@ function Form({ existing }: { existing: Child | null }) {
   const [name, setName] = useState(existing?.alias ?? "");
   const [grade, setGrade] = useState<number>(existing?.grade ?? 2);
   const [language, setLanguage] = useState<Lang>(existing?.language ?? "kn-IN");
+  // The child's picture: how a child who cannot read yet finds themselves. A new child gets
+  // the first picture nobody in that language's class has, until the teacher picks one.
+  const [picture, setPicture] = useState<PictureName | null>(
+    existing ? pictureOf(existing.id, existing.avatar) : null,
+  );
+  const { data: classmates } = useLoad(() => api.listChildren(language), [language]);
+  const taken = new Set(
+    (classmates ?? []).filter((c) => c.id !== existing?.id).map((c) => pictureOf(c.id, c.avatar)),
+  );
+  const shown = picture ?? PICTURES.find((p) => !taken.has(p)) ?? PICTURES[0];
   // Consent can be re-dated but not taken back here: withdrawing it means deleting the data.
   const consented = Boolean(existing?.consent_date);
   const [consent, setConsent] = useState(consented);
@@ -105,7 +117,7 @@ function Form({ existing }: { existing: Child | null }) {
         alias,
         grade,
         language,
-        avatar: initialsOf(alias),
+        avatar: pictureCode(shown),
         consent_date: consentDate,
       };
       const child = existing
@@ -121,32 +133,24 @@ function Form({ existing }: { existing: Child | null }) {
 
   return (
     <form
-      className="workspace workspace--w340"
+      className="form"
       noValidate
       onSubmit={(e) => {
         e.preventDefault();
         void save();
       }}
     >
-      <div className="stack">
-        <h1 className="card__title">{existing ? "Edit child" : "Add a child"}</h1>
-        <p className="note">The child picks this name on the reading screen, so use one they know.</p>
-        <Card>
-          <p className="reader-name">A nickname is enough</p>
-          <p className="note">
-            Use a first name or nickname, never the full name. Akshara keeps only this name, the
-            class, the language and the readings. Recordings are kept for {RETENTION_DAYS} days so
-            you can listen to them, then deleted.
-            {isMock ? " In this demo, children are saved in this browser only." : ""}
-          </p>
-        </Card>
+      <div className="register-head">
+        <h1 className="register-head__title">{existing ? "Edit child" : "Add a child"}</h1>
       </div>
+      <p className="register-status">
+        <strong>A nickname is enough.</strong> Use a first name or nickname, never the full name.
+        Akshara keeps only this name, the picture, the class, the language and the readings.
+        Recordings are kept for {RETENTION_DAYS} days so you can listen to them, then deleted.
+        {isMock ? " In this demo, children are saved in this browser only." : ""}
+      </p>
 
-      <div className="stack">
-        <div className="metarow">
-          <Avatar initials={name.trim() ? initialsOf(name) : "?"} />
-          <span className="reader-meta">Shown with the name</span>
-        </div>
+      <div className="form__fields">
 
         <Input
           label="Child’s name *"
@@ -162,8 +166,31 @@ function Form({ existing }: { existing: Child | null }) {
         />
 
         <fieldset className="fieldset">
+          <legend className="field__label">Their picture</legend>
+          <p className="note">
+            The child finds themselves by this picture before they can read their name.
+          </p>
+          <div className="picture-pick" role="radiogroup" aria-label="Their picture">
+            {PICTURES.map((p) => (
+              <button
+                key={p}
+                type="button"
+                role="radio"
+                aria-checked={p === shown}
+                aria-label={`${p}${taken.has(p) ? " (another child has it)" : ""}`}
+                className="picture-pick__option"
+                data-taken={taken.has(p)}
+                onClick={() => setPicture(p)}
+              >
+                <ChildMark picture={p} />
+              </button>
+            ))}
+          </div>
+        </fieldset>
+
+        <fieldset className="fieldset">
           <legend className="field__label">Class *</legend>
-          <div className="stack--tight stack">
+          <div className="radio-row">
             {GRADES.map((g) => (
               <Radio key={g} selected={grade === g} onSelect={() => setGrade(g)}>
                 Class {g}
@@ -222,13 +249,12 @@ function Form({ existing }: { existing: Child | null }) {
           </p>
         )}
 
-        <div className="actions">
-          <Button block type="submit" disabled={busy}>
+        <div className="register-actions">
+          <Button type="submit" disabled={busy}>
             {busy ? "Saving…" : existing ? "Save changes" : "Save child"}
           </Button>
           <Button
             variant="ghost"
-            block
             type="button"
             onClick={() => navigate(existing ? `/teacher/child/${existing.id}` : "/teacher")}
           >
@@ -274,8 +300,8 @@ function DeleteChild({ child }: { child: Child }) {
   }
 
   return (
-    <section className="card danger-zone" aria-labelledby="delete-heading">
-      <h2 className="reader-name" id="delete-heading">
+    <section className="danger-zone" aria-labelledby="delete-heading">
+      <h2 className="card__title" id="delete-heading">
         Delete this child’s data
       </h2>
       <p className="note">
@@ -283,17 +309,17 @@ function DeleteChild({ child }: { child: Child }) {
         when a parent takes their consent back or the child leaves. It cannot be undone.
       </p>
       {!asking ? (
-        <Button variant="danger" block onClick={() => setAsking(true)}>
+        <Button variant="danger" onClick={() => setAsking(true)}>
           Delete {child.alias}’s data
         </Button>
       ) : (
-        <div className="stack stack--tight">
-          <p className="reader-meta">Delete everything about {child.alias}? This cannot be undone.</p>
-          <div className="actions" ref={confirmRow}>
-            <Button variant="danger" block disabled={busy} onClick={() => void remove()}>
+        <div className="danger-zone__ask">
+          <p className="note">Delete everything about {child.alias}? This cannot be undone.</p>
+          <div className="register-actions" ref={confirmRow}>
+            <Button variant="danger" disabled={busy} onClick={() => void remove()}>
               {busy ? "Deleting…" : "Yes, delete everything"}
             </Button>
-            <Button variant="ghost" block disabled={busy} onClick={() => setAsking(false)}>
+            <Button variant="ghost" disabled={busy} onClick={() => setAsking(false)}>
               Keep {child.alias}’s data
             </Button>
           </div>

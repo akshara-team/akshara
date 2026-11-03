@@ -181,6 +181,10 @@ Akshara practice. `aksharas` splits a word into the units the script is read in
 plays each through `/v1/feedback/audio` (cached), then the whole word. `practice` (multipart:
 `audio`, `word`, `lang`, optional `child_id`) scores one re-read of one word and returns
 `{word, said, state}`; with `child_id` it teaches the learner model. Costs one Prisma call.
+`state` is `correct`, `error`, or `unsure`: a word heard as a near word (same first akshara,
+at most one akshara different, two for a word of one or two aksharas; `near_miss` in
+`core/aksharas.py`) is `unsure`, because one word alone is where the speech service mishears
+most. A word with no letters is `400`.
 
 ### `GET /v1/review?lang=kn-IN` · `POST /v1/review` · `GET /v1/attempts/{request_id}/words/{index}/clip`
 

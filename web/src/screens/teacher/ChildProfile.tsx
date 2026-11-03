@@ -1,21 +1,11 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { api, isMock } from "../../api";
-import { initialsOf, levelOf } from "../../api/classSummary";
+import { levelOf } from "../../api/classSummary";
 import { fslGoal } from "../../lib/nipun";
-import {
-  Avatar,
-  BenchmarkBand,
-  Button,
-  Card,
-  EmptyState,
-  StatCard,
-  StatusBadge,
-  Table,
-  PageHeader,
-} from "../../components";
+import { BenchmarkBand, Button, ChildMark, EmptyState, PageHeader, pictureOf } from "../../components";
 import { LEVEL_TEXT } from "./PlacementScreen";
 import { useLoad } from "../../state/useLoad";
-import { scriptClass, scriptEnglish, scriptName } from "../../theme/script";
+import { isLang, scriptClass, scriptEnglish, scriptName } from "../../theme/script";
 import { TEACHER_NAV } from "./nav";
 
 const NAV = TEACHER_NAV;
@@ -30,9 +20,15 @@ const pct = (v: number) => `${Math.round(v * 100)}%`;
 function change(now: number | null, before: number | null, unit: string): string | undefined {
   if (now == null || before == null) return undefined;
   const d = Math.round(now - before);
-  return `${d > 0 ? "↑" : d < 0 ? "↓" : "→"} ${Math.abs(d)}${unit} vs last time`;
+  if (d === 0) return "the same as last time";
+  return `${d > 0 ? "up" : "down"} ${Math.abs(d)}${unit} on last time`;
 }
 
+/**
+ * One child, as a page of the class register: who they are and the step they are on in one
+ * sentence, the sounds they are working on as chalk tiles, their words a minute over time,
+ * and every reading as a ruled row.
+ */
 export function ChildProfile() {
   const { childId } = useParams<{ childId: string }>();
   const navigate = useNavigate();
@@ -51,7 +47,7 @@ export function ChildProfile() {
     return (
       <>
         <PageHeader back backTo="/teacher" nav={NAV} />
-        <div className="screen-body">
+        <div className="register-page">
           <EmptyState title="Child not found">
             <p className="note">They may have been removed. Go back to the class.</p>
             <Link className="screen__link" to="/teacher">
@@ -66,7 +62,7 @@ export function ChildProfile() {
     return (
       <>
         <PageHeader back backTo="/teacher" nav={NAV} />
-        <div className="screen-body">
+        <div className="register-page">
           <p className="note" role="status">
             Loading…
           </p>
@@ -84,67 +80,110 @@ export function ChildProfile() {
   const chart = readings.slice(0, 6).reverse();
   const goal = fslGoal(child.language);
   const max = Math.max(goal?.high ?? 0, ...chart.map((r) => r.wcpm ?? 0));
+  const readingPath = (session: string) =>
+    `/teacher/child/${child.id}/reading/${encodeURIComponent(session)}`;
+  const trend = latest ? change(latest.wcpm, previous?.wcpm ?? null, "") : undefined;
 
   return (
     <>
       <PageHeader back backTo="/teacher" badge={levelOf(child.grade)} nav={NAV} />
-      <div className="screen-body">
-        <p className="eyebrow">Teacher · Child profile{isMock ? " · demo data" : ""}</p>
-
-        <div className="metarow">
-          <Avatar initials={child.avatar || initialsOf(child.alias)} />
-          <div className="metarow__text">
-            <span className="reader-name">{child.alias}</span>
-            <span className="reader-meta">
-              {levelOf(child.grade)} · {scriptName(child.language)} /{" "}
-              {scriptEnglish(child.language)}
-            </span>
+      <div className="register-page">
+        <div className="register-head">
+          <div className="register-head__who">
+            <ChildMark picture={pictureOf(child.id, child.avatar)} />
+            <h1 className="register-head__title">{child.alias}</h1>
           </div>
+          {latest && (
+            <Button icon="book" onClick={() => navigate(readingPath(latest.session))}>
+              View latest reading
+            </Button>
+          )}
         </div>
 
-        <Card>
-          <div className="metarow">
-            <div className="metarow__text">
-              <span className="eyebrow">Reading level (ASER)</span>
-              <span className="reader-name">
-                {level ? `${level.name} · ${level.means}` : "Not placed yet"}{" "}
-                {child.level_uncertain && <StatusBadge tone="warning">Listen again</StatusBadge>}
-              </span>
-            </div>
-          </div>
-          {(skills.working_on.length > 0 || skills.learned.length > 0) && (
-            <div className="stack--tight stack">
-              {skills.working_on.length > 0 && (
-                <p className="note">
-                  Working on:{" "}
-                  <span className={scriptClass(child.language)} lang={child.language}>
-                    {skills.working_on.map((s) => s.text).join("  ")}
-                  </span>
-                </p>
-              )}
-              {skills.learned.length > 0 && (
-                <p className="note">
-                  Learned:{" "}
-                  <span className={scriptClass(child.language)} lang={child.language}>
-                    {skills.learned
-                      .slice(0, 12)
-                      .map((s) => s.text)
-                      .join("  ")}
-                  </span>
-                  {skills.learned.length > 12 ? ` and ${skills.learned.length - 12} more` : ""}
-                </p>
-              )}
-            </div>
+        {/* One status sentence: who, which step, how the last reading went. */}
+        <p className="register-status">
+          {levelOf(child.grade)}, reads{" "}
+          <span className={scriptClass(child.language)} lang={child.language}>
+            {scriptName(child.language)}
+          </span>{" "}
+          ({scriptEnglish(child.language)}).{" "}
+          {level ? (
+            <>
+              Reading step <strong>{level.name}</strong>: {level.means}.
+            </>
+          ) : (
+            <strong>Not placed yet.</strong>
           )}
-          <div className="actions">
-            <Button
-              variant={level ? "ghost" : "primary"}
-              onClick={() => navigate(`/teacher/child/${child.id}/placement`)}
-            >
-              {level ? "Check the level again" : "Find reading level"}
-            </Button>
-          </div>
-        </Card>
+          {child.level_uncertain && <strong> Listen again to confirm the step.</strong>}
+          {latest && (
+            <>
+              {" "}
+              Latest reading: <span className="num">
+                {latest.wcpm == null ? "-" : Math.round(latest.wcpm)}
+              </span>{" "}
+              words a minute, <span className="num">{pct(latest.accuracy)}</span> right
+              {trend ? ` (${trend})` : ""}.
+            </>
+          )}
+          {isMock && <span className="register-status__goal">Demo data.</span>}
+        </p>
+
+        <div className="register-links">
+          <button
+            type="button"
+            className="link-button"
+            onClick={() => navigate(`/teacher/child/${child.id}/placement`)}
+          >
+            {level ? "Check the level again" : "Find reading level"}
+          </button>
+          <button
+            type="button"
+            className="link-button"
+            onClick={() => navigate(`/teacher/edit/${child.id}`)}
+          >
+            Edit child
+          </button>
+        </div>
+
+        {(skills.working_on.length > 0 || skills.learned.length > 0) && (
+          <section className="sounds" aria-label="Sounds">
+            {skills.working_on.length > 0 && (
+              <div className="sounds__row">
+                <h2 className="sounds__label">Working on</h2>
+                <ul className="sounds__tiles">
+                  {skills.working_on.map((s) => (
+                    <li
+                      key={s.text}
+                      className={`sound sound--now ${scriptClass(child.language)}`}
+                      lang={child.language}
+                    >
+                      {s.text}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {skills.learned.length > 0 && (
+              <div className="sounds__row">
+                <h2 className="sounds__label">Learned</h2>
+                <ul className="sounds__tiles">
+                  {skills.learned.slice(0, 12).map((s) => (
+                    <li
+                      key={s.text}
+                      className={`sound ${scriptClass(child.language)}`}
+                      lang={child.language}
+                    >
+                      {s.text}
+                    </li>
+                  ))}
+                  {skills.learned.length > 12 && (
+                    <li className="sound sound--more">and {skills.learned.length - 12} more</li>
+                  )}
+                </ul>
+              </div>
+            )}
+          </section>
+        )}
 
         {!latest ? (
           <EmptyState title={`${first} has not read yet`}>
@@ -152,40 +191,16 @@ export function ChildProfile() {
               Their readings will appear here. On the child screen, choose {child.alias} and read a
               story.
             </p>
-            <div className="actions">
-              <Button variant="ghost" onClick={() => navigate(`/teacher/edit/${child.id}`)}>
-                Edit child
-              </Button>
-            </div>
           </EmptyState>
         ) : (
-          <div className="workspace workspace--w360">
-            <div className="stack">
-              <div className="stats-grid">
-                <StatCard
-                  label="WCPM"
-                  value={latest.wcpm == null ? "—" : String(Math.round(latest.wcpm))}
-                  caption={change(latest.wcpm, previous?.wcpm ?? null, "")}
-                />
-                <StatCard
-                  label="Accuracy"
-                  value={pct(latest.accuracy)}
-                  caption={change(
-                    latest.accuracy * 100,
-                    previous ? previous.accuracy * 100 : null,
-                    " points",
-                  )}
-                />
-              </div>
+          <>
+            {latest.wcpm != null && (
+              <BenchmarkBand lang={child.language} grade={3} wcpm={latest.wcpm} />
+            )}
 
-              {latest.wcpm != null && (
-                <BenchmarkBand lang={child.language} grade={3} wcpm={latest.wcpm} />
-              )}
-
-              <Card>
-                <p className="eyebrow">
-                  {first}’s WCPM
-                </p>
+            {chart.length > 1 && (
+              <figure className="progress-page">
+                <figcaption className="sounds__label">{first}’s words a minute</figcaption>
                 <div
                   className="chart"
                   role="img"
@@ -196,7 +211,7 @@ export function ChildProfile() {
                   {chart.map((r) => (
                     <div className="chart__col" key={r.session}>
                       <span className="chart__value">
-                        {r.wcpm == null ? "—" : Math.round(r.wcpm)}
+                        {r.wcpm == null ? "-" : Math.round(r.wcpm)}
                       </span>
                       <div
                         className={`chart__bar ${goal && (r.wcpm ?? 0) >= goal.low ? "chart__bar--ok" : ""}`}
@@ -206,57 +221,47 @@ export function ChildProfile() {
                     </div>
                   ))}
                 </div>
-              </Card>
-            </div>
+              </figure>
+            )}
 
-            <div className="stack">
-              <p className="step__label">
-                Reading history · {readings.length} {readings.length === 1 ? "reading" : "readings"}
-              </p>
-              <Table
-                columns={[
-                  { key: "date", header: "Date" },
-                  { key: "story", header: "Story" },
-                  { key: "wcpm", header: "WCPM" },
-                  { key: "accuracy", header: "Accuracy" },
-                  { key: "open", header: "Details" },
-                ]}
-                rows={readings.map((r) => ({
-                  date: shortDate(r.at),
-                  story: r.title ?? r.passage_id,
-                  wcpm: r.wcpm == null ? "—" : String(Math.round(r.wcpm)),
-                  accuracy: pct(r.accuracy),
-                  open: (
-                    <Link
-                      className="screen__link"
-                      to={`/teacher/child/${child.id}/reading/${encodeURIComponent(r.session)}`}
-                    >
-                      Open
-                    </Link>
-                  ),
-                }))}
-              />
-
-              <div className="actions">
-                <Button
-                  block
-                  onClick={() =>
-                    navigate(
-                      `/teacher/child/${child.id}/reading/${encodeURIComponent(latest.session)}`,
-                    )
-                  }
-                >
-                  View latest reading
-                </Button>
-                <Button variant="ghost" block onClick={() => navigate(`/teacher/edit/${child.id}`)}>
-                  Edit child
-                </Button>
-                <Link className="screen__link" to="/teacher">
-                  Back to class
-                </Link>
-              </div>
+            <h2 className="register-section">
+              Reading history · {readings.length} {readings.length === 1 ? "reading" : "readings"}
+            </h2>
+            <div className="register">
+              <table className="register__table">
+                <thead>
+                  <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Story</th>
+                    <th scope="col" className="num">
+                      WCPM
+                    </th>
+                    <th scope="col" className="num">
+                      Accuracy
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {readings.map((r) => (
+                    <tr key={r.session} className="register__row">
+                      <td>
+                        <Link className="register__open" to={readingPath(r.session)}>
+                          {shortDate(r.at)}
+                        </Link>
+                      </td>
+                      <td>
+                        <span className={isLang(r.language) ? scriptClass(r.language) : undefined} lang={r.language}>
+                          {r.title ?? r.passage_id}
+                        </span>
+                      </td>
+                      <td className="num">{r.wcpm == null ? "-" : Math.round(r.wcpm)}</td>
+                      <td className="num">{pct(r.accuracy)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-          </div>
+          </>
         )}
       </div>
     </>

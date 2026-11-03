@@ -1,112 +1,99 @@
-import { useNavigate } from "react-router-dom";
-import {
-  BookIcon,
-  Button,
-  Card,
-  HandIcon,
-  Radio,
-  StarIcon,
-  PageHeader,
-  UsersIcon,
-} from "../../components";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { api } from "../../api";
+import { toReader } from "../../api/classSummary";
+import type { Reader } from "../../api/types";
+import { Button, ChildFrame, EmptyState, FIRST_AKSHARA, Logo, UsersIcon } from "../../components";
+import { useCopy } from "../../i18n";
 import { useSession } from "../../state/session";
-import { setLanguage as persistLanguage } from "../../state/storage";
-import { LANGS, scriptClass, scriptEnglish, scriptName, type Lang } from "../../theme/script";
+import { setLanguage as persistLanguage, setReaderAndLang } from "../../state/storage";
+import { useLoad } from "../../state/useLoad";
+import { LANGS, scriptClass, scriptName } from "../../theme/script";
+import { ReaderGrid } from "./ReaderGrid";
 
-const HELLO: Record<Lang, string> = {
-  "kn-IN": "ನಮಸ್ಕಾರ! ಬನ್ನಿ, ಓದೋಣ.",
-  "ta-IN": "வணக்கம்! வாங்க, படிக்கலாம்.",
-  "hi-IN": "नमस्ते! आइए, पढ़ें.",
-};
-
+/**
+ * The shared phone or tablet, as the teacher hands it over: the class's language as three
+ * script letters, then every child as their picture in chalk. The child taps their own and
+ * their home opens. No English on the child's path; the teacher's door is a small link.
+ */
 export function RoleSelection() {
-  const { lang, setLang } = useSession();
+  const { lang, setLang, setReader } = useSession();
   const navigate = useNavigate();
+  const { Tx } = useCopy(lang);
+  const { data: children, error } = useLoad(() => api.listChildren(lang), [lang]);
+  const readers: Reader[] = (children ?? []).map(toReader);
+  const [busy, setBusy] = useState<string | null>(null);
+
+  function pick(r: Reader) {
+    setBusy(r.id);
+    setReader(r);
+    setReaderAndLang(r, lang);
+    navigate("/home");
+  }
 
   return (
-    <>
-      <PageHeader />
-      <div className="hero">
-        <h1 className="hero__title">A little reading.</h1>
-        <p className="hero__sub">
-          A lot of fun! <StarIcon className="inline-icon" />
-        </p>
-      </div>
-
-      <div className="screen-body">
-        <div className="workspace workspace--w360">
-          {/* Left: greeting and language. */}
-          <div className="stack">
-            <Card>
-              <div className="greeting">
-                <p className="eyebrow">Welcome · Demo school</p>
-                <p className="greeting__school">Govt Primary School, Mandya</p>
-                <p className={`greeting__hello ${scriptClass(lang)}`} lang={lang}>
-                  {HELLO[lang]} <HandIcon className="inline-icon" />
-                </p>
-              </div>
-            </Card>
-
-            <div className="step">
-              <span className="step__num">1</span>
-              <span className="step__label">Pick your language</span>
-            </div>
-            <div className="stack" role="radiogroup" aria-label="Reading language">
-              {LANGS.map((l) => (
-                <Radio
-                  key={l}
-                  selected={l === lang}
-                  onSelect={() => {
-                    setLang(l);
-                    persistLanguage(l);
-                  }}
-                >
-                  <span className={scriptClass(l)} lang={l}>{scriptName(l)}</span>{" "}
-                  <span className="reader-meta">{scriptEnglish(l)}</span>
-                </Radio>
-              ))}
-            </div>
-          </div>
-
-          {/* Right: role and start. */}
-          <div className="stack">
-            <div className="step">
-              <span className="step__num">2</span>
-              <span className="step__label">Who are you?</span>
-            </div>
-
-            <button type="button" className="rolecard" onClick={() => navigate("/reader")}>
-              <span className="rolecard__icon" aria-hidden="true">
-                <BookIcon width={28} height={28} />
-              </span>
-              <span>
-                <span className="rolecard__title">I am reading</span>
-                <span className="rolecard__sub">Choose a story and read it aloud</span>
-              </span>
-            </button>
-
-            <button type="button" className="rolecard" onClick={() => navigate("/teacher")}>
-              <span className="rolecard__icon" aria-hidden="true">
-                <UsersIcon width={28} height={28} />
-              </span>
-              <span>
-                <span className="rolecard__title">I am a teacher</span>
-                <span className="rolecard__sub">Choose stories · Track progress</span>
-              </span>
-            </button>
-
-            <p className="note">
-              Children read. Teachers choose stories and follow progress.
-            </p>
-
-            <div className="actions">
-              <Button block icon="book" onClick={() => navigate("/reader")}>
-                Start reading
-              </Button>
-            </div>
+    <ChildFrame
+      lang={lang}
+      lineKey="voice.tapYou"
+      title="Welcome"
+      action={
+        <Link className="teacher-door" to="/teacher">
+          <UsersIcon width={20} height={20} aria-hidden="true" />
+          <span>I am the teacher</span>
+        </Link>
+      }
+    >
+      <div className="who">
+        <div className="who__top">
+          <Logo lang={lang} />
+          <div className="lang-pick" role="radiogroup" aria-label="Reading language">
+            {LANGS.map((l) => (
+              <button
+                key={l}
+                type="button"
+                role="radio"
+                aria-checked={l === lang}
+                aria-label={scriptName(l)}
+                className={`lang-pick__letter ${scriptClass(l)}`}
+                lang={l}
+                onClick={() => {
+                  setLang(l);
+                  persistLanguage(l);
+                }}
+              >
+                {FIRST_AKSHARA[l]}
+              </button>
+            ))}
           </div>
         </div>
+
+        <h1 className={`display ${scriptClass(lang)}`} lang={lang}>
+          <Tx k="reader.title" />
+        </h1>
+
+        {error ? (
+          <EmptyState title={<Tx k="reader.loadFailed" />}>
+            <p className="note">
+              <Tx k="reader.loadFailedHelp" />
+            </p>
+          </EmptyState>
+        ) : children === null ? (
+          <p className="note" role="status">
+            <Tx k="reader.loading" />
+          </p>
+        ) : readers.length === 0 ? (
+          <EmptyState title={<Tx k="reader.none" />}>
+            <p className="note">
+              <Tx k="reader.noneHelp" vars={{ language: scriptName(lang) }} />
+            </p>
+            <Button variant="outline" icon="add" onClick={() => navigate("/teacher/add")}>
+              <Tx k="reader.addChild" />
+            </Button>
+          </EmptyState>
+        ) : (
+          <ReaderGrid readers={readers} lang={lang} busyId={busy} onPick={pick} />
+        )}
       </div>
-    </>
+    </ChildFrame>
   );
 }

@@ -1,61 +1,72 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api, childIdOf, storyFor } from "../../api";
-import { fslGoal } from "../../lib/nipun";
+import type { Passage } from "../../api/types";
 import {
-  Button,
-  Card,
-  GlobeIcon,
-  LanguageBadge,
-  ProgressBar,
-  PageHeader,
-  RewardsStrip,
-  UserSwitchIcon,
-  WordChip,
-  wordStatus,
-  SayButton,
+  Action,
+  BookIcon,
+  BookPage,
+  ChildFrame,
+  FlameIcon,
+  Kolam,
+  PersonIcon,
+  StarIcon,
+  pictureOf,
 } from "../../components";
+import { coverFor } from "../../data/covers";
 import { useQueuedCount } from "../../state/outbox";
+import { currentStreak, starCount } from "../../state/rewards";
 import { useSession } from "../../state/session";
 import { useChildProgress } from "../../state/useChildProgress";
 import { useCopy } from "../../i18n";
-import { scriptClass, scriptName } from "../../theme/script";
+import { scriptClass } from "../../theme/script";
+import { storyTitle } from "./title";
 
 /**
- * The child's home. One big action, their own progress, and no tables — the
- * teacher dashboard is the detailed view; this is the child's.
+ * The child's home: "this is me, this is my story, tap read". Today's story as a picture book
+ * (its real cover), the one Read action, and the child's row of kolams: one for every story
+ * finished, and today's still only dots. A star count; no speeds or percentages.
  */
 export function ChildHome() {
   const navigate = useNavigate();
   const { setReader, setLang, beginPassage } = useSession();
-  const { store, synced, gone } = useChildProgress();
+  const { store, gone } = useChildProgress();
   const [busy, setBusy] = useState(false);
-  const { t, Tx } = useCopy(store.lang);
+  const lang = store.lang;
+  const { t, Tx } = useCopy(lang);
   const waiting = useQueuedCount();
+  // Encourage, never compare: a star per story read, and the days in a row (from two).
+  const stars = starCount(store.readings);
+  const streak = currentStreak(store.readings);
 
   const reader = gone ? null : store.reader;
   const first = reader?.alias.split(" ")[0] ?? "";
-  const last = store.readings[0];
-  const recent = store.readings.slice(0, 3);
-  const bars = [...recent].reverse(); // oldest to newest
-  const best = Math.max(0, ...store.readings.map((r) => r.wcpm ?? 0));
-  const goal = fslGoal(store.lang);
+  // One kolam per story finished, newest first.
+  const finished = [...new Map(store.readings.map((r) => [r.passageId, r])).values()];
 
-  async function start(reuseLast = false) {
+  const [next, setNext] = useState<Passage | null>(null);
+  useEffect(() => {
+    if (!reader) return;
+    let live = true;
+    storyFor(lang, childIdOf(reader.id))
+      .then((p) => live && setNext(p))
+      .catch(() => {});
+    return () => {
+      live = false;
+    };
+  }, [reader?.id, lang]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  async function start() {
     if (!reader) {
       navigate("/switch");
       return;
     }
     setBusy(true);
     try {
-      const passage = await storyFor(
-        store.lang,
-        childIdOf(reader.id),
-        reuseLast && last ? last.passageId : null,
-      );
+      const passage = next ?? (await storyFor(lang, childIdOf(reader.id)));
       if (!passage) return;
       setReader(reader);
-      setLang(store.lang);
+      setLang(lang);
       beginPassage(passage, api.partsOf(passage));
       navigate(`/read/${passage.id}`);
     } finally {
@@ -63,174 +74,85 @@ export function ChildHome() {
     }
   }
 
+  if (!reader) {
+    return (
+      <ChildFrame
+        lang={lang}
+        lineKey="home.findNameHelp"
+        title="My reading"
+        action={
+          <Action icon={<PersonIcon />} onClick={() => navigate("/switch")}>
+            <Tx k="home.chooseName" />
+          </Action>
+        }
+      >
+        <h1 className={`display ${scriptClass(lang)}`} lang={lang}>
+          <Tx k="home.findName" />
+        </h1>
+      </ChildFrame>
+    );
+  }
+
+  const cover = next ? coverFor(next) : null;
+  const todayDone = next ? finished.some((r) => r.passageId === next.id) : false;
+
   return (
-    <>
-      <PageHeader />
-      <div className="home">
-        <div className="home__hero">
-          <p className="eyebrow">
-            <Tx k="home.eyebrow" />
-          </p>
-          <h1 className="card__title">
-            {reader ? <Tx k="home.welcomeBack" vars={{ name: first }} /> : <Tx k="home.hello" />}
-          </h1>
-          <div className="home__meta">
-            <LanguageBadge lang={store.lang} />
-            <span className="reader-meta">
-              <span className={scriptClass(store.lang)} lang={store.lang}>
-                {scriptName(store.lang)}
-              </span>
-              {reader ? ` · ${reader.level}` : ""}
-            </span>
-          </div>
-          {waiting > 0 && (
-            <p className="note" role="status">
-              <Tx k="home.waiting" vars={{ n: waiting }} />
-            </p>
+    <ChildFrame
+      lang={lang}
+      lineKey={finished.length ? "voice.readyStory" : "home.firstStoryHelp"}
+      title="My reading"
+      mark={pictureOf(reader.id, reader.picture)}
+      action={
+        <Action icon={<BookIcon />} disabled={busy} onClick={() => void start()}>
+          <Tx k={busy ? "home.opening" : "home.readStory"} />
+        </Action>
+      }
+    >
+      <h1 className={`display ${scriptClass(lang)}`} lang={lang}>
+        <Tx k="home.welcomeBack" vars={{ name: first }} />
+      </h1>
+      {waiting > 0 && (
+        <p className="note" role="status">
+          <Tx k="home.waiting" vars={{ n: waiting }} />
+        </p>
+      )}
+
+      <BookPage
+        className="today"
+        art={cover}
+        artFrom={next ? storyTitle(next) : null}
+        lang={lang}
+        fallback={next ? <Kolam seed={next.id} progress={0} /> : null}
+      >
+        <p className={`today__title ${scriptClass(lang)}`} lang={lang}>
+          {next ? storyTitle(next) : <Tx k="home.firstStory" />}
+        </p>
+      </BookPage>
+
+      <section className="kolams" aria-label={t("home.myStories")}>
+        <ul className="kolams__row">
+          {finished.slice(0, 5).map((r) => (
+            <li key={r.passageId} title={r.storyTitle}>
+              <Kolam seed={r.passageId} tone="leaf" label={r.storyTitle} />
+            </li>
+          ))}
+          {next && !todayDone && (
+            <li className="kolams__next">
+              <Kolam seed={next.id} progress={0} />
+            </li>
           )}
-        </div>
-
-        {!reader ? (
-          <Card>
-            <p className="reader-name">
-              <Tx k="home.findName" />
-            </p>
-            <p className="note">
-              <Tx k="home.findNameHelp" />
-            </p>
-            <div className="actions">
-              <Button block icon="person" onClick={() => navigate("/switch")}>
-                <Tx k="home.chooseName" />
-              </Button>
-            </div>
-          </Card>
-        ) : (
-          <>
-            <div className="say-row">
-              <SayButton k="home.firstStoryHelp" lang={store.lang} />
-              <p className="note">
-                <Tx k="home.firstStoryHelp" />
-              </p>
-            </div>
-            <div className="home__actions">
-              <Button block icon="book" disabled={busy} onClick={() => start()}>
-                <Tx k={busy ? "home.opening" : "home.readStory"} />
-              </Button>
-              {last && (
-                <Button variant="outline" block icon="repeat" disabled={busy} onClick={() => start(true)}>
-                  <Tx k="home.readAgain" vars={{ title: last.storyTitle }} />
-                </Button>
-              )}
-            </div>
-
-            <RewardsStrip
-              readings={store.readings}
-              labels={{
-                stars: t("rewards.stars"),
-                streak: t("rewards.streak"),
-                best: t("rewards.best"),
-              }}
-            />
-
-            {recent.length === 0 ? (
-              <Card>
-                <p className="reader-name">
-                  <Tx k="home.firstStory" />
-                </p>
-                <p className="note">
-                  <Tx k="home.firstStoryHelp" />
-                </p>
-              </Card>
-            ) : (
-              <>
-                <section className="stack">
-                  <p className="step__label">
-                    <Tx k="home.progress" />
-                  </p>
-                  {bars.map((r) => (
-                    <div className="home__progress" key={r.id}>
-                      <span className={`reader-meta ${scriptClass(r.language)}`} lang={r.language}>
-                        {r.storyTitle}
-                      </span>
-                      <ProgressBar
-                        value={r.wcpm && goal ? (r.wcpm / goal.high) * 100 : 0}
-                        label={t("home.target", { title: r.storyTitle })}
-                      />
-                      <span className="reader-meta">
-                        <Tx
-                          k="home.speed"
-                          vars={{ wcpm: r.wcpm ?? "—", accuracy: Math.round(r.accuracy * 100) }}
-                        />
-                      </span>
-                    </div>
-                  ))}
-                  {best > 0 && (
-                    <p className="note">
-                      <Tx k="home.best" vars={{ wcpm: best }} />
-                    </p>
-                  )}
-                  {synced?.latest && (
-                    <p className="note">
-                      <Tx k="home.teacherSees" vars={{ count: synced.readings }} />
-                    </p>
-                  )}
-                </section>
-
-                <section className="stack">
-                  <p className="step__label">
-                    <Tx k="home.myReading" />
-                  </p>
-                  {recent.map((r) => (
-                    <div className="reading-row" key={r.id}>
-                      <div className="reading-row__head">
-                        <span className={`reader-name ${scriptClass(r.language)}`} lang={r.language}>
-                          {r.storyTitle}
-                        </span>
-                        <span className="reader-meta">
-                          {new Date(r.at).toLocaleDateString(undefined, {
-                            day: "numeric",
-                            month: "short",
-                          })}
-                        </span>
-                      </div>
-                      <div className="reading-row__chips">
-                        {r.words
-                          .filter((w) => w.op !== "inserted")
-                          .slice(0, 6)
-                          .map((w, i) => (
-                            <WordChip uiLang={store.lang}
-                              key={`${r.id}-${i}`}
-                              status={wordStatus(w)}
-                              word={w.word ?? ""}
-                              lang={r.language}
-                            />
-                          ))}
-                      </div>
-                      <span className="reader-meta">
-                        <Tx
-                          k="home.speed"
-                          vars={{ wcpm: r.wcpm ?? "—", accuracy: Math.round(r.accuracy * 100) }}
-                        />
-                      </span>
-                    </div>
-                  ))}
-                </section>
-              </>
-            )}
-
-            <div className="home__links">
-              <button type="button" className="screen__link" onClick={() => navigate("/switch")}>
-                <UserSwitchIcon width={18} height={18} />
-                <Tx k="home.notMe" />
-              </button>
-              <button type="button" className="screen__link" onClick={() => navigate("/switch")}>
-                <GlobeIcon width={18} height={18} />
-                <Tx k="home.changeLanguage" />
-              </button>
-            </div>
-          </>
+        </ul>
+        <p className="kolams__stars" aria-label={`${t("rewards.stars")}: ${stars}`}>
+          <StarIcon width={28} height={28} aria-hidden="true" />
+          <span className="num">{stars}</span>
+        </p>
+        {streak > 1 && (
+          <p className="kolams__streak" aria-label={`${t("rewards.streak")}: ${streak}`}>
+            <FlameIcon width={24} height={24} aria-hidden="true" />
+            <span className="num">{streak}</span>
+          </p>
         )}
-      </div>
-    </>
+      </section>
+    </ChildFrame>
   );
 }

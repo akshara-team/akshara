@@ -18,7 +18,7 @@ describe("akshara practice (mock mode)", () => {
   it("splits each word into tiles, takes a re-read, and ends after the last word", async () => {
     at(["ಹಾರುತ್ತಿತ್ತು", "ಕೆಂಪು"]);
     const tiles = await screen.findByRole("img", { name: "ಹಾರುತ್ತಿತ್ತು" });
-    expect(tiles.querySelectorAll(".practice-tile").length).toBeGreaterThan(1);
+    expect(tiles.querySelectorAll(".tile").length).toBeGreaterThan(1);
     expect(screen.getByText(kn("practice.wordOf", { n: 1, total: 2 }))).toBeTruthy();
 
     fireEvent.click(await screen.findByRole("button", { name: kn("read.demoReading") }));

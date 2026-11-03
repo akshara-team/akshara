@@ -14,8 +14,8 @@ So we built Akshara, a reading tutor that listens, in Kannada, Tamil and Hindi.
 
 A child reads a story aloud. Gnani's Prisma hears every word. The words they missed are broken
 into aksharas, and Gnani's Timbre says each part until the child can read the whole word. Evon,
-Gnani's open language model, writes practice sentences for the exact sounds that child finds
-hard, and a teacher approves each one. The teacher sees the whole class and listens only to the
+Gnani's open language model, is wired in to write practice sentences for the exact sounds that
+child finds hard, with a teacher approving each one; its first batch is still to run. The teacher sees the whole class and listens only to the
 marks worth doubting.
 
 We didn't just build it, we measured it: 90 passages, three languages, four audio conditions, the

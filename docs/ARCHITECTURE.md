@@ -60,7 +60,8 @@ no connection -> the browser keeps the clip (IndexedDB) and sends it later with 
 3. **Never send `bias_list` to Prisma** for reading attempts; it hides mistakes. Use
    `format=verbatim`.
 4. **Cache and cap everything that costs credits.** Transcripts and Timbre audio are cached by
-   content; every paid call goes in `results/ledger.jsonl` with a hard cap.
+   content; every paid call goes in `results/ledger.jsonl` (per checkout, not in git) with a
+   hard cap. The study's calls are kept as a record in `results/ledger_study.jsonl`.
 5. **Retries are safe.** An attempt is keyed by request id; a resend returns the stored result,
    makes no second paid call and does not teach the learner model twice.
 6. **Numbers come from results.** The reliability page and the write-ups are checked against
@@ -73,6 +74,6 @@ no connection -> the browser keeps the clip (IndexedDB) and sends it later with 
 ## Not built or not verified
 
 - No logins or multiple teachers; one server serves one class.
-- The evidence model and fusion are not in the app; Evon is not used.
-- Spoken instructions for the child screens (WP6) are not built.
+- The evidence model and fusion are not in the app (measured, did not beat Prisma alone).
+- Evon's practice-sentence pipeline is built and tested, but its first batch has not run.
 - The Dockerfile has not been built on this machine.

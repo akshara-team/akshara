@@ -1,5 +1,6 @@
 import type { Lang } from "../theme/script";
 import { nipunBand } from "../lib/nipun";
+import { isPictureCode } from "../components/ChildPicture";
 import type { Child, Level, Reader } from "./types";
 
 export type RosterStatus = "in-target" | "practise" | "new";
@@ -8,6 +9,8 @@ export type RosterEntry = {
   id: number;
   name: string;
   initials: string;
+  /** The picture the teacher chose (a picture code), or null to follow the id. */
+  picture: string | null;
   level: string;
   lang: Lang;
   status: RosterStatus;
@@ -34,6 +37,11 @@ export function initialsOf(name: string): string {
   return ([...parts[0]][0] + [...parts[1]][0]).toUpperCase();
 }
 
+/** A child's initials: the stored ones, unless `avatar` holds their chosen picture. */
+function initialsOfChild(c: Child): string {
+  return c.avatar && !isPictureCode(c.avatar) ? c.avatar : initialsOf(c.alias);
+}
+
 export function levelOf(grade: number | null): string {
   return grade ? `Class ${grade}` : "—";
 }
@@ -43,9 +51,10 @@ export function toReader(c: Child): Reader {
   return {
     id: String(c.id),
     alias: c.alias,
-    initials: c.avatar || initialsOf(c.alias),
+    initials: initialsOfChild(c),
     level: levelOf(c.grade),
     lang: c.language,
+    picture: c.avatar,
   };
 }
 
@@ -68,7 +77,8 @@ export function toRoster(children: Child[]): { roster: RosterEntry[]; metrics: C
     return {
       id: c.id,
       name: c.alias,
-      initials: c.avatar || initialsOf(c.alias),
+      initials: initialsOfChild(c),
+      picture: c.avatar,
       level: levelOf(c.grade),
       lang: c.language,
       status,

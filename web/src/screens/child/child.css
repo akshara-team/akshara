@@ -1,0 +1,416 @@
+/* The child's screens, laid out from the shared parts in components/book.css. */
+
+.frame .display {
+  margin: 0;
+  max-width: none;
+  font-size: var(--type-display);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+.frame .note {
+  margin: 0;
+  color: var(--ink-2);
+}
+.frame :is(h1, p) {
+  text-wrap: balance;
+}
+
+/* ---------- Who is reading ---------- */
+.who {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-16);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  /* Room for the tiles' shadows when the grid scrolls on a very small phone. */
+  padding: var(--s-4);
+  margin: calc(var(--s-4) * -1);
+}
+.who__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-12);
+}
+.lang-pick {
+  display: flex;
+  gap: var(--s-8);
+}
+.lang-pick__letter {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 2px solid var(--register-line);
+  border-radius: 50%;
+  background: var(--rice);
+  color: var(--ink-2);
+  font-size: 1.375rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform var(--t-press) var(--ease-out);
+}
+.lang-pick__letter:active {
+  transform: scale(0.97);
+}
+.lang-pick__letter[aria-checked="true"] {
+  border-color: var(--peacock);
+  background: var(--peacock);
+  color: var(--rice);
+}
+.reader-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-12);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 600px) {
+  .reader-grid {
+    grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+    gap: var(--s-16);
+  }
+}
+.reader-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--s-8);
+  width: 100%;
+  min-height: var(--tap-child);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+  transition: transform var(--t-press) var(--ease-out);
+}
+.reader-tile:active:not(:disabled) {
+  transform: scale(0.97);
+}
+.reader-tile .child-mark {
+  box-shadow:
+    inset 0 0 0 4px var(--slate-frame),
+    var(--shadow-page);
+}
+.reader-tile__name {
+  font-size: var(--type-label);
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: center;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.reader-tile[aria-busy="true"] .child-mark {
+  box-shadow:
+    inset 0 0 0 4px var(--turmeric),
+    var(--shadow-page);
+}
+.teacher-door {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-8);
+  min-height: 44px;
+  padding: var(--s-8) var(--s-16);
+  color: var(--ink-2);
+  font-size: var(--type-label);
+  font-weight: 600;
+}
+
+/* ---------- Home: today's story and the row of kolams ---------- */
+
+.today__title {
+  margin: 0;
+  font-size: var(--type-reading);
+  font-weight: 700;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.kolams {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: var(--s-16);
+}
+.kolams__row {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--s-12);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow: hidden;
+}
+.kolams__row li {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+}
+.kolams__row .kolam {
+  width: 100%;
+  height: 100%;
+}
+.kolams__next .kolam__dot {
+  fill: var(--ink-muted);
+}
+.kolams__stars {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-4);
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+.kolams__stars svg {
+  color: var(--turmeric-deep);
+  fill: var(--turmeric);
+}
+.kolams__streak {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-4);
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--laterite);
+}
+
+/* ---------- Reading ---------- */
+.page-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-12);
+  margin-top: var(--s-8);
+}
+.part-dots {
+  display: inline-flex;
+  gap: var(--s-8);
+}
+.part-dots i {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--ink-muted);
+}
+.part-dots i[data-done="true"] {
+  border-color: var(--leaf);
+  background: var(--leaf);
+}
+.part-dots i[data-here="true"] {
+  border-color: var(--peacock);
+  background: var(--peacock);
+}
+.page-foot__timer {
+  font-size: var(--type-label);
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+.page-hint {
+  margin: var(--s-8) 0 0;
+  font-size: var(--type-label);
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+/* The marked page gives the words more room than the picture. */
+.book-page--marked .book-page__art {
+  flex: 0 1 34%;
+}
+
+/* ---------- Checking, saved, failed: one centred stage ---------- */
+.center-stage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-16);
+  text-align: center;
+}
+.center-stage__sub {
+  margin: 0;
+  font-size: var(--type-voice);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.checking-stage__kolam {
+  width: min(56vw, 240px);
+  height: auto;
+}
+
+/* ---------- Practice ---------- */
+.action-asides {
+  display: flex;
+  justify-content: center;
+  gap: var(--s-8);
+}
+.slate__star {
+  color: var(--turmeric);
+  fill: var(--turmeric);
+}
+.slate__tick {
+  display: grid;
+  place-items: center;
+  min-height: 40px;
+  color: var(--leaf);
+}
+.slate__tick svg {
+  stroke-width: 3;
+}
+
+/* ---------- Finished ---------- */
+.finish {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-16);
+  text-align: center;
+}
+.finish__kolam {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(64vw, 280px);
+  padding: var(--s-24);
+  border-radius: var(--r-page);
+  background: var(--rice);
+  box-shadow: var(--shadow-page);
+}
+.finish__kolam .kolam {
+  width: 100%;
+  height: auto;
+  max-height: 38dvh;
+}
+.finish__star {
+  position: absolute;
+  right: calc(var(--s-16) * -1);
+  top: calc(var(--s-16) * -1);
+  display: grid;
+  place-items: center;
+  color: var(--turmeric-deep);
+  animation: star-settle var(--t-ui) var(--ease-out) both calc(var(--t-reward) - 100ms);
+}
+.finish__star svg {
+  fill: var(--turmeric);
+}
+@keyframes star-settle {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  @keyframes star-settle {
+    from {
+      opacity: 0;
+    }
+  }
+}
+.finish__story {
+  margin: 0;
+  font-size: var(--type-voice);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+/* A narrow phone: the language letters drop under the logo rather than off the edge. */
+.who__top {
+  flex-wrap: wrap;
+}
+
+/* ---------- Recovery: what to do, on a page ---------- */
+.book-page--note {
+  flex: 0 1 auto;
+}
+.steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-12);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--type-voice);
+  font-weight: 600;
+  line-height: 1.35;
+}
+.steps-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-12);
+}
+.steps-list__num {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--peacock-wash);
+  color: var(--peacock);
+  font-size: var(--type-label);
+  font-weight: 800;
+}
+.page-note {
+  margin: 0;
+  font-size: var(--type-voice);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+/* ---------- The practice sentence ---------- */
+/* One sentence: a smaller page, centred on the wall, not a stretched card. */
+.book-page--sentence {
+  flex: 0 1 auto;
+  margin-block: auto;
+}
+
+/* ---------- Not found ---------- */
+.lost {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-16);
+  padding: var(--gutter-x);
+  background: var(--limewash);
+  color: var(--ink);
+  text-align: center;
+}
+.lost__title {
+  margin: 0;
+  font-size: var(--type-display);
+  font-weight: 800;
+}
+.lost .kolam {
+  width: 120px;
+  height: auto;
+}
+.lost a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 700;
+  color: var(--peacock);
+}

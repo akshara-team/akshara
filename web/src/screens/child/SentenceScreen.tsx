@@ -3,7 +3,18 @@ import { useNavigate } from "react-router-dom";
 import { api, childIdOf, isMock } from "../../api";
 import { RecordingError, createRecorder, type Recorder } from "../../api/mock";
 import type { SentenceFor, SentenceRead } from "../../api/types";
-import { Button, CheckIcon, ListenButton, MicButton, PageHeader, WordChip, wordStatus, SayButton } from "../../components";
+import {
+  Action,
+  BookPage,
+  ChildFrame,
+  FlagIcon,
+  MarkedText,
+  MicIcon,
+  StopIcon,
+  pictureOf,
+} from "../../components";
+import { meterValue } from "../../audio/noise";
+import { play } from "../../audio/playback";
 import { useCopy, type CopyKey } from "../../i18n";
 import { useSession } from "../../state/session";
 import { load as loadChild } from "../../state/storage";
@@ -19,7 +30,7 @@ type Phase = "loading" | "none" | "ready" | "recording" | "checking" | "done";
 export function SentenceScreen() {
   const { lang, reader, reset } = useSession();
   const navigate = useNavigate();
-  const { t, Tx } = useCopy(lang);
+  const { Tx } = useCopy(lang);
   const childId = childIdOf((reader ?? loadChild().reader)?.id);
   const [sentence, setSentence] = useState<SentenceFor | null>(null);
   const [phase, setPhase] = useState<Phase>("loading");
@@ -47,6 +58,17 @@ export function SentenceScreen() {
   }, [childId]);
 
   useEffect(() => () => recorder.current?.cancel(), []);
+
+  // The voice control's ring follows the microphone while the child reads.
+  const [level, setLevel] = useState(0);
+  useEffect(() => {
+    if (phase !== "recording") return;
+    const timer = setInterval(() => {
+      const db = recorder.current?.level();
+      if (db != null) setLevel(meterValue(db));
+    }, 100);
+    return () => clearInterval(timer);
+  }, [phase]);
 
   function finish() {
     reset();
@@ -91,99 +113,102 @@ export function SentenceScreen() {
     }
   }
 
+  const me = reader ?? loadChild().reader;
+  const mark = me ? pictureOf(me.id, me.picture) : null;
+
   if (phase === "none") {
     return (
-      <>
-        <PageHeader back backTo="/home" />
-        <div className="screen-body">
-          <div className="checking">
-            <h1 className="recovery-hero__title">
-              <Tx k="sentence.none" />
-            </h1>
-            <div className="actions">
-              <Button block icon="finish" onClick={finish}>
-                <Tx k="results.finish" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </>
+      <ChildFrame
+        lang={lang}
+        lineKey="sentence.none"
+        title="Practice"
+        mark={mark}
+        heading
+        action={
+          <Action icon={<FlagIcon />} onClick={finish}>
+            <Tx k="results.finish" />
+          </Action>
+        }
+      >
+        {null}
+      </ChildFrame>
     );
   }
 
   const words = (result?.words ?? []).filter((w) => w.op !== "inserted");
-  return (
-    <>
-      <PageHeader back backTo="/home" />
-      <div className="screen-body">
-        <div className="say-row">
-          <h1 className="recovery-hero__title">
-            <Tx k="sentence.title" />
-          </h1>
-          <SayButton k="sentence.title" lang={lang} />
-        </div>
-        {phase === "loading" || !sentence ? (
-          <p className="note" role="status">
-            <Tx k="home.opening" />
-          </p>
-        ) : (
-          <div className="stack">
-            <div className="passage-card">
-              <div className="passage-card__accent" aria-hidden="true" />
-              <p className={`reading-text ${scriptClass(lang)}`} lang={lang}>
-                {sentence.text}
-              </p>
-            </div>
+  const done = phase === "done";
+  const line: CopyKey = done
+    ? result && result.accuracy >= 0.99
+      ? "sentence.great"
+      : "sentence.good"
+    : phase === "recording"
+      ? "voice.listening"
+      : "sentence.title";
 
-            {phase === "done" ? (
-              <>
-                <p className="practice-message" role="status">
-                  <Tx k={result && result.accuracy >= 0.99 ? "sentence.great" : "sentence.good"} />{" "}
-                  <CheckIcon className="inline-icon" />
-                </p>
-                <div className="chips">
-                  {words.map((w, i) => (
-                    <WordChip
-                      uiLang={lang}
-                      key={`${w.index ?? i}-${w.word ?? ""}`}
-                      status={wordStatus(w)}
-                      word={w.word ?? ""}
-                      lang={lang}
-                    />
-                  ))}
-                </div>
-                <div className="actions">
-                  <Button block icon="finish" onClick={finish}>
-                    <Tx k="results.finish" />
-                  </Button>
-                </div>
-              </>
-            ) : (
-              <div className="controls">
-                <ListenButton uiLang={lang} text={sentence.text} lang={lang} label={t("common.listen")} />
-                <MicButton
-                  state={phase === "recording" ? "recording" : phase === "ready" ? "idle" : "processing"}
-                  onClick={mic}
-                  label={t(phase === "recording" ? "read.recording" : "read.tapToStart")}
-                />
-                <p className="controls__desc">
-                  <Tx k={phase === "checking" ? "practice.checking" : phase === "recording" ? "read.recording" : "read.tapToStart"} />
-                </p>
-                {isMock && phase === "ready" && (
-                  <Button variant="ghost" icon="play" onClick={() => void judge(null)}>
+  return (
+    <ChildFrame
+      lang={lang}
+      lineKey={message ?? line}
+      title="Practice"
+      mark={mark}
+      level={phase === "recording" ? level : undefined}
+      heading
+      action={
+        done ? (
+          <Action icon={<FlagIcon />} onClick={finish}>
+            <Tx k="results.finish" />
+          </Action>
+        ) : (
+          <>
+            <Action
+              icon={phase === "recording" ? <StopIcon /> : <MicIcon />}
+              aria-pressed={phase === "recording"}
+              disabled={phase === "loading" || phase === "checking"}
+              onClick={mic}
+            >
+              <Tx
+                k={
+                  phase === "checking"
+                    ? "practice.checking"
+                    : phase === "recording"
+                      ? "read.recording"
+                      : "read.tapToStart"
+                }
+              />
+            </Action>
+            {phase === "ready" && sentence && (
+              <div className="action-asides">
+                <button
+                  type="button"
+                  className="action-aside"
+                  onClick={() => void play(sentence.text, lang)}
+                >
+                  <Tx k="common.listen" />
+                </button>
+                {isMock && (
+                  <button type="button" className="action-aside" onClick={() => void judge(null)}>
                     <Tx k="read.demoReading" />
-                  </Button>
+                  </button>
                 )}
               </div>
             )}
-            {message && (
-              <p className="note" role="status">
-                <Tx k={message} />
-              </p>
-            )}
-          </div>
+          </>
+        )
+      }
+    >
+      <BookPage className="book-page--sentence">
+        {phase === "loading" || !sentence ? (
+          <p className="page-hint" role="status">
+            <Tx k="home.opening" />
+          </p>
+        ) : done ? (
+          <MarkedText words={words} lang={lang} />
+        ) : (
+          <p className={`reading ${scriptClass(lang)}`} lang={lang}>
+            {sentence.text}
+          </p>
         )}
-      </div>
-    </>
+      </BookPage>
+    </ChildFrame>
   );
 }

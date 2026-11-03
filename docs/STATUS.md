@@ -1,6 +1,6 @@
 # Status: what is done and what is next
 
-*Last updated 2026-10-29. Keep this file current when work lands; it is the fastest way for
+*Last updated 2026-11-02. Keep this file current when work lands; it is the fastest way for
 either of us to see where the project stands. The day-by-day plan is
 [FINISH_PLAN.md](FINISH_PLAN.md); the log is [WORKLOG.md](WORKLOG.md).*
 
@@ -11,8 +11,9 @@ consent) and places them with a short ASER-style test. The child reads a story p
 level, part by part, and sees which words were right. Missed words are practised straight away:
 split into aksharas, said by Timbre, read again. A learner model tracks which letters and sounds
 each child knows and picks the next story. The teacher sees the class, listens to the marks
-worth checking and corrects them, and can read how reliable the marks are. Evon writes
-practice sentences for each child's weak sounds; a teacher approves each one first.
+worth checking and corrects them, and can read how reliable the marks are. Evon is wired
+in to write practice sentences for each child's weak sounds (a teacher approves each one); its
+first batch has not run yet.
 
 ## Where things stand
 
@@ -34,9 +35,10 @@ practice sentences for each child's weak sounds; a teacher approves each one fir
 | Trust: reliability page, consent, 30-day deletion, delete a child (WP7) | Done |
 | FLS 2022 Grade 3 bands (WP8, D2) | Done; wired into the child profile and the dashboard status, per language (Hindi 35-54, Kannada 30-48, Tamil 28-49) |
 | Offline readings, noise check (WP9) | Done |
-| Stars and reading streak (WP9, D3) | Done; on the child home |
+| Stars and reading streak (WP9, D3) | Done; on the child home, beside the row of kolams (the streak shows from two days) |
 | End-to-end tests, Pages dry run, docs (WP10) | Done; the hands-on browser pass and Lighthouse are Checkpoint A |
-| Public demo (GitHub Pages, mock mode) | Builds and serves under `/akshara/`; goes live when the repo is public |
+| Public demo (GitHub Pages, mock mode) | Live: https://akshara-team.github.io/akshara/ (repo public since Nov 2, now under the `akshara-team` org) |
+| Look and feel | Redesigned Nov 2-3 to [DESIGN.md](../DESIGN.md), "a picture book that listens": the book page, the slate, the kolam as progress and reward, the teacher's register; every screen |
 
 ## Who owns what
 
@@ -49,15 +51,15 @@ We enter as a pair (decided Oct 28). Both are interviewed separately, so each sh
 
 ## What is next, in order
 
-1. **Checkpoint A** (Achindra, about 30 minutes): use the app as a teacher and as a child in
-   live mode. Check that the right word plays in Review, switch the network off mid-story, try
-   "Is it quiet here?", read one sentence into a real microphone, run Lighthouse.
-2. **Daniel**: D1-D3 are merged (Kannada/Tamil text, FLS bands, rewards); left is D4 (a pass on his phone) and D6 (approve Evon's sentences).
-3. **Hindi text review** (Achindra): `web/src/i18n/hi.json`.
-4. **Run Evon's batch** (Kaggle's free 2×T4 or a rented GPU, see [EVON_HOWTO.md](EVON_HOWTO.md)), then approve its sentences in the app.
-5. **Record the demo video** (Nov 1) in live mode.
-6. **Go public, post** (Nov 2–3): make the repo public, turn on Pages, post the demo (drafts in
-   [POST.md](POST.md)), share it for a week before the Nov 10 cutoff. **Submit by Nov 9.**
+Done since Oct 29: Checkpoint A (live mode, real microphone), the Hindi text review, Daniel's
+phone test (D4), the repo made public and moved to the `akshara-team` org, Pages turned on, and
+the redesign.
+
+1. **Evon's first batch** (Daniel, free Kaggle 2×T4): build llama.cpp for the T4s, keep the
+   model in `/tmp`, run `scripts/evon_sentences.py`, commit the sentences; then approve them in
+   the app (D6). Until then the docs say Evon is wired in and its batch is pending.
+2. **Post** (drafts in [POST.md](POST.md)), reshare for a week before the Nov 10 cutoff.
+   **Submit by Nov 9.**
 
 ## How to run it
 
@@ -70,19 +72,23 @@ We enter as a pair (decided Oct 28). Both are interviewed separately, so each sh
 
 ## Current numbers
 
-- **277 Python tests**, **180 web tests** (axe on 22 routes); CI runs both on every PR.
+- **277 Python tests**, **199 web tests** (axe on 22 routes); CI runs both on every PR.
 - End-to-end, one child from consent to deletion: `tests/test_end_to_end.py` (API) and
   `web/src/endToEnd.test.tsx` (screens, mock mode).
 - Production web bundle: **112 kB JS / 125 kB total gzip** (budget 120 / 160), including the
   practice-sentence data, which loads only when needed.
-- Ledger: **2,136** paid calls logged in `results/ledger.jsonl`. The `AKSHARA_MAX_CALLS` cap
-  counts this file. Credits are not the limit (5,000 programme credits, about 0.05–0.1 a call).
+- Ledger: **2,136** paid calls in the study, kept in `results/ledger_study.jsonl`. The
+  `AKSHARA_MAX_CALLS` cap counts `results/ledger.jsonl`, which each checkout keeps for itself
+  (not in git, so a fresh clone starts at 0). Credits are not the limit (5,000 programme credits, about 0.05–0.1 a call).
 
 ## Known limits (stated in the app and the docs)
 
 - Synthetic voices only: no child has used it, and no teacher has marked the same readings to
   measure agreement.
 - A change in one sound is mostly not caught (8 of 39); the reliability page says so.
+- One word alone is the hardest case for the speech service: a short word read right was
+  heard as a near word in 2 of 3 live tries (Nov 3). A practice re-read heard that way counts
+  as "not sure": the child is told "good try" and moves on, never "try again".
 - Word clips in Review are estimated from pauses, since Prisma gives no word timings.
 - Placement passages are short book blurbs, weaker evidence than the paper ASER test.
 - Kannada and Tamil child text reviewed by a native speaker; Hindi is still a draft.

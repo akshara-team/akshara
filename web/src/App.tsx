@@ -27,7 +27,9 @@ import { useOfflineRedirect } from "./state/useOffline";
 import { useOutboxSync, type Queued } from "./state/outbox";
 import { api } from "./api";
 import "./components/components.css";
+import "./components/book.css";
 import "./screens/screens.css";
+import "./screens/child/child.css";
 import "./app.css";
 
 /**
@@ -64,12 +66,23 @@ function useFocusOnRouteChange(main: RefObject<HTMLElement>) {
 const sendQueued = (q: Queued) =>
   api.submitAttempt({ ...q, audio: q.audio ?? new Blob([], { type: "audio/wav" }) });
 
+/**
+ * Which of the three surfaces (DESIGN.md) a route is: the teacher's register, the practice
+ * slate, or the picture book. The shell sets the surface's one action colour from it.
+ */
+export function surfaceOf(pathname: string): "book" | "slate" | "register" {
+  if (pathname.startsWith("/teacher")) return "register";
+  if (pathname === "/practice") return "slate";
+  return "book";
+}
+
 /** Owns the shell: one responsive frame for every route, plus offline handling. */
 function Shell({ children }: { children: ReactNode }) {
   useOfflineRedirect();
   useOutboxSync(sendQueued);
   const main = useRef<HTMLElement>(null);
   useFocusOnRouteChange(main);
+  const { pathname } = useLocation();
 
   // Handled in JS so the router never sees a "#main" hash change.
   function skipToContent(event: MouseEvent<HTMLAnchorElement>) {
@@ -78,7 +91,7 @@ function Shell({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="app-shell">
+    <div className="app-shell" data-surface={surfaceOf(pathname)}>
       <a className="skip-link" href="#main" onClick={skipToContent}>
         Skip to content
       </a>

@@ -38,4 +38,4 @@ Akshara is built as a tutor around that limit rather than hiding it. It keeps Pr
 - Prisma returns no word timings or confidence, which limits what a second pass can do.
 
 ## Models used
-Gnani Prisma v2.5 (speech to text, `format=verbatim`, no `bias_list`), Timbre v3.0 (text to speech) and Evon v3.3 (practice sentences, offline, every sentence checked by code and approved by a teacher). Scoring is plain code with no language model.
+Gnani Prisma v2.5 (speech to text, `format=verbatim`, no `bias_list`), Timbre v3.0 (text to speech) and Evon v3.3 (practice sentences, offline, every sentence checked by code and approved by a teacher; wired in, first batch still to run). Scoring is plain code with no language model.

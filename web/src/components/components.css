@@ -1,468 +1,372 @@
-/* Hallmark · shape: app screen · genre: playful · theme: brand · redesign: full · paper: #fffdf5 · accent: #fde047 · display: Inter · body: Inter · axes: light/grotesk-sans/warm · posture: settled · contrast: pass · v2.0.0 */
-/* Design-system components — sizes/radii/colours from the Figma library
-   (section 05 · Akshara · Native component library). */
+/* ============================================================================
+   Shared controls, in the design language of DESIGN.md: the teacher's register
+   (rice paper, ink, ruled lines) and the child's book and slate (book.css).
+   Tokens only. Every control presses with a 0.97 scale; nothing else moves.
+   ============================================================================ */
 
-/* ---------- Button ---------- */
+/* ---------- Button ----------
+   Pills. One primary per screen: ink on the register (the activity hue, set by
+   the shell), with the pressed edge. */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-8);
+  gap: var(--s-8);
   min-height: var(--size-control);
-  padding: var(--space-12) var(--space-24);
-  border: var(--border-width) solid transparent;
-  border-radius: var(--radius-pill);
+  padding: var(--s-12) var(--s-24);
+  border: 2px solid transparent;
+  border-radius: var(--r-pill);
   font: inherit;
-  font-weight: var(--font-weight-semibold);
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.1;
+  text-align: center;
   cursor: pointer;
+  transition: transform var(--t-press) var(--ease-out);
+}
+.btn:active:not(:disabled) {
+  transform: scale(0.97);
 }
 .btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+.btn svg {
+  flex: none;
+}
 .btn--primary {
   background: var(--color-brand-primary);
-  color: var(--color-text-primary);
+  color: var(--color-on-brand);
+  box-shadow: var(--shadow-edge);
+}
+.btn--primary:active:not(:disabled) {
+  box-shadow: none;
 }
 .btn--secondary {
-  background: var(--color-secondary);
-  color: var(--color-on-accent);
+  background: var(--ink);
+  color: var(--rice);
+  box-shadow: var(--shadow-edge);
 }
 .btn--outline {
-  background: transparent;
-  border-color: var(--color-border);
-  color: var(--color-text-primary);
+  background: var(--rice);
+  border-color: var(--register-line);
+  color: var(--ink);
 }
 .btn--ghost {
   background: transparent;
-  color: var(--color-secondary);
+  color: var(--ink);
 }
 .btn--danger {
-  background: var(--color-surface);
+  background: var(--rice);
   border-color: var(--color-danger-text);
   color: var(--color-danger-text);
+}
+.btn--sm {
+  min-height: var(--size-control-sm);
+  padding: var(--s-8) var(--s-16);
+  font-size: var(--type-label);
 }
 .btn--block {
   width: 100%;
 }
+@media (hover: hover) and (pointer: fine) {
+  .btn--outline:hover:not(:disabled) {
+    border-color: var(--ink-muted);
+  }
+  .btn--ghost:hover:not(:disabled) {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  .btn--primary:hover:not(:disabled),
+  .btn--secondary:hover:not(:disabled) {
+    filter: brightness(1.12);
+  }
+}
 
-/* ---------- Card ---------- */
+/* ---------- Card: a page on the wall ---------- */
 .card {
-  background: var(--color-surface);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-16);
-  padding: var(--space-20);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-12);
+  padding: var(--pad-surface);
+  border-radius: var(--r-tile);
+  background: var(--rice);
+  box-shadow: var(--shadow-page);
 }
 .card__title {
   margin: 0;
-  font-size: var(--text-heading-3);
+  max-width: none;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--ink);
 }
 .card__text {
   margin: 0;
-  color: var(--color-text-secondary);
-  font-size: var(--text-secondary);
+  color: var(--ink-2);
+  font-size: var(--type-label);
 }
 
-/* ---------- StatCard ---------- */
-.statcard {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  background: var(--color-surface);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-16);
-  padding: var(--space-16);
-}
-.statcard__label {
-  color: var(--color-text-secondary);
-  font-size: var(--text-secondary);
-}
-.statcard__value {
-  font-size: var(--text-heading-1);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
-}
-.statcard__caption {
-  color: var(--color-muted);
-  font-size: var(--text-meta);
-}
-
-/* ---------- LanguageBadge ---------- */
-.langbadge {
-  display: inline-flex;
-  align-items: center;
-  padding: var(--space-12) var(--space-16);
-  border-radius: var(--radius-pill);
-  background: var(--color-background-soft);
-  color: var(--color-text-primary);
-  font-size: var(--text-secondary);
-  font-weight: var(--font-weight-semibold);
-}
-
-/* ---------- StatusBadge ---------- */
+/* ---------- Status and benchmark: quiet words, never a traffic light ---------- */
 .statusbadge {
   display: inline-flex;
   align-items: center;
-  padding: var(--space-8) var(--space-16);
-  border-radius: var(--radius-pill);
-  font-size: var(--text-badge);
-  font-weight: var(--font-weight-bold);
+  padding: var(--s-4) var(--s-12);
+  border-radius: var(--r-pill);
+  font-size: var(--type-label);
+  font-weight: 700;
+  white-space: nowrap;
 }
 .statusbadge--success {
-  background: var(--chip-correct-bg);
+  background: var(--leaf-wash);
+  color: var(--leaf-deep);
 }
 .statusbadge--warning {
-  background: var(--chip-substituted-bg);
+  background: var(--turmeric-wash);
+  color: var(--turmeric-deep);
 }
 .statusbadge--neutral {
-  background: var(--color-background-soft);
+  background: var(--limewash);
+  color: var(--ink-2);
 }
-
-/* ---------- BenchmarkBand ---------- */
-/* One neutral pill: it says where the child is against the goal, not a pass or fail. */
 .benchmarkband {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-8);
-  padding: var(--space-8) var(--space-16);
-  border-radius: var(--radius-pill);
-  background: var(--color-background-soft);
-  font-size: var(--text-badge);
+  gap: var(--s-8);
+  padding: var(--s-8) var(--s-16);
+  border-radius: var(--r-pill);
+  background: var(--leaf-wash);
+  color: var(--ink);
+  font-size: var(--type-label);
 }
 .benchmarkband__value {
-  font-weight: var(--font-weight-bold);
+  font-weight: 700;
 }
 .benchmarkband__label {
-  color: var(--color-text-secondary);
+  color: var(--ink-2);
 }
 
-/* ---------- RewardsStrip ---------- */
-.rewardsstrip {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-12);
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.rewardsstrip__item {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-8);
-  padding: var(--space-12) var(--space-16);
-  border-radius: var(--radius-16);
-  background: var(--color-surface-selected);
-}
-.rewardsstrip__count {
-  font-size: var(--text-heading-3);
-  font-weight: var(--font-weight-bold);
-}
-.rewardsstrip__label {
-  font-size: var(--text-meta);
-  color: var(--color-text-secondary);
-}
-
-/* ---------- MicButton ---------- */
-.micbutton {
-  width: var(--size-mic);
-  height: var(--size-mic);
-  border-radius: var(--radius-pill);
-  border: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  background: var(--color-brand-primary);
-  color: var(--color-text-primary);
-}
-.micbutton--recording {
-  background: var(--color-feedback-danger);
-  color: var(--color-on-accent);
-}
-.micbutton--processing {
-  background: var(--chip-correct-bg);
-  color: var(--color-feedback-success);
-  cursor: default;
-}
-
-/* ---------- WordChip ---------- */
-.wordchip {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-6);
-  min-height: var(--size-tap);
-  padding: var(--space-6) var(--space-8);
-  border: var(--border-width) solid;
-  border-radius: var(--radius-12);
-}
-.wordchip__icon {
-  display: inline-flex;
-  align-items: center;
-  line-height: var(--line-height-normal);
-}
-.wordchip__word {
-  font-size: var(--text-chip);
-  line-height: var(--line-height-reading);
-}
-.wordchip--correct {
-  background: var(--chip-correct-bg);
-  border-color: var(--chip-correct-border);
-}
-.wordchip--substituted {
-  background: var(--chip-substituted-bg);
-  border-color: var(--chip-substituted-border);
-}
-.wordchip--skipped {
-  background: var(--chip-skipped-bg);
-  border-color: var(--chip-skipped-border);
-  text-decoration: line-through;
-}
-/* Our addition: a word accepted only by a spelling rule. Dashed = "look at this". */
-.wordchip--uncertain {
-  background: var(--chip-uncertain-bg);
-  border-color: var(--chip-uncertain-border);
-  border-style: dashed;
-}
-
-/* ---------- ProgressBar ---------- */
-.progressbar {
-  width: 100%;
-  height: var(--size-progress-height);
-  border-radius: var(--radius-pill);
-  background: var(--color-surface-muted);
-  overflow: hidden;
-}
-.progressbar__fill {
-  height: 100%;
-  border-radius: var(--radius-pill);
-  background: var(--color-feedback-success);
-}
-
-/* ---------- ProgressDots ---------- */
-.progressdots {
-  display: inline-flex;
-  gap: var(--space-8);
-  align-items: center;
-}
-.progressdots__dot {
-  width: var(--size-dot);
-  height: var(--size-dot);
-  border-radius: var(--radius-pill);
-  background: var(--color-border);
-}
-.progressdots__dot--current {
-  background: var(--color-secondary);
-}
-.progressdots__dot--done {
-  background: var(--color-feedback-success);
-}
-
-/* ---------- Input / Select / Radio ---------- */
+/* ---------- Fields: label above, control, error below ---------- */
 .field {
   display: flex;
   flex-direction: column;
-  gap: var(--space-8);
+  gap: var(--s-8);
 }
 .field__label {
-  font-size: var(--text-secondary);
-  color: var(--color-text-secondary);
+  font-size: var(--type-label);
+  font-weight: 600;
+  color: var(--ink-2);
 }
 .field__control {
   min-height: var(--size-control);
-  padding: var(--space-12) var(--space-16);
-  /* A field edge must read against its surface: 3:1, so the muted ink, not the hairline rule. */
-  border: var(--border-width) solid var(--color-muted);
-  border-radius: var(--radius-12);
-  background: var(--color-surface);
-  color: var(--color-text-primary);
+  padding: var(--s-12) var(--s-16);
+  /* A field edge must read against its surface: 3:1, so muted ink, not the ruled line. */
+  border: 1px solid var(--ink-muted);
+  border-radius: var(--r-inner);
+  background: var(--rice);
+  color: var(--ink);
   font: inherit;
 }
+.field__control::placeholder {
+  color: var(--ink-muted);
+}
+.field__control:focus-visible {
+  outline: 2px solid var(--peacock);
+  outline-offset: 1px;
+}
 .field__control--error {
-  border-color: var(--color-feedback-danger);
+  border-color: var(--laterite);
 }
 .field__error {
   margin: 0;
   color: var(--color-danger-text);
-  font-size: var(--text-meta);
+  font-size: var(--type-label);
+  font-weight: 600;
 }
 .field--select {
   position: relative;
 }
+/* One chevron: ours. The browser's own arrow is hidden, and the text keeps clear of ours. */
+.field--select .field__control {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: calc(var(--s-12) + var(--icon-size-sm) + var(--s-8));
+}
 .field__chevron {
   position: absolute;
-  right: var(--space-12);
-  bottom: var(--space-12);
-  color: var(--color-muted);
+  right: var(--s-12);
+  bottom: var(--s-16);
+  color: var(--ink-muted);
   pointer-events: none;
 }
-
-.radio {
+.fieldset {
   display: flex;
+  flex-direction: column;
+  gap: var(--s-8);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* Radio: a pill that fills with ink when chosen. In a group they sit in a row. */
+.radio {
+  display: inline-flex;
   align-items: center;
-  gap: var(--space-12);
-  min-height: var(--size-control);
-  padding: var(--space-12) var(--space-16);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-pill);
-  background: var(--color-surface);
-  cursor: pointer;
-  text-align: left;
+  gap: var(--s-8);
+  min-height: 44px;
+  padding: var(--s-8) var(--s-16);
+  border: 2px solid var(--register-line);
+  border-radius: var(--r-pill);
+  background: var(--rice);
+  color: var(--ink);
   font: inherit;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: transform var(--t-press) var(--ease-out);
+}
+.radio:active {
+  transform: scale(0.97);
 }
 .radio--selected {
-  border-color: var(--color-brand-primary);
-  background: var(--color-surface-selected);
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--rice);
 }
 .radio__mark {
-  width: var(--size-radio-mark);
-  height: var(--size-radio-mark);
-  border-radius: var(--radius-pill);
-  border: 2px solid var(--color-border);
   flex: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
 }
 .radio--selected .radio__mark {
-  border-color: var(--color-brand-primary);
-  background: var(--color-brand-primary);
+  background: currentColor;
+  box-shadow: inset 0 0 0 3px var(--ink);
+}
+.radio-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-8);
 }
 
 .checkbox {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-12);
-  padding: var(--space-12) var(--space-16);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-12);
-  background: var(--color-surface);
-  color: var(--color-text-primary);
+  gap: var(--s-12);
+  padding: var(--s-16);
+  border-radius: var(--r-inner);
+  background: var(--rice);
+  box-shadow: inset 0 0 0 1px var(--register-line);
+  color: var(--ink);
   cursor: pointer;
 }
 .checkbox--error {
-  border-color: var(--color-feedback-danger);
+  box-shadow: inset 0 0 0 2px var(--laterite);
 }
 .checkbox__control {
   flex: none;
   width: 22px;
   height: 22px;
-  margin: 0;
-  accent-color: var(--color-secondary);
+  margin: 2px 0 0;
+  accent-color: var(--ink);
 }
 
-/* ---------- Avatar ---------- */
-.avatar {
-  width: var(--size-avatar);
-  height: var(--size-avatar);
-  flex: none;
-  border-radius: var(--radius-pill);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--color-background-soft);
-  border: var(--border-width-2) solid transparent;
-  color: var(--color-text-primary);
-  font-weight: var(--font-weight-bold);
-}
-.avatar--selected {
-  border-color: var(--color-brand-primary);
-}
-
-/* ---------- Spinner ---------- */
-.spinner-wrap {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-12);
-}
-.spinner {
-  width: var(--size-spinner);
-  height: var(--size-spinner);
-  border-radius: var(--radius-pill);
-  border: var(--border-width-4) solid var(--color-border);
-  border-top-color: var(--color-secondary);
-  animation: spin var(--duration-spin) linear infinite;
-}
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .spinner {
-    animation-duration: var(--duration-spin-reduced);
-  }
-}
-
-/* ---------- Table ---------- */
+/* ---------- Table: the register's ruled rows ---------- */
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
 }
 .table th,
 .table td {
+  height: var(--row-register);
+  padding: 0 var(--s-12);
+  border-bottom: 1px solid var(--register-line);
   text-align: left;
-  padding: var(--space-8);
-  border-bottom: var(--border-width) solid var(--color-border);
+  vertical-align: middle;
 }
 .table th {
-  color: var(--color-text-secondary);
-  font-weight: var(--font-weight-semibold);
+  font-size: var(--type-label);
+  font-weight: 600;
+  color: var(--ink-muted);
 }
 
-/* ---------- EmptyState ---------- */
+/* ---------- Empty state: a quiet page, one line and what to do ---------- */
 .emptystate {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-12);
+  gap: var(--s-12);
+  padding: var(--s-32) var(--pad-surface);
+  border-radius: var(--r-tile);
+  background: var(--rice);
+  box-shadow: inset 0 0 0 1px var(--register-line);
   text-align: center;
-  padding: var(--space-24);
-  border: 1px dashed var(--color-border);
-  border-radius: var(--radius-16);
+  color: var(--ink);
+}
+.emptystate .note {
+  max-width: 44ch;
 }
 
-/* ---------- Page header ---------- */
+/* ---------- Banner: one sentence the teacher must not miss ---------- */
+.banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-12);
+  margin: 0;
+  padding: var(--s-16);
+  border-radius: var(--r-inner);
+  background: var(--peacock-wash);
+  color: var(--ink);
+  font-size: var(--type-label);
+}
+
+/* ---------- The teacher's header: logo, a plain back link, the sections ---------- */
 .page-header {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: var(--color-surface);
-  border-bottom: var(--border-width) solid var(--color-border);
+  padding-top: env(safe-area-inset-top, 0px);
+  background: var(--rice);
+  box-shadow: 0 1px 0 var(--register-line);
 }
 .page-header__row {
-  min-height: var(--size-topbar);
-  padding: var(--space-12) var(--space-20);
   display: flex;
   align-items: center;
-  gap: var(--space-12);
+  gap: var(--s-16);
+  min-height: var(--bar-top);
+  max-width: var(--max-register);
+  margin-inline: auto;
+  padding: var(--s-8) var(--gutter-x);
 }
 .page-header__logo {
   display: inline-flex;
   align-items: center;
-  border-radius: var(--radius-12);
+  min-height: 44px;
+  border-radius: var(--r-inner);
+  color: var(--ink);
+  text-decoration: none;
 }
-.page-header__logo img {
-  display: block;
-  height: var(--logo-height);
-  width: auto;
+.page-header__logo .logo__word {
+  font-size: 1.25rem;
 }
+/* Back: a link with an arrow, not a button. */
 .page-header__back {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-6);
-  min-height: var(--size-tap);
-  padding: 0 var(--space-12);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-pill);
-  color: var(--color-text-secondary);
-  font-size: var(--text-secondary);
+  gap: var(--s-4);
+  min-height: 44px;
+  padding: 0 var(--s-4);
+  color: var(--ink-2);
+  font-size: var(--type-label);
+  font-weight: 600;
   text-decoration: none;
-  transition:
-    background var(--duration-fast) var(--ease-out),
-    border-color var(--duration-fast) var(--ease-out);
 }
 .page-header__back:hover {
-  background: var(--color-surface-muted);
-  border-color: var(--color-text-secondary);
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 .page-header__spacer {
   flex: 1;
@@ -474,39 +378,43 @@
   .page-header__nav {
     display: flex;
     align-items: center;
-    gap: var(--space-24);
+    gap: var(--s-24);
   }
 }
 .page-header__link {
-  color: var(--color-text-secondary);
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  border-bottom: 3px solid transparent;
+  color: var(--ink-2);
+  font-size: var(--type-label);
+  font-weight: 600;
   text-decoration: none;
-  font-size: var(--text-secondary);
-  padding: var(--space-4) 0;
-  border-bottom: var(--border-width-3) solid transparent;
-  transition: color var(--duration-fast) var(--ease-out);
 }
 .page-header__link:hover {
-  color: var(--color-text-primary);
+  color: var(--ink);
 }
 .page-header__link--active {
-  color: var(--color-text-primary);
-  font-weight: var(--font-weight-semibold);
-  border-bottom-color: var(--color-brand-primary);
+  border-bottom-color: var(--ink);
+  color: var(--ink);
 }
 .page-header__badge {
-  background: var(--color-background-soft);
-  border-radius: var(--radius-pill);
-  padding: var(--space-6) var(--space-16);
-  font-size: var(--text-meta);
-  font-weight: var(--font-weight-semibold);
+  padding: var(--s-4) var(--s-12);
+  border-radius: var(--r-pill);
+  background: var(--limewash);
+  color: var(--ink-2);
+  font-size: var(--type-label);
+  font-weight: 600;
 }
-
-/* Mobile teacher tabs; the desktop nav lives in the header row. */
+/* Phone and tablet: the sections as an underlined row under the header. */
 .teacher-tabs {
   display: flex;
-  gap: var(--space-4);
-  padding: 0 var(--space-12) var(--space-8);
+  gap: var(--s-16);
+  max-width: var(--max-register);
+  margin-inline: auto;
+  padding: 0 var(--gutter-x);
   overflow-x: auto;
+  scrollbar-width: none;
 }
 @media (min-width: 900px) {
   .teacher-tabs {
@@ -514,203 +422,50 @@
   }
 }
 .teacher-tabs__tab {
-  padding: var(--space-8) var(--space-12);
-  border-radius: var(--radius-pill);
-  color: var(--color-text-secondary);
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  border-bottom: 3px solid transparent;
+  color: var(--ink-2);
+  font-size: var(--type-label);
+  font-weight: 600;
   text-decoration: none;
-  font-size: var(--text-secondary);
   white-space: nowrap;
 }
 .teacher-tabs__tab--active {
-  background: var(--color-background-soft);
-  color: var(--color-text-primary);
-  font-weight: var(--font-weight-semibold);
+  border-bottom-color: var(--ink);
+  color: var(--ink);
 }
 
-/* Account menu: details/summary, so it works without JavaScript. */
-.account {
-  position: relative;
-}
-.account__trigger {
-  list-style: none;
-  cursor: pointer;
-  display: inline-flex;
-  border-radius: var(--radius-pill);
-}
-.account__trigger::-webkit-details-marker {
-  display: none;
-}
-.account__menu {
-  position: absolute;
-  right: 0;
-  top: calc(100% + var(--space-8));
-  min-width: 180px;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  padding: var(--space-8);
-  background: var(--color-surface);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-12);
-  box-shadow: var(--shadow-card);
-  z-index: 20;
-}
-.account__menu a {
-  display: flex;
-  align-items: center;
-  gap: var(--space-8);
-  padding: var(--space-8) var(--space-12);
-  border-radius: var(--radius-12);
-  color: var(--color-text-primary);
-  text-decoration: none;
-  font-size: var(--text-secondary);
-}
-.account__menu a:hover {
-  background: var(--color-surface-muted);
-}
-
-/* ---------- Pass B additions ---------- */
-.btn--sm {
-  min-height: var(--size-control-sm);
-  padding: var(--space-8) var(--space-16);
-  font-size: var(--text-secondary);
-}
-.banner {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-12);
-  padding: var(--space-16);
-  border: var(--border-width) solid var(--color-info-border);
-  border-radius: var(--radius-12);
-  background: var(--color-info-bg);
-  color: var(--color-text-secondary);
-  font-size: var(--text-secondary);
-}
-.avatar--sm {
-  width: var(--size-avatar-sm);
-  height: var(--size-avatar-sm);
-  font-size: var(--text-secondary);
-}
-
-/* ---------- Level meter and noise check (WP9) ---------- */
-.level-meter {
-  width: 100%;
-  max-width: 240px;
-  height: 12px;
-  border-radius: var(--radius-pill);
-  background: var(--color-surface-muted);
-  border: var(--border-width) solid var(--color-border);
-  overflow: hidden;
-}
-.level-meter__fill {
-  display: block;
-  width: 100%;
-  height: 100%;
-  transform-origin: left center;
-  background: var(--color-feedback-success);
-  transition: transform 100ms linear;
-}
-@media (prefers-reduced-motion: reduce) {
-  .level-meter__fill {
-    transition: none;
-  }
-}
-.noise-check {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-8);
-  text-align: center;
-}
-.noise-check__verdict {
-  margin: 0;
-  font-size: var(--text-secondary);
-  color: var(--color-text-secondary);
-}
-.noise-check__verdict--noisy {
-  color: var(--color-text-primary);
-  font-weight: var(--font-weight-semibold);
-}
-
-/* Pressed: every control answers the finger. */
-.btn:active:not(:disabled),
-.micbutton:active,
-.say-button:active:not(:disabled),
-.rolecard:active,
-.reader-row:active,
-.screen__link:active,
-.screen-error__button:active {
-  transform: translateY(1px);
-  filter: brightness(0.97);
-}
-@media (prefers-reduced-motion: reduce) {
-  .btn, .micbutton, .say-button, .rolecard, .reader-row, .screen__link {
-    transition: none;
-  }
-}
-
-/* ---------- Spoken instruction (WP6) ---------- */
-.say-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: none;
-  width: var(--size-control);
-  height: var(--size-control);
-  border-radius: var(--radius-pill);
-  border: var(--border-width) solid var(--color-border);
-  background: var(--color-surface);
-  color: var(--color-secondary);
-  cursor: pointer;
-  vertical-align: middle;
-}
-/* Disabled: fill, ink and cursor, not opacity alone. */
-.say-button:disabled {
-  background: var(--color-surface-muted);
-  border-color: var(--color-border);
-  color: var(--color-muted);
-  cursor: not-allowed;
-}
-.say-row {
-  display: flex;
-  align-items: center;
-  gap: var(--space-12);
-}
-
-/* ---------- Icons (child-action pictograms) ----------
-   The SVG set lives in `icons.tsx`; this is the reference for what each one means,
-   so every button gets one picture and a child who cannot read still knows the action.
-   Stroke-only, `currentColor`, so colour comes from the button's own text colour;
-   inside `.btn` the icon sits 8px before its label (`.btn` gap). Sizes: theme.css.
+/* ---------- Icons ----------
+   Stroke-only SVGs from `icons.tsx` (fill none, currentColor, 2 px, round caps), so colour
+   comes from the control. One picture per child action, so a child who cannot read still
+   knows the action:
 
    Reading out loud
      MicIcon        start reading aloud        read.tapToStart
      StopIcon       stop and send              read.recording
-     VolumeIcon     listen / hear it           common.listen, SayButton
-     BookIcon       read a story               home.readStory, role card
-     RepeatIcon     read it again              home.readAgain, check.readAgain
+     VolumeIcon     listen / hear it           common.listen, the voice control
+     BookIcon       read a story               home.readStory
+     RepeatIcon     read it again              check.readAgain
      SparklesIcon   practise these words       practice.start
      FlagIcon       finish reading             results.finish
-     TrendingUpIcon see results / progress     feedback.seeResults
-     EarIcon        is it quiet here?          read.noiseCheck
+     StarIcon       see how I did              feedback.seeResults
 
    Moving around
      ArrowRightIcon next part / next word      feedback.next, practice.next
-     ArrowLeftIcon  back                       header
+     ArrowLeftIcon  back                       header, feedback.backToReading
      HomeIcon       go home                    common.home
 
-   Who, and what language
-     UsersIcon      I am a teacher             role card
+   Who
+     UsersIcon      I am the teacher           teacher door
      PersonIcon     choose my name             home.chooseName
-     UserSwitchIcon not me / switch reader     home.notMe
      PersonAddIcon  add a child                reader.addChild
-     GlobeIcon      change language            home.changeLanguage
 
    When something goes wrong
      RefreshIcon    try again / check again    recovery.*.primary
      UploadIcon     send my reading again      recovery.offline.primary
-     WifiOffIcon    no internet               recovery.offline
+     WifiOffIcon    no internet                recovery.offline
      ClockIcon      wait a moment              recovery.loading.primary
      QuestionIcon   show me what to do         check.whatToDo
-     HandIcon       ask a teacher              recovery.connection.primary
-     CloseIcon      close / dismiss            any X button */
+     HandIcon       ask a teacher              recovery.connection.primary */

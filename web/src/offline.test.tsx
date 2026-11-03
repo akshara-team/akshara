@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { App } from "./App";
@@ -44,7 +44,7 @@ describe("reading with no connection (WP9)", () => {
 
     online(false);
     fireEvent.click(demo);
-    expect(await screen.findByText(kn("check.savedTitle"))).toBeTruthy();
+    expect((await screen.findAllByText(kn("check.savedTitle"))).length).toBeGreaterThan(0);
     expect(await queued()).toHaveLength(1);
     // the story goes on: the next part is offered, not an error
     fireEvent.click(screen.getByRole("button", { name: kn("feedback.next", { n: 2 }) }));
@@ -67,8 +67,13 @@ describe("reading with no connection (WP9)", () => {
     );
     fireEvent.click(await screen.findByRole("button", { name: kn("home.readStory") }));
     fireEvent.click(await screen.findByRole("button", { name: kn("read.demoReading") }));
-    await screen.findByText(kn("check.savedTitle"));
-    fireEvent.click(screen.getByRole("link", { name: /akshara home/i }));
+    await screen.findAllByText(kn("check.savedTitle"));
+    cleanup();
+    render(
+      <MemoryRouter initialEntries={["/home"]}>
+        <App />
+      </MemoryRouter>,
+    );
     expect(await screen.findByText(kn("home.waiting", { n: 1 }))).toBeTruthy();
   });
 

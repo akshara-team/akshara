@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import type { Reader } from "./api/types";
 import { App } from "./App";
 import { setReaderAndLang } from "./state/storage";
+import { t } from "./i18n";
 
 const reader: Reader = {
   id: "1",
@@ -26,30 +27,30 @@ beforeEach(() => window.localStorage.clear());
 describe("page header", () => {
   it("links the logo to the child home", () => {
     setReaderAndLang(reader, "kn-IN");
-    at("/home");
+    at("/teacher");
     const logo = screen.getByRole("link", { name: /akshara home/i });
     expect(logo.getAttribute("href")).toBe("/home");
   });
 
   it("links the logo to role selection when no reader is saved", () => {
-    at("/switch");
+    at("/teacher");
     expect(screen.getByRole("link", { name: /akshara home/i }).getAttribute("href")).toBe(
       "/switch",
     );
   });
 
-  it("offers the account menu on child screens", () => {
+  it("lets a child tap their own picture to go back to who is reading", () => {
     setReaderAndLang(reader, "kn-IN");
-    const { container } = at("/home");
-    expect(container.querySelector('[aria-label="My account"]')).toBeTruthy();
-    expect(screen.getByText("Switch reader").closest("a")?.getAttribute("href")).toBe("/switch");
-    expect(screen.getByText("Teacher view").closest("a")?.getAttribute("href")).toBe("/teacher");
+    at("/home");
+    const mark = screen.getByRole("link", { name: t("kn-IN", "home.notMe") });
+    expect(mark.getAttribute("href")).toBe("/switch");
   });
 
   it("gives the back link a label instead of a bare arrow", () => {
-    setReaderAndLang(reader, "kn-IN");
-    at("/read/kn-101");
-    expect(screen.getByRole("link", { name: "Home" }).getAttribute("href")).toBe("/home");
+    const { container } = at("/teacher/story");
+    const back = container.querySelector(".page-header__back");
+    expect(back?.textContent).toBe("Class");
+    expect(back?.getAttribute("href")).toBe("/teacher");
   });
 
   it("sets the document title per route", () => {

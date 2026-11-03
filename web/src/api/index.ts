@@ -153,11 +153,31 @@ const live: Api = {
     liveApi.readSentence(id, audio ?? new Blob([], { type: "audio/wav" }), childId),
 };
 
-/** Mock mode's akshara split: the browser's grapheme clusters, close to aksharas. */
-function graphemes(word: string, lang: Lang): string[] {
-  const Seg = (Intl as unknown as { Segmenter?: typeof Intl.Segmenter }).Segmenter;
-  if (!Seg) return [...word];
-  return [...new Seg(lang, { granularity: "grapheme" }).segment(word)].map((s) => s.segment);
+const VIRAMA: Record<Lang, string> = { "kn-IN": "್", "ta-IN": "்", "hi-IN": "्" };
+const CONSONANT: Record<Lang, RegExp> = {
+  "kn-IN": /[ಕ-ಹೞ]/u,
+  "ta-IN": /[க-ஹ]/u,
+  "hi-IN": /[क-हक़-य़]/u,
+};
+
+/**
+ * Mock mode's akshara split, the same rule as the backend's `core/aksharas.split`: marks
+ * stay with their letter, and a consonant after a virama joins it as a conjunct (ತ್ತಿ is one
+ * akshara). Tamil writes its clusters apart with a visible pulli, so only க்ஷ joins there.
+ */
+export function graphemes(word: string, lang: Lang): string[] {
+  const vir = VIRAMA[lang] ?? VIRAMA["kn-IN"];
+  const consonant = CONSONANT[lang] ?? CONSONANT["kn-IN"];
+  const out: string[] = [];
+  for (const ch of word.normalize("NFC")) {
+    const last = out[out.length - 1];
+    const joins = lang !== "ta-IN" || (last === "க்" && ch === "ஷ");
+    if (last !== undefined && /\p{M}/u.test(ch)) out[out.length - 1] = last + ch;
+    else if (last !== undefined && last.endsWith(vir) && consonant.test(ch) && joins)
+      out[out.length - 1] = last + ch;
+    else out.push(ch);
+  }
+  return out;
 }
 
 export const isMock = import.meta.env.VITE_API_MODE !== "live";

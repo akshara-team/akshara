@@ -57,7 +57,7 @@ describe("MVP routes", () => {
     // mean WCPM (25 + 51) / 2 = 38, accuracy (0.75 + 0.95) / 2 = 85%
     expect(screen.getByText("38")).toBeTruthy();
     expect(screen.getByText("85%")).toBeTruthy();
-    expect(screen.getByText("1 / 2")).toBeTruthy(); // Meera is below the goal
+    expect(screen.getByText("1 of 2")).toBeTruthy(); // Meera is below the goal
   });
 
   it("says so when the class cannot be loaded", async () => {
