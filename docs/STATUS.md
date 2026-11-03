@@ -79,8 +79,9 @@ the redesign.
   `web/src/endToEnd.test.tsx` (screens, mock mode).
 - Production web bundle: **112 kB JS / 125 kB total gzip** (budget 120 / 160), including the
   practice-sentence data, which loads only when needed.
-- Ledger: **2,136** paid calls logged in `results/ledger.jsonl`. The `AKSHARA_MAX_CALLS` cap
-  counts this file. Credits are not the limit (5,000 programme credits, about 0.05–0.1 a call).
+- Ledger: **2,136** paid calls in the study, kept in `results/ledger_study.jsonl`. The
+  `AKSHARA_MAX_CALLS` cap counts `results/ledger.jsonl`, which each checkout keeps for itself
+  (not in git, so a fresh clone starts at 0). Credits are not the limit (5,000 programme credits, about 0.05–0.1 a call).
 
 ## Known limits (stated in the app and the docs)
 

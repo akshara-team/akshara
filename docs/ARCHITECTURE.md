@@ -60,7 +60,8 @@ no connection -> the browser keeps the clip (IndexedDB) and sends it later with 
 3. **Never send `bias_list` to Prisma** for reading attempts; it hides mistakes. Use
    `format=verbatim`.
 4. **Cache and cap everything that costs credits.** Transcripts and Timbre audio are cached by
-   content; every paid call goes in `results/ledger.jsonl` with a hard cap.
+   content; every paid call goes in `results/ledger.jsonl` (per checkout, not in git) with a
+   hard cap. The study's calls are kept as a record in `results/ledger_study.jsonl`.
 5. **Retries are safe.** An attempt is keyed by request id; a resend returns the stored result,
    makes no second paid call and does not teach the learner model twice.
 6. **Numbers come from results.** The reliability page and the write-ups are checked against

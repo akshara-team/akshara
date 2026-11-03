@@ -219,7 +219,8 @@ paid call. `PrismaSTT` wraps it in the interface.
 transcript exists, return it with no call; otherwise call, save, and sleep 1.5 s (other teams hit
 rate limits on back-to-back calls).
 
-**`ledger.py`** (27). Appends one line per paid call to `results/ledger.jsonl`. `record` raises
+**`ledger.py`** (27). Appends one line per paid call to `results/ledger.jsonl` (not in git, so
+each checkout counts its own calls; the study's 2,136 are in `results/ledger_study.jsonl`). `record` raises
 `CapExceeded` if the count has reached `AKSHARA_MAX_CALLS` (default 600) *before* logging the call.
 
 **`timbre.py`** (84). Text-to-speech. Sends text, voice, model, language and speed; retries on
@@ -511,9 +512,9 @@ Not fixed here; listed so you can decide.
 3. **Repeated upload validation.** `api/app.py` repeats the same size, WAV and length checks and the
    same `stt_lock` / error-mapping block in `create_attempt`, `read_placement_item`, `practice` and
    `read_sentence`. A shared helper would cut about 60 lines and remove the risk of the copies drifting.
-4. **The ledger default cap is 600** (`ledger.py`), while `STATUS.md` reports 2,136 logged calls. The
-   cap must be raised through `AKSHARA_MAX_CALLS`; if it ever is not, the app will refuse paid calls
-   with a 503. Worth confirming the intended value.
+4. **Fixed 2026-11-03: the ledger was in git.** A fresh clone started with 2,136 calls against the
+   default cap of 600, so every live reading got a 503. The ledger is now per checkout (ignored); the
+   study's calls are kept in `results/ledger_study.jsonl`.
 5. **`calls_so_far` re-reads the whole ledger on every paid call.** Fine at this size; it grows linearly.
 6. **Purging is request-driven.** `purge_old_recordings` runs only when a request arrives, so an idle
    server deletes nothing. Acceptable for a demo; a real deployment would want a timer.
