@@ -210,9 +210,12 @@ function Word({
       const tried = tries + 1;
       setTries(tried);
       setResult(r.state);
+      // "unsure": heard as a near word, which on one word alone is as likely the speech service
+      // mishearing as the child (the API's near_miss). Never "try again" for that: go on.
       if (r.state === "correct") setMessage("practice.great");
+      else if (r.state === "unsure") setMessage("practice.unsure");
       else setMessage(tried >= TRIES ? "practice.moveOn" : "practice.again");
-      setPhase(r.state === "correct" || tried >= TRIES ? "done" : "ready");
+      setPhase(r.state !== "error" || tried >= TRIES ? "done" : "ready");
     } catch (e) {
       setMessage(problemOf(e));
       setPhase("ready");

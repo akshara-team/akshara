@@ -7,6 +7,7 @@ import {
   BookIcon,
   BookPage,
   ChildFrame,
+  FlameIcon,
   Kolam,
   PersonIcon,
   StarIcon,
@@ -14,6 +15,7 @@ import {
 } from "../../components";
 import { coverFor } from "../../data/covers";
 import { useQueuedCount } from "../../state/outbox";
+import { currentStreak, starCount } from "../../state/rewards";
 import { useSession } from "../../state/session";
 import { useChildProgress } from "../../state/useChildProgress";
 import { useCopy } from "../../i18n";
@@ -33,6 +35,9 @@ export function ChildHome() {
   const lang = store.lang;
   const { t, Tx } = useCopy(lang);
   const waiting = useQueuedCount();
+  // Encourage, never compare: a star per story read, and the days in a row (from two).
+  const stars = starCount(store.readings);
+  const streak = currentStreak(store.readings);
 
   const reader = gone ? null : store.reader;
   const first = reader?.alias.split(" ")[0] ?? "";
@@ -137,10 +142,16 @@ export function ChildHome() {
             </li>
           )}
         </ul>
-        <p className="kolams__stars" aria-label={`${t("rewards.stars")}: ${store.readings.length}`}>
+        <p className="kolams__stars" aria-label={`${t("rewards.stars")}: ${stars}`}>
           <StarIcon width={28} height={28} aria-hidden="true" />
-          <span className="num">{store.readings.length}</span>
+          <span className="num">{stars}</span>
         </p>
+        {streak > 1 && (
+          <p className="kolams__streak" aria-label={`${t("rewards.streak")}: ${streak}`}>
+            <FlameIcon width={24} height={24} aria-hidden="true" />
+            <span className="num">{streak}</span>
+          </p>
+        )}
       </section>
     </ChildFrame>
   );

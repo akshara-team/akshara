@@ -122,7 +122,9 @@ export function createRecorder(): Recorder {
       stream = media;
       meter = openMeter(media);
       chunks = [];
-      recorder = new MediaRecorder(media);
+      // A high bitrate: compression at the default rate is enough to turn one sound into
+      // another on a single word (heard live: நாளை as நாலு), and a re-read is one word.
+      recorder = new MediaRecorder(media, { audioBitsPerSecond: 128_000 });
       recorder.ondataavailable = (e) => {
         if (e.data.size > 0) chunks.push(e.data);
       };

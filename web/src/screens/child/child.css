@@ -182,6 +182,16 @@
   color: var(--turmeric-deep);
   fill: var(--turmeric);
 }
+.kolams__streak {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-4);
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--laterite);
+}
 
 /* ---------- Reading ---------- */
 .page-foot {
