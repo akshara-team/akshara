@@ -1,6 +1,28 @@
+<div align="center">
+
 # Akshara
 
-**A reading tutor that listens.** A child reads a story aloud in Kannada, Tamil or Hindi. Akshara hears every word, helps with the ones they missed, akshara by akshara, and tells the teacher who needs help with what. Built on all three of Gnani AI's models: Prisma hears the child, Timbre speaks to them, and Evon is wired in to write their practice sentences (its first batch is still to run).
+### A reading tutor that listens.
+
+**Master of Computer Applications (IV Trimester, 2026)**
+**Department of Computer Science | CHRIST (Deemed to be University), Bangalore**
+
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Scikit-Learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)](https://pytorch.org/)
+[![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)](https://tensorflow.org/)
+[![Pandas](https://img.shields.io/badge/pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)](https://pandas.pydata.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
+
+[Live demo](https://akshara-team.github.io/akshara/) · [Docs](docs/) · [Writeup](docs/WRITEUP.md) · [Results](docs/RESULTS.md)
+
+</div>
+
+---
+
+A child reads a story aloud in Kannada, Tamil or Hindi. Akshara hears every word, helps with the ones they missed, akshara by akshara, and tells the teacher who needs help with what. Built on all three of Gnani AI's models: Prisma hears the child, Timbre speaks to them, and Evon is wired in to write their practice sentences (its first batch is still to run).
 
 **Try it in the browser:** [akshara-team.github.io/akshara](https://akshara-team.github.io/akshara/). This is **demo mode**: no backend and no Gnani model is called; the marks come from fixtures and the voice is the device's. Synthetic data, no microphone needed (tap "Use demo reading").
 
@@ -95,7 +117,6 @@ uv run uvicorn akshara.api.app:create_app --factory   # API on :8000 (offline fi
 ```bash
 cd web
 npm install          # NODE_ENV must not be "production", or devDependencies are skipped
-npm run dev          # http://localhost:5173, proxies /v1 to :8000
 npm run lint && npm run typecheck && npm test && npm run build
 ```
 
